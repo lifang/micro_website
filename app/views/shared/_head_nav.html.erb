@@ -1,0 +1,9 @@
+<div>
+  <% if current_user %>
+    <%= link_to 'Sign out', signout_path %>
+    <%= current_user.name %>
+  <% else %>
+    <%= link_to 'Sign up', '/signup' %>
+    <%= link_to 'Sign in', '/signin' %>
+  <% end %>
+</div>
