@@ -6,6 +6,8 @@ MicroWebsite::Application.routes.draw do
     get "/signout", :to => "devise/sessions#destroy"
   end
   resources :sites
+  resources :resources
+  get "/signout", :to => "resources#upload"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -43,9 +43,7 @@
 					<button name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
 						编辑
 					</button>
-					<button class="blue_btn">
-						详情
-					</button>
+					<%=link_to '详情', resources_path ,class:'blue_btn'%>
 				</div>
 			</div>
 		</div>
