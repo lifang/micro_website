@@ -11,14 +11,17 @@
     	<div class="head_box">
     		<div class="logo">微网站</div>
         	<div class="user">
-            	<div class="user_name">张三
+        	    <% if user_signed_in?%>
+            	<div class="user_name"><%=current_user.name%>
 					<ul class="user_act">
 						<li class="scd_btn" name="uinfo_chg">编辑</li>
 						<li class="scd_btn" name="pass_chg">修改密码</li>
 					</ul>
 				</div>
-                <div class="user_login"><a>登陆</a></div>
-                <div class="user_logout"><a>退出</a></div>
+				<%else%>
+                <div class="user_login"> <a>登陆</a> </div>
+                <%end%>
+                <div class="user_logout"><a>退出</a> </div>
             </div>
         </div>
 		<div class="nav">

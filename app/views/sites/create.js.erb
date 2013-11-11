@@ -1,0 +1,5 @@
+<%if flash[:error]%>
+$('#fault').html('<%=flash[:error]%>')
+<%else%>
+location.reload();
+<%end%>

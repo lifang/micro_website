@@ -1,1 +1,139 @@
-hello
+<div>
+<% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, id: "flash#{name}"%>
+<% end %>
+	<div class="main_container">
+		<h1>站点汇总</h1>
+		<div class="set_btn cf" name='create'>
+			<button class="blue_btn scd_btn" name="new_point">
+				创建站点
+			</button>
+		</div>
+		<% @sites.each do |s|%>
+		<div class="main_content">
+			<div class="con_box point_box">
+				<span class="close">关闭</span>
+				<dl>
+					<dt>
+						站点名称：
+					</dt>
+					<dd>
+						<%=s.name%>
+					</dd>
+					<dt>
+						根目录：
+					</dt>
+					<dd>
+						<%=s.root_path%>
+					</dd>
+					<dt>
+						状态：
+					</dt>
+					<dd>
+						<%=s.status!=1 ? '未审核':'已经审核'%>
+					</dd>
+					<dt>
+						备注：
+					</dt>
+					<dd>
+						<%=s.notes%>
+					</dd>
+				</dl>
+				<div class="box_act">
+					<button name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
+						编辑
+					</button>
+					<button class="blue_btn">
+						详情
+					</button>
+				</div>
+			</div>
+		</div>
+		<%end%>
+		<div style="font-size: 20px;float: right;" >			
+           <%= will_paginate %>
+		</div>
+	</div>
+	<div class="foot"></div>
+
+	<div class="second_bg"></div>
+	<div class="second_box uinfo_chg">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>编辑</h1>
+			<li>
+				<label>联系电话：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>E-mail：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box pass_chg">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>修改密码</h1>
+			<li>
+				<label>旧密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>新密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>确认：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box new_point"  >
+		<%=form_for(Site.new,remote:true) do |f|%>
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1 id="site_titile">创建站点</h1>
+			<div id='fault' style="margin:auto;text-align: center;color:red"> </div>
+			<input type="hidden" value="create" id="site_edit_or_create" name='site[edit_or_create]'/>
+			<li>
+				<%= f.label '站点名称：'%>
+				<%= f.text_field :name %>
+				 
+			</li>
+			<li>
+				<%= f.label '根目录：'%>
+				<%= f.text_field :root_path %>
+			</li>
+			<li>
+				<%= f.label '备注：'%>
+				<%= f.text_field :notes%>
+				
+			</li>
+			<div class="uinfo_act">
+				<%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
+				<input id="create" class="blue_btn" type="button" value="取消"/>
+			</div>
+		</div>
+		<%end%>
+	</div>
+	
+	
+	
+</div>

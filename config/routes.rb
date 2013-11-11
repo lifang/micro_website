@@ -5,7 +5,7 @@ MicroWebsite::Application.routes.draw do
     get "/signup", :to => "devise/registrations#new"
     get "/signout", :to => "devise/sessions#destroy"
   end
-
+  resources :sites
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
