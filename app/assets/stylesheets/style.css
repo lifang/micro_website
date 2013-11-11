@@ -1,0 +1,247 @@
+﻿* { padding: 0; margin: 0;}
+body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background:#e9ebea;}
+li { list-style: none;}
+a { text-decoration: none; cursor: pointer;}
+button { border: none; cursor: pointer; font-family: "微软雅黑", "宋体", Arial;}
+button:hover { box-shadow:0px 0px 2px rgba(0,0,0,0.3);}
+h1 { font-size: 18px; color: #202e3c; line-height:36px; margin-bottom: 10px;}
+h2 { font-size: 16px; color: #202e3c; line-height:32px; margin-bottom: 10px;}
+h2 input { font-size: 16px;}
+
+.cf:after { clear: both; content:"."; display: block; height: 0; overflow: hidden; visibility:hidden;}
+
+.blue_btn { 
+	background: #328BD5; 
+	padding: 5px 10px; 
+	color: #FFFFFF;
+    border: 0 none;
+    border-radius: 5px;
+}
+
+.close,.delete {
+    background: url(../images/close.png) no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    text-indent: -999px;
+    width: 17px;
+}
+
+/* 登陆、注册 */
+.login {
+	width:400px;
+	height:300px;
+	margin: 100px auto;
+	background: #ffffff;
+	border-radius: 5px;
+	text-align:center;
+}
+.login h1,.rsg h1 {
+	height:65px;
+	background-color: #0E6EB8;
+	border-radius: 5px 5px 0 0;
+	color:#FFFFFF;
+	line-height:65px;
+	font-size:24px;
+}
+.login_info,.rsg_info { padding: 10px;}
+.login_info label { line-height: 50px; font-size: 24px; }
+.login_info input { font-size: 24px; width: 200px; border: 1px solid #003333; }
+.login_act,.rsg_act { padding: 10px;}
+.login_act a { margin: 10px; text-decoration: underline; font-size: 16px;}
+.login_btn { width: 150px; margin-bottom: 10px; font-size: 20px;}
+.rsg_btn { font-size: 16px;}
+.rsg_act button { font-size: 20px;}
+
+.rsg {
+	width:400px;
+	height:360px;
+	margin: 100px auto;
+	background: #ffffff;
+	border-radius: 5px;
+	text-align:center;
+}
+.rsg_info label { display: inline-block; font-size: 18px; line-height: 36px; text-align: right; width: 100px; margin-right: 10px;}
+.rsg_info input { font-size: 20px; width: 200px; border: 1px solid #003333; }
+.check { font-size: 18px; color: #ff0000;}
+
+/* head */
+.head { background: #0e6eb8; text-shadow: 1px 1px 0px rgba(0,0,0,0.5); font-weight: 600; width: 100%; position: fixed;}
+.head_behind { height: 130px;}
+.head_box { width: 1000px; margin: 0 auto; position: relative; }
+.logo { font-size: 32px; color: #f2f2f2; line-height: 80px; }
+
+.user { background: #29a7e1; position: absolute; top: 0; right: 0; padding: 0 25px; border-radius: 0 0 10px 10px; }
+.user_name,.user_login,.user_logout { font-size:16px; line-height: 32px; color: #f2f2f2; padding: 0 15px; float: left; cursor: pointer;}
+.user_login { font-size: 12px; display: none; }
+.user_logout { font-size: 12px;}
+.user_act { display: none; background: #000; border: 1px solid #0E6EB8; }
+.user_act li { text-decoration: underline;}
+.user:hover .user_act { display: block; position: absolute; background: #29a7e1; color: #ffffff; left: 30px; top: 32px; padding: 0 10px; }
+
+.nav { height:50px; line-height:50px; background:#29A7E1;}
+.menu { width:1000px; margin: 0 auto;}
+.menu li { float: left; margin: 0px 10px 0 0;}
+.menu li a { 
+    color: #6CD6D6; 
+	display: block; 
+	height: 50px; 
+	width: 120px; 
+	text-align: center; 
+	font-size: 18px; 
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+.menu li a.hover, .menu li a:hover { color: #edf0f1; background:#4AC8F9;}
+
+/* 主内容 */
+.main_container { width: 1000px; margin: 0 auto; padding: 140px 0 10px;}
+.set_btn { float: right; margin-top: -36px;}
+
+.con_box {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+    margin: 0 20px 10px 0;
+    padding: 10px;
+    position: relative;
+    width: 270px;
+}
+.con_box .close {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.con_box:hover .close { display:block;}
+.con_box:hover { box-shadow: 0px 0px 20px rgba(0,0,0,0.3);}
+
+.point_box { height: 130px;}
+.point_box dl { height: 100px;}
+.point_box dt {
+	width:35%;
+	float:left;
+	text-align:right;
+}
+.point_box dd{
+	width:60%;
+	float:left;
+	margin-left:10px;
+	overflow:hidden;
+}
+.box_act { text-align: center;}
+.box_act button { margin: 5px;}
+
+.det_tit { text-align: center;}
+
+/*.main_content { background: #FFF;}*/
+
+.theTabs li {
+	width:130px;
+	height:35px;
+	line-height:35px;
+	font-size:18px;
+	background-color:#0E6EB8;
+	color:#FFFFFF;
+	float:left;
+	cursor: pointer;
+	text-align: center;
+}
+.theTabs li:hover {	background-color:#328BD5;}
+.theTabs li span { font-size: 14px;}
+.theTabs li.used { background-color:#328BD5;}
+.tabDiv {
+	display:none;
+	width:100%;
+	float:left;
+	margin:10px 0;
+}
+.tabDiv.used { display:block;}
+.tab_line { background: #328BD5; height: 3px; border: none;}
+
+.page_content { border: 1px solid #C2C2C2; padding: 0 20px;}
+.page_tit { height: 36px;}
+fieldset.page_tit {
+    border: 1px solid #C2C2C2;
+    height: 52px;
+    margin: 10px 0;
+    padding: 0 20px;
+}
+.page_tit label { font-size: 16px; line-height: 36px; padding-left: 22px;}
+.page_tit p { display: inline-block; width: 48%; font-size: 16px;}
+.page_tit input { font-size: 16px;}
+.page_tit span { padding: 0 5px; color: #ff0000;}
+.page_tit button { float: right; margin: 5px 22px;}
+.page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%; height: 270px; overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
+.page_act { padding: 10px; text-align: center;}
+.page_act button { margin: 0 10px;}
+
+.table1 {
+    border-collapse: collapse;
+    width: 100%;
+	table-layout:fixed;
+	background:#FFFFFF;
+	border: 5px solid #FFFFFF;
+}
+.table1 th,.table1 td {
+	padding: 7px 20px;
+	word-wrap:break-word;
+	vertical-align: top;
+	line-height: 24px;
+	text-align: center;
+}
+.table1 th{ background:#d8dde0;}
+
+/*弹窗*/
+.second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
+.second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; opacity: 0.5; display: none;}
+.second_content {
+    background-color: #FCFCFC;
+    border: 1px solid #CBD5D9;
+    border-radius: 5px;
+	width: 450px;
+	max-height: 480px;
+	overflow: auto;
+	margin: 100px auto;
+    padding: 10px;
+	position: relative;
+}
+.second_content.second_content2 { width: 900px; }
+.second_content .close,.delete {
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+.second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
+.second_content h2 { text-align: center; font-size: 18px; line-height: 36px;}
+.second_content li { font-size: 18px;}
+.second_content li input { font-size: 18px;}
+.second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
+.second_content input { width: 200px; border: 1px solid #003333; }
+.second_content input[type=radio],.second_content input[type=checkbox] { width: 30px; border: none;}
+.second_content p { text-align: center; padding: 5px 0;}
+.second_content span { text-align: center; padding: 5px;}
+
+.uinfo_act { text-align: center; padding: 10px;}
+.uinfo_act button { font-size: 16px;}
+
+/*file*/
+.fileBox { position:relative; overflow:hidden; float:left;}
+.fileBox .fileText_1 { border:1px solid #cdcdcd; padding:3px; width:70%; margin:0;}
+.fileBox .fileBtn_1 { width:25%; margin:0;}
+.fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; margin:0;}
+
+.page_tit button.up_btn { float: left; margin: 0 10px;}
+
+.vall_box { width: 15%; float: left;}
+.formArea { width: 68%; height: 235px; float: left; border: 1px solid #C2C2C2; overflow: auto; }
+.formTit { margin: 0 199px;}
+.formTit input { color: #a7a7a7; font-size: 16px;}
+.addElemt { width: 15%; float: right;}
+.addElemt button { display: block; margin: 5px auto;}
+.page_txt legend { font-size: 16px; line-height: 32px; position: relative; top: 1px;}
+.insertDiv { height: 210px; overflow: auto; }
+.insertBox { width: 75%; margin: 10px auto 0; border: 1px solid #C2C2C2; position: relative; padding: 5px 20px;} 
+.inputArea { margin: 8px; border: 1px dashed #003333; width: 350px; background: #f5f5f5; color: #a7a7a7; display: inline-block;}
+.second_content input.txtArea { margin: 8px; border: 1px solid #003333; display: none; width: 350px; }
