@@ -151,12 +151,10 @@ h2 input { font-size: 16px;}
 .theTabs li span { font-size: 14px;}
 .theTabs li.used { background-color:#328BD5;}
 .tabDiv {
-	display:none;
 	width:100%;
 	float:left;
 	margin:10px 0;
 }
-.tabDiv.used { display:block;}
 .tab_line { background: #328BD5; height: 3px; border: none;}
 
 .page_content { border: 1px solid #C2C2C2; padding: 0 20px;}

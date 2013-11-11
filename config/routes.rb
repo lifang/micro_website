@@ -10,7 +10,11 @@ MicroWebsite::Application.routes.draw do
      resources :sites do
        resources :pages do
          collection do
-           post '/preview', :to => "pages#preview"
+           post :preview
+           get :sub, :form
+         end
+         member do
+
          end
        end
      end

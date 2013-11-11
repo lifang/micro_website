@@ -3,36 +3,62 @@ class PagesController < ApplicationController
   layout 'sites'
   before_filter :get_site
 
+  #主页 index
   def index
-    @page = Page.find_by_types_and_site_id( Page::TYPE_NAMES[:main], @site.id)
+    @page = @site.pages.main.first
     if @page
+      index_html = File.new(@page.path_name, 'r')
+      @index = index_html.read
+      index_html.close
       render :edit
     else
-      @page = Page.new(:types => Page::TYPE_NAMES[:main])
+      @page = Page.new
       render :new
     end
   end
 
+  #新建page
   def create
-    params[:page][:path_name] = "/#{@site.root_path}/#{params[:page][:file_name]}"
     content = params[:page][:content]
-    pages_info = params[:page].except(params[:page][:content])
-    @page = @site.pages.create(pages_info)
-    if @page.save
-      save_into_file(content, @page)
-      redirect_to site_pages_path(@site)
-    else
-      render :new
-    end 
+    params[:page].delete(params[:page][:content])
+    Page.transaction do
+      @page = @site.pages.create(params[:page])
+      if @page.save
+        save_into_file(content, @page)
+        @notice = "新建成功!"
+        @path = site_pages_path(@site)
+        render :success
+      else
+        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+        render :fail
+      end
+    end
   end
 
+  #更新page
   def update
-    @page = @site.pages.create(:params[:page].except(params[:page][:content]))
-    if @page.save
-      redirect_to site_pages_path(@site)
+    content = params[:page][:content]
+    params[:page].delete(params[:page][:content])
+    @page = Page.find_by_id params[:id]
+    if @page && @page.update_attributes(params[:page])
+      save_into_file(content, @page)
+      @notice = "更新成功!"
+      @path = site_pages_path(@site)
+      render :success
     else
-      render :new
-    end 
+      @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+      render :fail
+    end
+  end
+
+  #子页 index
+  def sub
+    @page = @site.pages.sub.first
+  end
+
+  #表单 index
+  def form
+    
   end
 
   def preview
