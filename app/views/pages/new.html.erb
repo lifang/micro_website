@@ -1,0 +1,23 @@
+<div class="main_container">
+  <%= render '/sites/site_status' %>
+  <div class="tabDiv used">
+    <div class="page_content">
+      <div class="page_tit">
+        <label>index.html</label>
+      </div>
+      <% p 1111111
+      p @site
+    p @page%>
+      <%= form_for [@site, @page], :html => {:id => "main_page_form"} do |f| %>
+        <%= f.hidden_field :title, :value => 'index' %>
+        <%= f.hidden_field :file_name, :value => 'index.html' %>
+        <%= f.text_area :content, :class => "page_txt" %>
+
+        <div class="page_act">
+          <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>')">保存</button>
+          <button class="blue_btn" onclick="changeUrl(this, '<%= @site.id %>')">预览</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
