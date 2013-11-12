@@ -25,12 +25,12 @@ class UsersController < ApplicationController
     set_user
     
     if @user.update_attribute(:name,'modify') 
-       redirect_to '/user/manage/1'
        
-    else
-      
-      
+       flash[:msg]='success!'      
+    else      
+       flash[:msg]='error!'    
     end
+       redirect_to '/user/manage/1'
   end
   
   
@@ -39,8 +39,12 @@ class UsersController < ApplicationController
   def delete
     # puts 'delete........................................'
     set_user
-    @user.destroy
-    
+    if @user.destroy
+      flash[:msg]='success!'
+    else
+      flash[:msg]='error!'
+      
+    end
     redirect_to '/user/manage/1'
     
   end
