@@ -112,18 +112,16 @@
 				</div>
 			</div>
 		</div>
+		<!-- 文件上传-->
 		<div class="tabDiv">
 			<div class="page_content">
 				<div class="page_tit">
 					<label>资源目录路径：/baidu/resources</label>
 				</div>
-				<%= form_tag({:action =>'upload'}, :multipart => true)%>
-				<p>
-					<label for="upload_file">选择上传文件</label>
-					<%= file_field("file", "filedata")%>
-					<%= submit_tag '提交' %>
-				</p>
-				</form>
+			     <%= form_for(:resources , :html =>{:multipart => true}) do |f|%>
+			     <%=f.file_field :myfile%>
+			     <%=f.submit 'Upload'%>   
+			     <%end%>
 				<fieldset class="page_tit">
 					<legend>
 						在这你可以上传页面资源

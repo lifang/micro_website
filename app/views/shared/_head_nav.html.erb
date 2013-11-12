@@ -1,35 +1,36 @@
 <%#*<div>%>
-  <%# if current_user %>
-    <%#= link_to 'Sign out', signout_path %>
-    <%#= current_user.name %>
-  <%# else %>
-    <%#= link_to 'Sign up', '/signup' %>
-    <%#= link_to 'Sign in', '/signin' %>
-  <%# end %>
+<%# if current_user %>
+<%#= link_to 'Sign out', signout_path %>
+<%#= current_user.name %>
+<%# else %>
+<%#= link_to 'Sign up', '/signup' %>
+<%#= link_to 'Sign in', '/signin' %>
+<%# end %>
 <%#*</div>%>
 <div class="head">
-    	<div class="head_box">
-    		<div class="logo">微网站</div>
-        	<div class="user">
-        	    <% if user_signed_in?%>
-            	<div class="user_name"><%=current_user.name%>
-					<ul class="user_act">
-						<li class="scd_btn" name="uinfo_chg">编辑</li>
-						<li class="scd_btn" name="pass_chg">修改密码</li>
-					</ul>
-				</div>
-				<%else%>
-                <div class="user_login"> <a>登陆</a> </div>
-                <%end%>
-                <div class="user_logout"><a>退出</a> </div>
-            </div>
+  <div class="head_box">
+    <div class="logo">微网站</div>
+    <div class="user">
+      <% if current_user %>
+        <div class="user_name"><%= current_user.name %>
+          <ul class="user_act">
+            <li class="scd_btn" name="uinfo_chg">编辑</li>
+            <li class="scd_btn" name="pass_chg">修改密码</li>
+          </ul>
         </div>
-		<div class="nav">
-			<div class="menu cf">
-				<ul>
-					<li><a href="#" class="hover">站点</a></li>
-					<li><a href="#">用户</a></li>
-				</ul>
-			</div>
-		</div>
+        <div class="user_logout"><a href="/signout">退出</a></div>
+      <% else %>
+        <div class="user_name"><a href="/signup">注册</a></div>
+        <div class="user_logout"><a href="/signin">登陆</a></div>
+      <% end %>
     </div>
+  </div>
+  <div class="nav">
+    <div class="menu cf">
+      <ul>
+        <li><a href="#" class="hover">站点</a></li>
+        <li><a href="#">用户</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

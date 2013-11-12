@@ -1,13 +1,13 @@
 MicroWebsite::Application.routes.draw do
    devise_for :users do
-    get "/change", :to => "devise/registrations#edit"
+    get "change", :to => "devise/registrations#edit"
     get "/signin", :to => "devise/sessions#new"
-    get "/signup", :to => "devise/registrations#new"
-    get "/signout", :to => "devise/sessions#destroy"
+    get "signup", :to => "devise/registrations#new"
+    get "signout", :to => "devise/sessions#destroy"
   end
   resources :sites
   resources :resources
-  get "/signout", :to => "resources#upload"
+  match "/upload", :to => "resources#upload" ,via: 'post'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -23,37 +23,13 @@ MicroWebsite::Application.routes.draw do
   #   resources :products
 
   # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+     resources :sites do
+       resources :pages do
+         collection do
+           post '/preview', :to => "pages#preview"
+         end
+       end
+     end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

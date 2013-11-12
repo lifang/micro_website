@@ -1,5 +1,7 @@
 #encoding: utf-8
 class SitesController < ApplicationController
+  layout 'sites'
+
   def index
     @sites=Site.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
   end

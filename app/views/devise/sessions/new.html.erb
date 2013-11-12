@@ -1,19 +1,24 @@
-<br><br><br><br><br>
 
 <h2>Sign in</h2>
+<div class="login">
+  <h1>登陆</h1>
+  <div class="login_info cf">
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <ul>
+        <li><%= f.label :email, "邮箱：。。用户名" %>
+          <%= f.email_field :email %></li>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+        <li><%= f.label :password, "密码：" %>
+          <%= f.password_field :password %></li>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+      </ul>
+    </div>
+    <div class="login_act">
+      <p><%= f.submit "登陆", :class => "login_btn blue_btn" %></p>
+      <p>
+        <a class="rsg_btn blue_btn" href="/signup">注册</a>
+        <%= link_to "忘记密码", new_password_path(:user) %>
+      </p>
+    </div>
+  <% end %>
+</div>
