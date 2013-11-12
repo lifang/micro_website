@@ -6,6 +6,10 @@ MicroWebsite::Application.routes.draw do
     get "signout", :to => "devise/sessions#destroy"
   end
 
+ get "user/manage/:type",:to  =>"users#index"
+    get "user/disable/:uid", :to=>"users#disable"
+    get "user/delete/:uid", :to=>"users#delete"
+
   # Sample resource route with options:
      resources :sites do
        resources :pages do
