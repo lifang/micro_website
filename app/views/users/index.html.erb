@@ -59,8 +59,8 @@
             
             <% case @type %>
             <% when 1 then %>	
-            <div class="Div">	<!--用户管理-->
-             	<div class="page_txt">
+            <div class="Div" >	<!--用户管理-->
+             	<div class="page_txt" style="height: 600px;">
             		
                     <table class="table1">	
                     	<tr>
@@ -83,16 +83,17 @@
                             </td>
                         </tr>
                         <% end %>
-                       <tr><td><%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%></td></tr>
-                   
+                                      
                     </table>    
             	</div>
+            	<div class="clear"></div>
+               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
             </div>
             
             
             <% when 2 then%>  <!--待审核站点-->
             <div class="Div">
-            	<div class="page_txt">
+            	<div class="page_txt" style="height: 600px;">
                     <table class="table1">
                     	<tr>
                         	<th>站点名</th>
@@ -113,16 +114,17 @@
                             </td>
                         </tr>
                         <% end %>
-                        <tr><td><%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%></td></tr> 
                         
                                                                     
-                    </table>
+                    </table>                   
             	</div>
+            	<div class="clear"></div>
+               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
             </div>
             
             <% when 3 then %>	<!--审核通过站点-->
             <div class="Div">
-            	<div class="page_txt">
+            	<div class="page_txt" style="height: 600px;">
                     <table class="table1">
                     	
                     	<tr>
@@ -144,16 +146,17 @@
                             </td>
                         </tr>
                         <% end %>
-                        <tr><td><%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%></td></tr>                      
 
                     </table>
             	</div>
+            	<div class="clear"></div>
+               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
             </div>
             
            
             <% when 4 then%>	<!--审核不通过站点-->
 			<div class="Div">
-            	<div class="page_txt">
+            	<div class="page_txt" style="height: 600px;">
                     <table class="table1">
                     	<tr>
                         	<th>站点名</th>
@@ -174,10 +177,11 @@
                             </td>
                         </tr>
                         <% end %>
-                        <tr><td><%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%></td></tr>                      
                    
                     </table>
             	</div>
+            	<div class="clear"></div>
+                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
             </div>
             <% end %>
             

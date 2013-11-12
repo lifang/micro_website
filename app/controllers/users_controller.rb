@@ -7,10 +7,10 @@ class UsersController < ApplicationController
     puts params
     
      case params[:type]
-     when '1' then @type=1;  @users=User.paginate(:page=>params[:page],:per_page=>3);
-     when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=3") #待审核
-     when '3' then @type=3; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=4")  #审核通过 
-     when '4' then @type=4; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=5") #审核不通过
+     when '1' then @type=1; @users=User.paginate(:page=>params[:page],:per_page=>1);
+     when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=3") #待审核
+     when '3' then @type=3; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=4")  #审核通过 
+     when '4' then @type=4; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=5") #审核不通过
      end 
     
     
@@ -23,9 +23,14 @@ class UsersController < ApplicationController
   def disable
     # puts 'disable.....................................'
     set_user
-   
     
-    redirect_to '/user/manage/1'
+    if @user.update_attribute(:name,'modify') 
+       redirect_to '/user/manage/1'
+       
+    else
+      
+      
+    end
   end
   
   
