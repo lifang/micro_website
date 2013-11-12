@@ -5,16 +5,17 @@ MicroWebsite::Application.routes.draw do
     get "signup", :to => "devise/registrations#new"
     get "signout", :to => "devise/sessions#destroy"
   end
-
+  
+   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   # Sample resource route with options:
      resources :sites do
        resources :pages do
          collection do
+           get :sub, :form, :style, :sub_new,  :form_new
            post :preview
-           get :sub, :form
          end
          member do
-
+           get :sub_edit,:form_edit, :if_authenticate, :sub_preview
          end
        end
      end

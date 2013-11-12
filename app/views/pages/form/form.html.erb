@@ -1,0 +1,44 @@
+<div class="main_container">
+  <%= render '/sites/site_status' %>
+  <div class="tabDiv">
+    <div class="page_content">
+      <div class="page_tit">
+        <%= link_to "新建表单", form_new_site_pages_path(@site),:remote => true, :class => "blue_btn" %>
+      </div>
+      <div class="page_txt">
+        <table class="table1">
+          <tr>
+            <th>标题</th>
+            <th>路径</th>
+            <th>访问权限</th>
+            <th style="width: 350px;">操作</th>
+          </tr>
+          <% @forms.each do |page| %>
+            <tr>
+              <td><%= page.title %></td>
+              <td><%= page.path_name %></td>
+              <td><%= if_authenticate(page)%></td>
+              <td>
+                <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+                <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+                <%= link_to "删除" , form_page_path(@site, page),:method => :delete, :confirm => "确定删除嘛？", :class => "blue_btn"%>
+                <%= link_to "预览" , page.path_name.gsub("/public", ""),:target =>"_blank", :class => "blue_btn"%>
+                <button class="blue_btn">下载数据</button>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="page_act"></div>
+    </div>
+  </div>
+</div>
+
+<div class="second_box newPage">
+  <div class="second_content second_content2">
+    <span class="close" >关闭</span>
+    <div id="form_container">
+
+    </div>
+  </div>
+</div>
