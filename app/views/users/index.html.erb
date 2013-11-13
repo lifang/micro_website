@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <%= stylesheet_link_tag    "application", :media => "all" %>
 <title>用户管理</title>
-
 </head>
 
 <body>
@@ -76,10 +75,20 @@
                         	<td><%= user.name%></td>
                             <td><%= user.phone%></td>
                             <td><%= user.email%></td>
-                            <td>正常</td>
-                            <td>
-                            	<button class="blue_btn" onclick="window.location='/user/disable/<%=user.id%>' ">禁用</button>
-                                <button class="blue_btn" onclick="window.location='/user/delete/<%=user.id%>' ">删除</button>
+                            <td id="user_status"><%=(user.status==0)?'禁用':'正常'%></td>
+                            <td >
+                            	<div id='status_btn'style="float: left; margin-left: 30px; margin-top:2px " >
+                            		
+	                             		<% unless user.status==0%>
+		                             	<%= button_to '禁用', "/user/disable/#{user.id}?page= #{params[:page]}",remote:true,class: "blue_btn"%>                             	
+		                            		<!--<button class="blue_btn"  onclick="window.location='/user/disable/<%= user.id %>?page=<%= params[:page] %>' ">禁用</button>-->
+		                            	<% else %>
+		                            	<%= button_to '启用', "/user/enable/#{user.id}?page= #{params[:page]}",remote:true,class: "blue_btn"%>	                          	
+		                            		<!--<button class="blue_btn" onclick="window.location='/user/enable/<%= user.id %>?page=<%= params[:page] %>' ">启用</button>-->
+										<% end %>
+								</div>																		
+                                		<button class="blue_btn"  onclick="window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' ">删除</button>
+                              
                             </td>
                         </tr>
                         <% end %>
