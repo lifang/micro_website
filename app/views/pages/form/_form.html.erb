@@ -32,7 +32,7 @@
     </div>
   </fieldset>
   <div class="uinfo_act">
-    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, <%= @page.new_record? ? 'new' : "edit"%>)">保存</button>
+    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, '<%= @page.new_record? ? "new" : "edit"%>')">保存</button>
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>

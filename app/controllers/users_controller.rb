@@ -1,7 +1,7 @@
 #encoding: utf-8
 class UsersController < ApplicationController
    # before_action :set_user ,only: [:disable,:delete]
-
+  layout 'sites'
   def index
     # puts 'index..................................................................'
     # puts params

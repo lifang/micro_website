@@ -1,5 +1,6 @@
 #encoding: utf-8
 class ResourcesController < ApplicationController
+  layout 'sites'
   SITE_PATH = "/public/%s/"
   require 'fileutils'
   #  require 'rubygems'
@@ -143,12 +144,10 @@ class ResourcesController < ApplicationController
     name=@site.root_path+"/resources/"+params[:name]
     @re=Resource.find_by_path_name(name)
 
-
     if @re
-      p 2222222222222222222
-      render :json => {:status => 1}
-    else
       render :json => {:status => 0}
+    else
+      render :json => {:status => 1}
     end
  
     #redirect_to root_path

@@ -159,15 +159,6 @@ function have_exist(id){
             
             name=name.split('\\');
             name=name[name.length-1];
-            alert(name);
-            //            $.ajax({
-            //                url : '/check_zip?name='+name+"&id="+id
-            //            }).done(function(date){
-            //                alert(date);
-            //                if(date==1)
-            //                    alert('已经存在资源');
-            //            });
-
 
             $.ajax({
             async:true,
@@ -180,10 +171,11 @@ function have_exist(id){
             success:function(data){
                 alert(1111111111111);
                 if(data.status == 1){
-                    alert("审查通过!");
-                     button.val("已审查").attr("disabled",true).css("background-color","red");
+                    alert("success");
+                  
+                     $("#uploadForm").submit();
                 }else{
-                    alert("审查不通过!");
+                    alert("已经存在资源!");
                 }
             }
         });

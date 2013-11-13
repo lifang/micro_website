@@ -8,7 +8,7 @@
 				<label>资源目录路径：/baidu/resources</label>
 			</div>
 			<fieldset class="page_tit">
-				<%= form_for( :resources, :html =>{:multipart => true}) do |f|%>
+				<%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
 				<legend>
                                       在这你可以上传页面资源
 				</legend>
@@ -16,7 +16,8 @@
 					<input type="text" class="fileText_1" id="resource_c"/>
 					<%=f.file_field :myfile , class:"file_1"%>
 				</div>
-				<%=f.submit 'Upload',class:"blue_btn up_btn",onclick:"javascript:return have_exist(#{@site.id})"%>
+                          <button type="button" class="blue_btn" onclick ="return have_exist(<%= @site.id %>)">上传</button>
+				<%#=f.submit 'Upload',class:"blue_btn up_btn",onclick:"javascript:return have_exist(#{@site.id})"%>
 				<%end%>
 			</fieldset>
 			<%=render 'resources/form'%>
