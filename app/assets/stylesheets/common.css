@@ -6,3 +6,15 @@
 }
 .clear{ clear: both}
 .question_title, .option_title{ display: none}
+.add_option{
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 25px;
+}
+.deleteOption{
+/*    overflow: hidden;
+    position: relstion;
+    right: 12px;
+    top: 25px;*/
+}

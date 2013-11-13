@@ -4,7 +4,7 @@
 <ul class="theTabs cf">
 
   <%= link_to(site_pages_path(@site)) do %>
-    <li class="theTab <%= controller.action_name == "index" ? 'used' : '' %>">
+    <li class="theTab <%= controller_name == "pages" && controller.action_name == "index" ? 'used' : '' %>">
       <span>主页</span>
     </li>
   <% end %>
@@ -21,16 +21,18 @@
     </li>
   <% end %>
 
-  <li class="theTab">
-    <span><%= link_to "资源", site_resources_path(@site) %></span>
-  </li>
+  <%= link_to(site_resources_path(@site)) do %>
+    <li class="theTab <%= controller_name == "resources" && controller.action_name == "index" ? 'used' : '' %>"">
+      <span>资源</span>
+    </li>
+  <% end %>
 
   <%= link_to(form_site_pages_path(@site)) do %>
     <li class="theTab <%= controller.action_name == "form" ? 'used' : '' %>">
       <span>表单</span>
     </li>
   <% end %>
-    
+
 </ul>
 <hr class="tab_line" />
 <div class="set_btn cf"><button class="blue_btn">提交审核</button></div>

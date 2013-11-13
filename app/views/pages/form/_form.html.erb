@@ -1,27 +1,27 @@
 <%= form_for [@site, @page] do |f| %>
-<h2>
-  <span>标题<span class="check">*</span>
-    <%= f.text_field :title %>
-  </span>
-  <span>文件名<span class="check">*</span>
-    <%= f.text_field :file_name %>
-  </span>
+  <h2>
+    <span>标题<span class="check">*</span>
+      <%= f.text_field :title %>
+    </span>
+    <span>文件名<span class="check">*</span>
+      <%= f.text_field :file_name %>
+    </span>
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
-</h2>
+  </h2>
   <fieldset class="page_txt">
     <legend>在这你可以编辑表单</legend>
     <div class="vall_box">
       <p>访问控制</p>
       <p>
         <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是
-         <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
+        <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
       </p>
     </div>
     <fieldset class="formArea">
       <legend class="formTit">表单</legend>
       <div class="insertDiv">
         <% unless @page.new_record?  %>
-        <%= @index.html_safe %>
+          <%= @index.html_safe %>
         <% end %>
       </div>
     </fieldset>
@@ -31,8 +31,9 @@
       <button type="button" class="blue_btn" onclick="addQuestion(3)">增加复选栏</button>
     </div>
   </fieldset>
+<div id="hiddenContentContainer"></div>
   <div class="uinfo_act">
-    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, '<%= @page.new_record? ? "new" : "edit"%>')">保存</button>
+    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, 'submit')">保存</button>
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>
