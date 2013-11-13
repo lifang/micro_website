@@ -1,39 +1,101 @@
 #encoding: utf-8
 class ResourcesController < ApplicationController
-  def upload
-    if request.get?
-      flash[:error]="error"
-      render action: 'index'
+  SITE_PATH = "/public/%s/"
+  require 'fileutils'
+  #  require 'rubygems'
+  #  require 'zip'
+  #require 'archive/zip'
+
+  def index
+    @site=Site.find(params[:site_id])
+
+  end
+
+  def create
+    @site=Site.find(params[:site_id])
+    @tmp = params[:resources][:myfile]
+    @resource=@site.resources.build
+    @root1_path=@site.root_path
+    @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
+    @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
+    @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
+    @lim_resource=%w{'zip' 'jpg' 'png' 'mp3' 'mp4' 'avi' 'rm' 'rmvb' 'git' }
+    postfix_name=@tmp.original_filename.split('.')[-1]
+    if @lim_resource.include?(postfix_name)
+      if postfix_name=='zip'
+        save_all
+      else
+        svae_afile @tmp
+      end
+    redirect_to action:show
     else
-       uploaded_file = params['file']['filedata']
-       puts 'dscfdasdas----->>>>',uploaded_file
-       if_succ,filepath = upload_file(uploaded_file,['jpg','txt'],'D:/a')
-       flash[:success]='success'
-       redirect_to resources_path
+      flash[:error]='资源不规范，只能视频，音频，图片，或压缩包'        
     end
   end
-  
-  def upload_file(file,extname,target_dir)
-    if file.nil? || file.original_filename.empty?
-      return false,"空文件或者文件名错误"
-    else
-      timenow = Time.now
-      filename = file.original_filename  #file的名字
-      fileloadname = timenow.strftime("%d%H%M%S")+filename #保存在文件夹下面的上传文件的名称
 
-      if extname.include?(File.extname(filename).downcase)
-        #创建目录
-        #首先获得当前项目所在的目录+文件夹所在的目录
-        path = Rails.root.join(target_dir,timenow.year.to_s,timenow.month.to_s)
-        #生成目录
-        FileUtils.makedirs(path)
-        File.open(File.join(path,fileloadname),"wb") do |f|
-          f.write(file.read)
-          return true,File.join(timenow.year.to_s,timenow.month.to_s,fileloadname)
+  def svae_afile(tmp)
+    if @resource.save
+      flash[:success]='保存成功'
+      save
+    else
+      flash[:error]='保存失败'
+    end
+  end
+
+  #zip解压保存
+  def save_all
+    @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"temp"
+    Archive::Zip.open(@tmp.path) do |z|
+      z.extract(@full_dir, :flatten => true)
+    end
+    arr=[]
+    Dir.foreach(@full_dir) do |entry|
+      if !File::directory?(entry)
+        resour=@site.resources.build
+        resour.path_name=@root1_path+"/resources/"+entry
+        ful_pa=Rails.root.to_s+SITE_PATH % @root1_path+"temp/"+entry
+        ful_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+entry
+        if resour.save
+          arr<<resour.path_name
+          FileUtils.cp  ful_pa,ful_path
         end
-      else
-        return false,"必须是#{extname}类型的文件"
       end
     end
+    flash[:success]="成功加入#{arr.length}个资源"
+    FileUtils.rm_r @full_dir
   end
+
+  def save
+    file = File.join("public",@tmp.original_filename)
+    #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
+    if !File::directory?( @full_dir )
+      FileUtils.mkdir_p(@full_dir)
+    end
+    file1=File.new(@full_path,'w+')
+    FileUtils.cp @tmp.path,file1
+  end
+
+  def destroy
+    @site=Site.find(params[:site_id])
+    @resource=Resource.find(params[:id])
+    name=@resource.path_name
+    if @resource.destroy
+      flash[:success]='删除成功'
+      delete_file name
+      redirect_to site_resources_path(@site)
+    else
+      flash[:success]='删除成功'
+      render 'resources/index'
+    end
+  end
+
+  def delete_file(name)
+    dirname=Rails.root.to_s+'/public/'+name;
+    FileUtils.rm dirname
+  end
+
+  #show
+  def show
+  end
+
 end

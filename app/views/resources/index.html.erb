@@ -1,385 +1,224 @@
 <div class="main_container">
-	<h1>站点详情</h1>
-	<h2 class="det_tit"><a title="站点名称">百度</a>(<a title="状态">新建</a>)</h2>
-	<div class="main_content">
-		<ul class="theTabs cf">
-			<li class="theTab used">
-				<span>主页</span>
-			</li>
-			<li class="theTab">
-				<span>子页</span>
-			</li>
-			<li class="theTab">
-				<span>样式表</span>
-			</li>
-			<li class="theTab">
-				<span>资源</span>
-			</li>
-			<li class="theTab">
-				<span>表单</span>
-			</li>
-		</ul>
-		<hr class="tab_line" />
-		<div class="set_btn cf">
-			<button class="blue_btn">
-				提交审核
-			</button>
-		</div>
-		<div class="tabDiv used">
-			<div class="page_content">
-				<div class="page_tit">
-					<label>index.html</label>
-				</div>
-				<textarea class="page_txt">
-                    </textarea>
-				<div class="page_act">
-					<button class="blue_btn">
-						保存
-					</button>
-					<button class="blue_btn">
-						预览
-					</button>
-				</div>
-			</div>
-		</div>
-		<div class="tabDiv">
-			<div class="page_content">
-				<div class="page_tit">
-					<button class="blue_btn scd_btn" name="newPage">
-						创建新页面
-					</button>
-				</div>
-				<div class="page_txt">
-					<table class="table1">
-						<tr>
-							<th>标题</th>
-							<th>路径</th>
-							<th>访问控制</th>
-							<th style="width: 300px;">操作</th>
-						</tr>
-						<tr>
-							<td>关于我们</td>
-							<td>/baidu/pages/about.html</td>
-							<td>是</td>
-							<td>
-							<button class="blue_btn scd_btn" name="visit_all">
-								访问权限
-							</button>
-							<button class="blue_btn">
-								编辑
-							</button>
-							<button class="blue_btn">
-								删除
-							</button>
-							<button class="blue_btn">
-								预览
-							</button></td>
-						</tr>
-						<tr>
-							<td>关于我们</td>
-							<td>/baidu/pages/about.html</td>
-							<td>是</td>
-							<td>
-							<button class="blue_btn scd_btn" name="visit_all">
-								访问权限
-							</button>
-							<button class="blue_btn">
-								编辑
-							</button>
-							<button class="blue_btn">
-								删除
-							</button>
-							<button class="blue_btn">
-								预览
-							</button></td>
-						</tr>
-					</table>
-				</div>
-				<div class="page_act"></div>
-			</div>
-		</div>
-		<div class="tabDiv">
-			<div class="page_content">
-				<div class="page_tit">
-					<label>style.css</label>
-				</div>
-				<textarea class="page_txt">
-                    </textarea>
-				<div class="page_act">
-					<button class="blue_btn">
-						保存
-					</button>
-				</div>
-			</div>
-		</div>
-		<!-- 文件上传-->
-		<div class="tabDiv">
-			<div class="page_content">
-				<div class="page_tit">
-					<label>资源目录路径：/baidu/resources</label>
-				</div>
-			     <%= form_for(:resources , :html =>{:multipart => true}) do |f|%>
-			     <%=f.file_field :myfile%>
-			     <%=f.submit 'Upload'%>   
-			     <%end%>
-				<fieldset class="page_tit">
-					<legend>
-						在这你可以上传页面资源
-					</legend>
-					<div class="fileBox" style="width:300px;">
-						<input type="text" class="fileText_1" />
-						<button class="fileBtn_1 blue_btn" >
-							浏览...
-						</button>
-						<input type="file" class="file_1" />
-					</div>
-					<button class="blue_btn up_btn">
-						导入
-					</button>
-				</fieldset>
-				<div class="page_txt">
-					<table class="table1">
-						<tr>
-							<th>路径</th>
-							<th>操作</th>
-						</tr>
-						<tr>
-							<td>/baidu/resources/about.jpg</td>
-							<td>
-							<button class="blue_btn">
-								删除
-							</button>
-							<button class="blue_btn">
-								预览
-							</button></td>
-						</tr>
-					</table>
-				</div>
-				<div class="page_act"></div>
-			</div>
-		</div>
-		<div class="tabDiv">
-			<div class="page_content">
-				<div class="page_tit">
-					<button class="blue_btn scd_btn" name="new_form">
-						新建表单
-					</button>
-				</div>
-				<div class="page_txt">
-					<table class="table1">
-						<tr>
-							<th>标题</th>
-							<th>路径</th>
-							<th>访问权限</th>
-							<th style="width: 350px;">操作</th>
-						</tr>
-						<tr>
-							<td>活动报名</td>
-							<td>/baidu/froms/activity.html</td>
-							<td>是</td>
-							<td>
-							<button class="blue_btn scd_btn" name="visit_all">
-								访问权限
-							</button>
-							<button class="blue_btn">
-								编辑
-							</button>
-							<button class="blue_btn">
-								删除
-							</button>
-							<button class="blue_btn">
-								预览
-							</button>
-							<button class="blue_btn">
-								下载数据
-							</button></td>
-						</tr>
-					</table>
-				</div>
-				<div class="page_act"></div>
-			</div>
-		</div>
+	<%= render '/sites/site_status' %>
 
-	</div>
-
-</div>
-<div class="foot"></div>
-
-<div class="second_bg"></div>
-<div class="second_box uinfo_chg">
-	<div class="second_content">
-		<span class="close" >关闭</span>
-		<h1>编辑</h1>
-		<li>
-			<label>联系电话：</label>
-			<input type="text" />
-		</li>
-		<li>
-			<label>E-mail：</label>
-			<input type="text" />
-		</li>
-		<div class="uinfo_act">
-			<button class="blue_btn">
-				确认
-			</button>
-			<button class="blue_btn">
-				取消
-			</button>
-		</div>
-	</div>
-</div>
-<div class="second_box pass_chg">
-	<div class="second_content">
-		<span class="close" >关闭</span>
-		<h1>修改密码</h1>
-		<li>
-			<label>旧密码：</label>
-			<input type="text" />
-		</li>
-		<li>
-			<label>新密码：</label>
-			<input type="text" />
-		</li>
-		<li>
-			<label>确认：</label>
-			<input type="text" />
-		</li>
-		<div class="uinfo_act">
-			<button class="blue_btn">
-				确认
-			</button>
-			<button class="blue_btn">
-				取消
-			</button>
-		</div>
-	</div>
-</div>
-<div class="second_box visit_all">
-	<div class="second_content">
-		<span class="close" >关闭</span>
-		<h1>访问权限</h1>
-		<h2>是否需要登录？</h2>
-		<p>
-			<input type="radio" name="visit_all" />
-			是
-			<input type="radio" name="visit_all" />
-			否
-		</p>
-		<div class="uinfo_act">
-			<button class="blue_btn">
-				提交
-			</button>
-			<button class="blue_btn">
-				取消
-			</button>
-		</div>
-	</div>
-</div>
-<div class="second_box newPage">
-	<div class="second_content second_content2">
-		<span class="close" >关闭</span>
-		<h1>创建/编辑子页</h1>
-		<h2><span>标题<span class="check">*</span>
-			<input class="check_input" type="text" />
-		</span><span>文件名<span class="check">*</span>
-			<input class="check_input" type="text" />
-			.html</span></h2>
-		<p>
-			<span>访问权限</span>
-			<input type="radio" name="visit_all" />
-			是
-			<input type="radio" name="visit_all" />
-			否
-		</p>
-		<textarea class="page_txt"></textarea>
-		<div class="uinfo_act">
-			<button class="blue_btn">
-				保存
-			</button>
-			<button class="blue_btn">
-				预览
-			</button>
-		</div>
-	</div>
-</div>
-<div class="second_box new_form">
-	<div class="second_content second_content2">
-		<span class="close" >关闭</span>
-		<h1>创建/编辑表单</h1>
-		<h2><span>标题<span class="check">*</span>
-			<input class="check_input" type="text" />
-		</span><span>文件名<span class="check">*</span>
-			<input class="check_input" type="text" />
-			.html</span></h2>
-		<fieldset class="page_txt">
-			<legend>
-				在这你可以编辑表单
-			</legend>
-			<div class="vall_box">
-				<p>
-					访问控制
-				</p>
-				<p>
-					<input type="radio" name="visit_all" />
-					是
-					<input type="radio" name="visit_all" />
-					否
-				</p>
+	<!-- 文件上传-->
+	<div class="tabDiv">
+		<div class="page_content">
+			<div class="page_tit">
+				<label>资源目录路径：/baidu/resources</label>
 			</div>
-			<fieldset class="formArea">
-				<legend class="formTit">
-					<input type="text" value="在这输入表单标题" />
+			<fieldset class="page_tit">
+				<%= form_for( :resources, :html =>{:multipart => true}) do |f|%>
+				<legend>
+					在这你可以上传页面资源
 				</legend>
-				<div class="insertDiv">
-					<div class="insertBox">
-						<span class="delete"></span>
-						<div class="inputArea">
-							双击输入标题
-						</div>
-						<input class="txtArea" type="text"/>
-					</div>
-					<div class="insertBox">
-						<span class="delete"></span>
-						<div class="inputArea">
-							双击输入问题
-						</div>
-						<input class="txtArea" type="text"/>
-						<div>
-							<input type="radio" name="" />
+				<div class="fileBox" style="width:300px;">
+					<input type="text" class="fileText_1" />
+					<%=f.file_field :myfile , class:"file_1"%>
+				</div>
+				<%=f.submit 'Upload',class:"blue_btn up_btn"%>
+				<%end%>
+			</fieldset>
+			<div class="page_txt">
+				<table class="table1">
+					<tr>
+						<th>路径</th>
+						<th>操作</th>
+					</tr>
+					<% @site.resources.each do |sr|%>
+					<tr>
+						<td><%= sr.path_name%></td>
+						<td>
+						
+						<%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
+						<button class="blue_btn">
+							预览
+						</button></td>
+					</tr>
+					<%end%>
+				</table>
+			</div>
+			<div class="page_act"></div>
+		</div>
+	</div>
+
+	<div class="foot"></div>
+
+	<div class="second_bg"></div>
+	<div class="second_box uinfo_chg">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>编辑</h1>
+			<li>
+				<label>联系电话：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>E-mail：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box pass_chg">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>修改密码</h1>
+			<li>
+				<label>旧密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>新密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>确认：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box visit_all">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>访问权限</h1>
+			<h2>是否需要登录？</h2>
+			<p>
+				<input type="radio" name="visit_all" />
+				是
+				<input type="radio" name="visit_all" />
+				否
+			</p>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					提交
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box newPage">
+		<div class="second_content second_content2">
+			<span class="close" >关闭</span>
+			<h1>创建/编辑子页</h1>
+			<h2><span>标题<span class="check">*</span>
+				<input class="check_input" type="text" />
+			</span><span>文件名<span class="check">*</span>
+				<input class="check_input" type="text" />
+				.html</span></h2>
+			<p>
+				<span>访问权限</span>
+				<input type="radio" name="visit_all" />
+				是
+				<input type="radio" name="visit_all" />
+				否
+			</p>
+			<textarea class="page_txt"></textarea>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					保存
+				</button>
+				<button class="blue_btn">
+					预览
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box new_form">
+		<div class="second_content second_content2">
+			<span class="close" >关闭</span>
+			<h1>创建/编辑表单</h1>
+			<h2><span>标题<span class="check">*</span>
+				<input class="check_input" type="text" />
+			</span><span>文件名<span class="check">*</span>
+				<input class="check_input" type="text" />
+				.html</span></h2>
+			<fieldset class="page_txt">
+				<legend>
+					在这你可以编辑表单
+				</legend>
+				<div class="vall_box">
+					<p>
+						访问控制
+					</p>
+					<p>
+						<input type="radio" name="visit_all" />
+						是
+						<input type="radio" name="visit_all" />
+						否
+					</p>
+				</div>
+				<fieldset class="formArea">
+					<legend class="formTit">
+						<input type="text" value="在这输入表单标题" />
+					</legend>
+					<div class="insertDiv">
+						<div class="insertBox">
+							<span class="delete"></span>
 							<div class="inputArea">
-								双击输入选项
+								双击输入标题
 							</div>
 							<input class="txtArea" type="text"/>
 						</div>
-						<div>
-							<input type="radio" name="" />
+						<div class="insertBox">
+							<span class="delete"></span>
 							<div class="inputArea">
-								双击输入选项
+								双击输入问题
 							</div>
 							<input class="txtArea" type="text"/>
+							<div>
+								<input type="radio" name="" />
+								<div class="inputArea">
+									双击输入选项
+								</div>
+								<input class="txtArea" type="text"/>
+							</div>
+							<div>
+								<input type="radio" name="" />
+								<div class="inputArea">
+									双击输入选项
+								</div>
+								<input class="txtArea" type="text"/>
+							</div>
 						</div>
 					</div>
+				</fieldset>
+				<div class="addElemt">
+					<button class="blue_btn addElemt1">
+						增加信息栏
+					</button>
+					<button class="blue_btn addElemt2">
+						增加单选栏
+					</button>
+					<button class="blue_btn addElemt3">
+						增加复选栏
+					</button>
 				</div>
 			</fieldset>
-			<div class="addElemt">
-				<button class="blue_btn addElemt1">
-					增加信息栏
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					保存
 				</button>
-				<button class="blue_btn addElemt2">
-					增加单选栏
-				</button>
-				<button class="blue_btn addElemt3">
-					增加复选栏
+				<button class="blue_btn">
+					预览
 				</button>
 			</div>
-		</fieldset>
-		<div class="uinfo_act">
-			<button class="blue_btn">
-				保存
-			</button>
-			<button class="blue_btn">
-				预览
-			</button>
 		</div>
 	</div>
-</div>

@@ -5,9 +5,8 @@ MicroWebsite::Application.routes.draw do
     get "signup", :to => "devise/registrations#new"
     get "signout", :to => "devise/sessions#destroy"
   end
-  resources :sites
-  resources :resources
-  match "/upload", :to => "resources#upload" ,via: 'post'
+
+  match "/upload/:sid", :to => "resources#show" ,via: 'get'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -24,9 +23,14 @@ MicroWebsite::Application.routes.draw do
 
   # Sample resource route with options:
      resources :sites do
+       resources :resources
        resources :pages do
          collection do
-           post '/preview', :to => "pages#preview"
+           post :preview
+           get :sub, :form
+         end
+         member do
+
          end
        end
      end

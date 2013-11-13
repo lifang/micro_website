@@ -7,8 +7,11 @@ gem 'rails', '3.2.6'
 
 gem 'mysql2', '0.3.10'
 gem 'devise', '2.1.2'
-
-
+#加压
+gem 'rubyzip', '1.1.0'
+#解压
+gem 'archive-zip', '0.6.0'
+gem "io-like", "~> 0.3.0"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
