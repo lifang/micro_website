@@ -7,6 +7,11 @@ MicroWebsite::Application.routes.draw do
     get "signout", :to => "devise/sessions#destroy"
   end
 
+		get "user/manage/:type", :to=>"users#index"   
+    post "user/disable/:uid", :to=>"users#disable"
+   	post "user/enable/:uid", :to=>"users#enable"       
+    get "user/delete/:uid", :to=>"users#delete"
+    
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   # Sample resource route with options:
   resources :sites do
