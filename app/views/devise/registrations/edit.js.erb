@@ -1,0 +1,7 @@
+$("#edit_user").html("<h1>编辑用户</h1>" + '<%= j (render '/devise/registrations/form') %>');
+show_tag($("#edit_user"));
+
+$(".cancel").click(function() {
+		$(this).parents(".second_box").hide();
+		$(".second_bg").hide();
+	});

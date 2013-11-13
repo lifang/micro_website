@@ -36,4 +36,15 @@ MicroWebsite::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
+    ActionMailer::Base.smtp_settings = {
+	  :enable_starttls_auto => true,
+	  :address => "smtp.gmail.com",
+	  :port => 587,
+	  :authentication => :plain,
+	  :user_name => "amandamfl1989",
+	  :password => "06291196"
+  }
+  ActionMailer::Base.default :charset => 'UTF-8'
+  ActionMailer::Base.default :content_type => "text/html"
 end

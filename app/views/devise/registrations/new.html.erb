@@ -5,19 +5,19 @@
     <%= devise_error_messages! %>
     <ul>
       <li><%= f.label :name, "用户名：" %>
-        <%= f.text_field :name %></li>
+        <%= f.text_field :name %><span class="check">*</span></li>
 
       <li><%= f.label :password, "密码：" %>
-        <%= f.password_field :password %></li>
+        <%= f.password_field :password %><span class="check">*</span></li>
 
       <li><%= f.label :password_confirmation, "确认：" %>
-        <%= f.password_field :password_confirmation %></li>
+        <%= f.password_field :password_confirmation %><span class="check">*</span></li>
 
       <li><%= f.label :email, "E-mail：" %>
-        <%= f.email_field :email %></li>
+        <%= f.email_field :email %><span class="check">*</span></li>
 
       <li><%= f.label :phone, "联系电话：" %>
-        <%= f.telephone_field :phone %></li>
+        <%= f.telephone_field :phone %><span class="check">*</span></li>
 
 
     </ul>

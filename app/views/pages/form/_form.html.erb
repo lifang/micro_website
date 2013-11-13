@@ -1,0 +1,54 @@
+<%= form_for [@site, @page], :html => {:remote => true} do |f| %>
+<h2>
+  <span>标题<span class="check">*</span>
+    <%= f.text_field :title %>
+  </span>
+  <span>文件名<span class="check">*</span>
+    <%= f.text_field :file_name %>
+  </span>
+</h2>
+  <fieldset class="page_txt">
+    <legend>在这你可以编辑表单</legend>
+    <div class="vall_box">
+      <p>访问控制</p>
+      <p>
+        <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是
+        <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
+      </p>
+    </div>
+    <fieldset class="formArea">
+      <legend class="formTit">表单</legend>
+      <div class="insertDiv">
+        <div class="insertBox">
+          <span class="delete"></span>
+          <div class="inputArea">双击输入标题</div>
+          <input class="txtArea" type="text"/>
+        </div>
+        <div class="insertBox">
+          <span class="delete"></span>
+          <div class="inputArea">双击输入问题</div>
+          <input class="txtArea" type="text"/>
+          <div>
+            <input type="radio" name="" />
+            <div class="inputArea">双击输入选项</div>
+            <input class="txtArea" type="text"/>
+          </div>
+          <div>
+            <input type="radio" name="" />
+            <div class="inputArea">双击输入选项</div>
+            <input class="txtArea" type="text"/>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="addElemt">
+      <button class="blue_btn addElemt1">增加信息栏</button>
+      <button class="blue_btn addElemt2">增加单选栏</button>
+      <button class="blue_btn addElemt3">增加复选栏</button>
+    </div>
+  </fieldset>
+  <div class="uinfo_act">
+    <button class="blue_btn">保存</button>
+    <button class="blue_btn">预览</button>
+  </div>
+<% end %>

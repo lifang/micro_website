@@ -1,0 +1,12 @@
+<h1>访问权限</h1>
+<h2>是否需要登录？</h2>
+<%= form_for [@site, @page], :html => {:remote => true} do |f|  %>
+  <p><span>访问权限</span>
+    <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是
+    <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
+  </p>
+<div class="uinfo_act">
+  <button type="submit" class="blue_btn">提交</button>
+  <button type="button" class="blue_btn cancel">取消</button>
+</div>
+<% end %>

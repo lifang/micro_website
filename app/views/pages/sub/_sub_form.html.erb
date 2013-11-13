@@ -1,0 +1,20 @@
+<%= form_for [@site, @page], :html => {:id => "sub_page_form", :remote => true} do |f| %>
+  <h2>
+    <span>标题<span class="check">*</span>
+      <%= f.text_field :title %>
+    </span>
+    <span>文件名<span class="check">*</span>
+      <%= f.text_field :file_name %></span>
+  </h2>
+  <p><span>访问权限</span>
+    <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是
+    <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
+  </p>
+  <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:sub] %>
+  <%= f.text_area :content, :value => @index || "", :class => "page_txt" %>
+
+  <div class="uinfo_act">
+    <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>', <%= @page.new_record? ? 0 : 2 %>, <%= @page.new_record? ? 'null' : @page.id %>)">保存</button>
+    <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
+  </div>
+<% end %>
