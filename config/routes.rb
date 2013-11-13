@@ -13,6 +13,7 @@ MicroWebsite::Application.routes.draw do
     get "user/delete/:uid", :to=>"users#delete"
     
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
+  match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   # Sample resource route with options:
   resources :sites do
     resources :resources
@@ -32,6 +33,7 @@ MicroWebsite::Application.routes.draw do
   root :to => 'sites#index'
 
 # See how all your routes lay out with "rake routes"
+
 
 # This is a legacy wild controller route that's not recommended for RESTful applications.
 # Note: This route will make all actions in every controller accessible via GET requests.

@@ -1,0 +1,18 @@
+if($("#resource_c").val()=="")
+{
+    alert('请选择文件');
+    return false;
+
+}
+else{
+    <%if  !is_not_repeat  %>
+    if !confirm('有相同的文件存在，是否继续？')
+    {
+       return false;
+    }
+    else{
+      <% do_create %>
+      $("#page_text").html("<%= escape_javascript(render('resources/form')) %>")
+    }
+    <%end%>
+}

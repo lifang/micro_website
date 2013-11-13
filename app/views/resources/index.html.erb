@@ -10,34 +10,16 @@
 			<fieldset class="page_tit">
 				<%= form_for( :resources, :html =>{:multipart => true}) do |f|%>
 				<legend>
-					在这你可以上传页面资源
+                                      在这你可以上传页面资源
 				</legend>
 				<div class="fileBox" style="width:300px;">
-					<input type="text" class="fileText_1" />
+					<input type="text" class="fileText_1" id="resource_c"/>
 					<%=f.file_field :myfile , class:"file_1"%>
 				</div>
-				<%=f.submit 'Upload',class:"blue_btn up_btn"%>
+				<%=f.submit 'Upload',class:"blue_btn up_btn",onclick:"javascript:return have_exist(#{@site.id})"%>
 				<%end%>
 			</fieldset>
-			<div class="page_txt">
-				<table class="table1">
-					<tr>
-						<th>路径</th>
-						<th>操作</th>
-					</tr>
-					<% @site.resources.each do |sr|%>
-					<tr>
-						<td><%= sr.path_name%></td>
-						<td>
-						
-						<%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
-						<button class="blue_btn">
-							预览
-						</button></td>
-					</tr>
-					<%end%>
-				</table>
-			</div>
+			<%=render 'resources/form'%>
 			<div class="page_act"></div>
 		</div>
 	</div>
@@ -222,3 +204,4 @@
 			</div>
 		</div>
 	</div>
+</div>

@@ -1,0 +1,19 @@
+<div class="page_txt" id="page_text">
+  <table class="table1">
+    <tr>
+      <th>路径</th>
+      <th>操作</th>
+    </tr>
+    <% @site.resources.each do |sr|%>
+      <tr>
+        <td><%= sr.path_name%></td>
+        <td>
+
+          <%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
+            <button class="blue_btn">
+                                                            预览
+            </button></td>
+        </tr>
+      <%end%>
+    </table>
+  </div>
