@@ -1,7 +1,9 @@
+
+<%= javascript_include_tag "registration" %>
 <div class="rsg">
 <h1>注册</h1>
 <div class="rsg_info cf">
-  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name),html:{onsubmit: "return check()"}) do |f| %>
     <%= devise_error_messages! %>
     <ul>
       <li><%= f.label :name, "用户名：" %>
