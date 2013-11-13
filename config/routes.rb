@@ -21,16 +21,27 @@ MicroWebsite::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
+
+MicroWebsite::Application.routes.draw do
+   devise_for :users do
+    get "change", :to => "devise/registrations#edit"
+    get "change_password", :to => "devise/passwords#edit"
+    get "signin", :to => "devise/sessions#new"
+    get "signup", :to => "devise/registrations#new"
+    get "signout", :to => "devise/sessions#destroy"
+  end
+  
+   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   # Sample resource route with options:
      resources :sites do
        resources :resources
        resources :pages do
          collection do
+           get :sub, :form, :style, :sub_new,  :form_new
            post :preview
-           get :sub, :form
          end
          member do
-
+           get :sub_edit,:form_edit, :if_authenticate, :sub_preview
          end
        end
      end
@@ -45,3 +56,4 @@ MicroWebsite::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end
+

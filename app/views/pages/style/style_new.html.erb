@@ -1,0 +1,20 @@
+<div class="main_container">
+  <%= render '/sites/site_status' %>
+  <div class="tabDiv">
+    <div class="page_content">
+      <div class="page_tit">
+        <label>style.css</label>
+      </div>
+      <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
+        <%= f.hidden_field :title, :value => 'style.css' %>
+        <%= f.hidden_field :file_name, :value => 'style.css' %>
+        <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:style] %>
+        <%= f.text_area :content, :class => "page_txt" %>
+
+        <div class="page_act">
+          <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>', 0, null)">保存</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

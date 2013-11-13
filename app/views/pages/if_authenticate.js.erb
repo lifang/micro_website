@@ -1,0 +1,6 @@
+$("#sub_form_authenticate").html('<%= j (render 'authenticate') %>');
+show_tag($("#sub_form_authenticate"));
+$(".cancel").click(function() {
+		$(this).parents(".second_box").hide();
+		$(".second_bg").hide();
+	});

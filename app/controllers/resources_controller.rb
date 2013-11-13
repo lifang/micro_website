@@ -1,3 +1,4 @@
+
 #encoding: utf-8
 class ResourcesController < ApplicationController
   SITE_PATH = "/public/%s/"
@@ -98,4 +99,3 @@ class ResourcesController < ApplicationController
   def show
   end
 
-end

@@ -1,12 +1,14 @@
 
-<h2>Sign in</h2>
 <div class="login">
   <h1>登陆</h1>
+
   <div class="login_info cf">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       <ul>
-        <li><%= f.label :email, "邮箱：。。用户名" %>
-          <%= f.email_field :email %></li>
+        <li>
+          <p><%= f.label :login, "帐号：" %>
+            <%= f.text_field :login, :placeholder =>"用户名或邮箱" %></p>
+        </li>
 
         <li><%= f.label :password, "密码：" %>
           <%= f.password_field :password %></li>
