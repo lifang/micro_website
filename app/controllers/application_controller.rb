@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
      site_root = page.site.root_path if page.site
      site_path = Rails.root.to_s + SITE_PATH % site_root
      FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+     p 11111111111111111
+     p site_path + page.file_name
      File.open(site_path + page.file_name, "wb") do |f|
         f.write(content.html_safe)
      end

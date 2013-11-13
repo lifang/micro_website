@@ -1,20 +1,5 @@
 $(function() {
 
-	var insert1 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入标题</div><input class='txtArea' type='text' /></div>";
-
-	var insert2 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
-
-	var insert3 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
-
-	$(".addElemt1").click(function() {
-		$(".insertDiv").append(insert1);
-	});
-	$(".addElemt2").click(function() {
-		$(".insertDiv").append(insert2);
-	});
-	$(".addElemt3").click(function() {
-		$(".insertDiv").append(insert3);
-	});
 
 	$(".formTit input").focus(function() {
 		if ($(this).val() == "在这输入表单标题") {

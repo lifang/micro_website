@@ -21,6 +21,7 @@ class PagesController < ApplicationController
   def create
     content = params[:page][:content]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
+    params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
@@ -39,6 +40,7 @@ class PagesController < ApplicationController
   def update
     content = params[:page][:content]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
+    params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       save_into_file(content, @page) if content
@@ -51,13 +53,15 @@ class PagesController < ApplicationController
     end
   end
 
-  #删除页面
+  #删除页面，表单或者子页
   def destroy
     Page.transaction do
       @page = Page.find_by_id params[:id]
       if @page.destroy
         File.delete Rails.root.to_s + @page.path_name if File.exists?(Rails.root.to_s + @page.path_name)
-        redirect_to sub_site_pages_path(@site)
+        redirect_to redirect_path(@page, @site)
+      else
+        
       end
     end
   end
@@ -141,5 +145,6 @@ class PagesController < ApplicationController
       form_site_pages_path(@site)
     end
   end
+
   
 end

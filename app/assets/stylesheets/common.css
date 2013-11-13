@@ -5,3 +5,4 @@
     color:red;
 }
 .clear{ clear: both}
+.question_title, .option_title{ display: none}
