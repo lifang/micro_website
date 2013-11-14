@@ -1,0 +1,29 @@
+<head>
+  <style>
+    .look_resources{
+      border:0px solid red;
+      margin-top:100px;
+      width:100%;
+    }
+    .look_resources div{
+      margin: auto;
+    }
+  </style>
+</head>
+
+<div class="look_resources">
+  <%case which_res(@resources.path_name) %>
+  <% when 'img' %>
+    <div style="height: 100px;width: 100px;">
+      <img src="/<%=@resources.path_name%>" />
+    </div>
+  <% when 'voice' %>
+    <div>
+      <embed height="100" width="500" src="/<%=@resources.path_name%>" />
+    </div>
+  <% when 'voide'%>
+    <div style="height: 400px;width: 400px;">
+      <object data="/<%=@resources.path_name%>" height="400" width="400"/>
+    </div>
+  <%end%>
+</div>
