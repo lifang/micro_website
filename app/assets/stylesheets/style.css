@@ -36,7 +36,7 @@ h2 input { font-size: 16px;}
 	border-radius: 5px;
 	text-align:center;
 }
-.login h1,.rsg h1 {
+.login h1,.rsg h1,.forgetPass h1 {
 	height:65px;
 	background-color: #0E6EB8;
 	border-radius: 5px 5px 0 0;
@@ -244,3 +244,16 @@ fieldset.page_tit {
 .insertBox { width: 75%; margin: 10px auto 0; border: 1px solid #C2C2C2; position: relative; padding: 5px 20px;} 
 .inputArea { margin: 8px; border: 1px dashed #003333; width: 350px; background: #f5f5f5; color: #a7a7a7; display: inline-block;}
 .second_content input.txtArea { margin: 8px; border: 1px solid #003333; display: none; width: 350px; }
+
+.forgetPass {
+ width: 400px;
+ height: auto;
+ margin: 100px auto;
+ background: #ffffff;
+ border-radius: 5px;
+ text-align: center;
+}
+.forgetPass p { padding: 10px 0;}
+.forgetPass label { display: inline-block; font-size: 18px; line-height: 36px; text-align: right; width: 100px; margin-right: 10px;}
+.forgetPass input { font-size: 20px; width: 200px; border: 1px solid #003333; }
+.forgetPass a { text-decoration: underline; font-size: 16px; margin: 10px; }

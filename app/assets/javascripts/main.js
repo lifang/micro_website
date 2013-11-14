@@ -170,7 +170,8 @@ function have_exist(id){
 
             success:function(data){
                 if(data.status == 1){
-                    alert("success");
+                    $("#fugai").show();
+                    $("#fugai1").show();
                     $("#uploadForm").submit();
                      
                 }else{
@@ -181,11 +182,6 @@ function have_exist(id){
                 }
             }
         });
-
-
-
-
-
         }else{
             alert('不合法文件，只能是视频，音频，图片，或(zip)压缩包');
             return false;
