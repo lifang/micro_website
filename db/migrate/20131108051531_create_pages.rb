@@ -8,7 +8,7 @@ class CreatePages < ActiveRecord::Migration
       t.integer :site_id
       t.string :path_name
       t.boolean :authenticate
-      t.text :element_relation #表单元素对应关系
+      t.text :element_relation #琛ㄥ崟鍏冪礌瀵瑰簲鍏崇郴
       
       t.timestamps
     end

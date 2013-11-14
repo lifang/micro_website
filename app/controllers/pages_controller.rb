@@ -149,7 +149,6 @@ class PagesController < ApplicationController
   #通用表单提交
   def submit_queries
     page = Page.find_by_id params[:id]
-
     FormData.transaction do
       if current_user
          page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
@@ -162,8 +161,12 @@ class PagesController < ApplicationController
            redirect_to "/#{@site.root_path}/index.html"
         end
       end
-     
     end
+  end
+
+  #get Token  ajax
+  def get_token
+    render :text => form_authenticity_token
   end
 
   protected

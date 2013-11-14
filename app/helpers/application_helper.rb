@@ -34,20 +34,30 @@ module ApplicationHelper
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
                     <link href='/assets/style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
-
+<script src='/assets/jquery.js?body=1' type='text/javascript'></script>
 <script language='javascript' type='text/javascript'>
-function setToken()
-{var a = document.getElementsByName('authenticity_token');
-var b = a[0];
- b.value='#{form_authenticity_token}'}
+        $.ajax({
+            url: '/get_token',
+            type: 'get',
+            dataType: 'text',
+            success:function(data){
+var a = $('.authenticity_token');
+a.each(function(){
+  $(this).val(data);
+});
+            },
+            error:function(data){
+alert('error')
+            }
+        })
 </script>
                     <title>preview</title>
                   </head>
-                  <body onload='setToken()'>
+                  <body>
                  <form accept-charset='UTF-8' action='/sites/#{site_id}/pages/#{page.id}/submit_queries' class='submit_form' method='post'>
-                   <div style='margin:0;padding:0;display:inline'>
-<input name='utf8' type='hidden' value='✓'>
-<input name='authenticity_token' type='hidden' value='#{form_authenticity_token}'></div>
+                   <div style=\"margin:0;padding:0;display:inline\">
+<input name=\"utf8\" type=\"hidden\" value=\"✓\">
+<input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>
                    <div id='formContent'>
                     #{content}
                    </div><button type='submit'>提交</button></form>

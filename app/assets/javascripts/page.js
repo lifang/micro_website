@@ -66,24 +66,25 @@ function addQuestion(type){
 
 //双击div， 显示input
 function showInput(obj){
-    var value = $(obj).text() == "双击输入选项" || $(obj).text() == "双击输入问题" ? "" : $(obj).text()
+    var value = $(obj).text() == "双击输入选项" || $(obj).text() == "双击输入问题" || $(obj).text() == "双击输入问题或选项"? "" : $(obj).text()
     $(obj).hide();
     $(obj).parent().children(".txtArea").val(value).show();
     $(obj).parent().children(".txtArea").focus();
 }
 
-//双击div，修改后隐藏当前输入框
+//双击div，修改后blur隐藏当前输入框
 function hideInput(obj){
+    var input_value = $(obj).val();
     $(obj).hide();
     var radio = $(obj).parent().find("input[type='radio']");
     if(radio){
-        radio.val($(obj).val());
+        radio.val(input_value);
     }
     var checkbox = $(obj).parent().find("input[type='checkbox']");
     if(checkbox){
-        checkbox.val($(obj).val());
+        checkbox.val(input_value);
     }
-    $(obj).parent().children(".inputArea").text($(obj).val()).show();
+    $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();
 }
 
 //提交表单验证 #TODO非空验证
