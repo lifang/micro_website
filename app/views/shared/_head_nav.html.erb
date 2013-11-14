@@ -8,7 +8,10 @@
             <%= link_to("/change", :remote => true) do %>
               <li>编辑</li>
             <% end %>
-            <li class="scd_btn" name="pass_chg">修改密码</li>
+                       
+            <%= link_to("/change_password", :remote => true) do %>
+            <li>修改密码</li>
+            <% end %>
           </ul>
         </div>
         <div class="user_logout"><a href="/signout">退出</a></div>

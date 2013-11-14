@@ -1,7 +1,7 @@
 MicroWebsite::Application.routes.draw do
   devise_for :users do
     get "change", :to => "devise/registrations#edit"
-    get "change_password", :to => "devise/passwords#edit"
+    get "change_password", :to => "devise/passwords#change"
     get "signin", :to => "devise/sessions#new"
     get "signup", :to => "devise/registrations#new"
     get "signout", :to => "devise/sessions#destroy"

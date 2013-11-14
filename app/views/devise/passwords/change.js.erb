@@ -1,0 +1,8 @@
+
+$("#edit_password").html("<h1>修改密码</h1>" + '<%= j (render '/devise/passwords/change_password') %>');
+show_tag($("#edit_password"));
+
+$(".cancel").click(function() {
+		$(this).parents(".second_box").hide();
+		$(".second_bg").hide();
+	});
