@@ -11,8 +11,8 @@
 
           <%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
             <button class="blue_btn">
-              <%=link_to '预览' , sr%>
-              <a href="/<%=sr.path_name%>">预览</a>
+          
+              <a href="/<%=sr.path_name%>" target="_blank">预览</a>
             </button></td>
         </tr>
       <%end%>
