@@ -169,43 +169,19 @@ function have_exist(id){
         
 
             success:function(data){
-                alert(1111111111111);
                 if(data.status == 1){
                     alert("success");
-                  
-                     $("#uploadForm").submit();
+                   $("#uploadForm").submit();
+                     
                 }else{
-                    alert("已经存在资源!");
+                    //alert("已经存在资源!是否上传");
+                    if(confirm('已经存在资源!是否上传')){
+                        $("#uploadForm").submit();
+                    }
                 }
             }
         });
 
-//            $.ajax({
-//                type:'get',
-//                url:'/check_zip',
-//                data:{
-//                    name:name,
-//                    id:id
-//                },
-//                dataType:"text",
-//                success: function(data){
-//                    alert(1111111111111);
-//                    alert(data);
-//                    show(data);
-//                },
-//                complete:function(date){
-//                    alert(date);
-//                    if(date)
-//                    alert('已经存在资源');
-//                },
-//                error:function(date,textStatus, errorThrown){
-//                    alert(textStatus+"@"+errorThrown);
-//                    if(date)
-//                    alert('error已经存在资源');
-//                }
-//            })
-
-   
 
 
 

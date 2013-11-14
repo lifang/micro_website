@@ -61,11 +61,11 @@ class ResourcesController < ApplicationController
 
   ##########保存一个文件
   def svae_afile(tmp)
+    save
     if @resource.save
       flash[:success]='保存成功'
-      save
     else
-      flash[:error]='文件已经存在'
+      flash[:error]='文件已经覆盖'
     end
   end
 
@@ -112,7 +112,7 @@ class ResourcesController < ApplicationController
        
       end
     end
-    flash[:success]="成功加入#{arr.length}个资源,有#{arr_error}个不符合规范的，有#{@arr_repeat}个重复资源"
+    flash[:success]="成功加入#{arr.length}个资源,有#{arr_error}个不符合规范的，有#{@arr_repeat}个重复资源,已经覆盖"
     FileUtils.rm_r @full_dir 
   end
   ##
@@ -121,12 +121,13 @@ class ResourcesController < ApplicationController
       arr<<resour.path_name
       FileUtils.cp  ful_pa,ful_path
     else
+      FileUtils.cp  ful_pa,ful_path
       @arr_repeat+=1
     end
   end
 
   def save
-    file = File.join("public",@tmp.original_filename)
+    #file = File.join("public",@tmp.original_filename)
     #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
     file1=File.new(@full_path,'wb')
     FileUtils.cp @tmp.path,file1
@@ -135,11 +136,6 @@ class ResourcesController < ApplicationController
 
 
   def is_not_repeat
-    puts '*******************'
-    puts '*******    ********'
-    puts '*     *************'
-    puts '*******************'
-    puts '*******************'
     @site=Site.find(params[:id])
     name=@site.root_path+"/resources/"+params[:name]
     @re=Resource.find_by_path_name(name)
@@ -149,9 +145,6 @@ class ResourcesController < ApplicationController
     else
       render :json => {:status => 1}
     end
- 
-    #redirect_to root_path
-  #  render 'resources/is_not_repeat',:layout=>false
   end
 
 
