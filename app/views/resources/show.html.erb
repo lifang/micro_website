@@ -4,6 +4,7 @@
       border:0px solid red;
       margin-top:100px;
       width:100%;
+      text-align:center;
     }
     .look_resources div{
       margin: auto;
@@ -12,14 +13,15 @@
 </head>
 
 <div class="look_resources">
+  <%=@resources.path_name%>
   <%case which_res(@resources.path_name) %>
   <% when 'img' %>
     <div style="height: 100px;width: 100px;">
       <img src="/<%=@resources.path_name%>" />
     </div>
   <% when 'voice' %>
-    <div>
-      <embed height="100" width="500" src="/<%=@resources.path_name%>" />
+    <div style="height: 100px;width: 400px;">
+      <embed src="/<%=@resources.path_name%>" />
     </div>
   <% when 'voide'%>
     <div style="height: 400px;width: 400px;">

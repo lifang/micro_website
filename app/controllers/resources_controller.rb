@@ -20,6 +20,10 @@ class ResourcesController < ApplicationController
     @tmp = params[:resources][:myfile]
     @resource=@site.resources.build
     @root1_path=@site.root_path
+    postfix_name =@tmp.original_filename.split('.')[-1]
+    #小写
+    postfix_name =postfix_name.downcase
+    #路径名
     @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
     @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
@@ -27,9 +31,8 @@ class ResourcesController < ApplicationController
     @img_resources=%w[jpg png gif]
     @voice_resources=%w[mp3]
     @video_resoures=%w[mp4 avi rm rmvb]
-    postfix_name=@tmp.original_filename.split('.')[-1]
-    #小写
-    postfix_name.downcase!
+    
+    
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)
@@ -113,7 +116,7 @@ class ResourcesController < ApplicationController
        
       end
     end
-    flash[:success]="成功加入#{arr.length}个资源,有#{arr_error}个不符合规范的，有#{@arr_repeat}个重复资源,已经覆盖"
+    flash[:success]="成功加入#{arr.length}个资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'存在资源覆盖')}"
     FileUtils.rm_r @full_dir 
   end
   ##
@@ -174,4 +177,13 @@ class ResourcesController < ApplicationController
     @resources =Resource.find(params[:id])
     render 'show' ,:layout=>false
   end
+
+  private
+    def message(num,msg)
+       if num==0
+         ''
+       else
+         "，有#{num}个#{msg}"
+       end
+    end
 end

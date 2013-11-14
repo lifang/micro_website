@@ -6,7 +6,7 @@
     </tr>
     <% @site.resources.each do |sr|%>
       <tr>
-        <td><%= sr.path_name%></td>
+        <td>/<%= sr.path_name%></td>
         <td>
 
           <%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>

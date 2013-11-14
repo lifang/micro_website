@@ -37,5 +37,5 @@
 <hr class="tab_line" />
 <div class="set_btn cf"><button class="blue_btn">提交审核</button></div>
 <% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, id: "flash_#{name}"%>
+  <%= content_tag :div, msg, id: "flash_#{name}",style:'color:red;'%>
 <% end %>

@@ -154,7 +154,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip', 'jpg', 'png', 'mp3', 'mp4', 'avi', 'rm' ,'rmvb', 'gif'] ;
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3', 'mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -166,12 +166,12 @@ function have_exist(id){
             url:'/check_zip',
             dataType:"json",
             data  :"name=" + name + "&id=" + id,
-        
+
 
             success:function(data){
                 if(data.status == 1){
                     alert("success");
-                   $("#uploadForm").submit();
+                    $("#uploadForm").submit();
                      
                 }else{
                     //alert("已经存在资源!是否上传");
