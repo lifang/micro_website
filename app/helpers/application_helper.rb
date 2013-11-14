@@ -15,8 +15,6 @@ module ApplicationHelper
 
   #拼凑form element 对应关系hash
   def form_ele_hash(params_form)
-    p 11111111111111111
-    p params_form
     ele_hash = {}
     params_form.each do |key, value|
       if key.include?("_value")
@@ -24,9 +22,44 @@ module ApplicationHelper
         ele_hash[name] = value
       end
     end
-    p 22222222222222
-    p ele_hash
-    ele_hash
+  end
+
+  def modifyContent(page,content,site_id)
+    redirect_script = '<script language="javascript" type="text/javascript">var href = window.location.href; window.location.href="/signin?returnUrl=" + href;</script>'
+    content = content.strip
+    if page.form?
+      #if flag=="new"
+        content = "<!DOCTYPE html>
+                 <html>
+                  <head>
+                    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+                    <link href='/assets/style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
+
+<script language='javascript' type='text/javascript'>
+function setToken()
+{var a = document.getElementsByName('authenticity_token');
+var b = a[0];
+ b.value='#{form_authenticity_token}'}
+</script>
+                    <title>preview</title>
+                  </head>
+                  <body onload='setToken()'>
+                 <form accept-charset='UTF-8' action='/sites/#{site_id}/pages/#{page.id}/submit_queries' class='submit_form' method='post'>
+                   <div style='margin:0;padding:0;display:inline'>
+<input name='utf8' type='hidden' value='✓'>
+<input name='authenticity_token' type='hidden' value='#{form_authenticity_token}'></div>
+                   <div id='formContent'>
+                    #{content}
+                   </div><button type='submit'>提交</button></form>
+                  </body></html>"
+      
+    end
+    #TODO正则中文有问题
+    content = content.gsub(/<title>\w*<\/title>/, "<title>#{page.title}</title>")
+    if page.authenticate && !current_user
+      content = content.gsub(/<head>/, "<head>" + " " + redirect_script)
+    end
+    content
   end
   
 end

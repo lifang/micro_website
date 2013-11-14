@@ -1,5 +1,6 @@
 #encoding: utf-8
 class PagesController < ApplicationController
+  skip_before_filter :authenticate_user!, :only => [:submit_queries]
   layout 'sites'
   before_filter :get_site
 
@@ -25,6 +26,9 @@ class PagesController < ApplicationController
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
+        unless @page.main?
+          content = modifyContent(@page, content, @site.id)
+        end
         save_into_file(content, @page) if content
         @notice = "新建成功!"
         @path = redirect_path(@page, @site)
@@ -43,6 +47,9 @@ class PagesController < ApplicationController
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
+      unless @page.main?
+        content = modifyContent(@page, content, @site.id)
+      end
       save_into_file(content, @page) if content
       @notice = "更新成功!"
       @path = redirect_path(@page, @site)
@@ -133,18 +140,41 @@ class PagesController < ApplicationController
     render :layout => false
   end
 
-  protected
-  
-  def redirect_path(page, site)
-    case page.types
-    when Page::TYPE_NAMES[:main]
-      site_pages_path(site)
-    when Page::TYPE_NAMES[:sub]
-      sub_site_pages_path(@site)
-    when Page::TYPE_NAMES[:form]
-      form_site_pages_path(@site)
+  #表单预览
+  def form_preview
+    @content = params[:page][:content]
+    render "/pages/form/preview", :layout => false
+  end
+
+  #通用表单提交
+  def submit_queries
+    page = Page.find_by_id params[:id]
+
+    FormData.transaction do
+      if current_user
+         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
+         redirect_to "/#{@site.root_path}/index.html"
+      else
+        if page.authenticate?
+           redirect_to '/signin'
+        else
+           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
+           redirect_to "/#{@site.root_path}/index.html"
+        end
+      end
+     
     end
   end
 
+  protected
   
+  def redirect_path(page, site)
+    if page.main?
+      site_pages_path(site)
+    elsif page.sub?
+      sub_site_pages_path(@site)
+    elsif page.form?
+      form_site_pages_path(@site)
+    end
+  end
 end

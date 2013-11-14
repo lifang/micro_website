@@ -13,9 +13,13 @@ MicroWebsite::Application.routes.draw do
     get "user/delete/:uid", :to=>"users#delete"
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
+  match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   # Sample resource route with options:
   resources :sites do
+    member do
+      post :verify_site
+    end
     resources :resources
     resources :pages do
       collection do
@@ -24,6 +28,7 @@ MicroWebsite::Application.routes.draw do
       end
       member do
         get :sub_edit,:form_edit, :if_authenticate, :sub_preview
+        post :submit_queries
       end
     end
   end

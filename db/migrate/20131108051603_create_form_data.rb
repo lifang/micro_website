@@ -1,9 +1,9 @@
 #encoding: utf-8
-class CreateFormData < ActiveRecord::Migration
+class CreateFormDatas < ActiveRecord::Migration
   def change
     create_table :form_datas do |t|
       t.integer :page_id
-      t.text :data_hash  #用户提交数据结果集
+      t.text :data_hash  #锟矫伙拷锟结交锟斤拷萁锟斤拷
       t.integer :user_id
 
       t.timestamps

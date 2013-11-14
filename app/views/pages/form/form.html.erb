@@ -16,7 +16,7 @@
           <% @forms.each do |page| %>
             <tr>
               <td><%= page.title %></td>
-              <td><%= page.path_name %></td>
+              <td><%= page.path_name.gsub("/public", "") %></td>
               <td><%= if_authenticate(page)%></td>
               <td>
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>

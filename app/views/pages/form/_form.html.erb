@@ -21,7 +21,7 @@
       <legend class="formTit">表单</legend>
       <div class="insertDiv">
         <% unless @page.new_record?  %>
-          <%= @index.html_safe %>
+          <%= @index.gsub(/\w*<div id='formContent'>/, "").gsub(/<\/div><button type='submit'>提交<\/button><\/form>\w*/, "").html_safe %>
         <% end %>
       </div>
     </fieldset>
@@ -34,6 +34,6 @@
 <div id="hiddenContentContainer"></div>
   <div class="uinfo_act">
     <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, 'submit')">保存</button>
-    <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
+    <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>

@@ -1,5 +1,5 @@
 #encoding: utf-8
-class UsersController < ApplicationController
+class UsersController < Devise::UsersController
    # before_action :set_user ,only: [:disable,:delete]
   layout 'sites'
   def index
@@ -88,8 +88,6 @@ class UsersController < ApplicationController
          return params[:page]
        end   
    end
-
-
 
   
 end
