@@ -28,7 +28,8 @@ class ResourcesController < ApplicationController
     @voice_resources=%w[mp3]
     @video_resoures=%w[mp4 avi rm rmvb]
     postfix_name=@tmp.original_filename.split('.')[-1]
-    
+    #小写
+    postfix_name.downcase!
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)
@@ -59,7 +60,7 @@ class ResourcesController < ApplicationController
     end
   end
 
-  ##########保存一个文件
+  ######### 保存一个文件
   def svae_afile(tmp)
     save
     if @resource.save
@@ -170,5 +171,7 @@ class ResourcesController < ApplicationController
 
   #show
   def show
+    @resources =Resource.find(params[:id])
+    render 'show' ,:layout=>false
   end
 end
