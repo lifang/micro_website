@@ -20,6 +20,10 @@ class ResourcesController < ApplicationController
     @tmp = params[:resources][:myfile]
     @resource=@site.resources.build
     @root1_path=@site.root_path
+    postfix_name =@tmp.original_filename.split('.')[-1]
+    #小写
+    postfix_name =postfix_name.downcase
+    #路径名
     @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
     @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
@@ -27,7 +31,7 @@ class ResourcesController < ApplicationController
     @img_resources=%w[jpg png gif]
     @voice_resources=%w[mp3]
     @video_resoures=%w[mp4 avi rm rmvb]
-    postfix_name=@tmp.original_filename.split('.')[-1]
+    
     
     #创建目录
     resources_dir_exist
@@ -59,13 +63,13 @@ class ResourcesController < ApplicationController
     end
   end
 
-  ##########保存一个文件
+  ######### 保存一个文件
   def svae_afile(tmp)
+    save
     if @resource.save
       flash[:success]='保存成功'
-      save
     else
-      flash[:error]='文件已经存在'
+      flash[:error]='文件已经覆盖'
     end
   end
 
@@ -81,12 +85,6 @@ class ResourcesController < ApplicationController
       z.extract(@full_dir, :flatten => true)
     end
     
-    # Archive::Zip.extract(
-    # @tmp.path,
-    # @full_dir,
-    # :create => false,
-    # :overwrite => :older
-    # )
     #@full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
     arr=[]
     @arr_repeat=0
@@ -112,7 +110,7 @@ class ResourcesController < ApplicationController
        
       end
     end
-    flash[:success]="成功加入#{arr.length}个资源,有#{arr_error}个不符合规范的，有#{@arr_repeat}个重复资源"
+    flash[:success]="成功加入#{arr.length}个资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'存在资源覆盖')}"
     FileUtils.rm_r @full_dir 
   end
   ##
@@ -121,12 +119,13 @@ class ResourcesController < ApplicationController
       arr<<resour.path_name
       FileUtils.cp  ful_pa,ful_path
     else
+      FileUtils.cp  ful_pa,ful_path
       @arr_repeat+=1
     end
   end
 
   def save
-    file = File.join("public",@tmp.original_filename)
+    #file = File.join("public",@tmp.original_filename)
     #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
     file1=File.new(@full_path,'wb')
     FileUtils.cp @tmp.path,file1
@@ -135,11 +134,6 @@ class ResourcesController < ApplicationController
 
 
   def is_not_repeat
-    puts '*******************'
-    puts '*******    ********'
-    puts '*     *************'
-    puts '*******************'
-    puts '*******************'
     @site=Site.find(params[:id])
     name=@site.root_path+"/resources/"+params[:name]
     @re=Resource.find_by_path_name(name)
@@ -149,9 +143,6 @@ class ResourcesController < ApplicationController
     else
       render :json => {:status => 1}
     end
- 
-    #redirect_to root_path
-  #  render 'resources/is_not_repeat',:layout=>false
   end
 
 
@@ -177,5 +168,16 @@ class ResourcesController < ApplicationController
 
   #show
   def show
+    @resources =Resource.find(params[:id])
+    render 'show' ,:layout=>false
   end
+
+  private
+    def message(num,msg)
+       if num==0
+         ''
+       else
+         "，有#{num}个#{msg}"
+       end
+    end
 end
