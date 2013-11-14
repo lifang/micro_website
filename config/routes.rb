@@ -11,7 +11,7 @@ MicroWebsite::Application.routes.draw do
     post "user/disable/:uid", :to=>"users#disable"
    	post "user/enable/:uid", :to=>"users#enable"       
     get "user/delete/:uid", :to=>"users#delete"
-    
+  match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   # Sample resource route with options:

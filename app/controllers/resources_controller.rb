@@ -85,12 +85,6 @@ class ResourcesController < ApplicationController
       z.extract(@full_dir, :flatten => true)
     end
     
-    # Archive::Zip.extract(
-    # @tmp.path,
-    # @full_dir,
-    # :create => false,
-    # :overwrite => :older
-    # )
     #@full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
     arr=[]
     @arr_repeat=0

@@ -1,7 +1,6 @@
 #encoding: utf-8
 class SitesController < ApplicationController
   layout 'sites'
-
   def index
     @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
   end
@@ -17,7 +16,7 @@ class SitesController < ApplicationController
       respond_to do |format|
         if @site && @site.save
           flash[:success]='创建成功'
-        #  redirect_to root_path
+          #  redirect_to root_path
         else
           flash[:error]='创建失败'
         end
@@ -36,14 +35,27 @@ class SitesController < ApplicationController
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
         flash[:success]='更新成功'
-      #redirect_to root_path
+        #redirect_to root_path
       else
         flash[:error]='更新失败'
       end
       format.js
     end
   end
-
+  def destroy_site
+    @site = Site.find(params[:id])
+    if @site.destroy
+      flash[:succcess]='删除站点成功'
+      r_path=Rails.root.to_s+"/public/"+@site.root_path
+      if File::directory?(r_path)
+        FileUtils.rm_r r_path
+      end
+      redirect_to root_path
+    else
+      flash[:error]='删除失败'
+      render 'index'
+    end
+  end
   private
 
   def sites_params
