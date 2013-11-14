@@ -1,6 +1,7 @@
 class Site < ActiveRecord::Base
   has_many :resources
   has_many :pages
+  belongs_to :user
   attr_accessible :name, :root_path, :notes, :user_id
   validates :name ,presence:true,uniqueness: { case_sensitive: false }
   validates :root_path ,

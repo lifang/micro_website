@@ -5,7 +5,7 @@
 	<div class="tabDiv">
 		<div class="page_content">
 			<div class="page_tit">
-				<label>资源目录路径：/baidu/resources</label>
+				<label>资源目录路径：/<%=@site.root_path%>/resources</label>
 			</div>
 			<fieldset class="page_tit">
 				<%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
