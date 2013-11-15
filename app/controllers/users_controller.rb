@@ -1,5 +1,5 @@
 #encoding: utf-8
-class UsersController < Devise::UsersController
+class UsersController  < ApplicationController
    # before_action :set_user ,only: [:disable,:delete]
   layout 'sites'
   def index
