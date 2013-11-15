@@ -1,0 +1,7 @@
+$("#verify_site").html("<h1>审核站点</h1>" + '<%= j (render '/sites/verify_site') %>');
+show_tag($("#verify_site"));
+
+$(".cancel").click(function() {
+		$(this).parents(".second_box").hide();
+		$(".second_bg").hide();
+	});

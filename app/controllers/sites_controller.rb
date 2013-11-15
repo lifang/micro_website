@@ -56,9 +56,36 @@ class SitesController < ApplicationController
       render 'index'
     end
   end
+  
+  
+    def change_status #改变站点状态   由2(待审核) 根据参数 ,改变至  3(审核通过),或 4(审核不通过)
+      
+      puts params
+      site =Site.find(params[:sid]) #站点id
+      status = params[:status]      #改变至status
+      page = params[:page]          #回到页面的页数
+      
+      if site.update_attribute(:status,status)
+        flash[:msg]='审核成功！'
+      else
+        flash[:msg]='审核失败！'
+      end
+      
+      
+      if(page==''||page==1)
+        redirect_to '/user/manage/2'   
+      else
+        redirect_to "/user/manage/2?page=#{page}"
+      end 
+      
+    end
+  
+  
+  
+  
   private
-
   def sites_params
     params.require(:site).permit(:name,:root_path,:notes)
   end
+  
 end

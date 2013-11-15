@@ -1,4 +1,10 @@
+#encoding: utf-8
 class Site < ActiveRecord::Base
+  
+  STATUS = {0 => "新建", 1 => "未审核", 2 => "待审核", 3 => "审核通过",4=>"审核不通过"}
+
+  
+  
   has_many :resources ,dependent: :destroy
   has_many :pages ,dependent: :destroy
   belongs_to :user

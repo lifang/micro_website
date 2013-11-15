@@ -11,6 +11,10 @@ MicroWebsite::Application.routes.draw do
   post "user/disable/:uid", :to=>"users#disable"
   post "user/enable/:uid", :to=>"users#enable"
   get "user/delete/:uid", :to=>"users#delete"
+  
+  post "site/verify/:sid",:to=>"sites#verify"
+  get "site/change_status/:sid/:status",:to=>"sites#change_status"
+  
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"

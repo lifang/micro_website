@@ -28,7 +28,7 @@
                                                   状态：
             </dt>
             <dd>
-              <%=s.status!=1 ? '未审核':'已经审核'%>
+              <%= status_desc s.status%>
             </dd>
             <dt>
                                                   备注：

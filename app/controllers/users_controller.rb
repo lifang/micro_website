@@ -7,10 +7,10 @@ class UsersController  < ApplicationController
     # puts params
     
      case params[:type]
-     when '1' then @type=1; @users=User.paginate(:page=>params[:page],:per_page=>1,:conditions =>"status!=-1")
-     when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=3") #待审核
-     when '3' then @type=3; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=4")  #审核通过 
-     when '4' then @type=4; @sites=Site.paginate(:page=>params[:page],:per_page=>1,:conditions => "status=5") #审核不通过
+     when '1' then @type=1; @users=User.paginate(:page=>params[:page],:per_page=>3,:conditions =>"status!=-1")
+     when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=2") #待审核
+     when '3' then @type=3; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=3")  #审核通过 
+     when '4' then @type=4; @sites=Site.paginate(:page=>params[:page],:per_page=>3,:conditions => "status=4") #审核不通过
      end 
  
      render 'index'
@@ -69,8 +69,16 @@ class UsersController  < ApplicationController
     else
       # flash[:msg]='error!'     
     end  
-    respond_to do |format|      
-      format.html{redirect_to "/user/manage/1?page=#{set_page}"}
+    respond_to do |format|    
+      
+       page=params[:page]
+        
+       if(page==''||page==1)  
+        format.html{redirect_to "/user/manage/1"}
+       else
+        format.html{redirect_to "/user/manage/1?page=#{page}"}
+       end
+       
     end   
   end
   
@@ -81,13 +89,7 @@ class UsersController  < ApplicationController
   end
   
   
-   def set_page
-       if(params[:page]=='')
-         return 1
-       else
-         return params[:page]
-       end   
-   end
+  
 
   
 end

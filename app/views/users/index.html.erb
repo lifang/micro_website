@@ -42,14 +42,14 @@
                         	<td><%= user.name%></td>
                             <td><%= user.phone%></td>
                             <td><%= user.email%></td>
-                            <td id="user_status"><%=(user.status==0)?'禁用':'正常'%></td>
+                            <td id="user_status_<%=user.id%>"><%=(user.status==0)?'禁用':'正常'%></td>
                             <td >
-                            	<div id='status_btn'style="float: left; margin-left: 35px; margin-top:1px " >
+                            	<div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; margin-top:1px " >
                             		
 	                             		<% unless user.status==0%>
-		                             	<%= button_to '禁用', "/user/disable/#{user.id}?page= #{params[:page]}",remote:true,class: "blue_btn"%>                             	
+		                             	<%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn"%>                             	
 		                            	<% else %>
-		                            	<%= button_to '启用', "/user/enable/#{user.id}?page= #{params[:page]}",remote:true,class: "blue_btn"%>	                          	
+		                            	<%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn"%>	                          	
 										<% end %>
 								</div>																		
                                 		<button class="blue_btn" style="height: 27px;" onclick="window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' ">删除</button>
@@ -84,6 +84,7 @@
                             <td>待审核</td>
                             <td><%= site.root_path%></td>
                             <td>
+		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; height:29px" %>                             	
                             	<button class="blue_btn">预览</button>
                             </td>
                         </tr>
