@@ -22,7 +22,7 @@
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , page.path_name.gsub("/public", ""),:target =>"_blank", :class => "blue_btn"%>
+                <%= link_to "预览" , page.path_name.gsub("/public/allsites", ""),:target =>"_blank", :class => "blue_btn"%>
                 <button class="blue_btn">下载数据</button>
               </td>
             </tr>

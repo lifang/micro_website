@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:submit_queries]
   layout 'sites'
   before_filter :get_site
-
+  
   #主页 index
   def index
     @page = @site.pages.main.first
@@ -164,7 +164,12 @@ class PagesController < ApplicationController
     end
   end
 
-  #get Token  ajax
+  #访问静态页面
+  def static
+    render Rails.root.to_s + "/public/allsites/" + params[:path_name], :layout => false
+  end
+
+  #get form authenticity_token  hack of CSRF
   def get_token
     render :text => form_authenticity_token
   end

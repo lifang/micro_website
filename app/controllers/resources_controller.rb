@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ResourcesController < ApplicationController
   layout 'sites'
-  SITE_PATH = "/public/%s/"
+  SITE_PATH = "/public/allsites/%s/"
   require 'fileutils'
   #  require 'rubygems'
   #  require 'zip'
@@ -162,7 +162,7 @@ class ResourcesController < ApplicationController
   end
 
   def delete_file(name)
-    dirname=Rails.root.to_s+'/public/'+name;
+    dirname=Rails.root.to_s+'/public/allsites/'+name;
     FileUtils.rm dirname
   end
 

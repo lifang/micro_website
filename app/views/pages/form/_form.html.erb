@@ -37,7 +37,7 @@
   </fieldset>
 <div id="hiddenContentContainer"></div>
   <div class="uinfo_act">
-    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/sites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, 'submit')">保存</button>
-    <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
+    <button type="button" class="blue_btn" alt="<%= @page.new_record? ? "/allsites/#{@site.id}/pages" : "/sites/#{@site.id}/pages/#{@page.id}"%>"  onclick="submitForm(this, 'submit')">保存</button>
+    <button type="button" class="blue_btn" alt="/allsites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>

@@ -46,7 +46,7 @@ class SitesController < ApplicationController
     @site = Site.find(params[:id])
     if @site.destroy
       flash[:succcess]='删除站点成功'
-      r_path=Rails.root.to_s+"/public/"+@site.root_path
+      r_path=Rails.root.to_s+"/public/allsites/"+@site.root_path
       if File::directory?(r_path)
         FileUtils.rm_r r_path
       end
