@@ -47,7 +47,7 @@ a.each(function(){
 });
             },
             error:function(data){
-alert('error')
+//alert('error')
             }
         })
 </script>
@@ -65,7 +65,7 @@ alert('error')
       
     end
     #TODO正则中文有问题
-    content = content.gsub(/<title>\w*<\/title>/, "<title>#{page.title}</title>")
+    content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     if page.authenticate && !current_user
       content = content.gsub(/<head>/, "<head>" + " " + redirect_script)
     end

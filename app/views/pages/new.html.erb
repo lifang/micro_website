@@ -7,7 +7,7 @@
       </div>
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
         <%= f.hidden_field :title, :value => 'index' %>
-        <%= f.hidden_field :file_name, :value => 'index' %>
+        <%= f.hidden_field :file_name, :value => 'index.html' %>
         <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:main] %>
         <%= f.text_area :content, :class => "page_txt" %>
 

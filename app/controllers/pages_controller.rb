@@ -1,6 +1,6 @@
 #encoding: utf-8
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:submit_queries]
+  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static]
   layout 'sites'
   before_filter :get_site
   
@@ -151,14 +151,15 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
-         redirect_to "/#{@site.root_path}/index.html"
+        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
+        redirect_to "/#{@site.root_path}/index.html"
       else
         if page.authenticate?
-           redirect_to '/signin'
+          flash[:notice] = "请先登陆！"
+          redirect_to '/signin'
         else
-           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
-           redirect_to "/#{@site.root_path}/index.html"
+          page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
+          redirect_to "/#{@site.root_path}/index.html"
         end
       end
     end
@@ -166,8 +167,19 @@ class PagesController < ApplicationController
 
   #访问静态页面
   def static
-    render Rails.root.to_s + "/public/allsites/" + params[:path_name], :layout => false
+    path_name = "/public/allsites/" + params[:path_name]
+    page = Page.find_by_path_name(path_name)
+    if page
+      if page.authenticate? && page.sub? && !user_signed_in?
+        redirect_to '/signin'
+      else
+        render Rails.root.to_s + path_name, :layout => false
+      end
+    else
+      render Rails.root.to_s + '/public/404.html', :layout => false
+    end
   end
+
 
   #get form authenticity_token  hack of CSRF
   def get_token

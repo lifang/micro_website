@@ -1,5 +1,5 @@
 MicroWebsite::Application.routes.draw do
-  devise_for :users do
+  devise_for :users, :controllers => { :passwords => "passwords" } do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
     get "signin", :to => "devise/sessions#new"
@@ -48,6 +48,6 @@ MicroWebsite::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  match '/:path_name',:to => "pages#static", :path_name => /\w+\/\w+\.html/
+  match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
 end
 
