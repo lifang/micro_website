@@ -20,6 +20,9 @@
 
       <li><%= f.label :phone, "联系电话：" %>
         <%= f.telephone_field :phone %><span class="check">*</span></li>
+      <li>
+          <%= select_tag(:types, options_for_select([['普通用户', 0], ['建站用户', 1]], 0)) %>
+      </li>
 
 
     </ul>

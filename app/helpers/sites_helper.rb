@@ -2,7 +2,7 @@
 module SitesHelper
   
  def status_desc status #根据status字段获得站点状态描述
-   s=
+  
    case status
     when 0  then  '新建'
     when 1  then  '未审核'
