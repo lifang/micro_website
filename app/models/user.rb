@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  STATUS = {-1 => "删除", 0 => "禁用", 1 => "启用"}
+
   has_many :sites ,dependent: :destroy
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
