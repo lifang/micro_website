@@ -21,7 +21,7 @@
       <legend class="formTit">表单</legend>
       <div class="insertDiv">
         <% unless @page.new_record?  %>
-          <%= @index.gsub(/.*\s+<div id='formContent'>/, "").gsub(/<\/div><button type='submit'>提交<\/button><\/form>.*\s+/, "").html_safe %>
+          <%= @index.split("<div id='formContent'>")[1].split("</div><button type='submit'>提交</button></form>")[0].html_safe %>
         <% end %>
       </div>
     </fieldset>

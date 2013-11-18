@@ -10,11 +10,20 @@
     overflow: hidden;
     position: absolute;
     right: 12px;
-    top: 25px;
+    top: 30px;
+    background: url(/assets/add.png) no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    text-indent: -999px;
+    width: 17px;
 }
 .deleteOption{
-/*    overflow: hidden;
-    position: relstion;
-    right: 12px;
-    top: 25px;*/
+    background: url(/assets/minus.png) no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    text-indent: -999px;
+    width: 17px;
+
 }

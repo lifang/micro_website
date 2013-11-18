@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+user = User.create(:name => "admin", :password => 'admin1234', :email => "admin@microwebsite.com")
+user.status = User::TYPES[:admin]
+user.types = User::STATUS_NAME[:normal]
+user.save

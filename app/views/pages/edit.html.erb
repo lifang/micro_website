@@ -5,6 +5,11 @@
       <div class="page_tit">
         <label><%= page_file_name(@page) %></label>
       </div>
+      <% if @page.style? %>
+        <div>
+          拷贝 <input type="text" style="width: 500px;" value='<link href="/allsites/<%= @site.root_path %>/style.css" rel="stylesheet" type="text/css" />'/>，粘贴到主页或者子页的"head"标签内
+        </div>
+      <% end %>
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
         <%= f.hidden_field :title, :value => page_title(@page) %>
         <%= f.hidden_field :file_name, :value =>  page_file_name(@page) %>

@@ -1,8 +1,8 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-  
   STATUS = {-1 => "删除", 0 => "禁用", 1 => "启用"}
-
+  STATUS_NAME = {:del => -1 , :forbidden => 0, :normal => 1}
+  TYPES = {:admin => 1, :mormal => 0}
   has_many :sites ,dependent: :destroy
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
   attr_accessible :name, :phone, :email, :password, :password_confirmation, :login
   attr_accessor :login
   validates :email, :name, :uniqueness => true
+
+  def admin
+    self.types == TYPES[:admin]
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)

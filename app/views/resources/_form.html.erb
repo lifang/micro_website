@@ -6,7 +6,9 @@
     </tr>
     <% @site.resources.each do |sr|%>
       <tr>
-        <td>/<%= sr.path_name%></td>
+        <td>/<%= "allsites/" + sr.path_name%>
+          【拷贝图片路径作为image的src】
+        </td>
         <td>
 
           <%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
