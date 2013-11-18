@@ -161,33 +161,52 @@ function have_exist(id){
             name=name[name.length-1];
 
             $.ajax({
-            async:true,
-            type : 'get',
-            url:'/check_zip',
-            dataType:"json",
-            data  :"name=" + name + "&id=" + id,
+                async:true,
+                type : 'get',
+                url:'/check_zip',
+                dataType:"json",
+                data  :"name=" + name + "&id=" + id,
 
 
-            success:function(data){
-                if(data.status == 1){
-                    $("#fugai").show();
-                    $("#fugai1").show();
-                    $("#uploadForm").submit();
-                     
-                }else{
-                    //alert("已经存在资源!是否上传");
-                    if(confirm('已经存在资源!是否上传')){
+                success:function(data){
+                    if(data.status == 1){
+                        $("#fugai").show();
+                        $("#fugai1").show();
                         $("#uploadForm").submit();
+                     
+                    }else{
+                        //alert("已经存在资源!是否上传");
+                        if(confirm('已经存在资源!是否上传')){
+                            $("#uploadForm").submit();
+                        }
                     }
                 }
-            }
-        });
+            });
         }else{
             alert('不合法文件，只能是视频，音频，图片，或(zip)压缩包');
             return false;
         }
     } 
        
+}
+function change_status(id,status,msg){
+    $.ajax({
+        async:true,
+        type : 'get',
+        url:'/change_status',
+        dataType:"text",
+        data  :"status=" + status + "&id=" + id,
+        success:function(data){
+            if(msg!="")
+            if(data == 1){
+                alert(msg+"成功！");
+
+            }else{
+                alert(msg+"失败！");
+               
+            }
+        }
+    });
 }
 
 function arr_contant(name,arr){

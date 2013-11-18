@@ -88,7 +88,7 @@ function hideInput(obj){
 }
 
 //提交表单验证 #TODO非空验证
-function submitForm(obj, flag){
+function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
     content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
     if(flag=="submit"){ //新建 或者编辑
@@ -103,7 +103,8 @@ function submitForm(obj, flag){
             dataType: "script",
             data:dataValue,
             success:function(data){
-            //alert("success")
+              //保存成功
+              change_status(site_id,1,"");
             },
             error:function(data){
             //alert("error")

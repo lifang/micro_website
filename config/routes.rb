@@ -20,6 +20,7 @@ MicroWebsite::Application.routes.draw do
   match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"
   match "/get_token", :to => "pages#get_token", :as => "get_token"
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
+  match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   # Sample resource route with options:
   resources :sites do
     member do
