@@ -87,9 +87,9 @@
 		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; height:29px ;" %>                             	
                             	                          	
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name unless p.nil?%>                          	
+                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
                             	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"blank"%>
+                            		<%=link_to '预览',path,class:"blue_btn",target:"blank" %>
                             	<% else%>
                             		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
                             	<% end %>
@@ -125,7 +125,7 @@
                             <td><%= site.root_path%></td>
                             <td>
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name unless p.nil?%>                          	
+                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
                             	<% unless path.nil?%>
                             		<%=link_to '预览',path,class:"blue_btn",target:"blank"%>
                             	<% else%>
@@ -162,7 +162,7 @@
                             <td><%= site.root_path%></td>
                             <td>
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name unless p.nil?%>                          	
+                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
                             	<% unless path.nil?%>
                             		<%=link_to '预览',path,class:"blue_btn",target:"blank"%>
                             	<% else%>
