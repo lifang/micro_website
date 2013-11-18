@@ -52,7 +52,7 @@
 		                            	<%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn"%>	                          	
 										<% end %>
 								</div>																		
-                                		<button class="blue_btn" style="height: 27px;" onclick="window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' ">删除</button>
+                                		<button class="blue_btn" style="height: 27px;" onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
                               
                             </td>
                         </tr>
