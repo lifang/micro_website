@@ -1,3 +1,4 @@
+#encoding :utf-8
 class User < ActiveRecord::Base
   
   STATUS = {-1 => "删除", 0 => "禁用", 1 => "启用"}
