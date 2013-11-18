@@ -28,6 +28,7 @@ MicroWebsite::Application.routes.draw do
     end
     resources :resources
     resources :pages do
+      resources :form_datas
       collection do
         get :sub, :form, :style, :sub_new,  :form_new
         post :preview

@@ -112,7 +112,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form
+    @forms = @site.pages.form.includes(:form_datas)
     render "/pages/form/form"
   end
 
