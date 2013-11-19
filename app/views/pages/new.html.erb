@@ -12,8 +12,8 @@
         <%= f.text_area :content, :class => "page_txt" %>
 
         <div class="page_act">
-          <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>', 0, null)">保存</button>
-          <button class="blue_btn" type="submit" onclick="changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
+          <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 0, null)">保存</button>
+          <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
         </div>
       <% end %>
     </div>

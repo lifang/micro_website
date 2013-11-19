@@ -8,8 +8,6 @@ class PagesController < ApplicationController
   def index
     @page = @site.pages.main.first
     if @page
-      p 111111111111111
-      p PUBLIC_PATH + @page.path_name
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
       @index = index_html.read
       index_html.close
@@ -36,7 +34,7 @@ class PagesController < ApplicationController
         @path = redirect_path(@page, @site)
         render :success
       else
-        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
         render :fail
       end
     end
@@ -57,7 +55,7 @@ class PagesController < ApplicationController
       @path = redirect_path(@page, @site)
       render :success
     else
-      @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+      @notice="更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
       render :fail
     end
   end

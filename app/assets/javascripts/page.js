@@ -4,13 +4,18 @@
  */
 //flag=0 submit form, flag=1 preview
 function changeUrl(obj, site_id, flag, page_id){
+    var tf_flag;
+    var content = $("#page_content").val();
     if(flag==1){
         $(obj).parents("form").attr("action", "/sites/"+ site_id + "/pages/preview").attr("target", "_blank").removeAttr("data-remote");
     }else if(flag==0){
+        tf_flag = validatePageForm(content);
         $(obj).parents("form").attr("action", "/sites/"+ site_id + "/pages").attr("data-remote", "true").removeAttr("target");
     }else{
+        tf_flag = validatePageForm(content);
         $(obj).parents("form").attr("action", "/sites/"+ site_id + "/pages/"+ page_id).attr("data-remote", "true").removeAttr("target");
-    } 
+    }
+    return tf_flag;
 }
 
 function show_tag(obj){
@@ -92,31 +97,34 @@ function hideInput(obj, flag){
 //提交表单验证 #TODO非空验证
 function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
+    var tf_flag = validatePageForm(content);
     content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
-    if(flag=="submit"){ //新建 或者编辑
-        var dataValue;
-        $("#form_container form").removeAttr("target");
-        $("#form_container #hiddenContent").remove();
-        dataValue = $(obj).parents("form").serialize();
-        dataValue = dataValue + "&page[content]=" + content;
-        $.ajax({
-            url: $(obj).attr("alt"),
-            type: "POST",
-            dataType: "script",
-            data:dataValue,
-            success:function(data){
-              //保存成功
-              change_status(site_id,1,"");
-            },
-            error:function(data){
-            //alert("error")
-            }
-        })
-    }else{ //预览
-        $("#form_container #hiddenContentContainer").html('<input type="hidden" id="hiddenContent" name="page[content]"/>');
-        $("#form_container form").attr("target", "_blank").attr("action", $(obj).attr("alt"));
-        $("#form_container #hiddenContent").val(content);
-        $("#form_container form").submit();
+    if(tf_flag){
+        if(flag=="submit"){ //新建 或者编辑
+            var dataValue;
+            $("#form_container form").removeAttr("target");
+            $("#form_container #hiddenContent").remove();
+            dataValue = $(obj).parents("form").serialize();
+            dataValue = dataValue + "&page[content]=" + content;
+            $.ajax({
+                url: $(obj).attr("alt"),
+                type: "POST",
+                dataType: "script",
+                data:dataValue,
+                success:function(data){
+                    //保存成功
+                   // change_status(site_id,1,"");
+                },
+                error:function(data){
+                //alert("error")
+                }
+            })
+        }else{ //预览
+            $("#form_container #hiddenContentContainer").html('<input type="hidden" id="hiddenContent" name="page[content]"/>');
+            $("#form_container form").attr("target", "_blank").attr("action", $(obj).attr("alt"));
+            $("#form_container #hiddenContent").val(content);
+            $("#form_container form").submit();
+        }
     }
     
 }
@@ -139,4 +147,21 @@ function addOption(obj, flag){
 //删除选项
 function deleOption(obj){
     $(obj).parent().remove();
+}
+function validatePageForm(content)
+{
+    var title = $.trim($("#page_title").val());
+    var file_name = $.trim($("#page_file_name").val());
+    var tf_flag = true;
+    if(title == ""){
+        alert("标题不能为空");
+        tf_flag = false;
+    }else if(file_name == ""){
+        alert("文件名不能为空")
+        tf_flag = false;
+    }else if(content == ""){
+        alert("内容不能为空");
+        tf_flag = false;
+    }
+    return tf_flag;
 }

@@ -189,6 +189,7 @@ function have_exist(id){
     } 
        
 }
+
 function change_status(id,status,msg){
     $.ajax({
         async:true,
@@ -200,7 +201,7 @@ function change_status(id,status,msg){
             if(msg!="")
             if(data == 1){
                 alert(msg+"成功！");
-
+                window.location.reload();
             }else{
                 alert(msg+"失败！");
                

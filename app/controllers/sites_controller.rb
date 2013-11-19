@@ -18,7 +18,7 @@ class SitesController < ApplicationController
           flash[:success]='创建成功'
           #  redirect_to root_path
         else
-          flash[:error]='创建失败'
+          flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
         end
         format.js
       end
@@ -37,7 +37,7 @@ class SitesController < ApplicationController
         flash[:success]='更新成功'
         #redirect_to root_path
       else
-        flash[:error]='更新失败'
+        flash[:error]="更新失败 #{@site.errors.messages.values.flatten.join("\\n")}"
       end
       format.js
     end
