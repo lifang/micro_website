@@ -37,3 +37,9 @@
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>
+<script type="text/javascript">
+  $(".textQuestion").each(function(){
+    $(this).val($(this).prev().text())
+  })
+
+</script>
