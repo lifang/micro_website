@@ -64,16 +64,16 @@ MicroWebsite::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-    config.action_mailer.default_url_options = { :host => 'http://116.255.202.113:3000/' }
-
+ config.action_mailer.default_url_options = { :host => '116.255.202.113:3000' }
+ config.action_mailer.perform_deliveries = true
+ config.action_mailer.default :charset => "utf-8"
+ config.action_mailer.default :content_type => "text/html"
     ActionMailer::Base.smtp_settings = {
 	  :enable_starttls_auto => true,
 	  :address => "smtp.gmail.com",
 	  :port => 587,
 	  :authentication => :plain,
-	  :user_name => "amandamfl1989",
-	  :password => "06291196"
+	  :user_name => "amandamfl1989@gmail.com",
+	  :password => "amanda1989"
   }
-  ActionMailer::Base.default :charset => 'UTF-8'
-  ActionMailer::Base.default :content_type => "text/html"
 end
