@@ -10,19 +10,51 @@
     <%= f.password_field :current_password, :class => "required", :alt => "密码"  %></li>
 
   <div class="uinfo_act">
-    <button class="blue_btn" onclick="return Validate(this)" >确认</button>
+    <button class="blue_btn" onclick="return check()" >确认</button>
     <button type="button" class="blue_btn cancel">取消</button>
   </div>
 <% end %>
 <script>
-  function Validate(obj){
-    var flag = true;
-    $(obj).parents("form").find(".required").each(function(){
-      if($.trim($(this).val()) == ""){
-        alert($(this).attr("alt") + "不能为空！");
-        flag = false;
-      }
-    });
-    return flag;
-  }
+
+ function check(){
+	
+	flg=(checkPhone()&&checkEmail());
+	
+	return flg;
+}
+
+
+function checkPhone(){
+	flg=true;
+	var phone = document.getElementById('user_phone').value;
+	var phoneReg =/^1[3458]\d{9}$/;
+	if(!phoneReg.test(phone)){
+		alert('提示:\n\n请输入有效的联系电话。');                 
+		flg=false;
+	}
+	
+	return flg;
+}
+
+
+
+
+function checkEmail(){
+	
+	flg=true;
+	var email = document.getElementById('user_email').value;
+	var emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	
+	 if(!emailReg.test(email))
+            {
+                alert('提示:\n\n请输入有效的E_mail');                 
+                flg=false;
+           }		
+	return flg;
+	
+}
+
+
+
+
 </script>
