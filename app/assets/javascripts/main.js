@@ -95,6 +95,7 @@ $(function() {
     $('#create').click(function() {
         $(this).parents(".second_box").hide();
         $('.second_bg').hide();
+        $("#fault").hide();
     });
     $('#create_sub').click(function() {
         var name = $('#site_name').val();
@@ -108,7 +109,7 @@ $(function() {
             alert('根目录不能为空');
             return false;
         }
-        if (!root.match(/[a-zA-Z]/i)) {
+        if (root.match(/[^a-zA-Z]/i)) {
             alert('根目录只能为字母');
             return false;
         }
@@ -130,6 +131,7 @@ function show_edit_page(name, rootpath, notes) {
 function text_value(name, rootpath, notes) {
 
     $('#site_name').val(name);
+    $('#origin_name').val(name);
     $('#site_root_path').val(rootpath);
     $('#site_notes').val(notes);
 }

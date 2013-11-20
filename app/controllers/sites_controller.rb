@@ -8,7 +8,7 @@ class SitesController < ApplicationController
   def create
     if params[:site][:edit_or_create]=='create'
       @site=Site.new()
-      @site.name=params[:site][:name]
+      @site.name=params[:site][:name].split(' ').join
       @site.root_path=params[:site][:root_path]
       @site.notes=params[:site][:notes]
       @site.status=0
@@ -28,8 +28,8 @@ class SitesController < ApplicationController
   end
 
   def update
-    @site=Site.find_by_name(params[:site][:name])
-    name=params[:site][:name]
+    @site=Site.find_by_name(params[:origin_name])
+    name=params[:site][:name].split(' ').join
     @root_path=params[:site][:root_path]
     notes=params[:site][:notes]
     respond_to do |format|
