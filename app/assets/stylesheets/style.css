@@ -261,3 +261,4 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
 
 
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
+ .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 28px;}

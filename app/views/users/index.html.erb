@@ -44,7 +44,7 @@
                             <td><%= user.email%></td>
                             <td id="user_status_<%=user.id%>"><%=(user.status==0)?'禁用':'正常'%></td>
                             <td >
-                            	<div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; margin-top:1px " >
+                            	<div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; " >
                             		
 	                             		<% unless user.status==0%>
 		                             	<%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn"%>                             	
@@ -84,7 +84,7 @@
                             <td>待审核</td>
                             <td><%= site.root_path%></td>
                             <td>
-		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; height:29px ;" %>                             	
+		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px;" %>                             	
                             	                          	
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
                             	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
