@@ -25,9 +25,9 @@ class UsersController  < ApplicationController
      if @user.update_attribute(:status,0)      #用户状态              1:正常           0：禁用       -1：删除         
         change_site_tatus(@user,4) #将用户对应站点status设置为审核不通过
        
-       # flash[:msg]='success!'      
+       # flash[:msg]='已禁用该用户!'      
      else      
-       # flash[:msg]='error!'    
+        #flash[:msg]='禁用失败!'    
      end
      
      render 'users/change_status'
@@ -50,9 +50,9 @@ class UsersController  < ApplicationController
        
         change_site_tatus(@user,1) #将用户对应站点status设置为未审核
      
-        flash[:msg]='启用成功!'      
+       # flash[:msg]='已启用改用户!'      
      else      
-        flash[:msg]='启用失败!'    
+       # flash[:msg]='启用失败!'    
      end
      
      render 'users/change_status'
@@ -73,9 +73,9 @@ class UsersController  < ApplicationController
        change_site_tatus(@user,4) #将用户对应站点status设置为审核不通过
       
       
-       flash[:msg]='删除成功!'
+      # flash[:msg]='删除成功!'
     else
-       flash[:msg]='删除失败!'     
+      # flash[:msg]='删除失败!'     
     end  
     respond_to do |format|    
       
