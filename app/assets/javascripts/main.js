@@ -185,7 +185,7 @@ function have_exist(id){
                 }
             });
         }else{
-            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)\n音频(mp3,wav,wma)\n图片(jpg,png,gif)\n或(zip)压缩包');
+            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<200M\n音频(mp3,wav,wma)<50M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
     } 

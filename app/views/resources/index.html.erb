@@ -1,4 +1,7 @@
 <div class="main_container">
+	 <% flash.each do |name, msg| %>
+       <span ><%= content_tag :div, msg, id: "flash#{name}",style:"font-size:20px;color:red;background:#D1EEEE;width:100%"%></span>
+    <% end %>
 	<%= render '/sites/site_status' %>
 	<!-- 文件上传-->
 	<div class="tabDiv">
