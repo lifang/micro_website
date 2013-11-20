@@ -171,11 +171,16 @@ class PagesController < ApplicationController
     path_name = params[:path_name]
     page = Page.find_by_path_name("/"+path_name)
     if page
-      if page.authenticate? && page.sub? && !user_signed_in?
-        redirect_to '/signin'
-      else
-        render PUBLIC_PATH + "/"+ path_name, :layout => false
-      end
+      site = page.site
+      #if site.status == Site::STATUS_NAME[:pass_verified]
+        if page.authenticate? && page.sub? && !user_signed_in?
+          redirect_to '/signin'
+        else
+          render PUBLIC_PATH + "/"+ path_name, :layout => false
+        end
+      #else
+       # redirect_to '/303.html', :layout => false
+      #end
     else
       render Rails.root.to_s + '/public/404.html', :layout => false
     end
