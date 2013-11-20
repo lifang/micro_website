@@ -42,10 +42,11 @@
                                                   编辑
             </button>
 
-            <button class="blue_btn">
-              <%= link_to "详情", site_pages_path(s) %>
-            </button>
-
+            <%= link_to site_pages_path(s) do %>
+                <button class="blue_btn">
+                  详情
+                </button>
+            <% end %>
           </div>
         </div>
       </div>

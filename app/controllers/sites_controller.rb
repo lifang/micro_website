@@ -9,7 +9,7 @@ class SitesController < ApplicationController
     if params[:site][:edit_or_create]=='create'
       @site=Site.new()
       @site.name=params[:site][:name]
-      @site.root_path=params[:site][:root_path]
+      @site.root_path=params[:site][:root_path].gsub(/\/+/, "")
       @site.notes=params[:site][:notes]
       @site.status=0
       @site.user_id=current_user.id
@@ -30,7 +30,7 @@ class SitesController < ApplicationController
   def update
     @site=Site.find_by_name(params[:site][:name])
     name=params[:site][:name]
-    @root_path=params[:site][:root_path]
+    @root_path=params[:site][:root_path].gsub(/\/+/, "")
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
