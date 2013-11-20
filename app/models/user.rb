@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     :recoverable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :phone, :email, :password, :password_confirmation, :login
+  attr_accessible :name, :phone, :email, :password, :password_confirmation, :login,:types
   attr_accessor :login
   validates :email, :name, :uniqueness => true
 
