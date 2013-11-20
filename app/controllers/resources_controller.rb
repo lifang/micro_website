@@ -81,17 +81,18 @@ class ResourcesController < ApplicationController
     #解压在一个临时目录
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"temp"
     #执行解压
+    
     Archive::Zip.open(@tmp.path) do |z|
       z.extract(@full_dir, :flatten => true)
     end
-    
+    `convmv -f gbk -t utf-8 -r --notest  #{@full_dir}`
     #@full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
     arr=[]
     @arr_repeat=0
     arr_error=0
     Dir.foreach(@full_dir) do |entry|
       if !File::directory?(entry)
-        postfix_name=entry.split('.')[-1]
+        postfix_name = entry.split('.')[-1]
         resour=@site.resources.build
         resour.path_name=@root1_path+"/resources/"+entry
         ful_pa=Rails.root.to_s+SITE_PATH % @root1_path+"temp/"+entry

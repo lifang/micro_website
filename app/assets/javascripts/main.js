@@ -114,6 +114,7 @@ $(function() {
             alert('根目录只能为字母');
             return false;
         }
+        $("#fault").show();
     });
 
 })
@@ -189,7 +190,6 @@ function have_exist(id){
             return false;
         }
     } 
-       
 }
 
 function change_status(id,status,msg){
