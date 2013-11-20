@@ -8,8 +8,8 @@ en:
       already_confirmed: "was already confirmed, please try signing in"
       not_locked: "was not locked"
       not_saved:
-        one: "1 error prohibited this %{resource} from being saved:"
-        other: "%{count} errors prohibited this %{resource} from being saved:"
+        one: "保存 %{resource} 时有1个错误"
+        other: "保存 %{resource} 时有%{count}个错误"
 
   devise:
     failure:
