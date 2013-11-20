@@ -7,11 +7,11 @@
     <% @site.resources.each do |sr|%>
       <tr>
         <td>/<%= "allsites/" + sr.path_name%>
-          【拷贝图片路径作为image的src】
+          【拷贝路径作为资源的src】
         </td>
         <td>
 
-          <%=link_to '删除',site_resource_path(@site,sr),class:'blue_btn',method: 'delete' %>
+          <%=link_to '删除',site_resource_path(@site,sr),confirm:'是否删除？',class:'blue_btn',method: 'delete' %>
             <button class="blue_btn">
               <%=link_to '预览' , site_resource_path(@site,sr),target:'_blank' %>
              <!--<a href="/<%=sr.path_name%>" target="_blank">预览</a>-->
