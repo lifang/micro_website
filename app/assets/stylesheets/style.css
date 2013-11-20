@@ -230,7 +230,7 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
 .fileBox { position:relative; overflow:hidden; float:left;}
 .fileBox .fileText_1 { border:1px solid #cdcdcd; padding:3px; width:70%; margin:0;}
 .fileBox .fileBtn_1 { width:25%; margin:0;}
-/*.fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; margin:0;}*/
+.fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; height:32px; margin:0;}
 
 .page_tit button.up_btn { float: left; margin: 0 10px;}
 
@@ -259,12 +259,5 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
 .forgetPass input { font-size: 20px; width: 200px; border: 1px solid #003333; }
 .forgetPass a { text-decoration: underline; font-size: 16px; margin: 10px; }
 
-.fileBox .file_1 {
-    left: 0;
-    margin: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
+
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
