@@ -99,6 +99,13 @@ function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
     var tf_flag = validatePageForm(content);
     content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
+    
+    
+    var title = $.trim($("#page_title").val()); //拿到去空格的值
+    var file_name = $.trim($("#page_file_name").val());
+    $("#page_title")[0].value=title;    //将去空格的值赋回去
+    $("#page_file_name")[0].value=file_name;
+    
     if(tf_flag){
         if(flag=="submit"){ //新建 或者编辑
             var dataValue;
@@ -157,11 +164,16 @@ function validatePageForm(content)
         alert("标题不能为空");
         tf_flag = false;
     }else if(file_name == ""){
-        alert("文件名不能为空")
+        alert("文件名不能为空");
         tf_flag = false;
     }else if(content == ""){
         alert("内容不能为空");
         tf_flag = false;
     }
+    
+    
+    $("#page_title")[0].value=title;    //将去空格的值赋回去
+    $("#page_file_name")[0].value=file_name;
+    
     return tf_flag;
 }
