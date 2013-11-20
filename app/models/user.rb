@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :phone, :email, :password, :password_confirmation, :login,:types,:status
   attr_accessor :login
-  validates :email, :name, :uniqueness => true
+  validates :email, :name, :uniqueness => { case_sensitive: false, :message => "邮箱已存在" }
 
   def admin
     self.types == TYPES[:admin]
