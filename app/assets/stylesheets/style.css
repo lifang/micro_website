@@ -229,7 +229,7 @@ fieldset.page_tit {
 .fileBox { position:relative; overflow:hidden; float:left;}
 .fileBox .fileText_1 { border:1px solid #cdcdcd; padding:3px; width:70%; margin:0;}
 .fileBox .fileBtn_1 { width:25%; margin:0;}
-.fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; margin:0;}
+/*.fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; margin:0;}*/
 
 .page_tit button.up_btn { float: left; margin: 0 10px;}
 
