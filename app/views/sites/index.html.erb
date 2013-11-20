@@ -42,16 +42,17 @@
                                                   编辑
             </button>
 
-            <button class="blue_btn">
-              <%= link_to "详情", site_pages_path(s) %>
-            </button>
-
+            <%= link_to site_pages_path(s) do %>
+                <button class="blue_btn">
+                  详情
+                </button>
+            <% end %>
           </div>
         </div>
       </div>
     <%end%>
     <div style="font-size: 20px;float: right;" >
-      <%= will_paginate %>
+      <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
     </div>
   </div>
   <div class="foot"></div>
@@ -114,7 +115,7 @@
         <li>
           <%= f.label '站点名称：'%>
           <%= f.text_field :name %>
-
+          <input type="hidden" name="origin_name" id='origin_name'/>
         </li>
         <li>
           <%= f.label '根目录：'%>

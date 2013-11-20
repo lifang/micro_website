@@ -1,4 +1,5 @@
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style>
     .look_resources{
       border:0px solid red;
@@ -13,19 +14,19 @@
 </head>
 
 <div class="look_resources">
-  <%=@resources.path_name%>
+  /allsites/<%=@resources.path_name%>
   <%case which_res(@resources.path_name) %>
   <% when 'img' %>
-    <div style="height: 100px;width: 100px;">
+    <div style="text-align:center;">
       <img src="/allsites/<%=@resources.path_name%>" />
     </div>
   <% when 'voice' %>
-    <div style="height: 100px;width: 400px;">
-      <embed src="/<%=@resources.path_name%>" />
+    <div style="text-align:center;">
+      <embed src="/allsites/<%=@resources.path_name%>" />
     </div>
   <% when 'voide'%>
-    <div style="height: 400px;width: 400px;">
-      <object data="/<%=@resources.path_name%>" height="400" width="400"/>
+    <div style="text-align:center;">
+      <object data="/allsites/<%=@resources.path_name%>" height="400" width="400"/>
     </div>
   <%end%>
 </div>

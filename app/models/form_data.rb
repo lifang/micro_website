@@ -4,4 +4,5 @@ class FormData < ActiveRecord::Base
    attr_accessible :page_id, :data_hash, :user_id
    belongs_to :page
    belongs_to :user
+   serialize :data_hash
 end

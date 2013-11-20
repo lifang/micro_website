@@ -1,5 +1,5 @@
 MicroWebsite::Application.routes.draw do
-  devise_for :users, :controllers => { :passwords => "passwords" } do
+  devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations" } do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
     get "signin", :to => "devise/sessions#new"
@@ -28,6 +28,7 @@ MicroWebsite::Application.routes.draw do
     end
     resources :resources
     resources :pages do
+      resources :form_datas
       collection do
         get :sub, :form, :style, :sub_new,  :form_new
         post :preview

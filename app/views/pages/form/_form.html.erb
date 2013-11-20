@@ -4,7 +4,7 @@
       <%= f.text_field :title %>
     </span>
     <span>文件名<span class="check">*</span>
-      <%= f.text_field :file_name %>
+      <%= f.text_field :file_name %>例如aboutus.html
     </span>
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
   </h2>
@@ -21,7 +21,7 @@
       <legend class="formTit">表单</legend>
       <div class="insertDiv">
         <% unless @page.new_record?  %>
-          <%= @index.gsub(/.*\s+<div id='formContent'>/, "").gsub(/<\/div><button type='submit'>提交<\/button><\/form>.*\s+/, "").html_safe %>
+          <%= @index.split("<div id='formContent'>")[1].split("</div><button type='submit'>提交</button></form>")[0].html_safe %>
         <% end %>
       </div>
     </fieldset>
@@ -37,3 +37,9 @@
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>
+<script type="text/javascript">
+  $(".textQuestion").each(function(){
+    $(this).val($(this).prev().text())
+  })
+
+</script>

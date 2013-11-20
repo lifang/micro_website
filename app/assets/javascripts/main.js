@@ -46,6 +46,7 @@ $(function() {
     $(".second_box .close").click(function() {
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
+        $("#fault").hide();
     });
     $(".insertDiv").on("click", ".delete", function() {
         $(this).parent().remove();
@@ -95,6 +96,7 @@ $(function() {
     $('#create').click(function() {
         $(this).parents(".second_box").hide();
         $('.second_bg').hide();
+        $("#fault").hide();
     });
     $('#create_sub').click(function() {
         var name = $('#site_name').val();
@@ -108,12 +110,11 @@ $(function() {
             alert('根目录不能为空');
             return false;
         }
-        if (!root.match(/[a-zA-Z]/i)) {
+        if (root.match(/[^a-zA-Z]/i)) {
             alert('根目录只能为字母');
             return false;
         }
     });
-
 
 })
 function show_edit_page(name, rootpath, notes) {
@@ -130,6 +131,7 @@ function show_edit_page(name, rootpath, notes) {
 function text_value(name, rootpath, notes) {
 
     $('#site_name').val(name);
+    $('#origin_name').val(name);
     $('#site_root_path').val(rootpath);
     $('#site_notes').val(notes);
 }
@@ -154,7 +156,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3', 'mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -183,12 +185,13 @@ function have_exist(id){
                 }
             });
         }else{
-            alert('不合法文件，只能是视频，音频，图片，或(zip)压缩包');
+            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<200M\n音频(mp3,wav,wma)<50M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
     } 
        
 }
+
 function change_status(id,status,msg){
     $.ajax({
         async:true,
@@ -200,7 +203,7 @@ function change_status(id,status,msg){
             if(msg!="")
             if(data == 1){
                 alert(msg+"成功！");
-
+                window.location.reload();
             }else{
                 alert(msg+"失败！");
                

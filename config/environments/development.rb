@@ -43,7 +43,7 @@ MicroWebsite::Application.configure do
 	  :port => 587,
 	  :authentication => :plain,
 	  :user_name => "amandamfl1989",
-	  :password => "06291196"
+	  :password => "amanda1989"
   }
   ActionMailer::Base.default :charset => 'UTF-8'
   ActionMailer::Base.default :content_type => "text/html"

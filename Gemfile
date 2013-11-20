@@ -26,6 +26,12 @@ end
 
 gem 'jquery-rails'
 gem 'will_paginate', '3.0.4'
+gem 'spreadsheet', '0.9.0'
+
+# Deploy with Capistrano
+ gem 'capistrano', '~>2.15.4'
+ gem 'capistrano_colors', '~>0.5.5'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

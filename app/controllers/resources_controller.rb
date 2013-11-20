@@ -27,9 +27,9 @@ class ResourcesController < ApplicationController
     @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
     @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
-    @lim_resource=%w[zip jpg png mp3 mp4 avi rm rmvb gif ]
+    @lim_resource=%w[zip jpg png mp3 wma wav mp4 avi rm rmvb gif ]
     @img_resources=%w[jpg png gif]
-    @voice_resources=%w[mp3]
+    @voice_resources=%w[mp3 wma wav]
     @video_resoures=%w[mp4 avi rm rmvb]
     
     

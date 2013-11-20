@@ -3,12 +3,12 @@ class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:submit_queries, :static]
   layout 'sites'
   before_filter :get_site
-  
+  PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
   #主页 index
   def index
     @page = @site.pages.main.first
     if @page
-      index_html = File.new((Rails.root.to_s + @page.path_name), 'r')
+      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
       @index = index_html.read
       index_html.close
       render :edit
@@ -34,7 +34,7 @@ class PagesController < ApplicationController
         @path = redirect_path(@page, @site)
         render :success
       else
-        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
         render :fail
       end
     end
@@ -48,14 +48,14 @@ class PagesController < ApplicationController
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
-        content = modifyContent(@page, content, @site.id)
+        content = modifyContent(@page, content, @site.id) if content
       end
       save_into_file(content, @page) if content
       @notice = "更新成功!"
       @path = redirect_path(@page, @site)
       render :success
     else
-      @notice="新建失败！ #{@page.errors.messages.values.flatten.join("<\\n>")}"
+      @notice="更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
       render :fail
     end
   end
@@ -65,7 +65,7 @@ class PagesController < ApplicationController
     Page.transaction do
       @page = Page.find_by_id params[:id]
       if @page.destroy
-        File.delete Rails.root.to_s + @page.path_name if File.exists?(Rails.root.to_s + @page.path_name)
+        File.delete PUBLIC_PATH + @page.path_name if File.exists?(PUBLIC_PATH + @page.path_name)
         redirect_to redirect_path(@page, @site)
       else
         
@@ -88,7 +88,7 @@ class PagesController < ApplicationController
   #子页 edit
   def sub_edit
     @page = Page.find_by_id params[:id]
-    index_html = File.new((Rails.root.to_s + @page.path_name), 'r')
+    index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
     @index = index_html.read
     index_html.close
     render "/pages/sub/sub_edit"
@@ -98,7 +98,7 @@ class PagesController < ApplicationController
   def style
     @page = @site.pages.style.first
     if @page
-      index_html = File.new((Rails.root.to_s + @page.path_name), 'r')
+      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
       @index = index_html.read
       index_html.close
       render :edit
@@ -110,7 +110,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form
+    @forms = @site.pages.form.includes(:form_datas)
     render "/pages/form/form"
   end
 
@@ -123,7 +123,7 @@ class PagesController < ApplicationController
   #子页 edit
   def form_edit
     @page = Page.find_by_id params[:id]
-    index_html = File.new((Rails.root.to_s + @page.path_name), 'r')
+    index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
     @index = index_html.read
     index_html.close
     render "/pages/form/form_edit"
@@ -143,6 +143,7 @@ class PagesController < ApplicationController
   #表单预览
   def form_preview
     @content = params[:page][:content]
+    @title = params[:page][:title]
     render "/pages/form/preview", :layout => false
   end
 
@@ -167,14 +168,19 @@ class PagesController < ApplicationController
 
   #访问静态页面
   def static
-    path_name = "/public/allsites/" + params[:path_name]
-    page = Page.find_by_path_name(path_name)
+    path_name = params[:path_name]
+    page = Page.find_by_path_name("/"+path_name)
     if page
-      if page.authenticate? && page.sub? && !user_signed_in?
-        redirect_to '/signin'
-      else
-        render Rails.root.to_s + path_name, :layout => false
-      end
+      site = page.site
+      #if site.status == Site::STATUS_NAME[:pass_verified]
+        if page.authenticate? && page.sub? && !user_signed_in?
+          redirect_to '/signin'
+        else
+          render PUBLIC_PATH + "/"+ path_name, :layout => false
+        end
+      #else
+       # redirect_to '/303.html', :layout => false
+      #end
     else
       render Rails.root.to_s + '/public/404.html', :layout => false
     end
