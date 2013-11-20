@@ -46,6 +46,7 @@ $(function() {
     $(".second_box .close").click(function() {
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
+        $("#fault").hide();
     });
     $(".insertDiv").on("click", ".delete", function() {
         $(this).parent().remove();
@@ -115,7 +116,6 @@ $(function() {
         }
     });
 
-
 })
 function show_edit_page(name, rootpath, notes) {
     $(".second_bg").show();
@@ -156,7 +156,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3', 'mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -185,7 +185,7 @@ function have_exist(id){
                 }
             });
         }else{
-            alert('不合法文件，只能是视频，音频，图片，或(zip)压缩包');
+            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)\n音频(mp3,wav,wma)\n图片(jpg,png,gif)\n或(zip)压缩包');
             return false;
         }
     } 
