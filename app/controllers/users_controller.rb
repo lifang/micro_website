@@ -11,7 +11,7 @@ class UsersController  < ApplicationController
      when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>10,:conditions => "status=2") #待审核
      when '3' then @type=3; @sites=Site.paginate(:page=>params[:page],:per_page=>10,:conditions => "status=3")  #审核通过 
      when '4' then @type=4; @sites=Site.paginate(:page=>params[:page],:per_page=>10,:conditions => "status=4") #审核不通过
-     end 
+     end    
  
      render 'index'
   end

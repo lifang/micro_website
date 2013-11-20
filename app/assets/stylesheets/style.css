@@ -252,7 +252,7 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
  margin: 100px auto;
  background: #ffffff;
  border-radius: 5px;
- text-align: center;
+ text-align: center;  
 }
 .forgetPass p { padding: 10px 0;}
 .forgetPass label { display: inline-block; font-size: 18px; line-height: 36px; text-align: right; width: 100px; margin-right: 10px;}
