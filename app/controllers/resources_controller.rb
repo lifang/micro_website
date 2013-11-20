@@ -85,6 +85,7 @@ class ResourcesController < ApplicationController
     Archive::Zip.open(@tmp.path) do |z|
       z.extract(@full_dir, :flatten => true)
     end
+    #转码
     `convmv -f gbk -t utf-8 -r --notest  #{@full_dir}`
     #@full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
     arr=[]
@@ -111,7 +112,7 @@ class ResourcesController < ApplicationController
        
       end
     end
-    flash[:success]="成功加入#{arr.length}个资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'存在资源覆盖')}"
+    flash[:success]="成功加入#{arr.length}个资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
     FileUtils.rm_r @full_dir 
   end
   ##
