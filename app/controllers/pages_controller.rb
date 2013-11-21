@@ -110,7 +110,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form.includes(:form_datas).paginate(:page=>params[:page],:per_page=>1)
+    @forms = @site.pages.form.includes(:form_datas).paginate(:page=>params[:page],:per_page=>10)
     render "/pages/form/form"
   end
 
