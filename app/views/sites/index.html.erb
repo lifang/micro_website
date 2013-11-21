@@ -121,11 +121,11 @@
         <li>
           <%= f.label '站点名称：'%>
           <%= f.text_field :name %>
-          <input type="hidden" name="origin_name" id='origin_name'/>
+          <input type="hidden" name="origin_name" id='origin_name'/><span class="check">*</span>
         </li>
         <li>
           <%= f.label '根目录：'%>
-          <%= f.text_field :root_path %>
+          <%= f.text_field :root_path %>&nbsp;<span class="check">*</span>
         </li>
         <li>
           <%= f.label '备注：'%>

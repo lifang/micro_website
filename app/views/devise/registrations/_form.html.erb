@@ -2,12 +2,11 @@
 
   <li><%= f.label :phone, "联系电话：" %>
     <%= f.phone_field :phone, :class => "required", :alt => "联系电话" %></li>
-
   <li><%= f.label :email, "E-mail：" %>
     <%= f.email_field :email, :class => "required", :alt => "E-mail" %></li>
 
-  <li><%= f.label :current_password, "密码：" %>
-    <%= f.password_field :current_password, :class => "required", :alt => "密码"  %></li>
+  <li><%= f.label :current_password, "当前密码：" %>
+    <%= f.password_field :current_password, :class => "required", :alt => "当前密码"  %><span class="check">*</span></li>
 
   <div class="uinfo_act">
     <button class="blue_btn" onclick="return check()" >确认</button>
