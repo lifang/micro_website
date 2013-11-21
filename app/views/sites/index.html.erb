@@ -44,14 +44,14 @@
             </dd>
           </dl>
           <div class="box_act">
-            <button name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
+            <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
                                                   编辑
-            </button>
+            </a>
 
-            <%= link_to site_pages_path(s) do %>
-                <button class="blue_btn">
-                  详情
-                </button>
+            &nbsp;&nbsp;&nbsp;<%= link_to site_pages_path(s),class:"blue_btn" do %>
+              
+                  详情  
+                
             <% end %>
           </div>
         </div>
