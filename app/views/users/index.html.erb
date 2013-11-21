@@ -68,7 +68,7 @@
 		                            	<%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;"%>	                          	
 										<% end %>
 								</div>																		
-                                		<button class="blue_btn" style="height: 27px;line-height: 18px;"  onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
+                                		<button class="blue_btn" style="height: 27px; line-height: 4px;"  onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
                               
                             </td>
                         </tr>
@@ -143,9 +143,9 @@
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
                             	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
                             	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank"%>
+                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
                             	<% else%>
-                            		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
+                            		<button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
                             	<% end %>
                             </td>
                         </tr>
@@ -180,9 +180,9 @@
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
                             	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
                             	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank"%>
+                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
                             	<% else%>
-                            		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
+                            		<button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
                             	<% end %>
                             </td>
                         </tr>
