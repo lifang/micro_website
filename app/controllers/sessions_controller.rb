@@ -8,11 +8,19 @@ class SessionsController < Devise::SessionsController
     p 111111111,user
     #禁用用户和删除用
    
-    if user!=[] && user[0].status>0
-      resource = warden.authenticate!(auth_options)
-      set_flash_message(:notice, :signed_in) if is_navigational_format?
-      sign_in(resource_name, resource)
-      respond_with resource, :location => after_sign_in_path_for(resource)
+    if user!=[]   
+         
+      user.each do |u|  
+        p u.status
+          if u.status>0
+            p u.id
+            # resource = warden.authenticate!(auth_options);p 1
+            set_flash_message(:notice, :signed_in) if is_navigational_format?;
+            sign_in(resource_name, u); 
+            respond_with resource, :location => after_sign_in_path_for(u)   ;       
+          end
+        end
+     
     else
       flash[:error]='用户不存在或已被禁用'
       redirect_to '/signin'
