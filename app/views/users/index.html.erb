@@ -1,4 +1,7 @@
-
+	
+	<input type="hidden" value="<%=params[:msg]%>" id="msg" />
+	
+	
     <div class="main_container">
     	<h1>用户管理</h1>
         <div class="main_content">
@@ -198,7 +201,12 @@
     	</div>
     </div>
 
-
+<script>
+	window.onload=function(){
+		if($("#msg").val()=='success')
+		alert('审核已完成！')		
+	}	
+</script>
 
 
 
