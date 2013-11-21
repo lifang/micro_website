@@ -193,7 +193,7 @@ fieldset.page_tit {
 /*弹窗*/
 .second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
 .second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; 
-opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#BF2c2c2c,endColorstr=#BF2c2c2c);}
+opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content {
     background-color: #FCFCFC;
     border: 1px solid #CBD5D9;

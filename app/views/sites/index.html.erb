@@ -22,7 +22,9 @@
                                                   站点名称：
             </dt>
             <dd>
-              <%=s.name%>
+              <%if s.status==3 %>
+                <%=s.name%>
+              <%end%>
             </dd>
             <dt>
                                                   根目录：

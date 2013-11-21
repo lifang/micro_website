@@ -27,10 +27,10 @@ class ResourcesController < ApplicationController
     @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
     @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
-    @lim_resource=%w[zip jpg png mp3 wma wav mp4 avi rm rmvb gif swf]
+    @lim_resource=%w[zip jpg png mp3 wma wav mp4 avi rm rmvb gif swf js]
     @img_resources=%w[jpg png gif]
     @voice_resources=%w[mp3 wma wav]
-    @video_resoures=%w[mp4 avi rm rmvb swf]
+    @video_resoures=%w[mp4 avi rm rmvb swf js]
     
     
     #创建目录
