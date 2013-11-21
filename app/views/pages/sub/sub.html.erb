@@ -17,13 +17,13 @@
           <% @sub_pages.each do |page| %>
             <tr>
               <td><%= page.title %></td>
-              <td>/allsites<%= page.path_name %></td>
+              <td><%= "/sites/static" + "?path_name=" + page.path_name %></td>
               <td><%= if_authenticate(page) %></td>
               <td>
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , sub_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , page.path_name,:target =>"_blank", :class => "blue_btn"%>
+                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn"%>
               </td>
             </tr>
           <% end %>

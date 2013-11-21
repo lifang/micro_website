@@ -30,12 +30,12 @@ class User < ActiveRecord::Base
   def is_exist(user)
     p 44444444444
     user.each do |u|
+      p u.status
       if u.status!=-1
         return true
-      end
-      false
+      end    
     end
-
+     return false
   end
   def admin
     self.types == TYPES[:admin]

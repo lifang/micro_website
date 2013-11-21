@@ -14,7 +14,7 @@ class SessionsController < Devise::SessionsController
       sign_in(resource_name, resource)
       respond_with resource, :location => after_sign_in_path_for(resource)
     else
-      flash[:error]='用户不存在'
+      flash[:error]='用户不存在或已被禁用'
       redirect_to '/signin'
     end
   end

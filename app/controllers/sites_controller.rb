@@ -2,8 +2,12 @@
 class SitesController < ApplicationController
   layout 'sites'
   def index
-    @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
 
+    if current_user.admin
+      render "/users/index"
+    else
+      @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
+    end
   end
 
   def create
@@ -16,6 +20,13 @@ class SitesController < ApplicationController
       @site.user_id=current_user.id
       respond_to do |format|
         if @site && @site.save
+          #初始化index页面
+          site_path = Rails.root.to_s + SITE_PATH % @site.root_path
+          FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+          File.open(site_path + "index.html", "wb") do |f|
+            f.write("  ")
+          end
+ 
           flash[:success]='创建成功'
           #  redirect_to root_path
         else
