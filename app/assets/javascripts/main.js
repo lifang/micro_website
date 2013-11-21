@@ -81,12 +81,13 @@ $(function() {
             $(this).parent().find("span").css("color", "#e9ebea");
         }
     });
-    //显示创建站点
+//显示创建站点
     $(".scd_btn").click(function() {
         $(".second_bg").show();
         $(".second_box." + $(this).attr("name")).show();
         $("#site_titile").html('创建站点');
         $('#site_edit_or_create').val('create');
+        $('#site_root_path').removeAttr("readonly");
         text_value("", '', '');
     })
 
@@ -118,11 +119,13 @@ $(function() {
     });
 
 })
+//显示编辑页面
 function show_edit_page(name, rootpath, notes) {
     $(".second_bg").show();
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
+    $('#site_root_path').attr("readonly","readonly");
     text_value(name, rootpath, notes);
 }
 

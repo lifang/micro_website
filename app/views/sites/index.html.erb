@@ -109,7 +109,7 @@
     <%=form_for(Site.new,remote:true) do |f|%>
       <div class="second_content">
         <span class="close" >关闭</span>
-        <h1 id="site_titile">创建站点</h1>
+        <h1 id="site_titile">创建站点(创建后不允许修改)</h1>
         <div id='fault' style="margin:auto;text-align: center;color:red"> </div>
         <input type="hidden" value="create" id="site_edit_or_create" name='site[edit_or_create]'/>
         <li>
