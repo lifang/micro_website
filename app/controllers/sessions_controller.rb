@@ -12,7 +12,7 @@ class SessionsController < Devise::SessionsController
          
       user.each do |u|  
         p u.status
-          if u.status>0
+          if u.status.to_i>0
             p u.id
             # resource = warden.authenticate!(auth_options);p 1
             set_flash_message(:notice, :signed_in) if is_navigational_format?;
