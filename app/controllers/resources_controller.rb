@@ -27,10 +27,10 @@ class ResourcesController < ApplicationController
     @resource.path_name=@root1_path+"/resources/"+@tmp.original_filename
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
     @full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
-    @lim_resource=%w[zip jpg png mp3 wma wav mp4 avi rm rmvb gif ]
+    @lim_resource=%w[zip jpg png mp3 wma wav mp4 avi rm rmvb gif swf]
     @img_resources=%w[jpg png gif]
     @voice_resources=%w[mp3 wma wav]
-    @video_resoures=%w[mp4 avi rm rmvb]
+    @video_resoures=%w[mp4 avi rm rmvb swf]
     
     
     #创建目录
@@ -102,9 +102,9 @@ class ResourcesController < ApplicationController
         
         if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
-        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<50*1024*1024
+        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<10*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
-        elsif @video_resoures.include?(postfix_name)&&tmp_file.size<200*1024*1024
+        elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
         else
           arr_error+=1
@@ -112,7 +112,7 @@ class ResourcesController < ApplicationController
        
       end
     end
-    flash[:success]="成功加入#{arr.length}个资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
+    flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
     FileUtils.rm_r @full_dir 
   end
   ##

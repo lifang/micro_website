@@ -16,7 +16,7 @@
           <% @sub_pages.each do |page| %>
             <tr>
               <td><%= page.title %></td>
-              <td><%= page.path_name %></td>
+              <td>/allsites<%= page.path_name %></td>
               <td><%= if_authenticate(page) %></td>
               <td>
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
@@ -38,7 +38,6 @@
   <div class="second_content second_content2">
     <span class="close" >关闭</span>
     <div id="sub_form">
-
     </div>
   </div>
 </div>

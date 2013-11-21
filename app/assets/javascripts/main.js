@@ -6,6 +6,10 @@ $(function() {
 
     var insert3 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
 
+    $("#close_flash").click(function(){
+        $("#flash_field").hide()
+    });
+     $("#flash_field").fadeOut(4000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });
@@ -160,7 +164,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB','swf','SWF', 'gif','GIF'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');

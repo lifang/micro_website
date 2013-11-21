@@ -1,46 +1,52 @@
+<% flash.each do |name, msg| %>
+  <div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+    <div   style="font-size:20px;margin: 200px auto;width: 300px;background: #ffffff;padding: 20px;">
+      <span class="close" id="close_flash" style="float:right;" ></span>
+      <%=msg%>
+    </div>
+  </div>
+<% end %>
 <div class="main_container">
-	 <% flash.each do |name, msg| %>
-       <span ><%= content_tag :div, msg, id: "flash#{name}",style:"font-size:20px;color:red;background:#D1EEEE;width:100%"%></span>
-    <% end %>
-	<%= render '/sites/site_status' %>
-	<!-- 文件上传-->
-	<div class="tabDiv">
-		<div class="page_content">
-			<div class="page_tit">
-				<label>资源目录路径：/allsites/<%=@site.root_path%>/resources</label>
-			</div>
-			<fieldset class="page_tit">
-				<%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
-				<legend>
-                                      在这你可以上传页面资源
-				</legend>
-				<div class="fileBox" style="width:300px;">
-					<input type="text" class="fileText_1" id="resource_c" />
-					<button class="fileBtn_1 blue_btn"  >浏览...</button>
-					<%=f.file_field :myfile , class:"file_1" %>
-				</div>
-                          <button type="button" class="blue_btn up_btn" onclick ="return have_exist(<%= @site.id %>)">上传</button>
-				<%#=f.submit 'Upload',class:"blue_btn up_btn",onclick:"javascript:return have_exist(#{@site.id})"%>
-				<%end%>
-			</fieldset>
-			<%=render 'resources/form'%>
-			<div class="page_act"></div>
-		</div>
-	</div>
 
-	<div class="foot"></div>
+  <%= render '/sites/site_status' %>
+  <!-- 文件上传-->
+  <div class="tabDiv">
+    <div class="page_content">
+      <div class="page_tit">
+        <label>资源目录路径：/allsites/<%=@site.root_path%>/resources</label>
+      </div>
+      <fieldset class="page_tit">
+        <%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+          <legend>
+            在这你可以上传页面资源
+          </legend>
+          <div class="fileBox" style="width:300px;">
+            <input type="text" class="fileText_1" id="resource_c" />
+            <button class="fileBtn_1 blue_btn"  >浏览...</button>
+            <%=f.file_field :myfile , class:"file_1" %>
+            </div>
+            <button type="button" class="blue_btn up_btn" onclick ="return have_exist(<%= @site.id %>)">上传</button>
+    <%#=f.submit 'Upload',class:"blue_btn up_btn",onclick:"javascript:return have_exist(#{@site.id})"%>
+          <%end%>
+        </fieldset>
+        <%=render 'resources/form'%>
+        <div class="page_act"></div>
+      </div>
+    </div>
 
-	<div class="second_bg"></div>
-	
-	
-</div>
-<div id="fugai" style="display: none;position: fixed ;top:0; z-index:2;width:100%;height:100%;opacity:0.7;background:#D1EEEE;">
-  
-</div>
-<div id="fugai1" style="display: none;width:100%;height:100%;position: fixed ;top:0;z-index: 3;">
-  <div style="display:block;margin: 100px auto;width:80px;height:80px;">
+    <div class="foot"></div>
+
+    <div class="second_bg"></div>
+
+
+  </div>
+  <div id="fugai" style="display: none;position: fixed ;top:0; z-index:2;width:100%;height:100%;opacity:0.7;background:#D1EEEE;">
+
+  </div>
+  <div id="fugai1" style="display: none;width:100%;height:100%;position: fixed ;top:0;z-index: 3;">
+    <div style="display:block;margin: 100px auto;width:80px;height:80px;">
       <h2 >资源上传中</h2>
       <img src="/assets/009.gif" style=" width:80px;height:80px; "/>
-  </div>
+    </div>
 
-</div>
+  </div>
