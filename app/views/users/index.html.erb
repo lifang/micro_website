@@ -3,18 +3,32 @@
     	<h1>用户管理</h1>
         <div class="main_content">
         	<ul class="theTabs cf">
-				<li class="theTab" <%if @type==1%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/1'">用户管理</span>
-				</li>
-				<li class="theTab" <%if @type==2%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/2'">待审核站点</span>
-				</li>
-				<li class="theTab" <%if @type==3%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/3'">审核通过站点</span>
-				</li>
-                <li class="theTab" <%if @type==4%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/4'">审核不通过站点</span>
-				</li>
+        		<%= link_to '/user/manage/1' do%>
+					<li class="theTab" <%if @type==1%> style="background-color:#328BD5 " <% end %> >
+						<span>用户管理</span>
+					</li>
+				<% end %>
+				
+				<%= link_to '/user/manage/2' do%>
+					<li class="theTab" <%if @type==2%> style="background-color:#328BD5 "  <% end %> >
+						<span>待审核站点</span>
+					</li>
+				<% end %>
+				
+				
+				<%= link_to '/user/manage/3' do%>
+					<li class="theTab" <%if @type==3%> style="background-color:#328BD5 " <% end %> >
+						<span>审核通过站点</span>
+					</li>
+				<% end %>
+				
+				
+				<%= link_to '/user/manage/4' do%>
+	                <li class="theTab" <%if @type==4%> style="background-color:#328BD5 " <% end %> >
+						<span>审核不通过站点</span>
+					</li>
+				<% end %>
+				
 			</ul>
 			<hr class="tab_line" />
             
