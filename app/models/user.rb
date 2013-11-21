@@ -1,6 +1,6 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-  before_save :is_user_exist
+  before_create :is_user_exist 
   STATUS = {-1 => "删除", 0 => "禁用", 1 => "启用"}
   STATUS_NAME = {:del => -1 , :forbidden => 0, :normal => 1}
   TYPES = {:admin => 1, :mormal => 0}

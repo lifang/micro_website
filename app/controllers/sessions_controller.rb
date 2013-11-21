@@ -3,10 +3,12 @@ class SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    p params
     user=User.where("name=? or email= ?",params[:user][:login],params[:user][:login])
     p 111111111,user
     #禁用用户和删除用
-    if user && user[0].status>0
+   
+    if user!=[] && user[0].status>0
       resource = warden.authenticate!(auth_options)
       set_flash_message(:notice, :signed_in) if is_navigational_format?
       sign_in(resource_name, resource)
