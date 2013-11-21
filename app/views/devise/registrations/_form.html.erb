@@ -25,8 +25,8 @@
 
 
 function checkPhone(){
-	flg=true;
-	var phone = document.getElementById('user_phone').value;
+	flg=true;       
+	var phone =  $("#user_phone").val();
 	var phoneReg =/^1[3458]\d{9}$/;
 	if(!phoneReg.test(phone)){
 		alert('提示:\n\n请输入有效的联系电话。');                 
@@ -42,7 +42,7 @@ function checkPhone(){
 function checkEmail(){
 	
 	flg=true;
-	var email = document.getElementById('user_email').value;
+	var email = $("#user_email").val();
 	var emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	
 	 if(!emailReg.test(email))
