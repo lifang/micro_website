@@ -4,7 +4,7 @@
       <th>路径【拷贝路径作为资源的src】</th>
       <th>操作</th>
     </tr>
-    <% @site.resources.each do |sr|%>
+    <% @resources.each do |sr|%>
       <tr>
         <td>/<%= "allsites/" + sr.path_name%>
           
@@ -21,4 +21,5 @@
         </tr>       
       <%end%>
     </table>
+  <%=will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
   </div>

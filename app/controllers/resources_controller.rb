@@ -9,6 +9,26 @@ class ResourcesController < ApplicationController
 
   def index
     @site=Site.find(params[:site_id])
+    @resources =classification('video')
+  end
+  def classification(sql_str)
+    @site.resources.paginate(page:params[:page],:per_page => 9)
+  end
+
+  def get_str(name)
+   case name
+   when 'img'
+     "path_name like '%.jpg' or path_name like '%.png' or path_name like '%.gif' or "+
+     "path_name like '%.JPG' or path_name like '%.PNG' or path_name like '%.GIF'"
+   when 'voice'
+     "path_name like '%.mp3' or path_name like '%.wma' or path_name like '%.wav' or "+
+     "path_name like '%.MP3' or path_name like '%.WMA' or path_name like '%.WAV'"
+   when 'js'
+     "path_name like '%.js' or path_name like '%.JS'"
+   when 'video'
+      "path_name like '%.mp4' or path_name like '%.avi' or path_name like '%.rm' or path_name like '%.rmvb' or path_name like '%.swf' or "+
+      "path_name like '%.MP4' or path_name like '%.AVI' or path_name like '%.RM' or path_name like '%.RMVB' or path_name like '%.SWF'"
+   end
   end
 
   def create
@@ -32,6 +52,7 @@ class ResourcesController < ApplicationController
     @voice_resources=%w[mp3 wma wav]
     @video_resoures=%w[mp4 avi rm rmvb swf js]
     
+
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)

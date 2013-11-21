@@ -170,7 +170,7 @@ fieldset.page_tit {
 .page_tit input { font-size: 16px;}
 .page_tit span { padding: 0 5px; color: #ff0000;}
 .page_tit button { float: right; margin: 5px 22px;}
-.page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%; height: 270px; overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
+.page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%;  overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
 .page_act { padding: 10px; text-align: center;}
 .page_act button { margin: 0 10px;}
 
