@@ -9,9 +9,9 @@ class ResourcesController < ApplicationController
 
   def index
     @site=Site.find(params[:site_id])
-    @resources =classification('video')
+    @resources =classification
   end
-  def classification(sql_str)
+  def classification
     @site.resources.paginate(page:params[:page],:per_page => 9)
   end
 
