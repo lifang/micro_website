@@ -7,61 +7,67 @@
   </div>
 <% end %>
 <div class="main_container">
-    <h1>站点汇总</h1>
-    <div class="set_btn cf" name='create'>
-      <button class="blue_btn scd_btn" name="new_point">
+  <h1>站点汇总</h1>
+  <div class="set_btn cf" name='create'>
+    <button class="blue_btn scd_btn" name="new_point">
 				创建站点
-      </button>
-    </div>
-    <% @sites.each do |s|%>
-      <div class="main_content">
-        <div class="con_box point_box">
-          <span class="close" onclick="delete_site(<%=s.id%>)"></span>
-          <dl>
-            <dt>
-                                                  站点名称：
-            </dt>
-            <dd>
-              <%if s.status==3 %>
+    </button>
+  </div>
+  <% @sites.each do |s|%>
+    <div class="main_content">
+      <div class="con_box point_box">
+        <span class="close" onclick="delete_site(<%=s.id%>)"></span>
+        <dl>
+          <dt>
+            站点名称：
+          </dt>
+          <dd>
+            <% if s.status==3 %>
+              <a href="/sites/static?path_name=/<%=s.root_path%>/resources/index.html">
                 <%=s.name%>
-              <%end%>
-            </dd>
-            <dt>
-                                                  根目录：
-            </dt>
-            <dd>
-              <%=s.root_path%>
-            </dd>
-            <dt>
-                                                  状态：
-            </dt>
-            <dd>
-              <%= status_desc s.status%>
-            </dd>
-            <dt>
-                                                  备注：
-            </dt>
-            <dd>
-              <%=s.notes%>
-            </dd>
-          </dl>
-          <div class="box_act">
-            <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
-                                                  编辑
-            </a>
+              </a>
+            <%else%>
+              <%=s.name%>
+            <%end%>
+          </dd>
+          <dt>
+            根目录：
+          </dt>
+          <dd>
+            <%=s.root_path%>
+          </dd>
+          <dt>
+            状态：
+          </dt>
+          <dd>
+            <%= status_desc s.status%>
+          </dd>
+          <dt>
+            备注：
+          </dt>
+          <dd>
+            <%=s.notes%>
+          </dd>
+        </dl>
+        <div class="box_act">
+          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
+            编辑
+          </a>
 
-            &nbsp;&nbsp;&nbsp;<%= link_to site_pages_path(s),class:"blue_btn" do %>
-              
-                  详情  
-                
+          &nbsp;&nbsp;&nbsp;<%= link_to site_pages_path(s),class:"blue_btn" do %>
+
+              详情
+
             <% end %>
           </div>
         </div>
       </div>
     <%end%>
-    <div style="font-size: 20px;float: right;" >
-      <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
-    </div>
+
+  </div>
+  <div class="clear"></div>
+  <div style="font-size: 20px;float: right;" >
+    <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
   </div>
   <div class="foot"></div>
 
@@ -79,10 +85,10 @@
       </li>
       <div class="uinfo_act">
         <button class="blue_btn">
-					确认
+                                          确认
         </button>
         <button class="blue_btn">
-					取消
+                                          取消
         </button>
       </div>
     </div>
@@ -105,10 +111,10 @@
       </li>
       <div class="uinfo_act">
         <button class="blue_btn">
-					确认
+                                          确认
         </button>
         <button class="blue_btn">
-					取消
+                                          取消
         </button>
       </div>
     </div>
@@ -135,7 +141,7 @@
 
         </li>
         <div class="uinfo_act">
-           <%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
+          <%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
             <input id="create" class="blue_btn" type="button" value="取消"/>
           </div>
         </div>
@@ -144,4 +150,3 @@
 
 
 
-  

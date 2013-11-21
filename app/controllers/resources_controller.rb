@@ -32,7 +32,6 @@ class ResourcesController < ApplicationController
     @voice_resources=%w[mp3 wma wav]
     @video_resoures=%w[mp4 avi rm rmvb swf js]
     
-    
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)

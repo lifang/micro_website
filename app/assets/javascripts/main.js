@@ -32,7 +32,6 @@ $(function() {
             $(this).css("color", "#A7A7A7");
         }
     });
-
     $(".insertDiv").on("dblclick", ".inputArea", function() {
         $(this).hide();
         $(this).parent().children(".txtArea").show();
@@ -103,6 +102,7 @@ $(function() {
         $('.second_bg').hide();
         $("#fault").hide();
     });
+    
     $('#create_sub').click(function() {
         var name = $('#site_name').val();
         var root = $('#site_root_path').val();
@@ -230,6 +230,12 @@ function arr_contant(name,arr){
     return false;
 }
 
-
+function check_form_particular(id){
+   var content=$("#"+id).val();
+   regex=/\~\!\@\#\$\%\^\&\*/;
+   if(!content.match(regex)){
+       alert('有非法字符！')
+   }
+}
 
 
