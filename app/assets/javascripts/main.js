@@ -88,7 +88,7 @@ $(function() {
     $(".scd_btn").click(function() {
         $(".second_bg").show();
         $(".second_box." + $(this).attr("name")).show();
-        $("#site_titile").html('创建站点');
+        $("#site_titile").html('创建站点（根目录创建后不可修改）');
         $('#site_edit_or_create').val('create');
         $('#site_root_path').removeAttr("readonly");
         text_value("", '', '');
