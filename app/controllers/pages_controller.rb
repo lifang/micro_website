@@ -75,7 +75,7 @@ class PagesController < ApplicationController
 
   #子页 index
   def sub
-    @sub_pages = @site.pages.sub
+    @sub_pages = @site.pages.sub.paginate(:page=>params[:page],:per_page=>10)
     render "/pages/sub/sub"
   end
 
@@ -110,7 +110,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form.includes(:form_datas)
+    @forms = @site.pages.form.includes(:form_datas).paginate(:page=>params[:page],:per_page=>1)
     render "/pages/form/form"
   end
 
