@@ -100,7 +100,7 @@
                             <td>待审核</td>
                             <td><%= site.root_path%></td>
                             <td>
-		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px;line-height: 26px" %>                             	
+		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px;line-height: 26.5px" %>                             	
                             	                          	
                             	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
                             	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
