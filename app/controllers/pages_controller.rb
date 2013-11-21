@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   layout 'sites'
   before_filter :get_site
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
+  caches_action :static
+  
   #主页 index
   def index
     @page = @site.pages.main.first
@@ -153,14 +155,14 @@ class PagesController < ApplicationController
     FormData.transaction do
       if current_user
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
-        redirect_to "/#{@site.root_path}/index.html"
+        redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?
           flash[:notice] = "请先登陆！"
           redirect_to '/signin'
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
-          redirect_to "/#{@site.root_path}/index.html"
+          redirect_to "/allsites/#{@site.root_path}/index.html"
         end
       end
     end
@@ -169,14 +171,14 @@ class PagesController < ApplicationController
   #访问静态页面
   def static
     path_name = params[:path_name]
-    page = Page.find_by_path_name("/"+path_name)
+    page = Page.find_by_path_name(path_name)
     if page
       site = page.site
       #if site.status == Site::STATUS_NAME[:pass_verified]
         if page.authenticate? && page.sub? && !user_signed_in?
           redirect_to '/signin'
         else
-          render PUBLIC_PATH + "/"+ path_name, :layout => false
+          redirect_to "/allsites" + path_name, :layout => false
         end
       #else
        # redirect_to '/303.html', :layout => false

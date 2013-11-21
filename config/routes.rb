@@ -14,6 +14,8 @@ MicroWebsite::Application.routes.draw do
   
   post "site/verify/:sid",:to=>"sites#verify"
   get "site/change_status/:sid/:status",:to=>"sites#change_status"
+
+  match "/sites/static", :to => "pages#static"
   
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
@@ -50,6 +52,6 @@ MicroWebsite::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
+ # match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
 end
 
