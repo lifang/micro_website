@@ -1,7 +1,7 @@
 <%if @user.status==0 %>
-$('#status_btn_<%=@user.id%>').html('<%= button_to "启用", "/user/enable/#{@user.id}",remote:true,class: "blue_btn" %>')
+$('#status_btn_<%=@user.id%>').html('<%= button_to "启用", "/user/enable/#{@user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;" %>')
 $('#user_status_<%=@user.id%>').html('禁用')
 <% else %>
-$('#status_btn_<%=@user.id%>').html('<%= button_to "禁用", "/user/disable/#{@user.id}",remote:true,class: "blue_btn" %>')
+$('#status_btn_<%=@user.id%>').html('<%= button_to "禁用", "/user/disable/#{@user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;" %>')
 $('#user_status_<%=@user.id%>').html('正常')
 <% end %>
