@@ -23,14 +23,14 @@ class PagesController < ApplicationController
   #新建page
   def create
     content = params[:page][:content]
-    img="<img src='"+params[:page][:img_path]+"'/><br>"
+    img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
         unless @page.main?
-          content = modifyContent(@page, content, @site.id,img)
+          content = modifyContent(@page, content, @site.id,@page.form? ? img : "")
         end
         save_into_file(content, @page) if content
         @notice = "新建成功!"
@@ -46,13 +46,13 @@ class PagesController < ApplicationController
   #更新page
   def update
     content = params[:page][:content]
-     img="<img src='"+params[:page][:img_path]+"'/><br>"
+    img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
-        content = modifyContent(@page, content, @site.id,img) if content
+        content = modifyContent(@page, content, @site.id,@page.form? ? img : "") if content
       end
       save_into_file(content, @page) if content
       @notice = "更新成功!"
@@ -178,7 +178,7 @@ class PagesController < ApplicationController
     page = Page.find_by_path_name(path_name)
     if page
       site = page.site
-      if current_user.admin || site.user == current_user
+      if current_user && (current_user.admin || site.user == current_user)
         redirect_to "/allsites" + path_name
       else
         if site.status == Site::STATUS_NAME[:pass_verified]
