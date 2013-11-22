@@ -1,6 +1,16 @@
 	
 <input type="hidden" value="<%=params[:msg]%>" id="msg" />
 
+<% flash.each do |name, msg| %>
+  <div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+    <div   style="font-size:20px;margin: 200px auto;width: 300px;background: #E0EEEE;padding: 20px;">
+      <span class="close" id="close_flash" style="float:right;" ></span>
+      <%=msg%>
+    </div>
+  </div>
+<% end %>
+
+
 
 <div class="main_container">
   <h1>用户管理</h1>
@@ -188,13 +198,6 @@
 
               </div>
             </div>
-
-            <script>
-              window.onload=function(){
-                if($("#msg").val()=='success')
-                  alert('审核已完成！')
-              }
-            </script>
 
 
 

@@ -84,16 +84,16 @@ class SitesController < ApplicationController
     page = params[:page]          #回到页面的页数
       
     if site.update_attribute(:status,status)
-      msg='success'
+      flash[:msg]='审核操作已完成！'
     else
-      msg='failed!'
+      flash[:msg]='failed!'
     end
       
       
     if(page==''||page==1)
-      redirect_to "/user/manage/2?msg=#{msg}"
+      redirect_to "/user/manage/2"
     else
-      redirect_to "/user/manage/2?page=#{page}&msg=#{msg}"
+      redirect_to "/user/manage/2?page=#{page}"
     end
       
   end
