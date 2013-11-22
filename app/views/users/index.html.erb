@@ -103,7 +103,7 @@
                     <td><%= site.root_path%></td>
                     <td>
                       <%= button_to '审核',"/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; " %>                                      
-                      <%= link_to   '预览',"/allsites/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                      <%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
                        
                     </td>
                    </tr>
@@ -140,7 +140,7 @@
                         <td>审核通过</td>
                         <td><%= site.root_path%></td>
                         <td>
-                            <%= link_to   '预览',"/allsites/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                      		<%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
                         </td>
                      </tr>
                     <% end %>
@@ -173,7 +173,7 @@
                           <td>审核不通过</td>
                           <td><%= site.root_path%></td>
                           <td>
-                              <%= link_to   '预览',"/allsites/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                     		  <%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
                           </td>
                         </tr>
                       <% end %>
