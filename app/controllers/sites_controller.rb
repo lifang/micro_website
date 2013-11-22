@@ -11,31 +11,36 @@ class SitesController < ApplicationController
   end
 
   def create
-    if params[:site][:edit_or_create]=='create'
-      @site=Site.new()
-      @site.name=params[:site][:name].split(' ').join
-      @site.root_path=params[:site][:root_path].gsub(/\/+/, "")
-      @site.notes=params[:site][:notes]
-      @site.status=0
-      @site.user_id=current_user.id
-      respond_to do |format|
-        if @site && @site.save
-          #初始化index页面
-          site_path = Rails.root.to_s + SITE_PATH % @site.root_path
-          FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
-          File.open(site_path + "index.html", "wb") do |f|
-            f.write("  ")
+    Site.transaction do
+      if params[:site][:edit_or_create]=='create'
+        @site=Site.new()
+        @site.name=params[:site][:name].split(' ').join
+        @site.root_path=params[:site][:root_path].gsub(/\/+/, "")
+        @site.notes=params[:site][:notes]
+        @site.status=0
+        @site.user_id=current_user.id
+        respond_to do |format|
+          if @site && @site.save
+            #初始化index页面
+            page = @site.pages.create({:title => "index", :file_name => "index.html",
+                :path_name => "/#{@site.root_path}/index.html", :types => Page::TYPE_NAMES[:main]})
+            if page
+              site_path = Rails.root.to_s + SITE_PATH % @site.root_path
+              FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+              File.open(site_path + "index.html", "wb") do |f|
+                f.write("  ")
+              end
+            end
+            flash[:success]='创建成功'
+            #  redirect_to root_path
+          else
+            flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
           end
- 
-          flash[:success]='创建成功'
-          #  redirect_to root_path
-        else
-          flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
+          format.js
         end
-        format.js
+      else
+        update
       end
-    else
-      update
     end
   end
 
