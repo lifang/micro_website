@@ -75,7 +75,9 @@
               </table>
             </div>
             <div class="clear"></div>
+            <div class="flickr_pagination">
             <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+            </div>
           </div>
 
 
@@ -103,7 +105,7 @@
                         <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
                         <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
                         <% unless path.nil?%>
-                          <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
+                          <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px;padding: 5px 10px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
                           <% else%>
                             <button style="  line-height: 10px;  background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
                           <% end %>
@@ -115,7 +117,10 @@
                   </table>
                 </div>
                 <div class="clear"></div>
-                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+                <div class="flickr_pagination">
+                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+                </div>
+
               </div>
 
             <% when 3 then %>	<!--审核通过站点-->
@@ -152,8 +157,9 @@
                     </table>
                   </div>
                   <div class="clear"></div>
+                   <div class="flickr_pagination">
                   <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                </div>
+                </div></div>
 
 
               <% when 4 then%>	<!--审核不通过站点-->
@@ -189,8 +195,9 @@
                       </table>
                     </div>
                     <div class="clear"></div>
+                     <div class="flickr_pagination">
                     <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                  </div>
+                  </div></div>
                 <% end %>
 
               </div>

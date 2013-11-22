@@ -90,7 +90,8 @@ $(function() {
         $(".second_box." + $(this).attr("name")).show();
         $("#site_titile").html('创建站点（根目录创建后不可修改）');
         $('#site_edit_or_create').val('create');
-        $('#site_root_path').removeAttr("readonly");
+        $('#site_root_path').removeAttr("disabled");
+        $('#must_fix').show();
         text_value("", '', '');
     })
 
@@ -129,7 +130,8 @@ function show_edit_page(name, rootpath, notes) {
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
-    $('#site_root_path').attr("readonly","readonly");
+    $('#site_root_path').attr("disabled","disabled");
+    $('#must_fix').hide();
     text_value(name, rootpath, notes);
 }
 
@@ -193,7 +195,7 @@ function have_exist(id){
                 }
             });
         }else{
-            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<200M\n音频(mp3,wav,wma)<50M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
+            alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
     } 

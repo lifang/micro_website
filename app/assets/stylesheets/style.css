@@ -261,4 +261,4 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 
 
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
- .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 28px;}
+ .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 30px; line-height: 30px; padding: 0 10px;}

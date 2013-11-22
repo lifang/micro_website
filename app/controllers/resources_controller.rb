@@ -11,10 +11,11 @@ class ResourcesController < ApplicationController
     @site=Site.find(params[:site_id])
     @resources =classification
   end
+  #分类，这里没做分类功能
   def classification
     @site.resources.paginate(page:params[:page],:per_page => 9)
   end
-
+  #得到sql选择语句
   def get_str(name)
    case name
    when 'img'
@@ -34,7 +35,7 @@ class ResourcesController < ApplicationController
   def create
    do_create
   end
-  #创建
+  #上传功能
   def do_create
     @site=Site.find(params[:site_id])
     @tmp = params[:resources][:myfile]
@@ -51,8 +52,6 @@ class ResourcesController < ApplicationController
     @img_resources=%w[jpg png gif]
     @voice_resources=%w[mp3 wma wav]
     @video_resoures=%w[mp4 avi rm rmvb swf js]
-    
-
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)
@@ -60,17 +59,15 @@ class ResourcesController < ApplicationController
         save_all
       elsif @img_resources.include?(postfix_name)&&@tmp.size<1024*1024
         svae_afile @tmp
-      elsif @voice_resources.include?(postfix_name)&&@tmp.size<50*1024*1024
+      elsif @voice_resources.include?(postfix_name)&&@tmp.size<20*1024*1024
         svae_afile @tmp
-      elsif @video_resoures.include?(postfix_name)&&@tmp.size<200*1024*1024
+      elsif @video_resoures.include?(postfix_name)&&@tmp.size<50*1024*1024
         svae_afile @tmp
       else
-        flash[:error]='文件大小超限,图片不超过1M，音频不超过50M，视频不超过200M'
+        flash[:error]='文件大小超限,图片不超过1M，音频不超过20M，视频不超过50M'
       end
       redirect_to site_resources_path(@site)
     else
-      #flash[:error]='资源不规范，只能视频，音频，图片，或(zip)压缩包'
-      #render 'index'
       redirect_to site_resources_path(@site)
     end
   end
@@ -101,7 +98,6 @@ class ResourcesController < ApplicationController
     #解压在一个临时目录
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"temp"
     #执行解压
-    
     Archive::Zip.open(@tmp.path) do |z|
       z.extract(@full_dir, :flatten => true)
     end
@@ -122,20 +118,19 @@ class ResourcesController < ApplicationController
         
         if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
-        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<10*1024*1024
+        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
         elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
         else
           arr_error+=1
-        end
-       
+        end      
       end
     end
     flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
     FileUtils.rm_r @full_dir 
   end
-  ##
+  ## 从zip保存
   def save_from_zip(resour,arr,ful_pa,ful_path)
     if resour.save
       arr<<resour.path_name
@@ -154,21 +149,18 @@ class ResourcesController < ApplicationController
   end
 
 
-
+  #是否重复action，以便于action的调用
   def is_not_repeat
     @site=Site.find(params[:id])
     name=@site.root_path+"/resources/"+params[:name]
     @re=Resource.find_by_path_name(name)
-
     if @re
       render :json => {:status => 0}
     else
       render :json => {:status => 1}
     end
   end
-
-
-    #
+  #删除
   def destroy
     @site=Site.find(params[:site_id])
     @resource=Resource.find(params[:id])
@@ -182,13 +174,13 @@ class ResourcesController < ApplicationController
       redirect_to site_resources_path(@site)
     end
   end
-
+  #删除
   def delete_file(name)
     dirname=Rails.root.to_s+'/public/allsites/'+name;
     FileUtils.rm dirname
   end
 
-  #show
+  #show the resources
   def show
     @resources =Resource.find(params[:id])
     render 'show' ,:layout=>false

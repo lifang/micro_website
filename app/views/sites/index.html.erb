@@ -63,12 +63,13 @@
         </div>
       </div>
     <%end%>
-
-  </div>
   <div class="clear"></div>
-  <div style="font-size: 20px;float: right;" >
+  <div class="digg_pagination" style="margin:0 auto;text-align: center;">
     <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
   </div>
+  </div>
+  
+  
   <div class="foot"></div>
 
   <div class="second_box uinfo_chg">
@@ -133,7 +134,7 @@
         </li>
         <li>
           <%= f.label '根目录：'%>
-          <%= f.text_field :root_path %>&nbsp;<span class="check">*</span>
+          <%= f.text_field :root_path %>&nbsp;<span id="must_fix" class="check">*</span>
         </li>
         <li>
           <%= f.label '备注：'%>
