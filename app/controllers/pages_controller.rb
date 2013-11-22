@@ -79,7 +79,7 @@ class PagesController < ApplicationController
 
   #子页 index
   def sub
-    @sub_pages = @site.pages.sub.paginate(:page=>params[:page],:per_page=>10)
+    @sub_pages = @site.pages.sub.order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
     render "/pages/sub/sub"
   end
 
