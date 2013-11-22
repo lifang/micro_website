@@ -23,13 +23,14 @@ class PagesController < ApplicationController
   #新建page
   def create
     content = params[:page][:content]
+    img="<img src='"+params[:page][:img_path]+"'/><br>"
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
         unless @page.main?
-          content = modifyContent(@page, content, @site.id)
+          content = modifyContent(@page, content, @site.id,img)
         end
         save_into_file(content, @page) if content
         @notice = "新建成功!"
@@ -45,12 +46,13 @@ class PagesController < ApplicationController
   #更新page
   def update
     content = params[:page][:content]
+     img="<img src='"+params[:page][:img_path]+"'/><br>"
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
-        content = modifyContent(@page, content, @site.id) if content
+        content = modifyContent(@page, content, @site.id,img) if content
       end
       save_into_file(content, @page) if content
       @notice = "更新成功!"
@@ -116,13 +118,13 @@ class PagesController < ApplicationController
     render "/pages/form/form"
   end
 
-  #子页 new
+  #表单 new
   def form_new
     @page = Page.new
     render "/pages/form/form_new"
   end
 
-  #子页 edit
+  #表单 edit
   def form_edit
     @page = Page.find_by_id params[:id]
     index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
@@ -144,6 +146,7 @@ class PagesController < ApplicationController
 
   #表单预览
   def form_preview
+    @img=params[:page][:img_path]
     @content = params[:page][:content]
     @title = params[:page][:title]
     render "/pages/form/preview", :layout => false
@@ -154,7 +157,7 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
+        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id,:img_path=>params[:img])
         redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?
@@ -174,7 +177,7 @@ class PagesController < ApplicationController
     path_name = params[:path_name]
     page = Page.find_by_path_name(path_name)
     if page
-      p 22222222
+
       site = page.site
       #if site.status == Site::STATUS_NAME[:pass_verified]
         if page.authenticate? && page.sub? && !user_signed_in?

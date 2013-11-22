@@ -25,10 +25,10 @@ module ApplicationHelper
     ele_hash
   end
 
-  def modifyContent(page,content,site_id)
+  def modifyContent(page,content,site_id,img)
     content = content.strip
     if page.form? 
-        content = "<!DOCTYPE html>
+      content = "<!DOCTYPE html>
                  <html>
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -54,7 +54,7 @@ a.each(function(){
                     <title>preview</title>
                   </head>
                   <body>
-<h2 style='text-align: center'>#{page.title}</h2>
+<h2 style='text-align: center'>#{page.title}</h2><br/>#{img}
                  <form accept-charset='UTF-8' action='/sites/#{site_id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post'>
                    <div style=\"margin:0;padding:0;display:inline\">
 <input name=\"utf8\" type=\"hidden\" value=\"✓\">

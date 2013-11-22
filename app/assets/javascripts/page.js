@@ -99,10 +99,14 @@ function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
     var tf_flag = validatePageForm(content);
     content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
-    
-    
     var title = $.trim($("#page_title").val()); //拿到去空格的值
     var file_name = $.trim($("#page_file_name").val());
+    var img=$("#page_img_path").val();
+    img=$.trim(img);
+    if(img==""){
+        alert('请输入图片路径');
+        return flase;
+    }
     $("#page_title")[0].value=title;    //将去空格的值赋回去
     $("#page_file_name")[0].value=file_name;
     
@@ -112,7 +116,7 @@ function submitForm(obj, flag,id){
             $("#form_container form").removeAttr("target");
             $("#form_container #hiddenContent").remove();
             dataValue = $(obj).parents("form").serialize();
-            dataValue = dataValue + "&page[content]=" + content;
+            dataValue = dataValue + "&page[content]=" + content+"&page[img_path]="+img;
             $.ajax({
                 url: $(obj).attr("alt"),
                 type: "POST",
@@ -127,9 +131,10 @@ function submitForm(obj, flag,id){
                 }
             })
         }else{ //预览
+            img="<img src='"+img+"'/><br/>";
             $("#form_container #hiddenContentContainer").html('<input type="hidden" id="hiddenContent" name="page[content]"/>');
             $("#form_container form").attr("target", "_blank").attr("action", $(obj).attr("alt"));
-            $("#form_container #hiddenContent").val(content);
+            $("#form_container #hiddenContent").val(img+content);
             $("#form_container form").submit();
         }
     }

@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   after_save :change_stat
   belongs_to :site
   has_many :form_datas, :dependent => :destroy
-  attr_accessible :title, :file_name, :types, :site_id, :path_name, :authenticate,:element_relation,:content
+  attr_accessible :title, :file_name, :types, :site_id, :path_name, :authenticate,:element_relation,:content,:img_path
   attr_accessor :content
   serialize :element_relation
   TYPES_ARR = ['main', 'sub', 'style', 'form']

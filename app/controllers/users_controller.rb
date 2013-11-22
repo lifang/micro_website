@@ -5,7 +5,6 @@ class UsersController  < ApplicationController
   def index
     # puts 'index..................................................................'
     # puts params
-    
      case params[:type]
      when '1' then @type=1; @users=User.paginate(:page=>params[:page],:per_page=>10,:conditions =>"status!=-1 and types!=1")#不是删除用户，不是管理员
      when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>10,:conditions => "status=2") #待审核
@@ -24,7 +23,6 @@ class UsersController  < ApplicationController
       puts params
      if @user.update_attribute(:status,0)      #用户状态              1:正常           0：禁用       -1：删除         
         change_site_status(@user,4) #将用户对应站点status设置为审核不通过
-       
        # flash[:msg]='已禁用该用户!'      
      else      
         #flash[:msg]='禁用失败!'    
