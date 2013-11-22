@@ -9,9 +9,14 @@
   </head>
   <body>
     
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, id: "flash#{name}"%>
-    <% end %>
+<% flash.each do |name, msg| %>
+  <div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+    <div   style="font-size:20px;margin: 200px auto;width: 300px;background: #ffffff;padding: 20px;">
+      <span class="close" id="close_flash" style="float:right;" ></span>
+      <%=msg%>
+    </div>
+  </div>
+<% end %>
     <%= yield %>
 
   </body>

@@ -7,15 +7,11 @@ class FormDatasController < ApplicationController
     @page = Page.find_by_id params[:page_id]
     @form_datas = FormData.find_all_by_page_id(params[:page_id])
     respond_to do |format|
-      if @form_datas.present?
-        format.xls {
-          send_data(xls_content_for(@form_datas, @page),
-            :type => "text/excel;charset=utf-8; header=present",
-            :filename => "form_#{params[:page_id]}.xls")
-        }
-      else
-        
-      end
+      format.xls {
+        send_data(xls_content_for(@form_datas, @page),
+          :type => "text/excel;charset=utf-8; header=present",
+          :filename => "form_#{params[:page_id]}.xls")
+      }
     end
   end
 

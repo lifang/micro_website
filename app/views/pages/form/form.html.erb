@@ -23,7 +23,7 @@
                 <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
                 <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn" %>
-                <%= link_to "下载数据", site_page_form_datas_path(@site,page, :format => 'xls'), :class => "blue_btn" %><span> <%= page.form_datas.length %>条数据</span>
+                <%= link_to "下载数据", page.form_datas.length == 0 ? "#" : site_page_form_datas_path(@site,page, :format => 'xls'), :class => "blue_btn" %><span> <%= page.form_datas.length %>条数据</span>
               </td>
             </tr>
           <% end %>

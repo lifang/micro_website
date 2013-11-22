@@ -33,11 +33,11 @@ class PagesController < ApplicationController
           content = modifyContent(@page, content, @site.id,@page.form? ? img : "")
         end
         save_into_file(content, @page) if content
-        @notice = "新建成功!"
+        flash[:notice] = "新建成功!"
         @path = redirect_path(@page, @site)
         render :success
       else
-        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+        @notice = "新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
         render :fail
       end
     end
@@ -55,11 +55,11 @@ class PagesController < ApplicationController
         content = modifyContent(@page, content, @site.id,@page.form? ? img : "") if content
       end
       save_into_file(content, @page) if content
-      @notice = "更新成功!"
+      flash[:notice] = "更新成功!"
       @path = redirect_path(@page, @site)
       render :success
     else
-      @notice="更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+      @notice = "更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
       render :fail
     end
   end
