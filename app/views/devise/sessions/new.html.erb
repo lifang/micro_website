@@ -3,7 +3,7 @@
   <h1>登陆</h1>
 
   <div class="login_info cf">
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name),html:{onsubmit: "return check()"})  do |f| %>
       <ul>
         <li>
           <p><%= f.label :login, "帐号：" %>
@@ -24,3 +24,22 @@
     </div>
   <% end %>
 </div>
+
+<script>
+	function check(){
+		if($.trim($("#user_login").val()).length==0){
+			alert('提示:\n\n用户名不能为空');
+			return false;	
+		}else if($.trim($("#user_password").val()).length==0){
+			alert('提示:\n\n密码需要包含至少一个非空白符');
+			return false;
+		}else if($("#user_password").val().length<6){
+			alert('提示:\n\n密码长度至少为6');
+			return false;
+			
+		}
+		
+	
+	}
+	
+</script>
