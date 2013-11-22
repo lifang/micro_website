@@ -3,6 +3,10 @@
  * and open the template in the editor.
  */
 //flag=0 submit form, flag=1 preview
+
+//判断非法字符
+var pattern = new RegExp("[`~@#$^&*()=:;,\\[\\].<>~！%@#￥……&*（）——|{}。，、-]")
+
 function changeUrl(obj, site_id, flag, page_id){
     var tf_flag;
     var content = $("#page_content").val();
@@ -80,18 +84,23 @@ function showInput(obj){
 //双击div，修改后blur隐藏当前输入框
 function hideInput(obj, flag){
     var input_value = $(obj).val();
-    $(obj).hide();
-    if(flag == 1){
-        var radio = $(obj).parent().find("input[type='radio']");
-        if(radio){
-            radio.val(input_value);
+
+    if($.trim(input_value) == "" || pattern.test(input_value)){
+        alert("请输入内容，不能包含非法字符")
+    }else{
+        $(obj).hide();
+        if(flag == 1){
+            var radio = $(obj).parent().find("input[type='radio']");
+            if(radio){
+                radio.val(input_value);
+            }
+            var checkbox = $(obj).parent().find("input[type='checkbox']");
+            if(checkbox){
+                checkbox.val(input_value);
+            }
         }
-        var checkbox = $(obj).parent().find("input[type='checkbox']");
-        if(checkbox){
-            checkbox.val(input_value);
-        }
-    }
-    $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();
+        $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();
+    } 
 }
 
 //提交表单验证 #TODO非空验证
@@ -119,8 +128,8 @@ function submitForm(obj, flag,id){
                 dataType: "script",
                 data:dataValue,
                 success:function(data){
-                    //保存成功
-                   // change_status(site_id,1,"");
+                //保存成功
+                // change_status(site_id,1,"");
                 },
                 error:function(data){
                 //alert("error")
