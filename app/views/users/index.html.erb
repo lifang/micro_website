@@ -61,24 +61,26 @@
                   <div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; " >
 
                     <% unless user.status==0%>
-                      <%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;"%>
-                      <% else %>
-                        <%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;"%>
-                        <% end %>
-                      </div>
-                      <button class="blue_btn" style="height: 28px; line-height: 0px;"  onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
+                      <%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn"%>
+                    <% else %>
+                      <%= button_to '启用', "/user/enable/#{user.id}" ,remote:true,class: "blue_btn"%>
+                    <% end %>
+                    
+                  </div>
+                    <input type="button"  value="删除" class="blue_btn"   onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }" >
 
-                    </td>
-                  </tr>
-                <% end %>
+                </td>
+              </tr>
+            <% end %>
 
-              </table>
-            </div>
-            <div class="clear"></div>
-            <div class="flickr_pagination">
-            <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-            </div>
-          </div>
+          </table>
+        </div>
+      
+        <div class="clear"></div>
+        <div class="flickr_pagination">
+          <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+        </div>
+      </div>
 
 
         <% when 2 then%>  <!--待审核站点-->
@@ -100,28 +102,23 @@
                     <td>待审核</td>
                     <td><%= site.root_path%></td>
                     <td>
-                      <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; line-height: 10px; font-family: '微软雅黑', '宋体', Arial" %>
-
-                        <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
-                        <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
-                        <% unless path.nil?%>
-                          <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px;padding: 5px 10px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
-                          <% else%>
-                            <button style="  line-height: 10px;  background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
-                          <% end %>
-                        </td>
-                      </tr>
-                    <% end %>
+                      <%= button_to '审核',"/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; " %>                                      
+                      <%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                       
+                    </td>
+                   </tr>
+                 <% end %>
 
 
-                  </table>
-                </div>
-                <div class="clear"></div>
-                <div class="flickr_pagination">
-                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                </div>
+              </table>
+             </div>
+             
+             <div class="clear"></div>
+             <div class="flickr_pagination">
+                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+             </div>
 
-              </div>
+          </div>
 
             <% when 3 then %>	<!--审核通过站点-->
               <div class="Div">
@@ -143,23 +140,18 @@
                         <td>审核通过</td>
                         <td><%= site.root_path%></td>
                         <td>
-                          <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
-                          <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
-                          <% unless path.nil?%>
-                            <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
-                            <% else%>
-                              <button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
-                            <% end %>
-                          </td>
-                        </tr>
-                      <% end %>
+                      		<%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                        </td>
+                     </tr>
+                    <% end %>
 
                     </table>
-                  </div>
-                  <div class="clear"></div>
-                   <div class="flickr_pagination">
-                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                </div></div>
+                </div>
+                <div class="clear"></div>
+                 <div class="flickr_pagination">
+                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+              	 </div>
+              </div>
 
 
               <% when 4 then%>	<!--审核不通过站点-->
@@ -181,16 +173,10 @@
                           <td>审核不通过</td>
                           <td><%= site.root_path%></td>
                           <td>
-                            <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
-                            <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
-                            <% unless path.nil?%>
-                              <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
-                              <% else%>
-                                <button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
-                              <% end %>
-                            </td>
-                          </tr>
-                        <% end %>
+                     		  <%= link_to   '预览',"/sites/static?pathname=/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
+                          </td>
+                        </tr>
+                      <% end %>
 
                       </table>
                     </div>
