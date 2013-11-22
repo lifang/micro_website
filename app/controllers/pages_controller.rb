@@ -169,16 +169,19 @@ class PagesController < ApplicationController
   end
 
   #访问静态页面
+  #TODO访问静态页面报错，暂时设置product.rb里面cache=false
   def static
     path_name = params[:path_name]
     page = Page.find_by_path_name(path_name)
     if page
+      p 22222222
       site = page.site
       #if site.status == Site::STATUS_NAME[:pass_verified]
         if page.authenticate? && page.sub? && !user_signed_in?
           redirect_to '/signin'
         else
-          redirect_to "/allsites" + path_name, :layout => false
+          p 11111111111111111
+          render Rails.root.to_s + "/public/allsites" + path_name, :layout => false
         end
       #else
        # redirect_to '/303.html', :layout => false
