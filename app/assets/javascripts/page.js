@@ -29,11 +29,11 @@ function hide_tab(obj){
     $(".second_bg").hide();
 }
 
-var inputEle = "<div class='insertBox inputBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><div class='inputArea' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><input type='text' class='newNameClass' /></div>";
+var inputEle = "<div class='insertBox inputBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><input type='text' class='newNameClass' /></div>";
 
-var radioEle = "<div class='insertBox radioBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 2)' title='添加选项'></span><div class='inputArea' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
+var radioEle = "<div class='insertBox radioBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 2)' title='添加选项'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
 
-var checkboxEle = "<div class='insertBox checkboxBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 3)' title='添加选项'></span><div class='inputArea' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)'/><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
+var checkboxEle = "<div class='insertBox checkboxBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 3)' title='添加选项'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)'/><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
 
 var radioOption = "<div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div>";
 
@@ -99,6 +99,13 @@ function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
     var tf_flag = validatePageForm(content);
     content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
+    
+    
+    var title = $.trim($("#page_title").val()); //拿到去空格的值
+    var file_name = $.trim($("#page_file_name").val());
+    $("#page_title")[0].value=title;    //将去空格的值赋回去
+    $("#page_file_name")[0].value=file_name;
+    
     if(tf_flag){
         if(flag=="submit"){ //新建 或者编辑
             var dataValue;
@@ -157,11 +164,16 @@ function validatePageForm(content)
         alert("标题不能为空");
         tf_flag = false;
     }else if(file_name == ""){
-        alert("文件名不能为空")
+        alert("文件名不能为空");
         tf_flag = false;
     }else if(content == ""){
         alert("内容不能为空");
         tf_flag = false;
     }
+    
+    
+    $("#page_title")[0].value=title;    //将去空格的值赋回去
+    $("#page_file_name")[0].value=file_name;
+    
     return tf_flag;
 }

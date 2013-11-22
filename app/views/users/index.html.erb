@@ -1,190 +1,209 @@
+	
+<input type="hidden" value="<%=params[:msg]%>" id="msg" />
 
-    <div class="main_container">
-    	<h1>用户管理</h1>
-        <div class="main_content">
-        	<ul class="theTabs cf">
-				<li class="theTab" <%if @type==1%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/1'">用户管理</span>
-				</li>
-				<li class="theTab" <%if @type==2%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/2'">待审核站点</span>
-				</li>
-				<li class="theTab" <%if @type==3%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/3'">审核通过站点</span>
-				</li>
-                <li class="theTab" <%if @type==4%> style="background-color:#328BD5 " <% end %> >
-					<span onclick="window.location='/user/manage/4'">审核不通过站点</span>
-				</li>
-			</ul>
-			<hr class="tab_line" />
-            
-            
-            
-            
-            
-            
-            <% case @type %>
-            <% when 1 then %>	
-            <div class="Div" >	<!--用户管理-->
-             	<div class="page_txt" style="height: 600px;">
-            		
-                    <table class="table1">	
-                    	<tr>
-                        	<th>用户名</th>
-                            <th>联系电话</th>
-                            <th>E-mail</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                        
-                        <% @users.each do |user| %>		
-                        <tr>
-                        	<td><%= user.name%></td>
-                            <td><%= user.phone%></td>
-                            <td><%= user.email%></td>
-                            <td id="user_status_<%=user.id%>"><%=(user.status==0)?'禁用':'正常'%></td>
-                            <td >
-                            	<div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; margin-top:1px " >
-                            		
-	                             		<% unless user.status==0%>
-		                             	<%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn"%>                             	
-		                            	<% else %>
-		                            	<%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn"%>	                          	
-										<% end %>
-								</div>																		
-                                		<button class="blue_btn" style="height: 27px;" onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
-                              
-                            </td>
-                        </tr>
-                        <% end %>
-                                      
-                    </table>    
-            	</div>
-            	<div class="clear"></div>
-               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-            </div>
-            
-            
-            <% when 2 then%>  <!--待审核站点-->
-            <div class="Div">
-            	<div class="page_txt" style="height: 600px;">
-                    <table class="table1">
-                    	<tr>
-                        	<th>站点名</th>
-                            <th>创建人</th>
-                            <th>状态</th>
-                            <th>根目录</th>
-                            <th>操作</th>
-                        </tr>
-                        
-                        <% @sites.each do |site|%>
-                        <tr>
-                        	<td><%= site.name%></td>
-                            <td><%= User.find(site.user_id).name%></td>
-                            <td>待审核</td>
-                            <td><%= site.root_path%></td>
-                            <td>
-		                        <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; height:29px ;" %>                             	
-                            	                          	
-                            	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
-                            	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank" %>
-                            	<% else%>
-                            		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
-                            	<% end %>
-                            </td>
-                        </tr>
-                        <% end %>
-                        
-                                                                    
-                    </table>                   
-            	</div>
-            	<div class="clear"></div>
-               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-            </div>
-            
-            <% when 3 then %>	<!--审核通过站点-->
-            <div class="Div">
-            	<div class="page_txt" style="height: 600px;">
-                    <table class="table1">
-                    	
-                    	<tr>
-                        	<th>站点名</th>
-                            <th>创建人</th>
-                            <th>状态</th>
-                            <th>根目录</th>
-                            <th>操作</th>
-                        </tr>
-                        
-                        <% @sites.each do |site|%>
-                        <tr>
-                        	<td><%= site.name%></td>
-                            <td><%= User.find(site.user_id).name%></td>
-                            <td>审核通过</td>
-                            <td><%= site.root_path%></td>
-                            <td>
-                            	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
-                            	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank"%>
-                            	<% else%>
-                            		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
-                            	<% end %>
-                            </td>
-                        </tr>
-                        <% end %>
 
-                    </table>
-            	</div>
-            	<div class="clear"></div>
-               <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-            </div>
-            
-           
-            <% when 4 then%>	<!--审核不通过站点-->
-			<div class="Div">
-            	<div class="page_txt" style="height: 600px;">
-                    <table class="table1">
-                    	<tr>
-                        	<th>站点名</th>
-                            <th>创建人</th>
-                            <th>状态</th>
-                            <th>根目录</th>
-                            <th>操作</th>
-                        </tr>
-                        
-                        <% @sites.each do |site|%>
-                        <tr>
-                        	<td><%= site.name%></td>
-                            <td><%= User.find(site.user_id).name%></td>
-                            <td>审核不通过</td>
-                            <td><%= site.root_path%></td>
-                            <td>
-                            	<% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>  
-                            	<% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>                          	
-                            	<% unless path.nil?%>
-                            		<%=link_to '预览',path,class:"blue_btn",target:"_blank"%>
-                            	<% else%>
-                            		<button style="background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>	
-                            	<% end %>
-                            </td>
-                        </tr>
+<div class="main_container">
+  <h1>用户管理</h1>
+  <div class="main_content">
+    <ul class="theTabs cf">
+      <%= link_to '/user/manage/1' do%>
+        <li class="theTab" <%if @type==1%> style="background-color:#328BD5 " <% end %> >
+          <span>用户管理</span>
+        </li>
+      <% end %>
+
+      <%= link_to '/user/manage/2' do%>
+        <li class="theTab" <%if @type==2%> style="background-color:#328BD5 "  <% end %> >
+          <span>待审核站点</span>
+        </li>
+      <% end %>
+
+
+      <%= link_to '/user/manage/3' do%>
+        <li class="theTab" <%if @type==3%> style="background-color:#328BD5 " <% end %> >
+          <span>审核通过站点</span>
+        </li>
+      <% end %>
+
+
+      <%= link_to '/user/manage/4' do%>
+        <li class="theTab" <%if @type==4%> style="background-color:#328BD5 " <% end %> >
+          <span>审核不通过站点</span>
+        </li>
+      <% end %>
+
+    </ul>
+    <hr class="tab_line" />
+
+
+
+    <% case @type %>
+    <% when 1 then %>
+      <div class="Div" >	<!--用户管理-->
+        <div class="page_txt" style="height: 600px;">
+
+          <table class="table1">
+            <tr>
+              <th>用户名</th>
+              <th>联系电话</th>
+              <th>E-mail</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.name%></td>
+                <td><%= user.phone%></td>
+                <td><%= user.email%></td>
+                <td id="user_status_<%=user.id%>"><%=(user.status==0)?'禁用':'正常'%></td>
+                <td >
+                  <div id='status_btn_<%=user.id%>'style="float: left; margin-left: 35px; " >
+
+                    <% unless user.status==0%>
+                      <%= button_to '禁用', "/user/disable/#{user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;"%>
+                      <% else %>
+                        <%= button_to '启用', "/user/enable/#{user.id}",remote:true,class: "blue_btn",style: "line-height: 22px;"%>
                         <% end %>
-                   
-                    </table>
-            	</div>
-            	<div class="clear"></div>
+                      </div>
+                      <button class="blue_btn" style="height: 28px; line-height: 0px;"  onclick="if( confirm('确定删除该用户?')){window.location='/user/delete/<%= user.id %>?page=<%= params[:page] %>' }">删除</button>
+
+                    </td>
+                  </tr>
+                <% end %>
+
+              </table>
+            </div>
+            <div class="clear"></div>
+            <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+          </div>
+
+
+        <% when 2 then%>  <!--待审核站点-->
+          <div class="Div">
+            <div class="page_txt" >
+              <table class="table1">
+                <tr>
+                  <th>站点名</th>
+                  <th>创建人</th>
+                  <th>状态</th>
+                  <th>根目录</th>
+                  <th>操作</th>
+                </tr>
+
+                <% @sites.each do |site|%>
+                  <tr>
+                    <td><%= site.name%></td>
+                    <td><%= User.find(site.user_id).name%></td>
+                    <td>待审核</td>
+                    <td><%= site.root_path%></td>
+                    <td>
+                      <%= button_to '审核', "/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; line-height: 10px; font-family: '微软雅黑', '宋体', Arial" %>
+
+                        <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
+                        <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
+                        <% unless path.nil?%>
+                          <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
+                          <% else%>
+                            <button style="  line-height: 10px;  background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+
+
+                  </table>
+                </div>
+                <div class="clear"></div>
                 <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+              </div>
+
+            <% when 3 then %>	<!--审核通过站点-->
+              <div class="Div">
+                <div class="page_txt" style="height: 600px;">
+                  <table class="table1">
+
+                    <tr>
+                      <th>站点名</th>
+                      <th>创建人</th>
+                      <th>状态</th>
+                      <th>根目录</th>
+                      <th>操作</th>
+                    </tr>
+
+                    <% @sites.each do |site|%>
+                      <tr>
+                        <td><%= site.name%></td>
+                        <td><%= User.find(site.user_id).name%></td>
+                        <td>审核通过</td>
+                        <td><%= site.root_path%></td>
+                        <td>
+                          <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
+                          <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
+                          <% unless path.nil?%>
+                            <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
+                            <% else%>
+                              <button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+
+                    </table>
+                  </div>
+                  <div class="clear"></div>
+                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+                </div>
+
+
+              <% when 4 then%>	<!--审核不通过站点-->
+                <div class="Div">
+                  <div class="page_txt" style="height: 600px;">
+                    <table class="table1">
+                      <tr>
+                        <th>站点名</th>
+                        <th>创建人</th>
+                        <th>状态</th>
+                        <th>根目录</th>
+                        <th>操作</th>
+                      </tr>
+
+                      <% @sites.each do |site|%>
+                        <tr>
+                          <td><%= site.name%></td>
+                          <td><%= User.find(site.user_id).name%></td>
+                          <td>审核不通过</td>
+                          <td><%= site.root_path%></td>
+                          <td>
+                            <% p = Page.where("site_id = #{site.id} and types = 0 ")[0]%>
+                            <% path=p.path_name.gsub("/public/allsites", "") unless p.nil?%>
+                            <% unless path.nil?%>
+                              <%=link_to '预览',path,class:"blue_btn",target:"_blank",style: "line-height:19px; height:18.5px; font-family: '微软雅黑', '宋体', Arial; font-size:12px" %>
+                              <% else%>
+                                <button style="  line-height: 10px; background: #C0C0C0; padding: 5px 10px; color: #FFFFFF;border: 0 none; border-radius: 5px;">预览</button>
+                              <% end %>
+                            </td>
+                          </tr>
+                        <% end %>
+
+                      </table>
+                    </div>
+                    <div class="clear"></div>
+                    <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+                  </div>
+                <% end %>
+
+              </div>
             </div>
-            <% end %>
-            
-    	</div>
-    </div>
+
+            <script>
+              window.onload=function(){
+                if($("#msg").val()=='success')
+                  alert('审核已完成！')
+              }
+            </script>
 
 
 
 
 
-
-		

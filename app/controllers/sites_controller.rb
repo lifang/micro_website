@@ -2,7 +2,12 @@
 class SitesController < ApplicationController
   layout 'sites'
   def index
-    @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
+
+    if current_user.admin
+      render "/users/index"
+    else
+      @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
+    end
   end
 
   def create
@@ -15,6 +20,13 @@ class SitesController < ApplicationController
       @site.user_id=current_user.id
       respond_to do |format|
         if @site && @site.save
+          #初始化index页面
+          site_path = Rails.root.to_s + SITE_PATH % @site.root_path
+          FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+          File.open(site_path + "index.html", "wb") do |f|
+            f.write("  ")
+          end
+ 
           flash[:success]='创建成功'
           #  redirect_to root_path
         else
@@ -67,19 +79,20 @@ class SitesController < ApplicationController
     page = params[:page]          #回到页面的页数
       
     if site.update_attribute(:status,status)
-      flash[:msg]='审核成功！'
+      msg='success'
     else
-      flash[:msg]='审核失败！'
+      msg='failed!'
     end
       
       
     if(page==''||page==1)
-      redirect_to '/user/manage/2'
+      redirect_to "/user/manage/2?msg=#{msg}"
     else
-      redirect_to "/user/manage/2?page=#{page}"
+      redirect_to "/user/manage/2?page=#{page}&msg=#{msg}"
     end
       
   end
+  
   def change_each_status
     site_id=params[:id]
     status=params[:status]

@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   layout 'sites'
   before_filter :get_site
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
+  caches_action :static
+  
   #主页 index
   def index
     @page = @site.pages.main.first
@@ -75,7 +77,7 @@ class PagesController < ApplicationController
 
   #子页 index
   def sub
-    @sub_pages = @site.pages.sub
+    @sub_pages = @site.pages.sub.paginate(:page=>params[:page],:per_page=>10)
     render "/pages/sub/sub"
   end
 
@@ -110,7 +112,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form.includes(:form_datas)
+    @forms = @site.pages.form.includes(:form_datas).paginate(:page=>params[:page],:per_page=>10)
     render "/pages/form/form"
   end
 
@@ -153,30 +155,33 @@ class PagesController < ApplicationController
     FormData.transaction do
       if current_user
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
-        redirect_to "/#{@site.root_path}/index.html"
+        redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?
           flash[:notice] = "请先登陆！"
           redirect_to '/signin'
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
-          redirect_to "/#{@site.root_path}/index.html"
+          redirect_to "/allsites/#{@site.root_path}/index.html"
         end
       end
     end
   end
 
   #访问静态页面
+  #TODO访问静态页面报错，暂时设置product.rb里面cache=false
   def static
     path_name = params[:path_name]
-    page = Page.find_by_path_name("/"+path_name)
+    page = Page.find_by_path_name(path_name)
     if page
+      p 22222222
       site = page.site
       #if site.status == Site::STATUS_NAME[:pass_verified]
         if page.authenticate? && page.sub? && !user_signed_in?
           redirect_to '/signin'
         else
-          render PUBLIC_PATH + "/"+ path_name, :layout => false
+          p 11111111111111111
+          render Rails.root.to_s + "/public/allsites" + path_name, :layout => false
         end
       #else
        # redirect_to '/303.html', :layout => false

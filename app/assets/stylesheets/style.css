@@ -170,7 +170,7 @@ fieldset.page_tit {
 .page_tit input { font-size: 16px;}
 .page_tit span { padding: 0 5px; color: #ff0000;}
 .page_tit button { float: right; margin: 5px 22px;}
-.page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%; height: 270px; overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
+.page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%;  overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
 .page_act { padding: 10px; text-align: center;}
 .page_act button { margin: 0 10px;}
 
@@ -193,7 +193,7 @@ fieldset.page_tit {
 /*弹窗*/
 .second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
 .second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; 
-opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#BF2c2c2c,endColorstr=#BF2c2c2c);}
+opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content {
     background-color: #FCFCFC;
     border: 1px solid #CBD5D9;
@@ -252,7 +252,7 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
  margin: 100px auto;
  background: #ffffff;
  border-radius: 5px;
- text-align: center;
+ text-align: center;  
 }
 .forgetPass p { padding: 10px 0;}
 .forgetPass label { display: inline-block; font-size: 18px; line-height: 36px; text-align: right; width: 100px; margin-right: 10px;}
@@ -261,3 +261,4 @@ opacity: 0.5; display: none; filter:progid:DXImageTransform.Microsoft.gradient(s
 
 
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
+ .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 28px;}

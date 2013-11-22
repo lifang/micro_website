@@ -3,7 +3,7 @@
   <div class="tabDiv">
     <div class="page_content">
       <div class="page_tit">
-        <%= link_to "新建表单", form_new_site_pages_path(@site),:remote => true, :class => "blue_btn" %>
+        <%= link_to "新建表单", form_new_site_pages_path(@site),:remote => true, :class => "blue_btn scd_btn" %>
       </div>
       <div class="page_txt">
         <table class="table1">
@@ -16,19 +16,22 @@
           <% @forms.each do |page| %>
             <tr>
               <td><%= page.title %></td>
-              <td><%= page.path_name %></td>
+              <td><%= "/sites/static" + "?path_name=" + page.path_name %></td>
               <td><%= if_authenticate(page)%></td>
               <td>
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , page.path_name,:target =>"_blank", :class => "blue_btn" %>
+                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn" %>
                 <%= link_to "下载数据", site_page_form_datas_path(@site,page, :format => 'xls'), :class => "blue_btn" %><span> <%= page.form_datas.length %>条数据</span>
               </td>
             </tr>
           <% end %>
         </table>
       </div>
+      <div class="clear"></div>
+      <%= will_paginate  @forms,:previous_label=>'上一页',:next_label=>'下一页'%>
+      
       <div class="page_act"></div>
     </div>
   </div>

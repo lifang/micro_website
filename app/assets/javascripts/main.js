@@ -5,7 +5,12 @@ $(function() {
     var insert2 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
 
     var insert3 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='checkbox' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
-    
+
+
+    $("#close_flash").click(function(){
+        $("#flash_field").hide()
+    });
+     $("#flash_field").fadeOut(4000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });
@@ -28,7 +33,6 @@ $(function() {
             $(this).css("color", "#A7A7A7");
         }
     });
-
     $(".insertDiv").on("dblclick", ".inputArea", function() {
         $(this).hide();
         $(this).parent().children(".txtArea").show();
@@ -81,12 +85,13 @@ $(function() {
             $(this).parent().find("span").css("color", "#e9ebea");
         }
     });
-    //显示创建站点
+//显示创建站点
     $(".scd_btn").click(function() {
         $(".second_bg").show();
         $(".second_box." + $(this).attr("name")).show();
-        $("#site_titile").html('创建站点');
+        $("#site_titile").html('创建站点（根目录创建后不可修改）');
         $('#site_edit_or_create').val('create');
+        $('#site_root_path').removeAttr("readonly");
         text_value("", '', '');
     })
 
@@ -98,6 +103,7 @@ $(function() {
         $('.second_bg').hide();
         $("#fault").hide();
     });
+    
     $('#create_sub').click(function() {
         var name = $('#site_name').val();
         var root = $('#site_root_path').val();
@@ -114,14 +120,17 @@ $(function() {
             alert('根目录只能为字母');
             return false;
         }
+        $("#fault").show();
     });
 
 })
+//显示编辑页面
 function show_edit_page(name, rootpath, notes) {
     $(".second_bg").show();
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
+    $('#site_root_path').attr("readonly","readonly");
     text_value(name, rootpath, notes);
 }
 
@@ -156,7 +165,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB', 'gif','GIF'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB','swf','SWF', 'gif','GIF','js','JS'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -189,7 +198,6 @@ function have_exist(id){
             return false;
         }
     } 
-       
 }
 
 function change_status(id,status,msg){
@@ -223,6 +231,12 @@ function arr_contant(name,arr){
     return false;
 }
 
-
+function check_form_particular(id){
+   var content=$("#"+id).val();
+   regex=/\~\!\@\#\$\%\^\&\*/;
+   if(!content.match(regex)){
+       alert('有非法字符！')
+   }
+}
 
 

@@ -1,22 +1,25 @@
 <div class="page_txt" id="page_text">
   <table class="table1">
     <tr>
-      <th>路径</th>
+      <th>路径【拷贝路径作为资源的src】</th>
       <th>操作</th>
     </tr>
-    <% @site.resources.each do |sr|%>
+    <% @resources.each do |sr|%>
       <tr>
         <td>/<%= "allsites/" + sr.path_name%>
-          【拷贝路径作为资源的src】
+          
         </td>
+        
         <td>
-
+  
           <%=link_to '删除',site_resource_path(@site,sr),confirm:'是否删除？',class:'blue_btn',method: 'delete' %>
-            <button class="blue_btn">
-              <%=link_to '预览' , site_resource_path(@site,sr),target:'_blank' %>
-             <!--<a href="/<%=sr.path_name%>" target="_blank">预览</a>-->
-            </button></td>
-        </tr>
+           
+          <%=link_to '预览' , site_resource_path(@site,sr),target:'_blank',class: "blue_btn" %>      
+          <!--<a href="/<%=sr.path_name%>" target="_blank">预览</a>-->
+        </td>
+        
+        </tr>       
       <%end%>
     </table>
+  <%=will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
   </div>

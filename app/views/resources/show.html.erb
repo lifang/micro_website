@@ -1,9 +1,9 @@
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style>
     .look_resources{
       border:0px solid red;
-      margin-top:100px;
+      margin-top:20px;
       width:100%;
       text-align:center;
     }
@@ -25,8 +25,16 @@
       <embed src="/allsites/<%=@resources.path_name%>" />
     </div>
   <% when 'voide'%>
-    <div style="text-align:center;">
-      <object data="/allsites/<%=@resources.path_name%>" height="400" width="400"/>
-    </div>
+    <%  if @resources.path_name.split('.')[-1].downcase=='js' %>
+   <div style="text-align:center;">
+        <object data="/allsites/<%=@resources.path_name%>" height="600" width="100%"/>
+      </div>
+    <%else%>
+      <p>友情提醒，视频资源无法观看时可能是您的浏览器没有安装相应的插件哦~*00*</p>
+      <!--google 是quickTime plug-in-->
+      <div style="text-align:center;">
+        <object data="/allsites/<%=@resources.path_name%>" height="400" width="400"/>
+      </div>
+    <%end%>
   <%end%>
 </div>
