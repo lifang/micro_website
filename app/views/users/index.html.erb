@@ -105,19 +105,20 @@
                       <%= button_to '审核',"/site/verify/#{site.id}",remote:true,class: "blue_btn",style:"float: left; margin-left: 35px; " %>                                      
                       <%= link_to   '预览',"/allsites/#{site.root_path}/index.html",class:"blue_btn",target:"_blank" %>
                        
-                        </td>
-                      </tr>
-                    <% end %>
+                    </td>
+                   </tr>
+                 <% end %>
 
 
-                  </table>
-                </div>
-                <div class="clear"></div>
-                <div class="flickr_pagination">
-                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                </div>
+              </table>
+             </div>
+             
+             <div class="clear"></div>
+             <div class="flickr_pagination">
+                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+             </div>
 
-              </div>
+          </div>
 
             <% when 3 then %>	<!--审核通过站点-->
               <div class="Div">
@@ -145,11 +146,12 @@
                     <% end %>
 
                     </table>
-                  </div>
-                  <div class="clear"></div>
-                   <div class="flickr_pagination">
-                  <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
-                </div></div>
+                </div>
+                <div class="clear"></div>
+                 <div class="flickr_pagination">
+                <%= will_paginate  @sites,:previous_label=>'上一页',:next_label=>'下一页'%>
+              	 </div>
+              </div>
 
 
               <% when 4 then%>	<!--审核不通过站点-->
