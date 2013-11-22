@@ -4,7 +4,7 @@
       <%= f.text_field :title %>
     </span>
     <span>文件名<span class="check">*</span>
-      <%= f.text_field :file_name %>例如aboutus.html
+      <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
     </span>
     <br/>
     <span style="width:100%;float:left;">图片路径：

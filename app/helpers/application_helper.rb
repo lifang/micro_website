@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def page_file_name(page)
-    page.main? ? "index.html" : "style.css"
+    page.main? ? "index" : "style.css"
   end
 
   def page_title(page)

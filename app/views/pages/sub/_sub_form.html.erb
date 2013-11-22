@@ -4,7 +4,7 @@
       <%= f.text_field :title %>
     </span>
     <span>文件名<span class="check">*</span>
-      <%= f.text_field :file_name %>例如aboutus.html</span>
+      <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html</span>
   </h2>
   <p><span>访问权限</span>
     <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是

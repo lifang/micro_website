@@ -11,7 +11,7 @@ function submit_form(obj){
 
         if(type.attr('type')=="text"){
             if($.trim(type.val()) == ""){
-                alert(title + " 不能为空！");
+                tishi_alert(title + " 不能为空！");
                 flag = false;
                 //return false;
             }else{
@@ -19,7 +19,7 @@ function submit_form(obj){
             }
         }else{
             if(insert.find("input:checked").length == 0){
-                alert(title + " 不能为空！");
+                tishi_alert(title + " 不能为空！");
                 flag = false;
                 //return false;
             }else{

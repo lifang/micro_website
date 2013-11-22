@@ -26,6 +26,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
+    params[:page][:file_name] = params[:page][:file_name] + ".html"
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
@@ -49,6 +50,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
+    params[:page][:file_name] = params[:page][:file_name] + ".html"
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
@@ -179,13 +181,13 @@ class PagesController < ApplicationController
     if page
       site = page.site
       if current_user && (current_user.admin || site.user == current_user)
-        redirect_to "/allsites" + path_name
+        redirect_to URI.encode("/allsites" + path_name)
       else
         if site.status == Site::STATUS_NAME[:pass_verified]
           if page.authenticate? && page.sub? && !user_signed_in?
             redirect_to '/signin'
           else
-            redirect_to "/allsites" + path_name
+            redirect_to URI.encode("/allsites" + path_name)
           end
         else
           redirect_to '/303.html', :layout => false

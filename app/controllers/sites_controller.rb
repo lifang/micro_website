@@ -48,7 +48,7 @@ class SitesController < ApplicationController
     @site=Site.find_by_name(params[:origin_name])
     name=params[:site][:name].split(' ').join
 
-    @root_path=params[:site][:root_path].gsub(/\/+/, "")
+    @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)

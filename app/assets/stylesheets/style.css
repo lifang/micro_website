@@ -192,7 +192,7 @@ fieldset.page_tit {
 
 /*弹窗*/
 .second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
-.second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; 
+.second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000;
 opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content {
     background-color: #FCFCFC;
@@ -235,7 +235,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .page_tit button.up_btn { float: left; margin: 0 10px;}
 
 .vall_box { width: 15%; float: left;}
-.formArea { width: 68%; height: 235px; float: left; border: 1px solid #C2C2C2; overflow: auto; }
+.formArea { width: 68%; float: left; border: 1px solid #C2C2C2; overflow: auto; }
 .formTit { margin: 0 199px;}
 .formTit input { color: #a7a7a7; font-size: 16px;}
 .addElemt { width: 15%; float: right;}

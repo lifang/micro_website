@@ -5,11 +5,12 @@
 //flag=0 submit form, flag=1 preview
 
 //判断非法字符
-var pattern = new RegExp("[`~@#$^&*()=:;,\\[\\].<>~！%@#￥……&*（）——|{}。，、-]")
+var pattern = new RegExp("[`~@#$^&*()=:;,\\[\\].<>~！%@#￥……&*（）——|{}。，、-]");
+var patten_html = new RegExp("[.]")
 
 function changeUrl(obj, site_id, flag, page_id){
     var tf_flag;
-    var content = $("#page_content").val();
+    var content = $.trim($("#page_content").val());
     if(flag==1){
         $(obj).parents("form").attr("action", "/sites/"+ site_id + "/pages/preview").attr("target", "_blank").removeAttr("data-remote");
     }else if(flag==0){
@@ -86,7 +87,7 @@ function hideInput(obj, flag){
     var input_value = $(obj).val();
 
     if($.trim(input_value) == "" || pattern.test(input_value)){
-        alert("请输入内容，不能包含非法字符")
+        tishi_alert("请输入内容，不能包含非法字符")
     }else{
         $(obj).hide();
         if(flag == 1){
@@ -113,7 +114,7 @@ function submitForm(obj, flag,id){
     var img=$("#page_img_path").val();
     img=$.trim(img);
     if(img==""){
-        alert('请输入图片路径');
+        tishi_alert('请输入图片路径');
         return flase;
     }
     $("#page_title")[0].value=title;    //将去空格的值赋回去
@@ -175,13 +176,13 @@ function validatePageForm(content)
     var file_name = $.trim($("#page_file_name").val());
     var tf_flag = true;
     if(title == ""){
-        alert("标题不能为空");
+        tishi_alert("请输入标题");
         tf_flag = false;
-    }else if(file_name == ""){
-        alert("文件名不能为空");
+    }else if(file_name == "" || patten_html.test(file_name)){
+        tishi_alert("请输入文件名，不能包含.");
         tf_flag = false;
     }else if(content == ""){
-        alert("内容不能为空");
+        tishi_alert("请输入内容");
         tf_flag = false;
     }
     
