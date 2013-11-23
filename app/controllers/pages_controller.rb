@@ -159,6 +159,7 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
+        p 1111111111111111111111
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
 
         @notice = 1
