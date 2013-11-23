@@ -179,7 +179,7 @@ function validatePageForm(content)
     if(title == ""){
         tishi_alert("请输入标题");
         tf_flag = false;
-    }else if(file_name == "" || patten_html.test(file_name)){
+    }else if(file_name == "" || (file_name !="style.css" && patten_html.test(file_name))){
         tishi_alert("请输入文件名，不能包含'.'");
         tf_flag = false;
     }else if(content == ""){
