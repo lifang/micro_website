@@ -28,7 +28,7 @@ function checkPhone(){
 	var phone =  $("#user_phone").val();
 	var phoneReg =/^1[3458]\d{9}$/;
 	if(!phoneReg.test(phone)){
-		alert('提示:\n\n请输入有效的联系电话。');                 
+		tishi_alert('请输入有效的联系电话。');                 
 		flg=false;
 	}
 	
@@ -46,7 +46,7 @@ function checkEmail(){
 	
 	 if(!emailReg.test(email))
             {
-                alert('提示:\n\n请输入有效的E_mail');                 
+                tishi_alert('请输入有效的E_mail');                 
                 flg=false;
            }		
 	return flg;

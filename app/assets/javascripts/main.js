@@ -236,7 +236,7 @@ function check_form_particular(id){
    var content=$("#"+id).val();
    regex=/\~\!\@\#\$\%\^\&\*/;
    if(!content.match(regex)){
-       alert('有非法字符！')
+       tishi_alert('有非法字符！')
    }
 }
 
