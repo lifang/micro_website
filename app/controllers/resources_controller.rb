@@ -55,7 +55,7 @@ class ResourcesController < ApplicationController
     #创建目录
     resources_dir_exist
     if @lim_resource.include?(postfix_name)
-      if postfix_name=='zip'
+      if postfix_name=='zip'&&@tmp.size<50*1024*1024
         save_all
       elsif @img_resources.include?(postfix_name)&&@tmp.size<1024*1024
         svae_afile @tmp
@@ -64,7 +64,7 @@ class ResourcesController < ApplicationController
       elsif @video_resoures.include?(postfix_name)&&@tmp.size<50*1024*1024
         svae_afile @tmp
       else
-        flash[:error]='文件大小超限,图片不超过1M，音频不超过20M，视频不超过50M'
+        flash[:error]='文件大小超限,图片不超过1M，音频不超过20M，视频不超过50M,zip<50M'
       end
       redirect_to site_resources_path(@site)
     else

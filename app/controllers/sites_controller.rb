@@ -45,15 +45,15 @@ class SitesController < ApplicationController
   end
 
   def update
+    p 11111111111111111111
     @site=Site.find_by_name(params[:origin_name])
     name=params[:site][:name].split(' ').join
     @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
+        p 1111111111122222222222
         flash[:success]='更新成功'
-        #redirect_to root_path
-        
       end
       format.js
     end

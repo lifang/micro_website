@@ -91,7 +91,7 @@ $(function() {
         $(".second_box." + $(this).attr("name")).show();
         $("#site_titile").html('创建站点（根目录创建后不可修改）');
         $('#site_edit_or_create').val('create');
-        $('#site_root_path').removeAttr("disabled");
+        $('#site_root_path').removeAttr("readonly");
         $('#must_fix').show();
         text_value("", '', '');
     })
@@ -131,7 +131,8 @@ function show_edit_page(name, rootpath, notes) {
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
-    $('#site_root_path').attr("disabled","disabled");
+    $('#site_root_path').attr("readonly","readonly");
+    $('#site_root_path').css('background','#C7C7C7')
     $('#must_fix').hide();
     text_value(name, rootpath, notes);
 }
