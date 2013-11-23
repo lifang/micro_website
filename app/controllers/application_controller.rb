@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    resource.admin ? "/user/manage/1" : root_path
+    resource.admin ? "/user/manage/1" : '/sites'
   end
 
   def check_user_status

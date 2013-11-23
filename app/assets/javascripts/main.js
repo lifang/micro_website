@@ -195,7 +195,6 @@ function have_exist(id){
                 }
             });
         }else{
-
             tishi_alert('不合法文件，只能是\n视频(mp4,swf,3gp)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }

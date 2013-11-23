@@ -1,5 +1,5 @@
 MicroWebsite::Application.routes.draw do
-  devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations"} do
+  devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations",:sessions=>'sessions'} do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
     get "signin", :to => "devise/sessions#new"
@@ -14,9 +14,7 @@ MicroWebsite::Application.routes.draw do
   
   post "site/verify/:sid",:to=>"sites#verify"
   post "site/change_status/:sid/:status",:to=>"sites#change_status"
-
   match "/sites/static", :to => "pages#static"
-  
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"
@@ -44,7 +42,9 @@ MicroWebsite::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'sites#index'
+devise_scope :user do
+  root to: "devise/sessions#new"
+end
 
   # See how all your routes lay out with "rake routes"
 
