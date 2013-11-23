@@ -7,11 +7,22 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+
+<% flash.each do |name, msg| %>
+  <div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+    <div   style="font-size:20px;margin: 200px auto;width: 300px;background: #E0EEEE;padding: 20px;">
+      <span class="close" id="close_flash" style="float:right;" ></span>
+      <%=msg%>
+    </div>
+  </div>
+<% end %>
+    
     <%= render "shared/head_nav" %>
     <%= yield %>
     <div class="foot"></div>
     <div class="second_bg"></div>
 
     <%= render "/shared/pop_container" %>
+   <%= render "/shared/tishi_alert" %>
   </body>
 </html>

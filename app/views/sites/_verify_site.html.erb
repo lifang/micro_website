@@ -2,6 +2,6 @@
  	<% page=params[:page]%>
  	
  	<div style="text-align: center">
- 	<button class="blue_btn" onclick="window.location='/site/change_status/<%= sid %>/3?page=<%= page %>' " >通过</button>	
-	<button class="blue_btn" onclick="window.location='/site/change_status/<%= sid %>/4?page=<%= page %>'" >不通过</button>
+	 	<%= link_to '通过',"/site/change_status/#{sid}/3?page=#{page}",class:"blue_btn",method: :post%>
+	 	<%= link_to '不通过',"/site/change_status/#{sid}/4?page=#{page}",class:"blue_btn",method: :post%>	
 	</div>

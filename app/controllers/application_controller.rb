@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  before_filter :check_user_status
   include ApplicationHelper
   SITE_PATH = "/public/allsites/%s/"
   require "fileutils"
@@ -23,5 +24,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     resource.admin ? "/user/manage/1" : root_path
+  end
+
+  def check_user_status
+    if current_user && current_user.status != User::STATUS_NAME[:normal]
+      sign_out current_user
+      
+    end
   end
 end

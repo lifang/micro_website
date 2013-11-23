@@ -48,7 +48,7 @@ class SitesController < ApplicationController
     @site=Site.find_by_name(params[:origin_name])
     name=params[:site][:name].split(' ').join
 
-    @root_path=params[:site][:root_path].gsub(/\/+/, "")
+    @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
@@ -84,16 +84,16 @@ class SitesController < ApplicationController
     page = params[:page]          #回到页面的页数
       
     if site.update_attribute(:status,status)
-      msg='success'
+      flash[:msg]='审核操作已完成！'
     else
-      msg='failed!'
+      flash[:msg]='failed!'
     end
       
       
     if(page==''||page==1)
-      redirect_to "/user/manage/2?msg=#{msg}"
+      redirect_to "/user/manage/2"
     else
-      redirect_to "/user/manage/2?page=#{page}&msg=#{msg}"
+      redirect_to "/user/manage/2?page=#{page}"
     end
       
   end

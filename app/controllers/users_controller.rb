@@ -22,7 +22,7 @@ class UsersController  < ApplicationController
     set_user
       puts params
      if @user.update_attribute(:status,0)      #用户状态              1:正常           0：禁用       -1：删除         
-        change_site_status(@user,4) #将用户对应站点status设置为审核不通过
+        change_site_status(@user,Site::STATUS_NAME[:unverified]) #将用户对应站点status设置为审核不通过
        # flash[:msg]='已禁用该用户!'      
      else      
         #flash[:msg]='禁用失败!'    
@@ -46,7 +46,7 @@ class UsersController  < ApplicationController
      
      if @user.update_attribute(:status,1) 
        
-        change_site_status(@user,1) #将用户对应站点status设置为未审核
+        change_site_status(@user,Site::STATUS_NAME[:unverified]) #将用户对应站点status设置为未审核
      
        # flash[:msg]='已启用改用户!'      
      else      
@@ -68,7 +68,7 @@ class UsersController  < ApplicationController
     # puts 'delete........................................'
     set_user
     if @user.update_attribute(:status,-1)     
-       change_site_status(@user,4) #将用户对应站点status设置为审核不通过
+       change_site_status(@user,Site::STATUS_NAME[:unverified]) #将用户对应站点status设置为未审核
       
       
       # flash[:msg]='删除成功!'

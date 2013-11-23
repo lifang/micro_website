@@ -26,6 +26,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
+    params[:page][:file_name] = params[:page][:file_name] + ".html"
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
@@ -33,11 +34,11 @@ class PagesController < ApplicationController
           content = modifyContent(@page, content, @site.id,@page.form? ? img : "")
         end
         save_into_file(content, @page) if content
-        @notice = "新建成功!"
+        flash[:notice] = "新建成功!"
         @path = redirect_path(@page, @site)
         render :success
       else
-        @notice="新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+        @notice = "新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
         render :fail
       end
     end
@@ -49,17 +50,18 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
+    params[:page][:file_name] = params[:page][:file_name] + ".html"
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
         content = modifyContent(@page, content, @site.id,@page.form? ? img : "") if content
       end
       save_into_file(content, @page) if content
-      @notice = "更新成功!"
+      flash[:notice] = "更新成功!"
       @path = redirect_path(@page, @site)
       render :success
     else
-      @notice="更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+      @notice = "更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
       render :fail
     end
   end
@@ -79,7 +81,7 @@ class PagesController < ApplicationController
 
   #子页 index
   def sub
-    @sub_pages = @site.pages.sub.paginate(:page=>params[:page],:per_page=>10)
+    @sub_pages = @site.pages.sub.order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
     render "/pages/sub/sub"
   end
 
@@ -157,7 +159,7 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id,:img_path=>params[:img])
+        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
         redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?
@@ -179,13 +181,13 @@ class PagesController < ApplicationController
     if page
       site = page.site
       if current_user && (current_user.admin || site.user == current_user)
-        redirect_to "/allsites" + path_name
+        redirect_to URI.encode("/allsites" + path_name)
       else
         if site.status == Site::STATUS_NAME[:pass_verified]
           if page.authenticate? && page.sub? && !user_signed_in?
             redirect_to '/signin'
           else
-            redirect_to "/allsites" + path_name
+            redirect_to URI.encode("/allsites" + path_name)
           end
         else
           redirect_to '/303.html', :layout => false

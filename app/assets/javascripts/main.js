@@ -10,7 +10,7 @@ $(function() {
     $("#close_flash").click(function(){
         $("#flash_field").hide()
     });
-     $("#flash_field").fadeOut(4000);
+     $("#flash_field").fadeOut(3000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });
@@ -110,15 +110,15 @@ $(function() {
         var root = $('#site_root_path').val();
         var notes = $('#site_notes').val();
         if (name.length == 0) {
-            alert('站点名不能为空');
+            tishi_alert('站点名不能为空');
             return false;
         }
         if (root.length == 0) {
-            alert('根目录不能为空');
+            tishi_alert('根目录不能为空');
             return false;
         }
         if (root.match(/[^a-zA-Z]/i)) {
-            alert('根目录只能为字母');
+            tishi_alert('根目录只能为字母');
             return false;
         }
         $("#fault").show();
@@ -162,7 +162,7 @@ function have_exist(id){
     var name=$("#resource_c").val();
     if(name=="")
     {
-        alert('请选择文件');
+        tishi_alert('请选择文件');
         return false;
     }
     else{
@@ -194,7 +194,8 @@ function have_exist(id){
                 }
             });
         }else{
-            alert('不合法文件，只能是\n视频(mp4,rm,3gp,avi)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
+
+            tishi_alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
     } 
@@ -210,10 +211,10 @@ function change_status(id,status,msg){
         success:function(data){
             if(msg!="")
             if(data == 1){
-                alert(msg+"成功！");
+                tishi_alert(msg+"成功！");
                 window.location.reload();
             }else{
-                alert(msg+"失败！");
+                tishi_alert(msg+"失败！");
                
             }
         }
@@ -237,6 +238,50 @@ function check_form_particular(id){
    if(!content.match(regex)){
        alert('有非法字符！')
    }
+}
+
+function show_center(t){
+    var content = $(t).parents(".second_box")
+    var mouse_position = document.body.scrollTop+document.documentElement.scrollTop;
+    var doc_height = $(document).height();
+    var doc_width = $(document).width();
+    var layer_height = $(t).height();
+    var layer_width = $(t).parent(".second_content").width();
+    var win_height =  $(window).height();
+ 
+    content.css('top',mouse_position+100+"px" );
+    content.css('left',(doc_width-layer_width)/2);
+
+    $(t).parent(".second_content").show();
+        content.show();
+    $(".second_bg").show();
+    content.find(".close").click(function(){
+        hide_tab($(t));
+    });
+}
+
+//提示错误信息
+function tishi_alert(message){
+    $(".alert_h").html(message);
+    var scolltop = document.body.scrollTop|document.documentElement.scrollTop;
+    var win_height = document.documentElement.clientHeight;//jQuery(document).height();
+    var z_layer_height = $(".tab_alert").height();
+    $(".tab_alert").css('top',(win_height-z_layer_height)/2 + scolltop);
+    var doc_width = $(document).width();
+    var layer_width = $(".tab_alert").width();
+    $(".tab_alert").css('left',(doc_width-layer_width)/2);
+    $(".tab_alert").css('display','block');
+    jQuery('.tab_alert').fadeTo("slow",1);
+    $(".tab_alert .close").click(function(){
+        $(".tab_alert").css('display','none');
+    })
+    setTimeout(function(){
+        jQuery('.tab_alert').fadeTo("slow",0);
+    }, 4000);
+    setTimeout(function(){
+        $(".tab_alert").css('display','none');
+    }, 4000);
+
 }
 
 

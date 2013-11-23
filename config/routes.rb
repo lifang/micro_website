@@ -13,7 +13,7 @@ MicroWebsite::Application.routes.draw do
   get "user/delete/:uid", :to=>"users#delete"
   
   post "site/verify/:sid",:to=>"sites#verify"
-  get "site/change_status/:sid/:status",:to=>"sites#change_status"
+  post "site/change_status/:sid/:status",:to=>"sites#change_status"
 
   match "/sites/static", :to => "pages#static"
   

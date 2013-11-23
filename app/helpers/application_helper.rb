@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def page_file_name(page)
-    page.main? ? "index.html" : "style.css"
+    page.main? ? "index" : "style.css"
   end
 
   def page_title(page)
@@ -62,11 +62,11 @@ a.each(function(){
 <input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>
                    <div id='formContent'>
                     #{content}
-                   </div><button type='button' onclick='return submit_form(this)'>提交</button>
+                   </div><button type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">提交</button>
 </form>
 <div class='second_box' id='form_view'>
   <div class='second_content second_content_3'>
-   <span class='second_dtl'>#{page.title}不能为空</span>
+   <span class='second_dtl' id='the_content'>#{page.title}不能为空</span>
    <div class='second_box_act' id='form_view_btn'>
     <a href='' ><span class='r_sure' >确认</span></a>
    </div>
@@ -74,7 +74,16 @@ a.each(function(){
  </div>
 </body>
 </html>"
-      
+=begin
+<div class='second_box' id='form_view'>
+  <div class='second_content second_content_3'>
+   <span class='second_dtl' id='this_content'>#{page.title}不能为空</span>
+   <div class='second_box_act' id='form_view_btn'>
+    <a href='' ><span class='r_sure' >确认</span></a>
+   </div>
+  </div>
+ </div>
+=end
     end
     #TODO正则中文有问题
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
