@@ -1,6 +1,6 @@
 <%if !flash[:success]%>
 
-  tishi_alert("更新失败 ");
+  tishi_alert("更新失败,站点名称存在！");
   $('#fault').html('<%=flash[:error]%>');
 <%else %>
   location.reload();
