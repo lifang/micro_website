@@ -50,7 +50,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
-    params[:page][:file_name] = params[:page][:file_name] + ".html"
+    params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
@@ -116,7 +116,7 @@ class PagesController < ApplicationController
 
   #表单 index
   def form
-    @forms = @site.pages.form.includes(:form_datas).paginate(:page=>params[:page],:per_page=>10)
+    @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
     render "/pages/form/form"
   end
 

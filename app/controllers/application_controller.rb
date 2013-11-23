@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
   def check_user_status
     if current_user && current_user.status != User::STATUS_NAME[:normal]
       sign_out current_user
-      
     end
   end
 end
