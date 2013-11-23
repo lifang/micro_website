@@ -26,7 +26,6 @@ module ApplicationHelper
   end
 
   def modifyContent(page,content,site_id,img="")
-    p 1111111111111111111111111111
     content = content.strip
     if page.form? 
       content = "<!DOCTYPE html>
@@ -65,7 +64,7 @@ a.each(function(){
 <span class='delimeter'></span>
                     #{content}
 <span class='delimeter'></span>
-                   <button type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">确认提交</button>
+                   <div class='r_joinUs2_act'><button class='grey_btn' type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">确认提交</button></div>
 </form>
 </div>
 <div class='second_box' id='form_view'>
