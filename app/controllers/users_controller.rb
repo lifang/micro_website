@@ -71,9 +71,9 @@ class UsersController  < ApplicationController
        change_site_status(@user,Site::STATUS_NAME[:unverified]) #将用户对应站点status设置为未审核
       
       
-      # flash[:msg]='删除成功!'
+       flash[:msg]='删除成功!'
     else
-      # flash[:msg]='删除失败!'     
+       flash[:msg]='删除失败!'     
     end  
     respond_to do |format|    
       

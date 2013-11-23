@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
     else
       self.assign_attributes(params, *options)
       self.valid?
-      self.errors.add(:current_password, current_password.blank? ? "当前密码不能为空！" : "当前密码错误！")
+      self.errors.add(:current_password, current_password.blank? ? "密码不能为空！" : "密码错误！")
       false
     end
 

@@ -19,7 +19,7 @@ h2 input { font-size: 16px;}
 }
 
 .close,.delete {
-    background: url(/assets/close.png) no-repeat;
+    background: url('/assets/close.png') no-repeat;
     cursor: pointer;
     display: block;
     height: 17px;
@@ -200,7 +200,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     border-radius: 5px;
 	width: 450px;
 	max-height: 480px;
-	overflow: auto;
+/*	overflow: auto;*/
 	margin: 100px auto;
     padding: 10px;
 	position: relative;
