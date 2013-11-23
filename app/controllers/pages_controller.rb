@@ -72,6 +72,7 @@ class PagesController < ApplicationController
       @page = Page.find_by_id params[:id]
       if @page.destroy
         File.delete PUBLIC_PATH + @page.path_name if File.exists?(PUBLIC_PATH + @page.path_name)
+        flash[:success]='删除成功！'
         redirect_to redirect_path(@page, @site)
       else
         
