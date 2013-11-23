@@ -58,13 +58,13 @@ function submit_form(obj,action_url){
     });
     if(flag){
         //$(obj).parents(".submit_form_static").submit();
-        alert(action_url);
+        //alert(action_url);
         $.ajax({
             url: action_url,
             type: "POST",
             dataType: "script",
             success:function(data){
-                  $("#the_content").html($(this).text() + " 提交成功！");
+                  $("#the_content").html(data+" 提交成功！");
                   $("#form_view").show();
             // change_status(site_id,1,"");
             },

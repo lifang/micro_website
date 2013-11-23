@@ -160,6 +160,7 @@ class PagesController < ApplicationController
     FormData.transaction do
       if current_user
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
+        #render :text=>'heiehi'
         redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?
@@ -167,6 +168,7 @@ class PagesController < ApplicationController
           redirect_to '/signin'
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
+         # render :text=>'heiehi'
           redirect_to "/allsites/#{@site.root_path}/index.html"
         end
       end

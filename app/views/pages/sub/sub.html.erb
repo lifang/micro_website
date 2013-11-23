@@ -13,7 +13,7 @@
             <th width="50">访问控制</th>
             <th width="300">操作</th>
           </tr>
-          
+
           <% @sub_pages.each do |page| %>
             <tr>
               <td><%= page.title %></td>
@@ -29,10 +29,13 @@
           <% end %>
         </table>          
       </div>
-      
+
       <div class="clear"></div>
-      <%= will_paginate  @sub_pages,:previous_label=>'上一页',:next_label=>'下一页'%>
-      
+      <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+        <%= will_paginate  @sub_pages,:previous_label=>'上一页',:next_label=>'下一页'%>
+      </div>
+
+
       <div class="page_act"></div>
     </div>
   </div>

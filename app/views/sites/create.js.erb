@@ -1,5 +1,7 @@
 <%if !flash[:success]%>
-$('#fault').html('<%=flash[:error]%>')
+
+  tishi_alert("更新失败 ");
+  $('#fault').html('<%=flash[:error]%>');
 <%else %>
   location.reload();
 <%end%>

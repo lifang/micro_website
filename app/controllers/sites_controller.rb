@@ -47,15 +47,13 @@ class SitesController < ApplicationController
   def update
     @site=Site.find_by_name(params[:origin_name])
     name=params[:site][:name].split(' ').join
-
     @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
         flash[:success]='更新成功'
         #redirect_to root_path
-      else
-        flash[:error]="更新失败 #{@site.errors.messages.values.flatten.join("\\n")}"
+        
       end
       format.js
     end
