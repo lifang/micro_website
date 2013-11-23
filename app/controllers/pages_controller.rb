@@ -47,7 +47,7 @@ class PagesController < ApplicationController
   #更新page
   def update
     content = params[:page][:content]
-    img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
+    img="<img src='"+params[:page][:img_path]+"' width='320'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name] && params[:page][:file_name] != "style.css"
