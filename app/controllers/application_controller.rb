@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
-  before_filter :check_user_status
+  prepend_before_filter :check_user_status
   include ApplicationHelper
   SITE_PATH = "/public/allsites/%s/"
   require "fileutils"

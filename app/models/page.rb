@@ -17,7 +17,7 @@ class Page < ActiveRecord::Base
       self.types == TYPE_NAMES[type.to_sym]
     end
   end
-  validates :title,  :uniqueness => {:scope => :site_id, :case_sensitive => false, :message => "站点内已经存在该标题"}
+  
   validates :file_name,  :uniqueness => {:scope => :site_id, :case_sensitive => false, :message => "站点内已经存在该文件名"}
-   
+
 end
