@@ -29,13 +29,14 @@
 }
 
 .digg_pagination {
-    background: white;
+    
     cursor: default;
     /* self-clearing method: */ }
+.pagination { display: inline-block; background: white;}
 .digg_pagination a, .digg_pagination span, .digg_pagination em {
     padding: 0.2em 0.5em;
-    display: block;
-    float: left;
+    display: inline-block;
+    
     margin-right: 1px; }
 .digg_pagination .disabled {
     color: #999999;

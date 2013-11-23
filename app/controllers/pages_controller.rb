@@ -159,7 +159,7 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id,:img_path=>params[:img])
+        page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
         redirect_to "/allsites/#{@site.root_path}/index.html"
       else
         if page.authenticate?

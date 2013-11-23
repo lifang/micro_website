@@ -167,7 +167,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','WAV' ,'wav','mp4','MP4', 'avi','AVI', 'rm','RM' ,'rmvb','RMVB','swf','SWF', 'gif','GIF','js','JS'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG','jpeg','JPEG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','3gp' ,'3GP','mp4','MP4', 'avi','AVI', 'rm','RM' ,'wmv','WMV','swf','SWF', 'gif','GIF','js','JS'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -179,8 +179,6 @@ function have_exist(id){
                 url:'/check_zip',
                 dataType:"json",
                 data  :"name=" + name + "&id=" + id,
-
-
                 success:function(data){
                     if(data.status == 1){
                         $("#fugai").show();
@@ -196,6 +194,7 @@ function have_exist(id){
                 }
             });
         }else{
+
             tishi_alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
