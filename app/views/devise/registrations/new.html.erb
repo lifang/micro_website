@@ -55,7 +55,7 @@ function checkName(){
 	flg=true;
 	var name = document.getElementById('user_name');
 	if(($.trim(name.value).length)==0){
-		alert('提示:\n\n用户名不能为空');		
+		tishi_alert('用户名不能为空');		
 		flg=false;
 	}
 	
@@ -69,17 +69,17 @@ function checkPassword(){
 	
 	if(password.length>=6){
 		if($.trim(password).length==0){
-			alert("提示:\n\n密码需要至少包含一个非空白符")
+			tishi_alert("密码需要至少包含一个非空白符")
 			
 		}
 		else if(password==repassword){
 				flg=true;
 				}else{
-			alert("提示:\n\n两次密码输入不一致");
+			tishi_alert("两次密码输入不一致");
 			}
 				
 	}else{
-		alert("提示:\n\n请输入长度大于6的密码");
+		tishi_alert("请输入长度大于6的密码");
 		}	
 	return flg;
 }
@@ -92,7 +92,7 @@ function checkEmail(){
 	
 	 if(!emailReg.test(email))
             {
-                alert('提示:\n\n请输入有效的E_mail');                 
+                tishi_alert('请输入有效的E_mail');                 
                 flg=false;
            }
 		
@@ -107,7 +107,7 @@ function checkPhone(){
 	var phone = document.getElementById('user_phone').value;
 	var phoneReg =/^1[3458]\d{9}$/;
 	if(!phoneReg.test(phone)){
-		alert('提示:\n\n请输入有效的联系电话。');                 
+		tishi_alert('请输入有效的联系电话。');                 
 		flg=false;
 	}
 	

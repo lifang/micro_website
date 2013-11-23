@@ -28,13 +28,13 @@
 <script>
 	function check(){
 		if($.trim($("#user_login").val()).length==0){
-			alert('提示:\n\n用户名不能为空');
+			tishi_alert('提示:\n\n用户名不能为空');
 			return false;	
 		}else if($.trim($("#user_password").val()).length==0){
-			alert('提示:\n\n密码需要包含至少一个非空白符');
+			tishi_alert('提示:\n\n密码需要包含至少一个非空白符');
 			return false;
 		}else if($("#user_password").val().length<6){
-			alert('提示:\n\n密码长度至少为6');
+			tishi_alert('提示:\n\n密码长度至少为6');
 			return false;
 			
 		}
