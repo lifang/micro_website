@@ -26,6 +26,7 @@ module ApplicationHelper
   end
 
   def modifyContent(page,content,site_id,img="")
+    p 1111111111111111111111111111
     content = content.strip
     if page.form? 
       content = "<!DOCTYPE html>
@@ -61,8 +62,18 @@ a.each(function(){
 <input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>
                    <div id='formContent'>
                     #{content}
-                   </div><button type='button' onclick='return submit_form(this)'>提交</button></form>
-                  </body></html>"
+                   </div><button type='button' onclick='return submit_form(this)'>提交</button>
+</form>
+<div class='second_box' id='form_view'>
+  <div class='second_content second_content_3'>
+   <span class='second_dtl'>#{page.title}不能为空</span>
+   <div class='second_box_act' id='form_view_btn'>
+    <a href='' ><span class='r_sure' >确认</span></a>
+   </div>
+  </div>
+ </div>
+</body>
+</html>"
       
     end
     #TODO正则中文有问题

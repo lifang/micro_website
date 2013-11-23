@@ -1,6 +1,6 @@
 module ResoursesHelper
   def which_res(name)
-    @img_resources=%w[jpg png gif]
+    @img_resources=%w[jpg png gif jpeg]
     @voice_resources=%w[mp3]
     @video_resoures=%w[mp4 avi rm rmvb]
     name=name.split('.')[-1]

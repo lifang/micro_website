@@ -84,7 +84,7 @@ function showInput(obj){
 //双击div，修改后blur隐藏当前输入框
 function hideInput(obj, flag){
     var input_value = $(obj).val();
-
+//判断内容是否罕有非法字符
     if($.trim(input_value) == "" || pattern.test(input_value)){
         alert("请输入内容，不能包含非法字符")
     }else{
@@ -132,6 +132,7 @@ function submitForm(obj, flag,id){
                 dataType: "script",
                 data:dataValue,
                 success:function(data){
+
                 //保存成功
                 // change_status(site_id,1,"");
                 },

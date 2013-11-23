@@ -2,6 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+$(function() {
+   $("#form_view_btn").click(function(){
+       $("#form_view").hide();
+   });
+});
 function submit_form(obj){
     var flag = true;
     $(obj).parents(".submit_form_static").find('.questionTitle').each(function(){
@@ -11,7 +16,7 @@ function submit_form(obj){
 
         if(type.attr('type')=="text"){
             if($.trim(type.val()) == ""){
-                alert(title + " 不能为空！");
+                $("#form_view").show();
                 flag = false;
                 //return false;
             }else{
@@ -19,7 +24,7 @@ function submit_form(obj){
             }
         }else{
             if(insert.find("input:checked").length == 0){
-                alert(title + " 不能为空！");
+               $("#form_view").show();
                 flag = false;
                 //return false;
             }else{
