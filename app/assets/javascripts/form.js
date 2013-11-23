@@ -34,23 +34,23 @@ function tishi_alert(message){
 
 function submit_form(obj,action_url){
     var flag = true;
+    var token = $('.authenticity_token').val();
     $(obj).parents(".submit_form_static").find('.questionTitle').each(function(){
-        //var title = $(this).text();
+        var title = $(this).text();
         var insert = $(this).parents(".insertBox");
         var type = insert.find("input.newNameClass");
 
         if(type.attr('type')=="text"){
             if($.trim(type.val()) == ""){
-                $("#form_view").show();
+                alert(title + "不能为空")
                 flag = false;
             }else{
                 flag = true;
             }
         }else{
             if(insert.find("input:checked").length == 0){
-                $("#form_view").show();
+                alert(title + "不能为空")
                 flag = false;
-            //return false;
             }else{
                 flag = true;
             }
@@ -58,19 +58,21 @@ function submit_form(obj,action_url){
     });
     if(flag){
         //$(obj).parents(".submit_form_static").submit();
-        //alert(action_url);
+
         $.ajax({
             url: action_url,
             type: "POST",
             dataType: "script",
-            success:function(data){
-                  $("#the_content").html(data+" 提交成功！");
-                  $("#form_view").show();
-            // change_status(site_id,1,"");
+
+            data:{authenticity_token: token},
+            success:function(data){   
+                 $("#the_content").html("提交成功！");
+                 $("#form_view").show();
             },
             error:function(data){
             //alert("error")
             }
         })
+        
     }
 }

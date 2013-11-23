@@ -55,15 +55,19 @@ a.each(function(){
                     <title>preview</title>
                   </head>
                   <body>
-#{img}
+<article>
+<div class='r_img_box_1'>#{img}</div>
+<div class='r_joinUs2_info'>
                  <form accept-charset='UTF-8' action='/sites/#{site_id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post'>
                    <div style=\"margin:0;padding:0;display:inline\">
 <input name=\"utf8\" type=\"hidden\" value=\"✓\">
-<input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>
-                   <div id='formContent'>
+<input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>                 
+<span class='delimeter'></span>
                     #{content}
-                   </div><button type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">提交</button>
+<span class='delimeter'></span>
+                   <button type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">确认提交</button>
 </form>
+</div>
 <div class='second_box' id='form_view'>
   <div class='second_content second_content_3'>
    <span class='second_dtl' id='the_content'>#{page.title}不能为空</span>
@@ -72,18 +76,9 @@ a.each(function(){
    </div>
   </div>
  </div>
+</article>
 </body>
 </html>"
-=begin
-<div class='second_box' id='form_view'>
-  <div class='second_content second_content_3'>
-   <span class='second_dtl' id='this_content'>#{page.title}不能为空</span>
-   <div class='second_box_act' id='form_view_btn'>
-    <a href='' ><span class='r_sure' >确认</span></a>
-   </div>
-  </div>
- </div>
-=end
     end
     #TODO正则中文有问题
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")

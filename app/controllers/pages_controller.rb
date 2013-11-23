@@ -1,6 +1,6 @@
 #encoding: utf-8
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static]
+  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
   layout 'sites'
   before_filter :get_site
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
@@ -148,7 +148,7 @@ class PagesController < ApplicationController
 
   #表单预览
   def form_preview
-    @img=params[:page][:img_path]
+    @img = params[:page][:img_path]
     @content = params[:page][:content]
     @title = params[:page][:title]
     render "/pages/form/preview", :layout => false
@@ -160,16 +160,18 @@ class PagesController < ApplicationController
     FormData.transaction do
       if current_user
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
-        #render :text=>'heiehi'
-        redirect_to "/allsites/#{@site.root_path}/index.html"
+
+        @notice = 1
+
       else
         if page.authenticate?
-          flash[:notice] = "请先登陆！"
-          redirect_to '/signin'
+           @notice = 0
+        
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
-         # render :text=>'heiehi'
-          redirect_to "/allsites/#{@site.root_path}/index.html"
+
+          @notice = 1 
+
         end
       end
     end
