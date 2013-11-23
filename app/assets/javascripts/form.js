@@ -58,13 +58,13 @@ function submit_form(obj,action_url){
     });
     if(flag){
         //$(obj).parents(".submit_form_static").submit();
-
+        var dataValue = $(obj).parents("form").serialize();
+        dataValue = dataValue + "&authenticity_token=" + token;
         $.ajax({
             url: action_url,
             type: "POST",
             dataType: "script",
-
-            data:{authenticity_token: token},
+            data:dataValue,
             success:function(data){   
                  $("#the_content").html("提交成功！");
                  $("#form_view").show();

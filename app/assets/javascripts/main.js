@@ -8,9 +8,9 @@ $(function() {
 
 
     $("#close_flash").click(function(){
-        $("#flash_field").hide();
+        $("#flash_field").hide()
     });
-    $("#flash_field").fadeOut(3000);
+     $("#flash_field").fadeOut(4000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });
@@ -85,13 +85,13 @@ $(function() {
             $(this).parent().find("span").css("color", "#e9ebea");
         }
     });
-    //显示创建站点
+//显示创建站点
     $(".scd_btn").click(function() {
         $(".second_bg").show();
         $(".second_box." + $(this).attr("name")).show();
         $("#site_titile").html('创建站点（根目录创建后不可修改）');
         $('#site_edit_or_create').val('create');
-        $('#site_root_path').removeAttr("readonly");
+        $('#site_root_path').removeAttr("disabled");
         $('#must_fix').show();
         text_value("", '', '');
     })
@@ -131,8 +131,7 @@ function show_edit_page(name, rootpath, notes) {
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
-    $('#site_root_path').attr("readonly","readonly");
-     $('#site_root_path').css('background','#CFCFCF');
+    $('#site_root_path').attr("disabled","disabled");
     $('#must_fix').hide();
     text_value(name, rootpath, notes);
 }
@@ -196,7 +195,7 @@ function have_exist(id){
             });
         }else{
 
-            tishi_alert('不合法文件，只能是<br/>视频(mp4,rm,rmvb,avi)<50M<br/>音频(mp3,wav,wma)<20M<br/>图片(jpg,png,gif)<2M<br/>或(zip)压缩包');
+            tishi_alert('不合法文件，只能是\n视频(mp4,rm,rmvb,avi)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
             return false;
         }
     } 
@@ -211,13 +210,14 @@ function change_status(id,status,msg){
         data  :"status=" + status + "&id=" + id,
         success:function(data){
             if(msg!="")
-                if(data == 1){
-                    tishi_alert(msg+"成功！");
-                    window.location.reload();
-                }else{
-                    tishi_alert(msg+"失败！");
+            if(data == 1){
+                tishi_alert(msg+"成功！");
+                setTimeout("window.location.reload()",800);
+                //window.location.reload();
+            }else{
+                tishi_alert(msg+"失败！");
                
-                }
+            }
         }
     });
 }
@@ -234,11 +234,11 @@ function arr_contant(name,arr){
 }
 
 function check_form_particular(id){
-    var content=$("#"+id).val();
-    regex=/\~\!\@\#\$\%\^\&\*/;
-    if(!content.match(regex)){
-        tishi_alert('有非法字符！')
-    }
+   var content=$("#"+id).val();
+   regex=/\~\!\@\#\$\%\^\&\*/;
+   if(!content.match(regex)){
+       tishi_alert('有非法字符！')
+   }
 }
 
 function show_center(t){
@@ -254,7 +254,7 @@ function show_center(t){
     content.css('left',(doc_width-layer_width)/2);
 
     $(t).parent(".second_content").show();
-    content.show();
+        content.show();
     $(".second_bg").show();
     content.find(".close").click(function(){
         hide_tab($(t));

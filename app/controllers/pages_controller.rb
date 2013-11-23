@@ -26,7 +26,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
-    params[:page][:file_name] = params[:page][:file_name] + ".html"
+    params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name] && params[:page][:file_name] != "style.css"
     Page.transaction do
       @page = @site.pages.create(params[:page])
       if @page.save
@@ -50,7 +50,7 @@ class PagesController < ApplicationController
     img="<img src='"+params[:page][:img_path]+"'/><br>" if params[:page][:img_path]
     params[:page].delete(params[:page][:content]) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
-    params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
+    params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name] && params[:page][:file_name] != "style.css"
     @page = Page.find_by_id params[:id]
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
@@ -161,18 +161,13 @@ class PagesController < ApplicationController
       if current_user
         p 1111111111111111111111
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
-
         @notice = 1
-
       else
         if page.authenticate?
-           @notice = 0
-        
+           @notice = 0    
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
-
           @notice = 1 
-
         end
       end
     end
