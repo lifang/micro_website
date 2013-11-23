@@ -142,10 +142,10 @@ function submitForm(obj, flag,id){
                 }
             })
         }else{ //预览
-            img="<img src='"+img+"'/><br/>";
+            //img="<img src='"+img+"'/><br/>";
             $("#form_container #hiddenContentContainer").html('<input type="hidden" id="hiddenContent" name="page[content]"/>');
             $("#form_container form").attr("target", "_blank").attr("action", $(obj).attr("alt"));
-            $("#form_container #hiddenContent").val(img+content);
+            $("#form_container #hiddenContent").val(content);
             $("#form_container form").submit();
         }
     }
