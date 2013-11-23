@@ -171,7 +171,7 @@ fieldset.page_tit {
 .page_tit span { padding: 0 5px; color: #ff0000;}
 .page_tit button { float: right; margin: 5px 22px;}
 .page_txt { border: 1px solid #C2C2C2; background: #ffffff; width: 98%;  overflow: auto; resize: none; padding: 10px; margin: 10px 0;}
-.second_box .page_txt { height: 250px;}
+/*.second_box .page_txt { height: 250px;}*/
 .page_act { padding: 10px; text-align: center;}
 .page_act button { margin: 0 10px;}
 
@@ -199,12 +199,14 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     background-color: #FCFCFC;
     border: 1px solid #CBD5D9;
     border-radius: 5px;
-	width: 450px;
-	max-height: 480px;
-/*	overflow: auto;*/
-	margin: 100px auto;
+    margin: 100px auto;
+    max-height: 500px;
     padding: 10px;
-	position: relative;
+    position: relative;
+    width: 450px;
+}
+.second_box .page_txt {
+    height: 280px;
 }
 .second_content.second_content2 { width: 900px; }
 .second_content .close,.delete {
