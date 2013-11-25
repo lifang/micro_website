@@ -32,6 +32,7 @@ module ApplicationHelper
                  <html>
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+                    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
                     <link href='/allsites/form_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
 <script src='/assets/jquery.js?body=1' type='text/javascript'></script>
 <script src='/assets/form.js?body=1' type='text/javascript'></script>
