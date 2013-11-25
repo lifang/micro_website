@@ -31,4 +31,10 @@ class ApplicationController < ActionController::Base
       sign_out current_user
     end
   end
+
+  def check_admin
+    if current_user && !current_user.admin
+      sign_out current_user
+    end
+  end
 end
