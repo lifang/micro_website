@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>我的微网站</title>
+
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<style>
+			#gallery {
+				float: left;
+				min-height: 12em;
+			}
+			.gallery.custom-state-active {
+				background: #eee;
+			}
+			.gallery li {
+				float: left;
+				width: 96px;
+				padding: 0.4em;
+				margin: 0 0.4em 0.4em 0;
+				text-align: center;
+			}
+			.gallery li h5 {
+				margin: 0 0 0.4em;
+				cursor: move;
+			}
+			.gallery li a {
+				float: right;
+			}
+			.gallery li a.ui-icon-zoomin {
+				float: left;
+			}
+			.gallery li img {
+				width: 100%;
+				cursor: move;
+			}
+			#trash {
+				float: right;
+				width: 32%;
+				min-height: 18em;
+				padding: 1%;
+			}
+			#trash h4 {
+				line-height: 16px;
+				margin: 0 0 0.4em;
+			}
+			#trash h4 .ui-icon {
+				float: left;
+			}
+			#trash .gallery h5 {
+				display: none;
+			}
+		</style>
+		</style>
+		<script>
+			$(function() {
+
+				var $gallery = $("#gallery"), $trash = $("#trash");
+
+				// let the gallery items be draggable
+				$("li", $gallery).draggable({
+					cancel : "a.ui-icon", // clicking an icon won't initiate dragging
+					revert : "invalid", // when not dropped, the item will revert back to its initial position
+					containment : "document",
+					helper : "clone",
+					cursor : "move"
+				});
+
+				// let the trash be droppable, accepting the gallery items
+				$trash.droppable({
+					accept : "#gallery > li",
+					activeClass : "ui-state-highlight",
+					drop : function(event, ui) {
+						deleteImage(ui.draggable);
+					}
+				});
+
+				// let the gallery be droppable as well, accepting items from the trash
+				$gallery.droppable({
+					accept : "#trash li",
+					activeClass : "custom-state-active",
+					drop : function(event, ui) {
+						recycleImage(ui.draggable);
+					}
+				});
+
+				$("#add_text_img").click(function() {
+					$("#show_all_image").show();
+					$("#background").show();
+				});
+				$("#cancel").click(function() {
+					$("#show_all_image").hide();
+					$("#background").hide();
+				});
+				// 加入图片
+				var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";
+				function deleteImage($item) {
+
+					//复制本身
+					var ll = $item.clone();
+					ll.find("a.ui-icon-circle-plus").remove();
+					//创造一个新的相同元素
+					//var ll =$("<li class='ui-widget-content ui-corner-tr'></li>");
+					//ll.html($item.html());
+					ll.fadeOut(function() {
+						var $list = $("ul", $trash).length ? $("ul", $trash) : $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+						//	ll.find("a.ui-icon-trash").remove();
+						ll.append(recycle_icon).appendTo($list).fadeIn(function() {
+
+							ll.animate({
+								width : "192px"
+							}).find("img").animate({
+								height : "144px"
+							});
+							ll.append("<textarea></textarea>");
+						});
+					});
+				}
+
+				// image preview function, demonstrating the ui.dialog used as a modal window
+				function viewLargerImage($link) {
+					var src = "http://127.0.0.1:3000" + $link.attr("src"), title = $link.siblings("img").attr("alt"), $modal = $("img[src$='" + src + "']");
+
+					if ($modal.length) {
+						$modal.dialog("open");
+					} else {
+						var img = $("<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />").attr("src", src).appendTo("body");
+						setTimeout(function() {
+							img.dialog({
+								title : title,
+								width : 400,
+								modal : true
+							});
+						}, 1);
+					}
+				}
+
+				// resolve the icons behavior with event delegation
+				$("ul.gallery > li").click(function(event) {
+					var $item = $(this), $target = $(event.target);
+
+					if ($target.is("a.ui-icon-circle-plus")) {
+						deleteImage($item);
+					} else if ($target.is("a.ui-icon-zoomin")) {
+						viewLargerImage($target);
+					}
+
+					return false;
+				});
+
+			});
+			//删除图片
+			function delete_ele(element) {
+				//获取父节点并移除
+				$(element).parent().remove();
+			}
+		</script>
+	</head>
+	<body>
+		<% flash.each do |name, msg| %>
+		<div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+			<div   style="font-size:20px;margin: 200px auto;width: 300px;background: #E0EEEE;padding: 20px;">
+
+				<span class="close" id="close_flash" style="float:right;" ></span>
+				<%= msg%>
+
+			</div>
+		</div>
+		<% end %>
+
+		<div class="main_container">
+			<%= render 'sites/site_status'%>
+			<input type="button" value="添加图文页" id='add_text_img'>
+			<!--主体-->
+
+			<div id="show_all_image" style="display:none;position: fixed;top:0px;left:0px;padding:10px;z-index: 2;">
+				<div style="border:1px solid red; overflow: auto;" >
+
+					<div style="width:100%;padding:1%;color:white">
+						<h1 style="color:white">
+							标题：
+						<input type="text"/>
+						文件名：
+						<input type="text"/>
+						</h1>
+						访问权限：是
+						<input type="radio" name="w" checked/>
+						否
+						<input type="radio"name="w" />
+					</div>
+					<div style="float:left;width:48%;height:500px;padding:1%;overflow: auto;">
+						<div id="trash" class="ui-widget-content ui-state-default"style="width:620px;background:white;float:left">
+							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区</h4>
+						</div>
+					</div>
+					<div style="float:left;width:50%;height:500px;overflow: auto;">
+						<p style="color:white">
+							拖拽您的图片
+						</p>
+						<%= render 'shared/all_image',:objects=>@imgs_path%>
+					</div>
+					<div style="width:100%;padding:1%;">
+						<input type="submit" value="提交"/>
+						<input type="button" value="预览"/>
+						<input type="button" value="取消" id='cancel'/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id='background' style="display:none;width:100%;height:100%;position:fixed;top:0px;left:0px; opacity:0.5;background:black;">	
+		</div>
+		<div id="dialog" title="Basic dialog">
+			<div></div>
+		</div>
+		<%= render "/shared/tishi_alert" %>
+	</body>
+</html>
