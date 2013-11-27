@@ -32,8 +32,8 @@
       <span>表单</span>
     </li>
   <% end %>
-  <%= link_to(image_text_site_resources_path(@site)) do %>
-    <li class="theTab <%= controller.action_name == "image_text" ? 'used' : '' %>">
+  <%= link_to(img_text_site_image_text_index_path(@site)) do %>
+    <li class="theTab <%= controller.action_name == "img_text" ? 'used' : '' %>">
       <span>图文页</span>
     </li>
   <% end %>

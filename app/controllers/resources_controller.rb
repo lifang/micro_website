@@ -185,11 +185,7 @@ class ResourcesController < ApplicationController
     @resources =Resource.find(params[:id])
     render 'show' ,:layout=>false
   end
-  def image_text
-    @site=Site.find(params[:site_id])
-    @imgs_path=@site.resources
-    render :layouts=>false
-  end
+  
   def allimage
     @site=Site.find(params[:id])
     @imgs_path=@site.resources

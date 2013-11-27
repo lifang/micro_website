@@ -27,11 +27,7 @@ MicroWebsite::Application.routes.draw do
     member do
       post :verify_site
     end
-    resources :resources do
-      collection do
-      get :image_text
-      end
-    end
+    resources :resources
     resources :pages do
       resources :form_datas
       collection do
@@ -44,7 +40,12 @@ MicroWebsite::Application.routes.draw do
       end
     end
 
-    resources :image_text
+    resources :image_text do
+      collection do
+         get :img_text
+      end
+    end
+    
   end
 
   # You can have the root of your site routed with "root"
