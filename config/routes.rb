@@ -44,6 +44,7 @@ MicroWebsite::Application.routes.draw do
       end
     end
   end
+  resources :image_text
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
