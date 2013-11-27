@@ -9,4 +9,12 @@ class ImageTextController < ApplicationController
     @imgs_path=@site.resources
     render :layouts=>false
   end
+  def create_imgtxt
+    name=params[:name];
+    title=params[:title];
+    check=params[:check];
+    imgarr=params[:src].split(",");
+    textstr=params[:text].split(",");
+    render :text=>1
+  end
 end

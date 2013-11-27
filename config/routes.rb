@@ -22,6 +22,7 @@ MicroWebsite::Application.routes.draw do
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'
+  match '/image_text_page',to: 'image_text#create_imgtxt' ,via: 'post'
   # Sample resource route with options:
   resources :sites do
     member do

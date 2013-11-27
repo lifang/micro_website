@@ -125,6 +125,7 @@
 
 					if ($modal.length) {
 						$modal.dialog("open");
+
 					} else {
 						var img = $("<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />").attr("src", src).appendTo("body");
 						setTimeout(function() {
@@ -149,6 +150,55 @@
 
 					return false;
 				});
+				$("#submit").click(function() {
+					//去掉空格
+					var title =$.trim( $("#title").val());
+					var name =$.trim( $("#name").val() );
+					if(title==""||name==""){
+						tishi_alert("标题，文件名不能为空！");
+						return false;
+					}
+					if(!name.match(/^[a-z]/i)){
+						tishi_alert("文件名不能为非字母！");
+						return false;
+					}
+					var arr = $("*[name='w']");
+					var check = "";
+					for (var i = 0; i < arr.length; i++) {
+						if (arr[i].checked) {
+							check = arr[i].value;
+							break;
+						}
+					}
+					var src="";
+					var text="";
+					var ul = $("#trash");
+					var liArr = $("#trash").children("ul").children("li");
+					$.each(liArr, function(index, name) {
+						src += $(name).find('img').attr("src")+",";
+						text += $(name).find('textarea').val()+",";
+					});
+					$.ajax({
+						//async : true,
+						headers : {
+							'X-Transaction' : 'POST Example',
+							'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+						},
+						type : 'post',
+						url : '/image_text_page',
+						dataType : "json",
+						data :'title='+title+'&name='+name+'&check='+check+'&src='+src+'&text='+text
+						,
+						success : function(data) {
+							if (data == 1) {
+								tishi_alert("创建成功");
+
+							} else {
+
+							}
+						}
+					});
+				});
 
 			});
 			//删除图片
@@ -169,48 +219,48 @@
 			</div>
 		</div>
 		<% end %>
-
+		<div id='background' style="z-index: 4;display:none;width:100%;height:100%;position:fixed;top:0px;left:0px; opacity:0.5;background:black;"></div>
+		<%= render "shared/head_nav" %>
 		<div class="main_container">
 			<%= render 'sites/site_status'%>
 			<input type="button" value="添加图文页" id='add_text_img'>
 			<!--主体-->
 
-			<div id="show_all_image" style="display:none;position: fixed;top:0px;left:0px;padding:10px;z-index: 2;">
-				<div style="border:1px solid red; overflow: auto;" >
+			<div id="show_all_image" style="display:none;position: fixed;top:0px;left:0px;padding:10px;z-index: 5;">
 
+				<div style="border:1px solid red; " >
 					<div style="width:100%;padding:1%;color:white">
-						<h1 style="color:white">
-							标题：
-						<input type="text"/>
+						<h1 style="color:white" > 标题：
+						<input type="text" id="title"/>
 						文件名：
-						<input type="text"/>
+						<input type="text" id="name"/>
 						</h1>
 						访问权限：是
-						<input type="radio" name="w" checked/>
+						<input type="radio" value=1 name="w" checked/>
 						否
-						<input type="radio"name="w" />
+						<input type="radio" value=0 name="w" />
 					</div>
 					<div style="float:left;width:48%;height:500px;padding:1%;overflow: auto;">
 						<div id="trash" class="ui-widget-content ui-state-default"style="width:620px;background:white;float:left">
 							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区</h4>
 						</div>
 					</div>
-					<div style="float:left;width:50%;height:500px;overflow: auto;">
+					<div style="float:left;width:50%;height:480px;overflow: auto;">
 						<p style="color:white">
 							拖拽您的图片
 						</p>
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
 					<div style="width:100%;padding:1%;">
-						<input type="submit" value="提交"/>
+						<input type="button" value="提交" id="submit"/>
 						<input type="button" value="预览"/>
 						<input type="button" value="取消" id='cancel'/>
 					</div>
 				</div>
+
 			</div>
 		</div>
-		<div id='background' style="display:none;width:100%;height:100%;position:fixed;top:0px;left:0px; opacity:0.5;background:black;">	
-		</div>
+
 		<div id="dialog" title="Basic dialog">
 			<div></div>
 		</div>
