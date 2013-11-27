@@ -43,6 +43,8 @@ MicroWebsite::Application.routes.draw do
         post :submit_queries
       end
     end
+
+    resources :image_text
   end
 
   # You can have the root of your site routed with "root"
