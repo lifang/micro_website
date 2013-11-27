@@ -185,7 +185,21 @@ class ResourcesController < ApplicationController
     @resources =Resource.find(params[:id])
     render 'show' ,:layout=>false
   end
-
+  def image_text
+    @site=Site.find(params[:site_id])
+    @imgs_path=@site.resources
+    render :layouts=>false
+  end
+  def allimage
+    p 111111111111111111111
+    @site=Site.find(params[:id])
+    @imgs_path=@site.resources
+    arr=Array.new
+    @imgs_path.each do |path|
+      arr<<{src:"http://127.0.0.1:3000/allsites/#{path.path_name}"}
+    end
+    render :json=>arr
+  end
   private
     def message(num,msg)
        if num==0

@@ -1,0 +1,13 @@
+<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+						<% objects.each do |img|%>
+						<%if which_res(img.path_name)=='img'%>
+						<li class="ui-widget-content ui-corner-tr">
+
+							<h5 class="ui-widget-header"> <%= img.path_name.split("/")[-1].length>9 ? "#{img.path_name.split('/')[-1][1..9]}..." :img.path_name.split("/")[-1]%> </h5>
+							<img src="/allsites/<%= img.path_name%>"  alt="On top of Kozi kopka" width="96" height="72">
+							<a href="/allsites/<%= img.path_name%>" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+							<a href="#" title="Delete this image" onclick="delete_ele(this)" class="ui-icon ui-icon-trash">Delete image</a>
+						</li>
+						<%end%>
+						<%end%>
+					</ul>

@@ -32,7 +32,11 @@
       <span>表单</span>
     </li>
   <% end %>
-
+  <%= link_to(image_text_site_resources_path(@site)) do %>
+    <li class="theTab <%= controller.action_name == "image_text" ? 'used' : '' %>">
+      <span>图文页</span>
+    </li>
+  <% end %>
 </ul>
 <hr class="tab_line" />
 <div class="set_btn cf"><button class="blue_btn" onclick="change_status('<%=@site.id%>',2,'提交审核')">提交审核</button></div>

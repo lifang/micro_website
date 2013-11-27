@@ -21,12 +21,17 @@ MicroWebsite::Application.routes.draw do
   match "/get_token", :to => "pages#get_token", :as => "get_token"
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
+  match '/allimg' ,to: 'resources#allimage' ,via: 'get'
   # Sample resource route with options:
   resources :sites do
     member do
       post :verify_site
     end
-    resources :resources
+    resources :resources do
+      collection do
+      get :image_text
+      end
+    end
     resources :pages do
       resources :form_datas
       collection do
