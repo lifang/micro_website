@@ -15,10 +15,10 @@
           </tr>
 
           <% @sub_pages.each do |page| %>
-            <tr>
-              <td><%= page.title %></td>
-              <td><%= "/sites/static" + "?path_name=" + page.path_name %></td>
-              <td><%= if_authenticate(page) %></td>
+          <tr id="<%= page.id %>">
+              <td class="title"><%= page.title %></td>
+              <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
+              <td class="authenticate"><%= if_authenticate(page) %></td>
               <td>
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , sub_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>

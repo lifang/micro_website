@@ -1,1 +1,7 @@
-window.location.replace("<%= @path %>")
+<% if (@page.sub? || @page.form?) && controller.action_name == "update" %>
+  hide_tab($("#<%= @page.sub? ? "sub_form" : "form_container" %>"));
+  $("#" + <%= @page.id %>).find(".title").text("<%= @page.title %>").end().find(".path").text("<%= "/sites/static" + "?path_name=" + @page.path_name  %>")
+  .end().find(".authenticate").text("<%= if_authenticate(@page) %>");
+<% else %>
+  window.location.replace("<%= @path %>")
+<% end %>

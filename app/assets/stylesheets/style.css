@@ -78,7 +78,7 @@ h2 input { font-size: 16px;}
 .user_act { display: none; background: #000; border: 1px solid #0E6EB8; }
 .user_act li { text-decoration: underline;}
 .user_name:hover .user_act { display: block; position: absolute; background: #29a7e1; color: #ffffff; left: 30px; top: 32px; padding: 0 10px; }
-
+.user a { color: #f2f2f2;}
 .nav { height:50px; line-height:50px; background:#29A7E1;}
 .menu { width:1000px; margin: 0 auto;}
 .menu li { float: left; margin: 0px 10px 0 0;}
