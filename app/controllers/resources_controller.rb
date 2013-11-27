@@ -191,7 +191,6 @@ class ResourcesController < ApplicationController
     render :layouts=>false
   end
   def allimage
-    p 111111111111111111111
     @site=Site.find(params[:id])
     @imgs_path=@site.resources
     arr=Array.new
