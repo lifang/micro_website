@@ -5,8 +5,6 @@
 		<title>我的微网站</title>
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<style>
 			#gallery {
 				float: left;
@@ -95,6 +93,9 @@
 				$("#cancel").click(function() {
 					$("#show_all_image").hide();
 					$("#background").hide();
+					var temp=$("#temp").clone();
+					
+					$("#trash").html(temp);
 				});
 				// 加入图片
 				var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";
@@ -194,7 +195,6 @@
 						text += $(name).find('textarea').val()+",";
 						}
 					});
-					alert(111);
 					$.ajax({
 						//async : true,
 						headers : {
@@ -209,9 +209,9 @@
 						success : function(data) {
 							if (data == 1) {
 								tishi_alert("创建成功");
-
+								location.reload();
 							} else {
-
+								tishi_alert("创建失败");
 							}
 						}
 					});
@@ -270,10 +270,10 @@
 					<div style="float:left;width:49%;height:450px;overflow: auto;">
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
-					<div style="width:100%;padding:1%;float:left;">
-						<input type="button" value="提交" id="submit"/>
-						<input type="button" value="预览"/>
-						<input type="button" value="取消" id='cancel'/>
+					<div style="width:100%;padding:1%;text-align:center;">
+						<input type="button" value="提交" id="submit" class="blue_btn"/>
+						<input type="button" value="预览" class="blue_btn"/>
+						<input type="button" value="取消" id='cancel' class="blue_btn"/>
 					</div>
 				</div>
 
