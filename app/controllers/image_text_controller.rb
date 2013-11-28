@@ -1,5 +1,5 @@
 class ImageTextController < ApplicationController
-
+  before_filter :get_site
 
   def index
     render "demo", :layout => false

@@ -96,7 +96,7 @@
           var src = $link.attr( "href" ),
           title = $link.siblings( "img" ).attr( "alt" ),
           $modal = $( "img[src$='" + src + "']" );
-
+alert($modal.length)
           if ( $modal.length ) {
             $modal.dialog( "open" );
           } else {

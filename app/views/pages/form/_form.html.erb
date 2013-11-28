@@ -1,4 +1,4 @@
-<%= form_for [@site, @page] do |f| %>
+<%= form_for [@site, @page] , :html => {:style=>"width:700px"} do |f| %>
   <h2>
     <span>标题<span class="check">*</span>
       <%= f.text_field :title %>
@@ -43,6 +43,6 @@
 <script type="text/javascript">
   $(".textQuestion").each(function(){
     $(this).val($(this).prev().text())
-  })
-
+  });
+  
 </script>
