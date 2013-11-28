@@ -33,7 +33,7 @@ class PagesController < ApplicationController
         unless @page.main?
           content = modifyContent(@page, content, @site.id,@page.form? ? img : "")
         end
-        save_into_file(content, @page) if content
+        save_into_file(content, @page, "") if content
         flash[:notice] = "新建成功!"
         @path = redirect_path(@page, @site)
         render :success
@@ -52,11 +52,12 @@ class PagesController < ApplicationController
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name] && params[:page][:file_name] != "style.css"
     @page = Page.find_by_id params[:id]
+    old_page_file_name = @page.file_name
     if @page && @page.update_attributes(params[:page])
       unless @page.main?
         content = modifyContent(@page, content, @site.id,@page.form? ? img : "") if content
       end
-      save_into_file(content, @page) if content
+      save_into_file(content, @page, old_page_file_name) if content
       flash[:notice] = "更新成功!"
       @path = redirect_path(@page, @site)
       render :success
@@ -124,6 +125,7 @@ class PagesController < ApplicationController
   #表单 new
   def form_new
     @page = Page.new
+    @imgs_path=@site.resources
     render "/pages/form/form_new"
   end
 

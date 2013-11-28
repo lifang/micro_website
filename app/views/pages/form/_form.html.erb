@@ -8,8 +8,9 @@
       <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
     </span>
     <br/>
-    <span style="width:100%;float:left;" id="span_image_area">图片路径：<span class="check">*</span>
-      <%=f.text_field :img_path,style:"width:420px;"%>(复制资源路径粘贴即可)</span>
+    <span  id="span_image_area"> <img src="<%= @page && @page.img_path ? @page.img_path : '/assets/temp.jpg' %>" style="width:186px;height:144;border:1px solid gray;"/>
+     <%=f.hidden_field :img_path,style:"width:420px;"%></span>
+
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
   </h2>
   <fieldset class="page_txt">

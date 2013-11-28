@@ -1,2 +1,65 @@
 $("#form_container").html("<h1>新建表单</h1>" + '<%= j (render '/pages/form/form') %>');
+$("#form_container").append('<div class="picRes">' + '<%= j (render 'shared/form_images',:objects=>@imgs_path) %>' + '</div>')
 show_tag($("#form_container"));
+
+  // there's the gallery and the trash
+        var $gallery = $( ".picRes" ),
+        $input = $( "#span_image_area img" );
+
+        // let the gallery items be draggable
+        $( "img", $gallery ).draggable({
+          cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+          revert: "invalid", // when not dropped, the item will revert back to its initial position
+          containment: "document",
+          helper: "clone",
+          cursor: "move"
+        });
+
+        // let the trash be droppable, accepting the gallery items
+        $input.droppable({
+          accept: ".picRes > img",
+          activeClass: "ui-state-highlight",
+          drop: function( event, ui ) {
+            $(this).attr("src", ui.draggable.attr("src"));
+            $(this).next().val(ui.draggable.attr("src"))
+          }
+        });
+
+
+        // image preview function, demonstrating the ui.dialog used as a modal window
+        function viewLargerImage( $link ) {
+
+          var src = $link.attr( "data-href" );
+          title = $link.siblings( "img" ).attr( "alt" );
+         $modal = $( "img[src$='" + src + "']" );
+
+          if ( $modal.length ) {
+            $modal.dialog( "open" );
+          } else {
+            var img = $( "<img alt='" + title + "' width='300' height='200' style='display: none; padding: 8px;' />" )
+            .attr( "src", src ).appendTo( "body" );
+            setTimeout(function() {
+              img.dialog({
+                title: title,
+                width: 400,
+                modal: true
+              });
+            }, 1 );
+          }
+        }
+
+        // resolve the icons behavior with event delegation
+        $( "ul.gallery > li" ).click(function( event ) {
+          var $item = $( this ),
+          $target = $( event.target );
+
+          if ( $target.is( "a.ui-icon-trash" ) ) {
+            deleteImage( $item );
+          } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
+            viewLargerImage( $target );
+          } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+            recycleImage( $item );
+          }
+
+          return false;
+        });

@@ -23,7 +23,7 @@
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , sub_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn"%>
+                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview"%>
               </td>
             </tr>
           <% end %>

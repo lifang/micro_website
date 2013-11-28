@@ -22,7 +22,7 @@
                 <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
                 <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn" %>
+                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
                 <% if  page.form_datas.length != 0 %>
                 <%= link_to "下载数据", site_page_form_datas_path(@site,page, :format => 'xls'), :class => "blue_btn" %>
               <% else %>
@@ -45,7 +45,7 @@
 </div>
 
 <div class="second_box newPage">
-  <div class="second_content second_content2" style="width:1200px; max-height:530px">
+  <div class="second_content second_content2" style="width:1250px; max-height:680px">
     <span class="close" >关闭</span>
     <div id="form_container">
 

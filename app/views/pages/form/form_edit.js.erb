@@ -5,7 +5,7 @@ show_tag($("#form_container"));
 
         // there's the gallery and the trash
         var $gallery = $( ".picRes" ),
-        $input = $( "#span_image_area" );
+        $input = $( "#span_image_area img" );
 
         // let the gallery items be draggable
         $( "img", $gallery ).draggable({
@@ -21,7 +21,8 @@ show_tag($("#form_container"));
           accept: ".picRes > img",
           activeClass: "ui-state-highlight",
           drop: function( event, ui ) {
-            $(this).find('input').val(ui.draggable.attr("src"))
+            $(this).attr("src", ui.draggable.attr("src"));
+            $(this).next().val(ui.draggable.attr("src"))
           }
         });
 
