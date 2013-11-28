@@ -229,7 +229,7 @@
 			<div id="show_all_image" style="display:none;position: fixed;top:0px;left:0px;padding:10px;z-index: 5;">
 
 				<div style="border:1px solid red; " >
-					<div style="width:100%;padding:1%;color:white">
+					<div style="width:100%;padding:1%;color:white;text-align: center;">
 						<h1 style="color:white" > 标题：
 						<input type="text" id="title"/>
 						文件名：
@@ -241,23 +241,20 @@
 						<input type="radio" value=0 name="w" />
 					</div>
 					<div style="float:left;width:48%;height:500px;padding:1%;overflow: auto;">
-						<div id="trash" class="ui-widget-content ui-state-default"style="width:620px;background:white;float:left">
+						<div id="trash" class="ui-widget-content ui-state-default"style="width:630px;background:white;float:left">
 							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区</h4>
 						</div>
 					</div>
-					<div style="float:left;width:50%;height:480px;overflow: auto;">
-						<p style="color:white">
-							拖拽您的图片
-						</p>
+					<div style="float:left;width:48%;padding:1%;height:400px;overflow: auto;">
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
-					<div style="width:100%;padding:1%;">
+				</div>
+
+					<div style="width:100%;padding:1%;float:left;">
 						<input type="button" value="提交" id="submit"/>
 						<input type="button" value="预览"/>
 						<input type="button" value="取消" id='cancel'/>
 					</div>
-				</div>
-
 			</div>
 		</div>
 
