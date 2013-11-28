@@ -15,6 +15,7 @@ class ImageTextController < ApplicationController
     check=params[:check];
     imgarr=params[:src].split(",");
     textstr=params[:text].split(",");
+    p imgarr,textstr
     render :text=>1
   end
 end

@@ -134,6 +134,7 @@
 
 				// image preview function, demonstrating the ui.dialog used as a modal window
 				function viewLargerImage($link) {
+					//得改http地址
 					var src = "http://127.0.0.1:3000" + $link.attr("src"), title = $link.siblings("img").attr("alt"), $modal = $("img[src$='" + src + "']");
 
 					if ($modal.length) {
@@ -144,7 +145,7 @@
 						setTimeout(function() {
 							img.dialog({
 								title : title,
-								width : 400,
+								width : 600,
 								modal : true
 							});
 						}, 1);
@@ -188,9 +189,12 @@
 					var ul = $("#trash");
 					var liArr = $("#trash").children("ul").children("li");
 					$.each(liArr, function(index, name) {
+						if(index<liArr.length-1){
 						src += $(name).find('img').attr("src")+",";
 						text += $(name).find('textarea').val()+",";
+						}
 					});
+					alert(111);
 					$.ajax({
 						//async : true,
 						headers : {
