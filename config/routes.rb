@@ -11,7 +11,7 @@ MicroWebsite::Application.routes.draw do
   post "user/disable/:uid", :to=>"users#disable"
   post "user/enable/:uid", :to=>"users#enable"
   get "user/delete/:uid", :to=>"users#delete"
-  
+
   post "site/verify/:sid",:to=>"sites#verify"
   post "site/change_status/:sid/:status",:to=>"sites#change_status"
   match "/sites/static", :to => "pages#static"
@@ -22,13 +22,16 @@ MicroWebsite::Application.routes.draw do
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'
-  match '/image_text_page',to: 'image_text#create_imgtxt' ,via: 'post'
   # Sample resource route with options:
   resources :sites do
     member do
       post :verify_site
     end
-    resources :resources
+    resources :resources do
+      collection do
+      get :image_text
+      end
+    end
     resources :pages do
       resources :form_datas
       collection do
@@ -41,12 +44,21 @@ MicroWebsite::Application.routes.draw do
       end
     end
 
-    resources :image_text do
-      collection do
-         get :img_text
-      end
+    resources :image_text
+  end
+match "/weixins/accept_token" => "weixins#accept_token"
+  resources :weixins do
+    collection do
+
+      post :accept_message_from_normal_user
     end
-    
+  end
+
+  resources :weixin do
+    collection do
+      get :accept_token
+      post :accept_message_from_normal_user
+    end
   end
 
   # You can have the root of your site routed with "root"
@@ -63,4 +75,3 @@ end
   # match ':controller(/:action(/:id))(.:format)'
  # match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
 end
-

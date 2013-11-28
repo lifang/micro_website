@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108051603) do
+ActiveRecord::Schema.define(:version => 20131122064631) do
 
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20131108051603) do
     t.text     "element_relation"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.string   "img_path"
   end
 
   add_index "pages", ["authenticate"], :name => "index_pages_on_authenticate"
@@ -67,16 +68,16 @@ ActiveRecord::Schema.define(:version => 20131108051603) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "phone"
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.boolean  "admin"
+    t.string   "email",                               :default => "", :null => false
+    t.string   "encrypted_password",                  :default => "", :null => false
+    t.integer  "types",                  :limit => 1
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.integer  "status",                 :limit => 1
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["phone"], :name => "index_users_on_phone"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

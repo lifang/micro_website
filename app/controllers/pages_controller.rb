@@ -130,9 +130,12 @@ class PagesController < ApplicationController
   #表单 edit
   def form_edit
     @page = Page.find_by_id params[:id]
+    #开始
     index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
     @index = index_html.read
     index_html.close
+    #结束
+    @imgs_path=@site.resources
     render "/pages/form/form_edit"
   end
 
