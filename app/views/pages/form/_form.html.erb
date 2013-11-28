@@ -1,4 +1,5 @@
-<%= form_for [@site, @page] , :html => {:style=>"width:700px"} do |f| %>
+<div  style="display: inline-block; width:720px">
+<%= form_for [@site, @page] do |f| %>
   <h2>
     <span>标题<span class="check">*</span>
       <%= f.text_field :title %>
@@ -7,7 +8,7 @@
       <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
     </span>
     <br/>
-    <span style="width:100%;float:left;">图片路径：<span class="check">*</span>
+    <span style="width:100%;float:left;" id="span_image_area">图片路径：<span class="check">*</span>
       <%=f.text_field :img_path,style:"width:420px;"%>(复制资源路径粘贴即可)</span>
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
   </h2>
@@ -40,6 +41,7 @@
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>
+</div>
 <script type="text/javascript">
   $(".textQuestion").each(function(){
     $(this).val($(this).prev().text())

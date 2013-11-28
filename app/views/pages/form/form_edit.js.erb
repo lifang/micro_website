@@ -1,14 +1,14 @@
 $("#form_container").html("<h1>编辑表单</h1>" + '<%= j (render '/pages/form/form') %>');
-$("#form_container").append('<div class="right_resource">' + '<%= j (render 'shared/all_image',:objects=>@imgs_path) %>' + '</div>')
+$("#form_container").append('<div class="picRes">' + '<%= j (render 'shared/form_images',:objects=>@imgs_path) %>' + '</div>')
 show_tag($("#form_container"));
 
 
         // there's the gallery and the trash
-        var $gallery = $( "#gallery" ),
-        $input = $( "#page_img_path" );
+        var $gallery = $( ".picRes" ),
+        $input = $( "#span_image_area" );
 
         // let the gallery items be draggable
-        $( "li", $gallery ).draggable({
+        $( "img", $gallery ).draggable({
           cancel: "a.ui-icon", // clicking an icon won't initiate dragging
           revert: "invalid", // when not dropped, the item will revert back to its initial position
           containment: "document",
@@ -18,10 +18,10 @@ show_tag($("#form_container"));
 
         // let the trash be droppable, accepting the gallery items
         $input.droppable({
-          accept: "#gallery > li",
+          accept: ".picRes > img",
           activeClass: "ui-state-highlight",
           drop: function( event, ui ) {
-            $(this).val(ui.draggable.find("img").attr("src"))
+            $(this).find('input').val(ui.draggable.attr("src"))
           }
         });
 
