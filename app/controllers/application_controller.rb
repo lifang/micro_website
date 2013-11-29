@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     site_root = page.site.root_path if page.site
     site_path = Rails.root.to_s + SITE_PATH % site_root
     FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
-    if old_file_name != page.file_name
+    if old_file_name.present? && old_file_name != page.file_name
        File.delete site_path + old_file_name if File.exists?(site_path + old_file_name)
     end
     File.open(site_path + page.file_name, "wb") do |f|
