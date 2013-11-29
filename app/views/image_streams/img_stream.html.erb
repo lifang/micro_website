@@ -36,7 +36,7 @@
 				cursor: move;
 			}
 			#trash {
-				
+
 				width: 34%;
 				min-height: 34em;
 				padding: 1%;
@@ -52,17 +52,23 @@
 				display: none;
 			}
 		</style>
-		</style>
 		<script>
 			$(function() {
-				function loop_add(){
-					$("#trashdiv").offset().top;
-					var left=$("#trash").offset().left+240;
-				    $("#add").top=$("#trashdiv").offset().top;
-				    $("#add").css('left',left);
-                    setTimeout(loop_add,2000);
+				//flash自动关闭
+				$("#close1_flash").click(function() {
+					$("#flash1_field").hide()
+				});
+				$("#flash1_field").fadeOut(4000);
+				//取消按钮，自动增加四个
+				function loop_add() {
+					$("#trashdiv").offset().top
+					var left = $("#trash").offset().left + 240;
+					$("#add").top = $("#trashdiv").offset().top;
+					$("#add").css('left', left);
+					setTimeout(loop_add, 2000);
 				}
-                loop_add();
+
+				loop_add();
 				var $gallery = $("#gallery"), $trash = $("#trash >ul>li");
 				// let the gallery items be draggable
 				$("li", $gallery).draggable({
@@ -101,7 +107,10 @@
 					$("#show_all_image").hide();
 					$("#background").hide();
 					$("#trashh").html("");
-					add();add();add();add();
+					add();
+					add();
+					add();
+					add();
 				});
 				// 加入图片
 				var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";
@@ -224,7 +233,7 @@
 						type : 'post',
 						url : '/image_text_page',
 						dataType : "json",
-						data : 'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text+'&site_id='+$("#site_id").val(),
+						data : 'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val(),
 						success : function(data) {
 							if (data == 1) {
 								tishi_alert("创建成功");
@@ -242,26 +251,28 @@
 					candrop(li);
 					li.appendTo($("#trashh"));
 				}
-				$("#add").click(function(){
-				   add();	
+
+
+				$("#add").click(function() {
+					add();
 				});
 			});
 			//删除图片
 			function delete_ele(element) {
 				//获取父节点并移除
 				$(element).parent().remove();
-				
+
 			}
 		</script>
+
 	</head>
 	<body>
 		<% flash.each do |name, msg| %>
-		<div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+		<div id="flash1_field" style="width:100%;position: fixed; z-index: 4;">
 			<div   style="font-size:20px;margin: 200px auto;width: 300px;background: #E0EEEE;padding: 20px;">
 
-				<span class="close" id="close_flash" style="float:right;" ></span>
+				<span class="close" id="close1_flash" style="float:right;" ></span>
 				<%= msg%>
-
 			</div>
 		</div>
 		<% end %>
@@ -271,16 +282,17 @@
 			<%= render 'sites/site_status'%>
 			<!--显示pages列表-->
 			<div class="tabDiv" id="img_table">
-			<%=render 'image_pages'%>
-            </div>
+				<%= render 'image_pages'%>
+			</div>
 			<!--增加图片的主体-->
-            <div style="overflow: auto;width:100%">
- 
-			<div id="show_all_image" style="width:80%;display:none;position: fixed;top:0px;height:100%;;padding:10px;z-index: 5;background:white;">
+			<div style="overflow: auto;width:100%">
 
-				
+				<div id="show_all_image" style="width:80%;display:none;position: fixed;top:0px;height:100%;;padding:10px;z-index: 5;background:white;">
+
 					<div style="width:100%;margin-bottom: 5px ;text-align: center;">
-						<h1  > 添加图文页<br/>标题：
+						<h1  > 添加图文页
+						<br/>
+						标题：
 						<input type="text" id="title"/>
 						文件名：
 						<input type="text" id="name"/>
@@ -292,11 +304,7 @@
 					</div>
 					<div id="trashdiv" style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
 						<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 35px;width:420px;background:white;float:right;">
-							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区
-		
-							<img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/>
-		</h4>
-							
+							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区 <img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/></h4>
 							<ul class='gallery ui-helper-reset' id="trashh" />
 							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
 								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
@@ -325,18 +333,17 @@
 							</ul>
 						</div>
 					</div>
-					<input type="hidden" id='site_id' value="<%=@site.id%>" />
+					<input type="hidden" id='site_id' value="<%= @site.id%>" />
 					<div style="float:left;width:49%;height:450px;overflow: auto;">
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
 					<div style="width:100%;text-align:center; margin-top: 5px;">
 						<input type="button" value="提交" id="submit" class="blue_btn"/>
-						
+
 						<input type="button" value="取消" id='cancel' class="blue_btn"/>
 					</div>
-				
 
-			</div>
+				</div>
 			</div>
 		</div>
 
@@ -345,7 +352,6 @@
 		</div>
 		<%= render "/shared/tishi_alert" %>
 		
-		
-		
+
 	</body>
 </html>

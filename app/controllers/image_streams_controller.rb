@@ -35,14 +35,15 @@ class ImageStreamsController < ApplicationController
     end
   end
   #删除图文页
-  def destory
+  def destroy
+    @site=Site.find(params[:site_id])
         p 121313131
     Page.transaction do
       @page = Page.find(params[:id])
       if @page.destroy
         File.delete PUBLIC_PATH + @page.path_name if File.exists?(PUBLIC_PATH + @page.path_name)
         flash[:success]='删除成功！'
-        redirect_to 'img_stream'
+        redirect_to img_stream_site_image_streams_path(@site)
       else
         flash[:success]='删除shibai ！'
         render 'img_stream'
@@ -62,7 +63,7 @@ class ImageStreamsController < ApplicationController
   #得到内容
   def get_content(imgarr,textarr)
     str=""
-    (0..imgarr.length-1).times do |x|  
+    (0..imgarr.length-1).each do |x|  
     str+="<li><a href='#'><img src='#{imgarr[x]}' width='140' height='222' ><p>#{textarr[x]}</p></a></li>"
     end
     p 1111111111111111111111,str 
@@ -72,22 +73,22 @@ class ImageStreamsController < ApplicationController
 <head>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1' /> 
-<title>迪卡侬</title>
-<script type='text/javascript' src='js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='js/main.js'></script>
-<script type='text/javascript' src='js/jquery.wookmark.js'></script>
+<title>#{@page.title}</title>
+<script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/allsites/js/main.js'></script>
+<script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
 
 
 <!--iphone4横版
-<link href='style/iphone4-landscape.css' rel='stylesheet' type='text/css' 
+<link href='/allsites/style/iphone4-landscape.css' rel='stylesheet' type='text/css' 
 media='only screen and (max-device-width:480px) and (orientation:landscape), only screen and (max-width:480px) and (orientation:landscape)'>
 
-<link href='style/iphone4-portrait.css' rel='stylesheet' type='text/css' 
+<link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css' 
 media='only screen and (max-device-width:320px) and (orientation:portrait), only screen and (max-width:320px) and (orientation:portrait)'>
 -->
 
 <!--iphone4竖版-->
-<link href='style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
+<link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
 
 
 
@@ -97,15 +98,7 @@ media='only screen and (max-device-width:320px) and (orientation:portrait), only
     <article>
           <a href='#' class='showPic_search'>搜索</a>
           <section class='showPic_con'>
-              <ul>
-                 <li>
-                    <a href='#'>
-                       <img src='images/320_hdPic.jpg' width='140' height='222' >
-                       <p>迪卡侬隶属于体育全产业链集团奥克西兰集团，集团涉足两大领域，既是体育用品的设计者和品牌的创造者。</p>
-                    </a>
-                 </li>
-                 
-              </ul>
+              <ul>#{str}</ul>
           </section>
     </article>
     <script type='text/javascript'>
