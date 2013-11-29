@@ -1,6 +1,6 @@
 <% objects.each do |img|%>
   <%if which_res(img.path_name)=='img'%>
-    <img src="/allsites/<%= img.path_name%>"  alt="On top of Kozi kopka" width="96" height="72"/>
+    <img src="/allsites/<%= img.path_name%>" alt="On top of Kozi kopka" width="96" height="72" onclick="viewLargerImage(this)"/>
   <%end%>
 <%end%>
 

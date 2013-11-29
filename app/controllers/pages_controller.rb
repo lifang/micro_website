@@ -119,13 +119,13 @@ class PagesController < ApplicationController
   #表单 index
   def form
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
+   @imgs_path=@site.resources
     render "/pages/form/form"
   end
 
   #表单 new
   def form_new
     @page = Page.new
-    @imgs_path=@site.resources
     render "/pages/form/form_new"
   end
 
@@ -137,7 +137,6 @@ class PagesController < ApplicationController
     @index = index_html.read
     index_html.close
     #结束
-    @imgs_path=@site.resources
     render "/pages/form/form_edit"
   end
 

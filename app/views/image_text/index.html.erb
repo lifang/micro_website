@@ -1,0 +1,28 @@
+<div class="main_container">
+  <%= render 'sites/site_status'%>
+    <div class="tabDiv">
+    <div class="page_content">
+      <div class="page_tit">
+        <%= link_to "新建图文", form_new_site_pages_path(@site),:remote => true, :class => "blue_btn scd_btn" %>
+        <%= link_to "新建图片流", form_new_site_pages_path(@site),:remote => true, :class => "blue_btn scd_btn" %>
+      </div>
+      <div class="page_txt">
+        <table class="table1">
+          <tr>
+            <th width="80">标题</th>
+            <th width="280">路径</th>
+            <th width="50">访问权限</th>
+            <th width="350">操作</th>
+          </tr>
+          
+        </table>
+      </div>
+      <div class="clear"></div>
+      <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+      <%= will_paginate  @forms,:previous_label=>'上一页',:next_label=>'下一页'%>
+      </div>
+
+      <div class="page_act"></div>
+    </div>
+    </div>
+</div>

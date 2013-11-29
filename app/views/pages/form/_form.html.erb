@@ -1,4 +1,3 @@
-<div  style="display: inline-block; width:720px">
 <%= form_for [@site, @page] do |f| %>
   <h2>
     <span>标题<span class="check">*</span>
@@ -42,7 +41,7 @@
     <button type="button" class="blue_btn" alt="/sites/<%= @site.id %>/pages/form_preview" data-siteid="<%= @site.id %>" onclick="submitForm(this, 'preview')">预览</button>
   </div>
 <% end %>
-</div>
+
 <script type="text/javascript">
   $(".textQuestion").each(function(){
     $(this).val($(this).prev().text())
