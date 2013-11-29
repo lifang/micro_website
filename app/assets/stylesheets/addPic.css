@@ -1,0 +1,40 @@
+/* CSS Document */
+* { padding: 0; margin: 0;}
+body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background:#e9ebea;}
+
+.addPic { width: 1000px; margin: 0 auto; background: #ffffff; padding: 20px; position: relative;}
+.addPic h1 { text-align: center; margin-bottom: 10px;}
+.addPic h2 { text-align: center; margin-bottom: 10px;}
+.addPic h2 span { margin: 5px; }
+.addPic h2 input { margin: 5px; }
+.addPic p { text-align: center; margin-bottom: 10px;}
+.addPic p input { margin: 0 5px;}
+.picSort { width: 450px; display: inline-block; overflow: auto; height: 360px; margin-left: 30px;}
+.picRes { width: 410px; display: inline-block; vertical-align: top; margin-left: 40px; overflow: auto; height: 340px; padding: 10px; background: #E3E3E3;}
+
+.picPosition { 
+	margin: 10px;
+	width: 180px; 
+	font-size: 64px; 
+	text-align: center; 
+	float: left;
+	border: 1px dashed #2f2f2f;
+	background: #e3e3e3;
+	color: #ffffff;
+	position: relative;
+}
+.picPosition span { display: inline-block; line-height: 200px;}
+.picPosition img { display: inline-block; height: 200px;}
+.picPosition:hover span { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); }
+.picPosition:hover { box-shadow: 0 0 5px #000000;}
+.picRes img { margin: 5px;}
+.picRes img:hover { box-shadow: 0 0 5px #000000; }
+
+.action { text-align: center;}
+.action button { font-size: 20px; padding:3px 10px; margin: 5px;}
+.addpicp { background: url(../images/add.png) no-repeat; display: block; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 458px; cursor: pointer;}
+
+.picPosition .delpicp { background: url(../images/close.png) no-repeat; display: none; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 160px; top: 2px; cursor: pointer;}
+.picPosition:hover .delpicp { display: block;}
+
+

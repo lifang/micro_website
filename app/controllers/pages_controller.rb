@@ -76,7 +76,7 @@ class PagesController < ApplicationController
         flash[:success]='删除成功！'
         redirect_to redirect_path(@page, @site)
       else
-        
+        flash[:error]='删除失败！'
       end
     end
   end

@@ -9,7 +9,7 @@
 			#gallery {
 				float: left;
 				min-height: 12em;
-				margin:0px 10px 10px 40px;
+				margin: 0px 10px 10px 40px;
 			}
 			.gallery.custom-state-active {
 				background: #eee;
@@ -36,11 +36,10 @@
 				cursor: move;
 			}
 			#trash {
-				float: right;
+				
 				width: 34%;
 				min-height: 34em;
 				padding: 1%;
-				
 			}
 			#trash h4 {
 				line-height: 16px;
@@ -56,9 +55,15 @@
 		</style>
 		<script>
 			$(function() {
-
-				var $gallery = $("#gallery"), $trash = $("#trash");
-
+				function loop_add(){
+					$("#trashdiv").offset().top;
+					var left=$("#trash").offset().left+240;
+				    $("#add").top=$("#trashdiv").offset().top;
+				    $("#add").css('left',left);
+                    setTimeout(loop_add,2000);
+				}
+                loop_add();
+				var $gallery = $("#gallery"), $trash = $("#trash >ul>li");
 				// let the gallery items be draggable
 				$("li", $gallery).draggable({
 					cancel : "a.ui-icon", // clicking an icon won't initiate dragging
@@ -69,12 +74,14 @@
 				});
 
 				// let the trash be droppable, accepting the gallery items
-				$trash.droppable({
-					accept : "#gallery > li",
-					activeClass : "ui-state-highlight",
-					drop : function(event, ui) {
-						deleteImage(ui.draggable);
-					}
+				$.each($trash, function(index, name) {
+					$(name).droppable({
+						accept : "#gallery > li",
+						activeClass : "ui-state-highlight",
+						drop : function(event, ui) {
+							deleteImage($(name), ui.draggable);
+						}
+					});
 				});
 
 				// let the gallery be droppable as well, accepting items from the trash
@@ -93,43 +100,55 @@
 				$("#cancel").click(function() {
 					$("#show_all_image").hide();
 					$("#background").hide();
-					var temp=$("#temp").clone();
-					
-					$("#trash").html(temp);
+					$("#trashh").html("");
+					add();add();add();add();
 				});
 				// 加入图片
 				var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";
-				function deleteImage($item) {
-
+				function deleteImage(name, $item) {
 					//复制本身
 					var ll = $item.clone();
 					ll.find("a.ui-icon-circle-plus").remove();
-					//创造一个新的相同元素
-					//var ll =$("<li class='ui-widget-content ui-corner-tr'></li>");
-					//ll.html($item.html());
+					ll.find("a.ui-icon-zoomin").remove();
+					/*创造一个新的相同元素
+					 var ll =$("<li class='ui-widget-content ui-corner-tr'></li>");
+					 ll.html($item.html());
+					 */
+
+					var str = "";
 					ll.fadeOut(function() {
 						var $list = $("ul", $trash).length ? $("ul", $trash) : $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
 						//	ll.find("a.ui-icon-trash").remove();
-						var temp=$("#temp").clone();
-						$("#temp").remove();
-						ll.append(recycle_icon).appendTo($list).fadeIn(function() {
-
-							ll.animate({
+						var temp = $("*[name='temp_picture']");
+						var f = false;
+						if (temp.length < 2) {
+							var t = name.clone();
+							candrop(t);
+							t.appendTo($("#trashh"));
+							var t1 = name.clone();
+							t1.appendTo($("#trashh"));
+							candrop(t1);
+						}
+						name.html(ll.html());
+						name.append(recycle_icon).fadeIn(function() {
+							name.animate({
 								width : "186px"
 							}).find("img").animate({
 								height : "144px"
 							});
-							ll.append("<textarea></textarea>");
-						});
-						temp.appendTo($list).fadeIn(function() {
+							name.append("<textarea></textarea>");
 
-							temp.animate({
-								width : "186px"
-							}).find("img").animate({
-								height : "144px"
-							});
-							
 						});
+					});
+				}
+
+				function candrop(name) {
+					name.droppable({
+						accept : "#gallery > li",
+						activeClass : "ui-state-highlight",
+						drop : function(event, ui) {
+							deleteImage(name, ui.draggable);
+						}
 					});
 				}
 
@@ -167,13 +186,13 @@
 				});
 				$("#submit").click(function() {
 					//去掉空格
-					var title =$.trim( $("#title").val());
-					var name =$.trim( $("#name").val() );
-					if(title==""||name==""){
+					var title = $.trim($("#title").val());
+					var name = $.trim($("#name").val());
+					if (title == "" || name == "") {
 						tishi_alert("标题，文件名不能为空！");
 						return false;
 					}
-					if(!name.match(/^[a-z]/i)){
+					if (!name.match(/^[a-z]/i)) {
 						tishi_alert("文件名不能为非字母！");
 						return false;
 					}
@@ -185,16 +204,17 @@
 							break;
 						}
 					}
-					var src="";
-					var text="";
+					var src = "";
+					var text = "";
 					var ul = $("#trash");
 					var liArr = $("#trash").children("ul").children("li");
 					$.each(liArr, function(index, name) {
-						if(index<liArr.length-1){
-						src += $(name).find('img').attr("src")+",";
-						text += $(name).find('textarea').val()+",";
+						if (index < liArr.length - 1) {
+							src += $(name).find('img').attr("src") + ",";
+							text += $(name).find('textarea').val() + ",";
 						}
 					});
+					alert(123123);
 					$.ajax({
 						//async : true,
 						headers : {
@@ -204,8 +224,7 @@
 						type : 'post',
 						url : '/image_text_page',
 						dataType : "json",
-						data :'title='+title+'&name='+name+'&check='+check+'&src='+src+'&text='+text
-						,
+						data : 'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text+'&site_id='+$("#site_id").val(),
 						success : function(data) {
 							if (data == 1) {
 								tishi_alert("创建成功");
@@ -216,12 +235,22 @@
 						}
 					});
 				});
-
+				//增加一个空白区域
+				function add() {
+					var li = $("<li class='ui-widget-content ui-corner-tr' style='width: 186px;'></li>");
+					li.html("<img  src='/assets/temp.jpg' style='width:182px;height:144px; '/><a  title='Delete this image' onclick='delete_ele(this)'  class='ui-icon ui-icon-trash'>Delete image</a><textarea></textarea><input type='hidden' name='temp_picture' />");
+					candrop(li);
+					li.appendTo($("#trashh"));
+				}
+				$("#add").click(function(){
+				   add();	
+				});
 			});
 			//删除图片
 			function delete_ele(element) {
 				//获取父节点并移除
 				$(element).parent().remove();
+				
 			}
 		</script>
 	</head>
@@ -240,14 +269,18 @@
 		<%= render "shared/head_nav" %>
 		<div class="main_container">
 			<%= render 'sites/site_status'%>
-			<input type="button" value="添加图文页" id='add_text_img'>
-			<!--主体-->
+			<!--显示pages列表-->
+			<div class="tabDiv" id="img_table">
+			<%=render 'image_pages'%>
+            </div>
+			<!--增加图片的主体-->
+            <div style="overflow: auto;width:100%">
+ 
+			<div id="show_all_image" style="width:80%;display:none;position: fixed;top:0px;height:100%;;padding:10px;z-index: 5;background:white;">
 
-			<div id="show_all_image" style="display:none;position: fixed;top:0px;left:0px;padding:10px;z-index: 5;">
-
-				<div  >
-					<div style="width:100%;margin-bottom: 5px ;color:white;text-align: center;">
-						<h1 style="color:white" > 标题：
+				
+					<div style="width:100%;margin-bottom: 5px ;text-align: center;">
+						<h1  > 添加图文页<br/>标题：
 						<input type="text" id="title"/>
 						文件名：
 						<input type="text" id="name"/>
@@ -257,26 +290,53 @@
 						否
 						<input type="radio" value=0 name="w" />
 					</div>
-					<div style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
-						<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 5px;width:620px;background:white;float:left">
-							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区</h4>
-							<ul class='gallery ui-helper-reset' />
-							<li id="temp">
-								<img  src="/assets/temp.jpg" style="width:186px;height:144;border:1px solid gray;"/>
+					<div id="trashdiv" style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
+						<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 35px;width:420px;background:white;float:right;">
+							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区
+		
+							<img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/>
+		</h4>
+							
+							<ul class='gallery ui-helper-reset' id="trashh" />
+							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
+								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
+								<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
+								<textarea></textarea>
+								<input type="hidden" name="temp_picture" />
+							</li>
+							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
+								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
+								<a  title="Delete this image" onclick="delete_ele(this)" class="ui-icon ui-icon-trash">Delete image</a>
+								<textarea></textarea>
+								<input type="hidden" name="temp_picture" />
+							</li>
+							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;'>
+								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
+								<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
+								<textarea></textarea>
+								<input type="hidden" name="temp_picture" />
+							</li>
+							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;'>
+								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
+								<a  title="Delete this image" onclick="delete_ele(this)" class="ui-icon ui-icon-trash">Delete image</a>
+								<textarea></textarea>
+								<input type="hidden" name="temp_picture" />
 							</li>
 							</ul>
 						</div>
 					</div>
+					<input type="hidden" id='site_id' value="<%=@site.id%>" />
 					<div style="float:left;width:49%;height:450px;overflow: auto;">
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
-					<div style="width:100%;padding:1%;text-align:center;">
+					<div style="width:100%;text-align:center; margin-top: 5px;">
 						<input type="button" value="提交" id="submit" class="blue_btn"/>
-						<input type="button" value="预览" class="blue_btn"/>
+						
 						<input type="button" value="取消" id='cancel' class="blue_btn"/>
 					</div>
-				</div>
+				
 
+			</div>
 			</div>
 		</div>
 
@@ -284,5 +344,8 @@
 			<div></div>
 		</div>
 		<%= render "/shared/tishi_alert" %>
+		
+		
+		
 	</body>
 </html>

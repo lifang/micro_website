@@ -84,5 +84,7 @@ a.each(function(){
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     content
   end
-  
+  def create_img_stream_page(src_arr,text_arr,name)
+    
+  end
 end
