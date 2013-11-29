@@ -46,6 +46,14 @@ MicroWebsite::Application.routes.draw do
       get :img_stream
       end
     end
+    resources :image_texts do
+      collection do
+        post :preview
+      end
+      member do
+        put :it_preview
+      end
+    end
   end
 match "/weixins/accept_token" => "weixins#accept_token"
   resources :weixins do

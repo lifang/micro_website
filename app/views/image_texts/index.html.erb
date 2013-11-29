@@ -1,0 +1,50 @@
+<div class="main_container">
+  <%= render 'sites/site_status'%>
+  <div class="tabDiv">
+    <div class="page_content">
+      <div class="page_tit">
+        <%= link_to "新建图文", new_site_image_text_path(@site),:remote => true, :class => "blue_btn scd_btn" %>
+      </div>
+      <div class="page_txt">
+        <table class="table1">
+          <tr>
+            <th width="80">标题</th>
+            <th width="280">路径</th>
+            <th width="50">访问权限</th>
+            <th width="350">操作</th>
+          </tr>
+          <% @image_texts.each do |page| %>
+            <tr id="<%= page.id %>">
+              <td class="title"><%= page.title %></td>
+              <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
+              <td class="authenticate"><%= if_authenticate(page)%></td>
+              <td>
+                <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+                <%= link_to "编辑" , form_edit_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+                <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
+                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="clear"></div>
+      <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+        <%= will_paginate  @image_texts,:previous_label=>'上一页',:next_label=>'下一页'%>
+      </div>
+
+      <div class="page_act"></div>
+    </div>
+  </div>
+</div>
+
+<div class="second_box newPage">
+  <div class="second_content second_content2" style="width: 1250px; margin: 20px auto; background: #ffffff; padding: 20px; min-height: 680px">
+    <span class="close" >关闭</span>
+    <div id="image_text_container">
+      <div  class="form_container"></div>
+      <div class="picRes"><%= render 'shared/form_images',:objects=>@imgs_path %></div>
+    </div>
+  </div>
+</div>
+<div id="viewLarge"></div>

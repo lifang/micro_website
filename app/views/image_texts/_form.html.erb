@@ -1,0 +1,29 @@
+<%= form_for :image_text, :url => site_image_texts_path, :method => "post" , :remote => true do |f| %>
+  <h2>
+    <span>标题<span class="check">*</span>
+      <%= f.text_field :title %>
+    </span>
+    <span>文件名<span class="check">*</span>
+      <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
+    </span>
+    <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:image_text] %>
+  </h2>
+  <p><span>访问权限</span><input type="radio" name="visit_all" />是<input type="radio" name="visit_all" />否</p>
+  <div class="picSort">
+    <span class="create_access">
+      <i class="icon42_common add_gray"></i>
+    </span>
+  </div>
+
+  <div class="action">
+    <button type="button" class="blue_btn"  alt="<%= @page.new_record? ? "/sites/#{@site.id}/image_texts" : "/sites/#{@site.id}/image_texts/#{@page.id}"%>">提交</button>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $(".textQuestion").each(function(){
+    $(this).val($(this).prev().text())
+  });
+
+</script>

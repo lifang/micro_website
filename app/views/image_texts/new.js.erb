@@ -1,0 +1,28 @@
+$("#image_text_container .form_container").html("<h1>新建图文</h1>" + '<%= j (render 'form') %>');
+show_tag($("#image_text_container"));
+
+$(function() {
+    // there's the gallery and the trash
+    var $gallery = $( ".picRes" ),
+    $input = $( "#span_image_area img" );
+
+    // let the gallery items be draggable
+    $( "img", $gallery ).draggable({
+        cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+        revert: "invalid", // when not dropped, the item will revert back to its initial position
+        containment: "document",
+        helper: "clone",
+        cursor: "move"
+    });
+
+    // let the trash be droppable, accepting the gallery items
+    $input.droppable({
+        accept: ".picRes > img",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            $(this).attr("src", ui.draggable.attr("src"));
+            $(this).next().val(ui.draggable.attr("src"))
+        }
+    });
+
+});
