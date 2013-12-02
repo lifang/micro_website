@@ -180,3 +180,6 @@
     margin-right: 10px;
     vertical-align: middle;
 }
+#image_text_container span{
+    padding: 0px;
+}

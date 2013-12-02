@@ -8,7 +8,7 @@
     </span>
     <br/>
     <span  id="span_image_area"> <img src="<%= @page && @page.img_path ? @page.img_path : '/assets/temp.jpg' %>" style="width:186px;height:144;border:1px solid gray;"/>
-     <%=f.hidden_field :img_path,style:"width:420px;"%></span>
+     <%= f.hidden_field :img_path %></span>
 
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
   </h2>

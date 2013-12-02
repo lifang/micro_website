@@ -12,5 +12,10 @@ class ImageTextsController < ApplicationController
   def new
     @page = Page.new
   end
+
+  def create
+    p 11111111111
+    p params
+  end
  
 end

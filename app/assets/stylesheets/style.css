@@ -265,36 +265,3 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
  .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 30px; line-height: 30px; padding: 0 10px;}
-
- /* 添加图文*/
- /* CSS Document */
-.addPic { width: 1000px; margin: 0 auto; background: #ffffff; padding: 20px; }
-.addPic h1 { text-align: center; margin-bottom: 10px;}
-.addPic h2 { text-align: center; margin-bottom: 10px;}
-.addPic h2 span { margin: 5px; }
-.addPic h2 input { margin: 5px; }
-.addPic p { text-align: center; margin-bottom: 10px;}
-.addPic p input { margin: 0 5px;}
-.picSort { width: 520px; display: inline-block; overflow: auto; height: 360px;}
-.picRes { width: 400px; display: inline-block; vertical-align: top; margin-left: 50px; overflow: auto; height: 340px; padding: 10px; background: #E3E3E3;}
-
-.picPosition {
-	margin: 10px;
-	width: 140px;
-	font-size: 64px;
-	text-align: center;
-	float: left;
-	border: 1px dashed #2f2f2f;
-	background: #e3e3e3;
-	color: #ffffff;
-}
-.picPosition span { display: inline-block; line-height: 163px;}
-.picPosition img { display: inline-block; height: 163px;}
-.picPosition:hover span { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); }
-.picPosition:hover { box-shadow: 0 0 5px #000000;}
-.picRes img { margin: 5px;}
-.picRes img:hover { box-shadow: 0 0 5px #000000; }
-
-.action { text-align: center;}
-.action button { font-size: 20px; padding:3px 10px; margin: 5px;}
-
