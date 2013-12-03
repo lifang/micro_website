@@ -56,7 +56,7 @@
 			$(function() {
 				//flash自动关闭
 				$("#close1_flash").click(function() {
-					$("#flash1_field").hide()
+					$("#flash1_field").hide();
 				});
 				$("#flash1_field").fadeOut(4000);
 				//取消按钮，自动增加四个
@@ -216,14 +216,24 @@
 					var src = "";
 					var text = "";
 					var ul = $("#trash");
+					var flag=true;
 					var liArr = $("#trash").children("ul").children("li");
+					//将有效图片存入字符串
 					$.each(liArr, function(index, name) {
-						if (index < liArr.length - 1) {
+						if (index < liArr.length) {
+							if($(name).find('img').attr("src")!="/assets/temp.jpg"){
 							src += $(name).find('img').attr("src") + ",";
 							text += $(name).find('textarea').val() + ",";
+								
+							}else{
+								flag=false;
+							}
 						}
 					});
-					alert(123123);
+					if (!flag) {
+						tishi_alert('存在未填充区域！');
+						return false;
+					}
 					$.ajax({
 						//async : true,
 						headers : {
@@ -290,7 +300,7 @@
 				<div id="show_all_image" style="width:80%;display:none;position: fixed;top:0px;height:100%;;padding:10px;z-index: 5;background:white;">
 
 					<div style="width:100%;margin-bottom: 5px ;text-align: center;">
-						<h1  > 添加图文页
+						<h1  > 添加图片流页
 						<br/>
 						标题：
 						<input type="text" id="title"/>

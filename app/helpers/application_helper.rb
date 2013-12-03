@@ -13,6 +13,7 @@ module ApplicationHelper
     page.main? ? "index" : "style.css"
   end
 
+
   #拼凑form element 对应关系hash
   def form_ele_hash(params_form)
     ele_hash = {}
