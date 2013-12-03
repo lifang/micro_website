@@ -85,7 +85,7 @@ function showInput(obj){
 //双击div，修改后blur隐藏当前输入框
 function hideInput(obj, flag){
     var input_value = $(obj).val();
-//判断内容是否罕有非法字符
+    //判断内容是否罕有非法字符
     if($.trim(input_value) == "" || pattern.test(input_value)){
         tishi_alert("请输入内容，不能包含非法字符")
     }else{
@@ -115,7 +115,7 @@ function submitForm(obj, flag,id){
     img=$.trim(img);
     if(img==""){
         tishi_alert('请输入图片路径');
-        return flase;
+        return false;
     }
     $("#page_title")[0].value=title;    //将去空格的值赋回去
     $("#page_file_name")[0].value=file_name;
@@ -191,5 +191,38 @@ function validatePageForm(content)
     $("#page_title")[0].value=title;    //将去空格的值赋回去
     $("#page_file_name")[0].value=file_name;
     
+    return tf_flag;
+}
+
+function checkITValid(obj){
+    var title = $.trim($("#image_text_container #image_text_title").val());
+    var file_name = $.trim($("#image_text_container #image_text_file_name").val());
+    var tf_flag = true;
+    if(title == ""){
+        tishi_alert("请输入标题");
+        tf_flag = false;
+    }else if(file_name == "" || (file_name !="style.css" && patten_html.test(file_name))){
+        tishi_alert("请输入文件名，不能包含'.'");
+        tf_flag = false;
+    }else{
+        $(".image_text_input").each(function(){
+            if($.trim($(this).val())==""){
+                tishi_alert("图片不能为空！");
+                tf_flag = false;
+                return false;
+            }
+        });
+        if(tf_flag){
+            $(".ke-edit-iframe").each(function(){
+                var content = $(this.contentDocument.body).html();
+                if($.trim(content)==""){
+                    tishi_alert("内容不能为空！");
+                    tf_flag = false;
+                    return false;
+                }
+            })
+            
+        }
+    }
     return tf_flag;
 }

@@ -36,7 +36,7 @@ module ApplicationHelper
                     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
                     <link href='/allsites/form_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
 <script src='/assets/jquery.js?body=1' type='text/javascript'></script>
-<script src='/assets/form.js?body=1' type='text/javascript'></script>
+<script src='/allsites/form.js?body=1' type='text/javascript'></script>
 <script language='javascript' type='text/javascript'>
         $.ajax({
             url: '/get_token',
@@ -85,7 +85,51 @@ a.each(function(){
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     content
   end
+
   def create_img_stream_page(src_arr,text_arr,name)
     
+  end
+
+  def image_text_content(page, it_content, img_path, site)
+    image_text = ''
+    img_path.each_with_index do |img, index|
+     image_text << '<img src="' + img + '" width="320" />' << '<p>' + it_content[index] + '</p>'
+    end
+    content = "
+    <!doctype html>
+        <html>
+        <head>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+        <title>title</title>
+        <script src=\"/assets/jquery.js?body=1\" type=\"text/javascript\"></script>
+
+
+        <!--iphone4横版
+        <link href=\"/allsites/iphone4-landscape.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"only screen and (max-device-width:480px) and (orientation:landscape), only screen and (max-width:480px) and (orientation:landscape)\">
+
+        <link href=\"/allsites/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"only screen and (max-device-width:320px) and (orientation:portrait), only screen and (max-width:320px) and (orientation:portrait)\">
+        -->
+
+        <!--iphone4竖版-->
+        <link href=\"/allsites/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\">
+
+        </head>
+
+        <body>
+            <article>
+                  <section class=\"activity_con\">
+                      <h1>#{page.title}</h1>
+                      <div class=\"title_info\"><span>#{site.name}</span></div>
+                      <div class=\"activity_con_text\">" + image_text + "</div>
+                  </section>
+            </article>
+
+        </body>
+        </html>"
+    content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
+    content
   end
 end

@@ -5,10 +5,23 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :check_user_status
   include ApplicationHelper
   SITE_PATH = "/public/allsites/%s/"
+  PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
   require "fileutils"
 
   def get_site
     @site = Site.find_by_id params[:site_id]
+  end
+
+  def redirect_path(page, site)
+    if page.main?
+      site_pages_path(site)
+    elsif page.sub?
+      sub_site_pages_path(site)
+    elsif page.form?
+      form_site_pages_path(site)
+    elsif page.image_text?
+      site_image_texts_path(site)
+    end
   end
 
   def save_into_file(content, page, old_file_name)
@@ -16,7 +29,7 @@ class ApplicationController < ActionController::Base
     site_path = Rails.root.to_s + SITE_PATH % site_root
     FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
     if old_file_name.present? && old_file_name != page.file_name
-       File.delete site_path + old_file_name if File.exists?(site_path + old_file_name)
+      File.delete site_path + old_file_name if File.exists?(site_path + old_file_name)
     end
     File.open(site_path + page.file_name, "wb") do |f|
       f.write(content.html_safe)

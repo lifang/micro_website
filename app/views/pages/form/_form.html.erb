@@ -7,7 +7,7 @@
       <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
     </span>
     <br/>
-    <span  id="span_image_area"> <img src="<%= @page && @page.img_path ? @page.img_path : '/assets/temp.jpg' %>" style="width:186px;height:144;border:1px solid gray;"/>
+    <span  id="span_image_area"> <img src="<%= @page && @page.img_path ? @page.img_path : '/assets/temp.jpg' %>" style="height:195px;border:1px solid gray;"/>
      <%= f.hidden_field :img_path %></span>
 
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>

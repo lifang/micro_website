@@ -1,10 +1,10 @@
-<%= form_for :image_text, :url => site_image_texts_path(@site), :method => "post" , :remote => true do |f| %>
+<%= form_for :image_text, :url => site_image_text_path(@site, @page), :method => "put" , :remote => true do |f| %>
   <h2>
     <span>标题<span class="check">*</span>
-      <%= f.text_field :title %>
+      <%= f.text_field :title, :value => @page.title %>
     </span>
     <span>文件名<span class="check">*</span>
-      <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %>.html
+      <%= f.text_field :file_name, :value => @page.file_name.gsub(".html", "") %>.html
     </span>
     <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:image_text] %>
   </h2>
@@ -15,14 +15,16 @@
   </p>
   <div class="picSort" style="width:700px">
     <div class="it_editor">
-      <div class="it_container">
-        <span class="delete" onclick="deleOption(this)" title="移除图文"></span>
-        <span class="image_area">
-          <img src="/assets/temp.jpg" style="height:195px;border:1px solid gray;"/>
-          <input type="hidden" name="image_text[img_path][]" class="image_text_input"/>
-        </span>
-        <textarea class="it_content" name="image_text[content][]" style="margin-bottom:20px"></textarea>
-      </div>
+      <% @image_text.img_path.each_with_index do |path, index|  %>
+        <div class="it_container">
+          <span class="delete" onclick="deleOption(this)" title="移除图文"></span>
+          <span class="image_area">
+            <img src="<%= path %>" style="height:195px;border:1px solid gray;"/>
+            <input type="hidden" name="image_text[img_path][]" class="image_text_input" value="<%= path %>"/>
+          </span>
+          <textarea class="it_content" name="image_text[content][]" style="margin-bottom:20px"><%= @image_text.content[index] %></textarea>
+        </div>
+      <% end %>
     </div>
     <span class="create_access" style="width:500px">
       <i class="icon42_common add_gray" onclick="appendEditor()"></i>

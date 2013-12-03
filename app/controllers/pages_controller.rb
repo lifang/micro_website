@@ -3,7 +3,6 @@ class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
   layout 'sites'
   before_filter :get_site
-  PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
   caches_action :static
   
   #主页 index
@@ -24,7 +23,7 @@ class PagesController < ApplicationController
   def create
     content = params[:page][:content]
     img="<img src='"+params[:page][:img_path]+"' width='320'/><br>" if params[:page][:img_path]
-    params[:page].delete(params[:page][:content]) if params[:page][:content]
+    params[:page].delete(:content) if params[:page][:content]
     params[:page][:element_relation] = form_ele_hash(params[:form]) if params[:form]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name] && params[:page][:file_name] != "style.css"
     Page.transaction do
@@ -119,7 +118,7 @@ class PagesController < ApplicationController
   #表单 index
   def form
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
-   @imgs_path=@site.resources
+    @imgs_path=@site.resources
     render "/pages/form/form"
   end
 
@@ -169,7 +168,7 @@ class PagesController < ApplicationController
         @notice = 1
       else
         if page.authenticate?
-           @notice = 0    
+          @notice = 0
         else
           page.form_datas.create(:data_hash => params[:form], :user_id =>nil )
           @notice = 1 
@@ -209,15 +208,4 @@ class PagesController < ApplicationController
     render :text => form_authenticity_token
   end
 
-  protected
-  
-  def redirect_path(page, site)
-    if page.main?
-      site_pages_path(site)
-    elsif page.sub?
-      sub_site_pages_path(@site)
-    elsif page.form?
-      form_site_pages_path(@site)
-    end
-  end
 end
