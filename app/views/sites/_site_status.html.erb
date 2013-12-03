@@ -23,7 +23,7 @@
 
   <%= link_to(site_resources_path(@site)) do %>
     <li class="theTab <%= controller_name == "resources" && controller.action_name == "index" ? 'used' : '' %>"">
-      <span>资源</span>
+        <span>资源</span>
     </li>
   <% end %>
 
@@ -32,9 +32,17 @@
       <span>表单</span>
     </li>
   <% end %>
+
   <%= link_to(img_stream_site_image_streams_path(@site)) do %>
     <li class="theTab <%= controller.action_name == "img_text" ? 'used' : '' %>">
-      <span>图文页</span>
+      <span>图片流</span>
+    </li>
+  <% end %>
+
+  <%= link_to(site_image_texts_path(@site)) do %>
+    <li class="theTab <%= controller_name == "image_texts" && controller.action_name == "index" ? 'used' : '' %>">
+      <span>图文</span>
+
     </li>
   <% end %>
 </ul>

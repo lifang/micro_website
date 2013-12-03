@@ -1,10 +1,20 @@
-$("#form_container .form_container").html("<h1>新建表单</h1>" + '<%= j (render '/pages/form/form') %>');
-show_tag($("#form_container"));
+$("#image_text_container .form_container").html("<h1>新建图文</h1>" + '<%= j (render 'form') %>');
+show_tag($("#image_text_container"));
+
 
 $(function() {
+     var editor = KindEditor.create('textarea[class="it_content"]', {
+                          resizeMode : 1,
+                          width : "500px",
+                          items : [
+                                  'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                                  'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                                  'insertunorderedlist']
+});
+
     // there's the gallery and the trash
     var $gallery = $( ".picRes" ),
-    $input = $( "#span_image_area img" );
+    $input = $( ".image_area img" );
 
     // let the gallery items be draggable
     $( "img", $gallery ).draggable({
