@@ -4,9 +4,9 @@
 		<input type="hidden" id="page_type" value="edit">
 		<h1  > 编辑图片流页
 		<br/>
-		标题：
+		标题：<span class="check">*</span>
 		<input type="text" id="title" value="<%= @page.title%>" />
-		文件名：
+		文件名：<span class="check">*</span>
 		<input type="hidden"  id="name" value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
 		<input type="text" disabled  value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>.html
 		</h1>
