@@ -8,7 +8,7 @@
 		<input type="text" id="title" value="<%= @page.title%>" />
 		文件名：
 		<input type="hidden"  id="name" value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
-		<input type="text" readonly  value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
+		<input type="text" disabled  value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>.html
 		</h1>
 		访问权限：是
 		<input type="radio" value=1 name="w" <%= (@page.authenticate ? 'checked':'')%>/>
