@@ -13,7 +13,7 @@
     <%= f.radio_button :authenticate, 1, :checked => @page && @page.authenticate ? true : false %>是
     <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
   </p>
-  <div class="picSort" style="width:700px">
+  <div class="picSort">
     <div class="it_editor">
       <div class="it_container">
         <span class="delete" onclick="deleOption(this)" title="移除图文"></span>
@@ -24,7 +24,7 @@
         <textarea class="it_content" name="image_text[content][]" style="margin-bottom:20px"></textarea>
       </div>
     </div>
-    <span class="create_access" style="width:500px">
+    <span class="create_access">
       <i class="icon42_common add_gray" onclick="appendEditor()"></i>
     </span>
 
@@ -46,7 +46,7 @@
     $(".it_editor").last().append(ediotrContent);
     KindEditor.create($(".it_content").last(), {
       resizeMode : 1,
-      width : "500px",
+      width : "400px",
       items : [
         'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',

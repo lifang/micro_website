@@ -1,4 +1,5 @@
 /* CSS Document */
+
 * { padding: 0; margin: 0;}
 body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background:#e9ebea;}
 
@@ -9,9 +10,21 @@ body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background
 .addPic h2 input { margin: 5px; }
 .addPic p { text-align: center; margin-bottom: 10px;}
 .addPic p input { margin: 0 5px;}
-.picSort { width: 450px; display: inline-block; overflow: auto; height: 360px; margin-left: 30px;}
-.picRes { width: 410px; display: inline-block; vertical-align: top; margin-left: 40px; overflow: auto; height: 340px; padding: 10px; background: #E3E3E3;}
-
+.picSort { width: 500px; display: inline-block; overflow: auto; height: 360px; margin-left: 30px; border: 1px solid #B8B8B8; border-radius: 5px;}
+/*.picRes { width: 410px; display: inline-block; vertical-align: top; margin-left: 40px; overflow: auto; height: 340px; padding: 10px; background: #E3E3E3;}*/
+.picRes {
+    background: none repeat scroll 0 0 #E3E3E3;
+    display: inline-block;
+    height: 340px;
+    right: 50px;
+    margin-left: 40px;
+    overflow: auto;
+    padding: 10px;
+    position: absolute;
+    top: 178px;
+    vertical-align: top;
+    width: 410px;
+}
 .picPosition { 
 	margin: 10px;
 	width: 180px; 
@@ -30,11 +43,18 @@ body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background
 .picRes img { margin: 5px;}
 .picRes img:hover { box-shadow: 0 0 5px #000000; }
 
-.action { text-align: center;}
+.action { text-align: center;margin-top: 30px;}
 .action button { font-size: 20px; padding:3px 10px; margin: 5px;}
-.addpicp { background: url(../images/add.png) no-repeat; display: block; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 458px; cursor: pointer;}
 
-.picPosition .delpicp { background: url(../images/close.png) no-repeat; display: none; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 160px; top: 2px; cursor: pointer;}
+.addpicpDiv {
+    background: none repeat scroll 0 0 #FCFCFC;
+    height: 30px;
+    position: absolute;
+    width: 433px;
+}
+.addpicp { background: url(/assets/add.png) no-repeat; display: block; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; float: right; cursor: pointer;}
+
+.picPosition .delpicp { background: url(/assets/close.png) no-repeat; display: none; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 160px; top: 2px; cursor: pointer;}
 .picPosition:hover .delpicp { display: block;}
 
 

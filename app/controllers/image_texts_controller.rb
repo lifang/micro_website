@@ -39,9 +39,8 @@ class ImageTextsController < ApplicationController
     @page = Page.find_by_id(params[:id])
     if @page
       @image_text = @page.page_image_texts[0]
-      p 11111111111111111
-      p @image_text
     end
+    render :new
   end
 
   def update
