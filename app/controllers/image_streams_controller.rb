@@ -19,7 +19,7 @@ class ImageStreamsController < ApplicationController
     title=params[:title];
     check=params[:check];
     imgarr=params[:src].split(",");
-    textstr=params[:text].split(",");
+    textstr=params[:text].split("||");
     p imgarr,textstr
     @site=Site.find(params[:site_id]);
     @page=@site.pages.build
@@ -29,7 +29,10 @@ class ImageStreamsController < ApplicationController
     @page.types=5
     @page.path_name="/"+@site.root_path+"/"+name+".html"
     if @page.save
-    
+      page_image=@page.page_image_texts.build
+      page_image.img_path=imgarr
+      page_image.content=textstr
+      page_image.save
       content=get_content(imgarr,textstr)
       bigcontent=get_bigcontent(imgarr,textstr)
       save_in_file(content,bigcontent,@site,@page.file_name)
@@ -57,6 +60,44 @@ class ImageStreamsController < ApplicationController
     end
 
   end
+  
+  def edit_itpage
+    @page = Page.find(params[:id])
+    @image_text=PageImageText.find_by_page_id(params[:id])
+    @site=Site.find(params[:site_id])
+    @imgs_path=@site.resources
+    render :layouts=>false
+  end
+  
+  def edit_update
+    name=params[:name]+".html";
+    title=params[:title];
+    check=params[:check];
+    imgarr=params[:src].split(",");
+    textstr=params[:text].split("||");
+    @site=Site.find(params[:site_id]);
+    @page=Page.find(params[:id]);
+    @image_text=PageImageText.find_by_page_id(params[:id])
+    if @page.update_attributes(file_name:name,title:title,authenticate:check)
+      @image_text.update_attributes(img_path:imgarr,content:textstr)
+      # 删除已经存在的html文件
+      bigimg_path=PUBLIC_PATH+"/"+@site.root_path+"/bigimg_"+@page.file_name
+      File.delete PUBLIC_PATH + @page.path_name if File.exists?(PUBLIC_PATH + @page.path_name)
+      File.delete  bigimg_path if File.exists?(bigimg_path)
+      #保存更新完的文件
+      content=get_content(imgarr,textstr)
+      bigcontent=get_bigcontent(imgarr,textstr)
+      save_in_file(content,bigcontent,@site,@page.file_name)
+      render :text=>1
+    else
+      render :text=>0
+    #  redirect_to site_image_texts_path(@site)
+   # else
+     # render "edit_itpage"
+    end
+  end
+  
+  #私有方法|||||||||||||||||||||||||||||||||||||||||||||||华丽的分割线||||||||||||||||||||||||||||||||||||||||||||||
   private
 
   #保存进

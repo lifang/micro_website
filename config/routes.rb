@@ -23,6 +23,7 @@ MicroWebsite::Application.routes.draw do
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'
   match 'image_text_page' ,to: 'image_streams#create_imgtxt' , via: 'post'
+  match 'imgtxt_edit_update' ,to: 'image_streams#edit_update' ,via: 'post'
   # Sample resource route with options:
   resources :sites do
     member do
@@ -42,8 +43,13 @@ MicroWebsite::Application.routes.draw do
     end
 
     resources :image_streams do
+      #对集合进行操作
       collection do
       get :img_stream
+      end
+      #对单个进行操作
+      member do
+      get :edit_itpage
       end
     end
     resources :image_texts do

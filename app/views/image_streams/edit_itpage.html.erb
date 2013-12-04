@@ -2,7 +2,7 @@
 <html>
 
 	<head>
-		<title>我的微网站</title>
+		<title>编辑图片流页</title>
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 		<style>
@@ -62,7 +62,7 @@
 				//取消按钮，自动增加四个
 				function loop_add() {
 					$("#trashdiv").offset().top
-					var left = $("#trash").offset().left + 240;
+					var left = $("#trash").offset().left + 407;
 					$("#add").top = $("#trashdiv").offset().top;
 					$("#add").css('left', left);
 					setTimeout(loop_add, 2000);
@@ -104,13 +104,7 @@
 					$("#background").show();
 				});
 				$("#cancel").click(function() {
-					$("#show_all_image").hide();
-					$("#background").hide();
-					$("#trashh").html("");
-					add();
-					add();
-					add();
-					add();
+					location.href="/sites/"+$("#site_id").val()+"/image_streams/img_stream";
 				});
 				// 加入图片
 				var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";
@@ -131,11 +125,12 @@
 						var temp = $("*[name='temp_picture']");
 						var f = false;
 						if (temp.length < 2) {
-							
-							var t = name.clone();
+							var li_temp=$("<li class=\"ui-widget-content ui-corner-tr\" style='width: 186px;'></li>");
+							li_temp.html("<img  src=\"/assets/temp.jpg\" style=\"width:182px;height:144px; \"/><a  title=\"Delete this image\" onclick=\"delete_ele(this)\"  class=\"ui-icon ui-icon-trash\">Delete image</a><textarea></textarea><input type=\"hidden\" name=\"temp_picture\" />");
+							var t = li_temp.clone();
 							candrop(t);
 							t.appendTo($("#trashh"));
-							var t1 = name.clone();
+							var t1 = li_temp.clone();
 							t1.appendTo($("#trashh"));
 							candrop(t1);
 						}
@@ -235,6 +230,11 @@
 						tishi_alert('存在未填充区域！');
 						return false;
 					}
+					
+					/*var url="/imgtxt_edit_update?"+'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val();
+					window.location.assign(url); 
+					*/
+					alert(111);
 					$.ajax({
 						//async : true,
 						headers : {
@@ -242,18 +242,19 @@
 							'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
 						},
 						type : 'post',
-						url : '/image_text_page',
+						url : '/imgtxt_edit_update',
 						dataType : "json",
-						data : 'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val(),
+						data : 'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val()+"&id="+$("#page_id").val(),
 						success : function(data) {
 							if (data == 1) {
 								tishi_alert("创建成功");
-								location.reload();
+								location.href="/sites/"+$("#site_id").val()+"/image_streams/img_stream";
 							} else {
-								tishi_alert("创建失败");
+								tishi_alert("创建失败,页名已存在");
 							}
 						}
 					});
+					
 				});
 				//增加一个空白区域
 				function add() {
@@ -278,73 +279,45 @@
 
 	</head>
 	<body>
-		<% flash.each do |name, msg| %>
-		<div id="flash1_field" style="width:100%;position: fixed; z-index: 4;">
-			<div   style="font-size:20px;margin: 200px auto;width: 300px;background: #E0EEEE;padding: 20px;">
-
-				<span class="close" id="close1_flash" style="float:right;" ></span>
-				<%= msg%>
-			</div>
-		</div>
-		<% end %>
+		
 		<div id='background' style="z-index: 4;display:none;width:100%;height:100%;position:fixed;top:0px;left:0px; opacity:0.5;background:black;"></div>
-		<%= render "shared/head_nav" %>
-		<div class="main_container">
-			<%= render 'sites/site_status'%>
-			<!--显示pages列表-->
-			<div class="tabDiv" id="img_table">
-				<%= render 'image_pages'%>
-			</div>
 			<!--添加图片的主体-->
-			<div style="overflow: auto;width:100%">
+			<div style="overflow: auto;text-align: center;width::100%;">
 
-				<div id="show_all_image" style="width:80%;display:none;position: fixed;top:0px;height:100%;;padding:10px;z-index: 5;background:white;">
+				<div id="show_all_image" style="width:80%;height:100%;padding:10px;margin:auto;background:white;">
 
 					<div style="width:100%;margin-bottom: 5px ;text-align: center;">
 						<h1  > 添加图片流页
 						<br/>
 						标题：
-						<input type="text" id="title"/>
+						<input type="text" id="title" value="<%=@page.title%>" />
 						文件名：
-						<input type="text" id="name"/>
+						<input type="hidden"  id="name" value="<%=@page.file_name.split('.')[0...-1].join('.')%>"/>
+						<input type="text" readonly  value="<%=@page.file_name.split('.')[0...-1].join('.')%>"/>
 						</h1>
 						访问权限：是
-						<input type="radio" value=1 name="w" checked/>
+						<input type="radio" value=1 name="w" <%= (@page.authenticate ? 'checked':'')%>/>
 						否
-						<input type="radio" value=0 name="w" />
+						<input type="radio" value=0 name="w" <%= (!@page.authenticate ? 'checked':'')%>/>
 					</div>
 					<div id="trashdiv" style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
 						<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 35px;width:420px;background:white;float:right;">
-							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区 <img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/></h4>
+							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span>
+								 您的图片区 <img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/></h4>
 							<ul class='gallery ui-helper-reset' id="trashh" />
+							<% (0..@image_text.img_path.length-1).each do |i|%>
 							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
-								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
+								<img  src="<%=@image_text.img_path[i]%>" style="width:182px;height:144px; "/>
 								<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
-								<textarea></textarea>
-								<input type="hidden" name="temp_picture" />
+								<textarea><%=@image_text.content[i]%></textarea>
 							</li>
-							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
-								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
-								<a  title="Delete this image" onclick="delete_ele(this)" class="ui-icon ui-icon-trash">Delete image</a>
-								<textarea></textarea>
-								<input type="hidden" name="temp_picture" />
-							</li>
-							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;'>
-								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
-								<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
-								<textarea></textarea>
-								<input type="hidden" name="temp_picture" />
-							</li>
-							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;'>
-								<img  src="/assets/temp.jpg" style="width:182px;height:144px; "/>
-								<a  title="Delete this image" onclick="delete_ele(this)" class="ui-icon ui-icon-trash">Delete image</a>
-								<textarea></textarea>
-								<input type="hidden" name="temp_picture" />
-							</li>
+							<%end%>
+							
 							</ul>
 						</div>
 					</div>
 					<input type="hidden" id='site_id' value="<%= @site.id%>" />
+					<input type="hidden" id='page_id' value="<%= @page.id%>" />
 					<div style="float:left;width:49%;height:450px;overflow: auto;">
 						<%= render 'shared/all_image',:objects=>@imgs_path%>
 					</div>
@@ -358,13 +331,6 @@
 			</div>
 		</div>
 
-
-
-
-
-		<div id="dialog" title="Basic dialog">
-			<div></div>
-		</div>
 		<%= render "/shared/tishi_alert" %>
 		
 
