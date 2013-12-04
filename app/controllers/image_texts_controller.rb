@@ -5,7 +5,7 @@ class ImageTextsController < ApplicationController
 
   def index
     @title = "微网站-图文"
-    @image_texts = Page.image_text.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
+    @image_texts = @site.pages.image_text.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
     @imgs_path = @site.resources
   end
 

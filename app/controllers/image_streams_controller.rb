@@ -9,7 +9,7 @@ class ImageStreamsController < ApplicationController
 
   def img_stream
     @site=Site.find(params[:site_id])
-    @image_stream_pages=@site.pages.paginate(page:params[:page])
+    @image_stream_pages=@site.pages.image_stream.paginate(page:params[:page])
     @imgs_path=@site.resources
     render :layouts=>false
   end
