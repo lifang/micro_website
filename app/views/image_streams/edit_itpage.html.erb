@@ -234,7 +234,6 @@
 					/*var url="/imgtxt_edit_update?"+'title=' + title + '&name=' + name + '&check=' + check + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val();
 					window.location.assign(url); 
 					*/
-					alert(111);
 					$.ajax({
 						//async : true,
 						headers : {
@@ -248,6 +247,7 @@
 						success : function(data) {
 							if (data == 1) {
 								tishi_alert("创建成功");
+								//返回主页
 								location.href="/sites/"+$("#site_id").val()+"/image_streams/img_stream";
 							} else {
 								tishi_alert("创建失败,页名已存在");

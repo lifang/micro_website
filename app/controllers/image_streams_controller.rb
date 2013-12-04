@@ -116,10 +116,11 @@ class ImageStreamsController < ApplicationController
   def get_content(imgarr,textarr)
     str=""
     (0..imgarr.length-1).each do |x|
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{imgarr[x]}' width='140' height='222' ><p>#{textarr[x]}</p></a></li>
+      p=(textarr[x] == "" ? '':"<p>#{textarr[x]}</p>")
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{imgarr[x]}' width='140' height='222' >#{p}</a></li>
       "
     end
-    p 1111111111111111111111,str
+#html 内容
     content="
     <!doctype html>
 <html>
