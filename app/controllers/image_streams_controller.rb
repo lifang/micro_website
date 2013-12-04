@@ -3,17 +3,17 @@ class ImageStreamsController < ApplicationController
   before_filter :get_site
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
-  def index
-    render "demo1", :layout => false
+  layout 'sites'
+  def new
+    @site=Site.find(params[:site_id])
+    @imgs_path=@site.resources
   end
 
   def img_stream
     @site=Site.find(params[:site_id])
     @image_stream_pages=@site.pages.image_stream.paginate(page:params[:page])
     @imgs_path=@site.resources
-    render :layouts=>false
   end
-
   def create_imgtxt
     name=params[:name];
     title=params[:title];
@@ -66,8 +66,10 @@ class ImageStreamsController < ApplicationController
     @image_text=PageImageText.find_by_page_id(params[:id])
     @site=Site.find(params[:site_id])
     @imgs_path=@site.resources
-    render :layouts=>false
+    
   end
+  
+
   
   def edit_update
     name=params[:name]+".html";

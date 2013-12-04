@@ -6,51 +6,7 @@
 
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 		<style>
-			#gallery {
-				float: left;
-				min-height: 12em;
-				margin: 0px 10px 10px 40px;
-			}
-			.gallery.custom-state-active {
-				background: #eee;
-			}
-			.gallery li {
-				float: left;
-				width: 96px;
-				padding: 0.4em;
-				margin: 0 0.4em 0.4em 0;
-				text-align: center;
-			}
-			.gallery li h5 {
-				margin: 0 0 0.4em;
-				cursor: move;
-			}
-			.gallery li a {
-				float: right;
-			}
-			.gallery li a.ui-icon-zoomin {
-				float: left;
-			}
-			.gallery li img {
-				width: 100%;
-				cursor: move;
-			}
-			#trash {
-
-				width: 34%;
-				min-height: 34em;
-				padding: 1%;
-			}
-			#trash h4 {
-				line-height: 16px;
-				margin: 0 0 0.4em;
-			}
-			#trash h4 .ui-icon {
-				float: left;
-			}
-			#trash .gallery h5 {
-				display: none;
-			}
+			
 		</style>
 		<script>
 			$(function() {
@@ -103,6 +59,7 @@
 					$("#show_all_image").show();
 					$("#background").show();
 				});
+				//取消按钮
 				$("#cancel").click(function() {
 					location.href="/sites/"+$("#site_id").val()+"/image_streams/img_stream";
 				});
@@ -263,18 +220,13 @@
 					candrop(li);
 					li.appendTo($("#trashh"));
 				}
-
-
-				$("#add").click(function() {
-					add();
-				});
-			});
-			//删除图片
-			function delete_ele(element) {
+		    	//删除图片
+	    		function delete_ele(element) {
 				//获取父节点并移除
 				$(element).parent().remove();
 
-			}
+    			}
+			});
 		</script>
 
 	</head>
@@ -303,7 +255,7 @@
 					<div id="trashdiv" style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
 						<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 35px;width:420px;background:white;float:right;">
 							<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span>
-								 您的图片区 <img src="/assets/add.png" alt="添加空白区域" id="add" style="position: absolute;left:490px;cursor:pointer;"/></h4>
+								 您的图片区 <img src="/assets/add.png" alt="添加空白区域" onclick="add" style="position: absolute;left:490px;cursor:pointer;"/></h4>
 							<ul class='gallery ui-helper-reset' id="trashh" />
 							<% (0..@image_text.img_path.length-1).each do |i|%>
 							<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >

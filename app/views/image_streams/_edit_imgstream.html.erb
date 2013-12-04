@@ -1,0 +1,44 @@
+<div style="height:100%;padding:10px;margin:auto;background:white;">
+
+	<div style="width:100%;margin-bottom: 5px ;text-align: center;">
+		<input type="hidden" id="page_type" value="edit">
+		<h1  > 编辑图片流页
+		<br/>
+		标题：
+		<input type="text" id="title" value="<%= @page.title%>" />
+		文件名：
+		<input type="hidden"  id="name" value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
+		<input type="text" readonly  value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
+		</h1>
+		访问权限：是
+		<input type="radio" value=1 name="w" <%= (@page.authenticate ? 'checked':'')%>/>
+		否
+		<input type="radio" value=0 name="w" <%= (!@page.authenticate ? 'checked':'')%>/>
+	</div>
+	<div id="trashdiv" style="float:left;width:51%;height:450px;padding:0%;overflow: auto;">
+		<div id="trash" class="ui-widget-content ui-state-default"style="margin:0px 35px;width:420px;background:white;float:right;">
+			<h4 class="ui-widget-header"><span class="ui-icon ui-icon-folder-collapsed">Document</span> 您的图片区 <img src="/assets/add.png" alt="添加空白区域"  onclick="add()" style="position: absolute;left:610px;cursor:pointer;"/></h4>
+			<ul class='gallery ui-helper-reset' id="trashh" >
+			<% (0..@image_text.img_path.length-1).each do |i|%>
+			<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
+				<img  src="<%= @image_text.img_path[i]%>" style="width:182px;height:144px; "/>
+				<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
+				<textarea><%= @image_text.content[i]%></textarea>
+			</li>
+			<%end%>
+
+			</ul>
+		</div>
+	</div>
+	<input type="hidden" id='site_id' value="<%= @site.id%>" />
+	<input type="hidden" id='page_id' value="<%= @page.id%>" />
+	<div style="float:left;width:49%;height:450px;overflow: auto;">
+		<%= render 'shared/all_image',:objects=>@imgs_path%>
+	</div>
+	<div style="width:100%;text-align:center; margin-top: 5px;">
+		<input type="button" value="提交" onclick="submit_btn()" class="blue_btn"/>
+
+		<input type="button" value="取消" id='cancel' class="blue_btn"/>
+	</div>
+
+</div>

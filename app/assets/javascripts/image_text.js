@@ -13,3 +13,4 @@ function viewLargerImage( obj ) {
         });
     }, 1 );
 }
+

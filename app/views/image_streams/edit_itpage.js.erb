@@ -1,0 +1,97 @@
+$("#image_text_container").html('<%= j (render 'edit_imgstream') %>');
+
+
+show_tag($("#image_text_container"));
+var $gallery = $("#gallery"), $trash = $("#trash >ul>li");
+
+// let the gallery items be draggable
+				$("li", $gallery).draggable({
+					cancel : "a.ui-icon", // clicking an icon won't initiate dragging
+					revert : "invalid", // when not dropped, the item will revert back to its initial position
+					containment : "document",
+					helper : "clone",
+					cursor : "move"
+				});
+// let the trash be droppable, accepting the gallery items
+				$.each($trash, function(index, name) {
+					$(name).droppable({
+						accept : "#gallery > li",
+						activeClass : "ui-state-highlight",
+						drop : function(event, ui) {
+							deleteImage($(name), ui.draggable);
+						}
+					});
+				});
+
+// let the gallery be droppable as well, accepting items from the trash
+$gallery.droppable({
+					accept : "#trash li",
+					activeClass : "custom-state-active",
+					drop : function(event, ui) {
+						recycleImage(ui.draggable);
+					}
+				});
+				
+
+				// resolve the icons behavior with event delegation
+$("ul.gallery > li").click(function(event) {
+					var $item = $(this), $target = $(event.target);
+
+					if ($target.is("a.ui-icon-circle-plus")) {
+						deleteImage($item);
+					} else if ($target.is("a.ui-icon-zoomin")) {
+						viewLargerImage($target);
+					}
+
+					return false;
+});
+
+//tianjian
+var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' class='ui-icon ui-icon-trash'>Recycle image</a>";		
+function deleteImage(name, $item) {
+					//复制本身
+					var ll = $item.clone();
+					ll.find("a.ui-icon-circle-plus").remove();
+					ll.find("a.ui-icon-zoomin").remove();
+					/*创造一个新的相同元素
+					 var ll =$("<li class='ui-widget-content ui-corner-tr'></li>");
+					 ll.html($item.html());
+					 */
+					var str = "";
+					ll.fadeOut(function() {
+						var $list = $("ul", $trash).length ? $("ul", $trash) : $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+						//	ll.find("a.ui-icon-trash").remove();
+						var temp = $("*[name='temp_picture']");
+						var f = false;
+						if (temp.length < 2) {
+							var li_temp=$("<li class=\"ui-widget-content ui-corner-tr\" style='width: 186px;'></li>");
+							li_temp.html("<img  src=\"/assets/temp.jpg\" style=\"width:182px;height:144px; \"/><a  title=\"Delete this image\" onclick=\"delete_ele(this)\"  class=\"ui-icon ui-icon-trash\">Delete image</a><textarea></textarea><input type=\"hidden\" name=\"temp_picture\" />");
+							var t = li_temp.clone();
+							candrop(t);
+							t.appendTo($("#trashh"));
+							var t1 = li_temp.clone();
+							t1.appendTo($("#trashh"));
+							candrop(t1);
+						}
+						name.html(ll.html());
+						name.append(recycle_icon).fadeIn(function() {
+							name.animate({
+								width : "186px"
+							}).find("img").animate({
+								height : "144px"
+							});
+							name.append("<textarea></textarea>");
+						});
+					});
+}
+
+//使之可以使用
+function candrop(name) {
+					name.droppable({
+						accept : "#gallery > li",
+						activeClass : "ui-state-highlight",
+						drop : function(event, ui) {
+							deleteImage(name, ui.draggable);
+						}
+					});
+}
