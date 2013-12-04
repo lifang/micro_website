@@ -34,7 +34,7 @@
   <% end %>
 
   <%= link_to(img_stream_site_image_streams_path(@site)) do %>
-    <li class="theTab <%= controller.action_name == "img_text" ? 'used' : '' %>">
+    <li class="theTab <%= controller_name=="image_streams" ? 'used' : '' %>">
       <span>图片流</span>
     </li>
   <% end %>
