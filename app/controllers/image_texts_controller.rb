@@ -14,8 +14,55 @@ class ImageTextsController < ApplicationController
   end
 
   def create
-    p 11111111111
-    p params
+    img_path = params[:image_text][:img_path]
+    it_content = params[:image_text][:content]
+    params[:image_text].delete(:content) if params[:image_text][:content]
+    params[:image_text].delete(:img_path) if params[:image_text][:img_path]
+    params[:image_text][:file_name] = params[:image_text][:file_name] + ".html" if params[:image_text][:file_name]
+    Page.transaction do
+      @page = @site.pages.create(params[:image_text])
+      if @page.save
+        @page.page_image_texts.create({:img_path => img_path, :content => it_content })
+        content = image_text_content(@page, it_content, img_path, @site) if it_content.present?
+        save_into_file(content, @page, "") if content
+        flash[:notice] = "新建成功!"
+        @path = redirect_path(@page, @site)
+        render :success
+      else
+        @notice = "新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+        render :fail
+      end
+    end
+  end
+
+  def edit
+    @page = Page.find_by_id(params[:id])
+    if @page
+      @image_text = @page.page_image_texts[0]
+      p 11111111111111111
+      p @image_text
+    end
+  end
+
+  def update
+    @page = Page.find_by_id(params[:id])
+    old_page_file_name = @page.file_name
+    img_path = params[:image_text][:img_path]
+    it_content = params[:image_text][:content]
+    params[:image_text].delete(:content) if params[:image_text][:content]
+    params[:image_text].delete(:img_path) if params[:image_text][:img_path]
+    params[:image_text][:file_name] = params[:image_text][:file_name] + ".html" if params[:image_text][:file_name]
+    if @page && @page.update_attributes(params[:image_text])
+      @page.page_image_texts[0].update_attributes({:img_path => img_path, :content => it_content })
+      content = image_text_content(@page, it_content, img_path, @site) if it_content.present?
+      save_into_file(content, @page, old_page_file_name) if content
+      flash[:notice] = "更新成功!"
+      @path = redirect_path(@page, @site)
+      render :success
+    else
+      @notice = "更新失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+      render :fail
+    end
   end
  
 end

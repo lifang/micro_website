@@ -1,6 +1,42 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+<% if @image_text %>
+$("#image_text_container .form_container").html("<h1>编辑图文</h1>" + '<%= j (render 'edit_form') %>');
+show_tag($("#image_text_container"));
 
-<%= "edit.js" %>
+
+$(function() {
+     var editor = KindEditor.create('textarea[class="it_content"]', {
+                          resizeMode : 1,
+                          width : "500px",
+                          items : [
+                                  'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                                  'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                                  'insertunorderedlist']
+});
+
+    // there's the gallery and the trash
+    var $gallery = $( ".picRes" ),
+    $input = $( ".image_area img" );
+
+    // let the gallery items be draggable
+    $( "img", $gallery ).draggable({
+        cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+        revert: "invalid", // when not dropped, the item will revert back to its initial position
+        containment: "document",
+        helper: "clone",
+        cursor: "move"
+    });
+
+    // let the trash be droppable, accepting the gallery items
+    $input.droppable({
+        accept: ".picRes > img",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            $(this).attr("src", ui.draggable.attr("src"));
+            $(this).next().val(ui.draggable.attr("src"));
+        }
+    });
+
+});
+<% else %>
+tishi_alert("出错了")
+<% end %>

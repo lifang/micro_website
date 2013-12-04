@@ -46,7 +46,7 @@ h2 input { font-size: 16px;}
 }
 .login_info,.rsg_info { padding: 10px;}
 .login_info label { line-height: 50px; font-size: 24px; }
-.login_info input { font-size: 24px; width: 200px; border: 1px solid #003333; }
+.login_info input { font-size: 20px; width: 200px; border: 1px solid #003333; padding: 5px }
 .login_act,.rsg_act { padding: 10px;}
 .login_act a { margin: 10px; text-decoration: underline; font-size: 16px;}
 .login_btn { width: 150px; margin-bottom: 10px; font-size: 20px;}

@@ -183,3 +183,9 @@
 #image_text_container span{
     padding: 0px;
 }
+.it_container{
+    border: 3px dashed #B8B8B8;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    position: relative;
+}
