@@ -204,25 +204,6 @@ function checkITValid(obj){
     }else if(file_name == "" || (file_name !="style.css" && patten_html.test(file_name))){
         tishi_alert("请输入文件名，不能包含'.'");
         tf_flag = false;
-    }else{
-        $(".image_text_input").each(function(){
-            if($.trim($(this).val())==""){
-                tishi_alert("图片不能为空！");
-                tf_flag = false;
-                return false;
-            }
-        });
-        if(tf_flag){
-            $(".ke-edit-iframe").each(function(){
-                var content = $(this.contentDocument.body).html();
-                if($.trim(content)==""){
-                    tishi_alert("内容不能为空！");
-                    tf_flag = false;
-                    return false;
-                }
-            })
-            
-        }
     }
     return tf_flag;
 }
