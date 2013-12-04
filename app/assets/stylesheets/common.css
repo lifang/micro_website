@@ -139,7 +139,7 @@
     float: right;width:500px
 }
 #span_image_area{display: inline-block;}
-.form_container{display: inline-block; width:720px}
+.form_container{ position: relative;margin-top: 10px;}
 
 .create_access {
     border: 3px dashed #B8B8B8;
@@ -149,6 +149,8 @@
     line-height: 150px;
     margin-bottom: 20px;
     text-align: center;
+    width: 400px;
+    margin: 20px auto;
 }
 
 .icon42_common.add_gray {
@@ -183,9 +185,12 @@
 #image_text_container span{
     padding: 0px;
 }
-.it_container{
-    border: 3px dashed #B8B8B8;
+.it_container {
+    border: 1px solid #B8B8B8;
     border-radius: 5px;
-    margin-bottom: 30px;
+    margin: 30px auto;
+    padding: 10px;
+    text-align: center;
+    width: 400px;
     position: relative;
 }

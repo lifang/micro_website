@@ -34,9 +34,9 @@ module ApplicationHelper
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
                     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-                    <link href='/allsites/form_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
-<script src='/assets/jquery.js?body=1' type='text/javascript'></script>
-<script src='/allsites/form.js?body=1' type='text/javascript'></script>
+                    <link href='/allsites/style/form_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
+<script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
+<script src='/allsites/js/form.js' type='text/javascript'></script>
 <script language='javascript' type='text/javascript'>
         $.ajax({
             url: '/get_token',
@@ -102,19 +102,19 @@ a.each(function(){
         <meta charset=\"utf-8\">
         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
         <title>title</title>
-        <script src=\"/assets/jquery.js?body=1\" type=\"text/javascript\"></script>
+        <script src=\"/allsites/js/jQuery-v1.9.0.js\" type=\"text/javascript\"></script>
 
 
         <!--iphone4横版
-        <link href=\"/allsites/iphone4-landscape.css\" rel=\"stylesheet\" type=\"text/css\"
+        <link href=\"/allsites/style/iphone4-landscape.css\" rel=\"stylesheet\" type=\"text/css\"
         media=\"only screen and (max-device-width:480px) and (orientation:landscape), only screen and (max-width:480px) and (orientation:landscape)\">
 
-        <link href=\"/allsites/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\"
+        <link href=\"/allsites/style/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\"
         media=\"only screen and (max-device-width:320px) and (orientation:portrait), only screen and (max-width:320px) and (orientation:portrait)\">
         -->
 
         <!--iphone4竖版-->
-        <link href=\"/allsites/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\">
+        <link href=\"/allsites/style/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\">
 
         </head>
 

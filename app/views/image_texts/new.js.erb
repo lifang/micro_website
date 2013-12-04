@@ -1,11 +1,15 @@
+<% if @page.new_record? %>
 $("#image_text_container .form_container").html("<h1>新建图文</h1>" + '<%= j (render 'form') %>');
+<% else %>
+$("#image_text_container .form_container").html("<h1>编辑图文</h1>" + '<%= j (render 'edit_form') %>');
+<% end %>
 show_tag($("#image_text_container"));
 
 
 $(function() {
      var editor = KindEditor.create('textarea[class="it_content"]', {
                           resizeMode : 1,
-                          width : "500px",
+                          width : "400px",
                           items : [
                                   'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
                                   'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
