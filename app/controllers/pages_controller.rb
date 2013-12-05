@@ -136,7 +136,7 @@ class PagesController < ApplicationController
     @index = index_html.read
     index_html.close
     #结束
-    render "/pages/form/form_edit"
+    render "/pages/form/form_new"
   end
 
   #子页、表单的访问控制

@@ -1,4 +1,4 @@
-$("#form_container .form_container").html("<h1>新建表单</h1>" + '<%= j (render '/pages/form/form') %>');
+$("#form_container .form_container").html("<h1><%= @page.new_record? ? "新建" : "编辑" %>表单</h1>" + '<%= j (render '/pages/form/form') %>');
 show_tag($("#form_container"));
 
 $(function() {
@@ -7,7 +7,7 @@ $(function() {
     $input = $( "#span_image_area img" );
 
     // let the gallery items be draggable
-    $( "img", $gallery ).draggable({
+    $( "li", $gallery ).draggable({
         cancel: "a.ui-icon", // clicking an icon won't initiate dragging
         revert: "invalid", // when not dropped, the item will revert back to its initial position
         containment: "document",
@@ -17,12 +17,14 @@ $(function() {
 
     // let the trash be droppable, accepting the gallery items
     $input.droppable({
-        accept: ".picRes > img",
+        accept: ".picRes > li",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            $(this).attr("src", ui.draggable.attr("src"));
-            $(this).next().val(ui.draggable.attr("src"));
+            $(this).attr("src", ui.draggable.find("img").attr("src"));
+            $(this).next().val(ui.draggable.find("img").attr("src"))
         }
     });
 
 });
+
+

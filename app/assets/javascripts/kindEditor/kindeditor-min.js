@@ -1103,7 +1103,7 @@ function Jb(a,b){
     b.pluginsPath=n(b.pluginsPath,b.basePath+"plugins/");
     if(n(b.loadStyleMode,f.options.loadStyleMode)){
         var d=n(b.themeType,f.options.themeType);
-        $a(b.themesPath+"default/default.css");
+        $a("/assets/kindEditor/themes/default/default.css");
         $a(b.themesPath+d+"/"+d+".css")
         }
         if((d=f(a))&&d.length!==
