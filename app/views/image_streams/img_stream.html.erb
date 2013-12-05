@@ -101,7 +101,7 @@
 				$.each(liArr, function(index, name) {
 					if (index < liArr.length) {
 						if ($(name).find('img').attr("src") != "/assets/temp.jpg") {
-							src += $(name).find('img').attr("src") + ",";
+							src += $(name).find('input').val() + ",";
 							text += $(name).find('textarea').val() + "||";
 
 						} else {

@@ -12,8 +12,11 @@ module ApplicationHelper
   def page_title(page)
     page.main? ? "index" : "style.css"
   end
-
-
+  #处理图片成_min名字
+  def deal_img_to_min(img_name)
+    img=img_name.split(".")[0...-1].join(".")+"_min."+img_name.split(".")[-1]
+    img
+  end
   #拼凑form element 对应关系hash
   def form_ele_hash(params_form)
     ele_hash = {}

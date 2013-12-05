@@ -102,6 +102,7 @@ class ResourcesController < ApplicationController
       z.extract(@full_dir, :flatten => true)
     end
     #转码
+    
     `convmv -f gbk -t utf-8 -r --notest  #{@full_dir}`
     #@full_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+@tmp.original_filename
     arr=[]
@@ -118,7 +119,7 @@ class ResourcesController < ApplicationController
         
         if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
-          p 11111111111111111111111111,ful_pa,entry,@full_dir
+          @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
           min_image(ful_pa,entry,@full_dir)
         elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
@@ -142,7 +143,7 @@ class ResourcesController < ApplicationController
       @arr_repeat+=1
     end
   end
-
+  #保存单个文件
   def save
     #file = File.join("public",@tmp.original_filename)
     #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
@@ -154,7 +155,7 @@ class ResourcesController < ApplicationController
   def min_image(ful_path,filename,ful_dir)
     if which_res(filename)=='img'
     image = MiniMagick::Image.open(ful_path)
-    image.resize "140"
+    image.resize "280"
     image.write  ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_min."+filename.split(".")[-1]
     end
   end
@@ -187,7 +188,7 @@ class ResourcesController < ApplicationController
   #删除
   def delete_file(name)
     dirname=Rails.root.to_s+'/public/allsites/'+name;
-    FileUtils.rm dirname
+    FileUtils.rm dirname if File.exists?(dirname)
     if which_res(name)=='img'
       dirname=Rails.root.to_s+'/public/allsites/'+name.split(".")[0...-1].join(".")+"_min."+name.split(".")[-1]
       FileUtils.rm dirname if File.exists?(dirname)

@@ -119,7 +119,7 @@ class ImageStreamsController < ApplicationController
     str=""
     (0..imgarr.length-1).each do |x|
       p=(textarr[x] == "" ? '':"<p>#{textarr[x]}</p>")
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{imgarr[x]}' width='140' height='222' >#{p}</a></li>
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='222' >#{p}</a></li>
       "
     end
 #html 内容
