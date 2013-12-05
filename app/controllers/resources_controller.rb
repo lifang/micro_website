@@ -156,7 +156,8 @@ class ResourcesController < ApplicationController
   def min_image(ful_path,filename,ful_dir)
     if which_res(filename)=='img'
     image = MiniMagick::Image.open(ful_path)
-    image.resize "280"
+    resize = size > image["width"] ? image["width"] : "280"
+    image.resize resize
     image.write  ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_min."+filename.split(".")[-1]
     end
   end
