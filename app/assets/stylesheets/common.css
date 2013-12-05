@@ -194,3 +194,6 @@
     width: 400px;
     position: relative;
 }
+.img_cont{
+    float: left; width:96px;border: 1px solid #ccc;text-align: center;margin: 0 2px;
+}

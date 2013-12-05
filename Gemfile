@@ -4,7 +4,7 @@ gem 'rails', '3.2.6'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'mini_magick'
+gem 'mini_magick', '3.7.0'
 gem 'mysql2', '0.3.10'
 gem 'devise', '2.1.2'
 #加压

@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
 
   def get_site
     @site = Site.find_by_id params[:site_id]
+    if @site && @site.user != current_user
+      render(:file  => "#{Rails.root}/public/404.html",
+             :layout => nil,
+             :status   => "404 Not Found") 
+    end
   end
 
   def redirect_path(page, site)
