@@ -118,6 +118,8 @@ class ResourcesController < ApplicationController
         
         if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
+          p 11111111111111111111111111,ful_pa,entry,@full_dir
+          min_image(ful_pa,entry,@full_dir)
         elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
           save_from_zip(resour,arr,ful_pa,ful_path)
         elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
@@ -130,7 +132,7 @@ class ResourcesController < ApplicationController
     flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
     FileUtils.rm_r @full_dir 
   end
-  ## 从zip保存
+  ## 从zip保存  resour是指自愿对象arr是指数组，ful_pa是指临时目录ful_path是指目标路径
   def save_from_zip(resour,arr,ful_pa,ful_path)
     if resour.save
       arr<<resour.path_name
@@ -146,8 +148,16 @@ class ResourcesController < ApplicationController
     #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
     file1=File.new(@full_path,'wb')
     FileUtils.cp @tmp.path,file1
+    min_image(@full_path,@tmp.original_filename,@full_dir)
   end
-
+  #资源临时路径 文件名 dir
+  def min_image(ful_path,filename,ful_dir)
+    if which_res(filename)=='img'
+    image = MiniMagick::Image.open(ful_path)
+    image.resize "140"
+    image.write  ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_min."+filename.split(".")[-1]
+    end
+  end
 
   #是否重复action，以便于action的调用
   def is_not_repeat
@@ -178,6 +188,10 @@ class ResourcesController < ApplicationController
   def delete_file(name)
     dirname=Rails.root.to_s+'/public/allsites/'+name;
     FileUtils.rm dirname
+    if which_res(name)=='img'
+      dirname=Rails.root.to_s+'/public/allsites/'+name.split(".")[0...-1].join(".")+"_min."+name.split(".")[-1]
+      FileUtils.rm dirname if File.exists?(dirname)
+    end
   end
 
   #show the resources
@@ -203,4 +217,18 @@ class ResourcesController < ApplicationController
          "，有#{num}个#{msg}"
        end
     end
+    def which_res(name)
+    @img_resources=%w[jpg png gif jpeg]
+    @voice_resources=%w[mp3]
+    @video_resoures=%w[mp4 avi rm rmvb]
+    name=name.split('.')[-1]
+    name.downcase!
+    if @img_resources.include?(name)
+      return 'img'
+    elsif @voice_resources.include?(name)
+      return 'voice'
+    else @video_resoures.include?(name)
+      return 'voide'
+    end
+  end
 end
