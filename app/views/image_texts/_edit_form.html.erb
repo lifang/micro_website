@@ -19,7 +19,7 @@
         <div class="it_container">
           <span class="delete" onclick="deleOption(this)" title="移除图文"></span>
           <span class="image_area">
-            <img src="<%= path %>" style="height:195px;border:1px solid gray;"/>
+            <img src="<%= path.present? ? path : "/assets/temp.jpg" %>" style="height:195px;border:1px solid gray;"/>
             <input type="hidden" name="image_text[img_path][]" class="image_text_input" value="<%= path %>"/>
           </span>
           <textarea class="it_content" name="image_text[content][]" style="margin-bottom:20px"><%= @image_text.content[index] %></textarea>

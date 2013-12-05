@@ -132,7 +132,7 @@ class ResourcesController < ApplicationController
     end
     flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
     @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"temp"
-    FileUtils.rm_r @full_dir 
+    FileUtils.rm_r @full_dir
   end
   ## 从zip保存  resour是指自愿对象arr是指数组，ful_pa是指临时目录ful_path是指目标路径
   def save_from_zip(resour,arr,ful_pa,ful_path)

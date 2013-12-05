@@ -96,7 +96,10 @@ a.each(function(){
   def image_text_content(page, it_content, img_path, site)
     image_text = ''
     img_path.each_with_index do |img, index|
-     image_text << '<img src="' + img + '" width="320" />' << '<p>' + it_content[index] + '</p>'
+      if img.present?
+        image_text << '<img src="' + img + '" width="320" />'
+      end
+      image_text << '<p>' + it_content[index] + '</p>'
     end
     content = "
     <!doctype html>
