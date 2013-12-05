@@ -13,6 +13,7 @@ class Page < ActiveRecord::Base
   TYPES = {0 => "主页", 1 => "子页", 2 => "样式表", 3 => "表单", 4 => "图文", 5 => "图片流", 6 => "大图"}
 
   TYPES_ARR.each do |type|
+    #取出等于 type的集合
     scope type.to_sym, :conditions => { :types => TYPE_NAMES[type.to_sym] }
     define_method  "#{type}?" do
       self.types == TYPE_NAMES[type.to_sym]

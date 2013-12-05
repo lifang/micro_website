@@ -99,7 +99,7 @@ class ImageStreamsController < ApplicationController
     end
   end
   
-  #私有方法|||||||||||||||||||||||||||||||||||||||||||||||华丽的分割线||||||||||||||||||||||||||||||||||||||||||||||
+  #私有方法|||||||||||||||||||||||||||||||||||||||||||||||---------华丽的分割线----------||||||||||||||||||||||||||||||||||||||||||||||
   private
 
   #保存进
@@ -118,8 +118,10 @@ class ImageStreamsController < ApplicationController
   def get_content(imgarr,textarr)
     str=""
     (0..imgarr.length-1).each do |x|
-      p=(textarr[x] == "" ? '':"<p>#{textarr[x]}</p>")
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='222' >#{p}</a></li>
+      p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
+      p 123333333333333333333333333333333333
+      p 12211111111111111111111111111111111,textarr[x] 
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='222' >#{p1}</a></li>
       "
     end
 #html 内容
