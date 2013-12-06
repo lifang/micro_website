@@ -1,6 +1,28 @@
 <% objects.each do |img|%>
   <%if which_res(img.path_name)=='img'%>
-    <li class="img_cont"><img src="/allsites/<%= deal_img_to_min img.path_name %>" alt="<%= File.basename(img.path_name) %>" data-path-name="/allsites/<%= img.path_name %>" onclick="viewLargerImage(this)"/></li>
+    <li class="img_cont"><img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"/></li>
     <%end%>
   <%end%>
 
+<script type="text/javascript">
+  //显示弹出框区域，设置不可见
+  show_tag($("#<%= form == "form" ? "form_container" : "image_text_container" %>"));
+  $("#<%= form == "form" ? "form_container" : "image_text_container" %>").parents(".second_box").css("visibility", "hidden");
+  //设置图片库宽高
+  $(".picRes img").each(function(){
+    var imgWidth = $(this).width();
+    var imgHeight = $(this).height();
+    var width;
+    var height;
+    if(imgWidth > imgHeight){
+      width = imgWidth > 85 ? "85px" : (imgWidth + "px");
+      $(this).css({"width": width, "height": "auto"});
+    }else{
+      height = imgHeight > 90 ? "90px" : (imgHeight + "px");
+      $(this).css({"height": height, "width" : "auto"});
+    }
+  });
+ //隐藏弹出框区域，设置可见
+  hide_tab($("#<%= form == "form" ? "form_container" : "image_text_container" %>"));
+  $("#<%= form == "form" ? "form_container" : "image_text_container" %>").parents(".second_box").css("visibility", "visible");
+</script>

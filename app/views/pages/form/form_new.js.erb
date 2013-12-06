@@ -2,79 +2,32 @@ $("#form_container .form_container").html("<h1><%= @page.new_record? ? "新建" 
 show_tag($("#form_container"));
 
 $(function() {
-    // there's the gallery and the trash
+
+    // 定义图片库, drop area
     var $gallery = $( ".picRes" ),
     $input = $( "#span_image_area img" );
 
-    // let the gallery items be draggable
-    $( "li", $gallery ).draggable({
-        cancel: "a.ui-icon", // clicking an icon won't initiate dragging
-        revert: "invalid", // when not dropped, the item will revert back to its initial position
-        containment: "document",
-        helper: "clone",
-        cursor: "move"
-    });
+    // 使图片库里面的元素可托拽
+    it_drag($( "li", $gallery));
 
-    // let the trash be droppable, accepting the gallery items
-    $input.droppable({
-        accept: ".picRes > li",
-        activeClass: "ui-state-highlight",
-        drop: function( event, ui ) {
-            $(this).attr("src", ui.draggable.find("img").attr("data-path-name"));
-            $(this).next().val(ui.draggable.find("img").attr("data-path-name"));
-
-
-             
-    var imgWidth = $(this).width();
-    var imgHeight = $(this).height();
-    var width;
-    var height;
-
-    if(imgWidth > imgHeight){
-
-      width = imgWidth > 300 ? "300px" : (imgWidth + "px");
-      $(this).css({"width": width, "height": "auto"});
-    }else{
-
-      height = imgHeight > 195 ? "195px" : (imgHeight + "px");
-      $(this).css({"height": height, "width" : "auto"});
-    }
-
-      
-          }
-      });
-
+ // drop 元素
+    it_drop($input);
+    
 <% unless @page.new_record? %>
-              $("#span_image_area img").each(function(){
+  $("#span_image_area img").each(function(){
     var imgWidth = $(this).width();
     var imgHeight = $(this).height();
     var width;
     var height;
 
     if(imgWidth > imgHeight){
-      width = imgWidth > 300 ? "300px" : (imgWidth + "px");
-      $(this).css({"width": width, "height": "auto"});
+      $(this).css({"width": "300px", "height": "auto"});
     }else{
-      height = imgHeight > 195 ? "195px" : (imgHeight + "px");
-      $(this).css({"height": height, "width" : "auto"});
+      $(this).css({"height": "195px", "width" : "auto"});
     }
 
       });
 <% end %>
-
-  $(".picRes img").each(function(){
-    var imgWidth = $(this).width();
-    var imgHeight = $(this).height();
-    var width;
-    var height;
-    if(imgWidth > imgHeight){
-      width = imgWidth > 85 ? "85px" : (imgWidth + "px");
-      $(this).css({"width": width, "height": "auto"});
-    }else{
-      height = imgHeight > 90 ? "90px" : (imgHeight + "px");
-      $(this).css({"height": height, "width" : "auto"});
-    }
-  });
 
 
 
