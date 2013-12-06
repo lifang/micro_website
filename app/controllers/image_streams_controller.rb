@@ -120,7 +120,7 @@ class ImageStreamsController < ApplicationController
     (0..imgarr.length-1).each do |x|
       p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
       image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' >#{p1}</a></li>
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' ></a>#{p1}</li>
       "
     end
 #html 内容
@@ -132,12 +132,13 @@ class ImageStreamsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1' />
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/main.js'></script>
+<script type='text/javascript' src='/allsites/js/pubuliu.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
 <!--[if lt IE 9]>
 <script src='/allsites/js/html5.js'></script>
 <![endif]-->
-<link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
+<link href='/allsites/style/pubuliu.css' rel='stylesheet' type='text/css'>
+<link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -166,7 +167,7 @@ class ImageStreamsController < ApplicationController
     selection="";
     image=""
     (1..imgarr.length).each do|i|
-      selection+="<section id='page-#{i}' data-role='page' class='demo-page'><div class=\'show_img si_#{i}\'></div></section>"
+      selection+="<section id='page-#{i}' data-role='page' class='demo-page'><div class=\'show_img si_#{i}\'><div class='text'>#{textarr[i-1]}</div></div></section>"
       image+=".si_#{i} { background: url('#{imgarr[i-1]}') no-repeat; background-size: 320px auto;}
       "
     end
@@ -178,14 +179,14 @@ class ImageStreamsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/main.js'></script>
+<script type='text/javascript' src='/allsites/js/pubuliu.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.mobile-1.3.2.js'></script>
 
 <!--[if lt IE 9]>
 <script src='/allsites/js/html5.js'></script>
 <![endif]-->
 <link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
-<link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
+<link href='/allsites/style/pubuliu.css' rel='stylesheet' type='text/css'>
 <style>
 .show_img { width: 320px;}#{image}</style></head>
 <body><article><article>#{selection}</article></article></body></html>"

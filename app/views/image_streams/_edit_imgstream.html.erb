@@ -22,7 +22,10 @@
 			<% (0..@image_text.img_path.length-1).each do |i|%>
 			<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
 				<!--截小的图片-->
-				<img  src="<%= deal_img_to_min @image_text.img_path[i]%>" style="width:182px;height:144px; "/>
+				<div style="height:144px;" >
+					
+				   <img  src="<%= deal_img_to_min @image_text.img_path[i]%>" style="width:182px;height:144px; "/>
+				</div>
 				<input  type="hidden" value="<%= @image_text.img_path[i]%>">
 				<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
 				<textarea><%= @image_text.content[i]%></textarea>

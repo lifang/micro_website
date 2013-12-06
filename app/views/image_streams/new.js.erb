@@ -72,11 +72,17 @@ function deleteImage(name, $item) {
 							candrop(t1);
 						}
 						name.html(ll.html());
-						name.append(recycle_icon).fadeIn(function() {
+						 
+						name.find("div").css("height","144px");			  
+						 var ig = name.find("img");
+						 var new_width=ig.attr("width")*2;
+						 var new_height=ig.attr("height")*2;
+						
+						 ig.attr("width",new_width);
+						 ig.attr("height",new_height);
+						 name.append(recycle_icon).fadeIn(function() {
 							name.animate({
 								width : "186px"
-							}).find("img").animate({
-								height : "144px"
 							});
 							name.append("<textarea></textarea>");
 						});

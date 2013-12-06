@@ -59,7 +59,7 @@
 			//增加一个空白区域
 			function add() {
 				var li = $("<li class='ui-widget-content ui-corner-tr' style='width: 186px;'></li>");
-				li.html("<img  src='/assets/temp.jpg' style='width:182px;height:144px; '/><a  title='Delete this image' onclick='delete_ele(this)'  class='ui-icon ui-icon-trash'>Delete image</a><textarea></textarea><input type='hidden' name='temp_picture' />");
+				li.html("<div style='height:144px;' ><img  src='/assets/temp.jpg' style='width:182px;height:144px; '/></div><a  title='Delete this image' onclick='delete_ele(this)'  class='ui-icon ui-icon-trash'>Delete image</a><textarea></textarea><input type='hidden' name='temp_picture' />");
 				candrop(li);
 				li.appendTo($("#trashh"));
 			}
