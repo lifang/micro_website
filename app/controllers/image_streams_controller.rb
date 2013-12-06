@@ -119,7 +119,8 @@ class ImageStreamsController < ApplicationController
     str=""
     (0..imgarr.length-1).each do |x|
       p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140'  >#{p1}</a></li>
+      image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' >#{p1}</a></li>
       "
     end
 #html 内容
@@ -187,7 +188,7 @@ class ImageStreamsController < ApplicationController
 <link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
 <style>
 .show_img { width: 320px;}#{image}</style></head>
-<body><article>#{selection}</article></body></html>"
+<body><article><article>#{selection}</article></article></body></html>"
 p "bigcontent",bigcontent
   bigcontent
   end
