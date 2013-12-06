@@ -1,7 +1,6 @@
 <% objects.each do |img|%>
   <%if which_res(img.path_name)=='img'%>
-    <li class="img_cont"><img src="/allsites/<%= img.path_name%>" alt="<%= File.basename(img.path_name) %>" height="64" onclick="viewLargerImage(this)"/></li>
+    <li class="img_cont"><img src="/allsites/<%= deal_img_to_min img.path_name %>" alt="<%= File.basename(img.path_name) %>" data-path-name="/allsites/<%= img.path_name %>" onclick="viewLargerImage(this)"/></li>
+    <%end%>
   <%end%>
-<%end%>
-
 

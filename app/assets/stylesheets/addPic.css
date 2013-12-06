@@ -40,7 +40,7 @@ body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background
 .picPosition img { display: inline-block; height: 200px;}
 .picPosition:hover span { text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); }
 .picPosition:hover { box-shadow: 0 0 5px #000000;}
-.picRes img { margin: 5px;}
+.picRes img { vertical-align: middle;}
 .picRes img:hover { box-shadow: 0 0 5px #000000; }
 
 .action { text-align: center;margin-top: 30px;}

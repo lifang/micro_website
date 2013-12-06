@@ -19,7 +19,7 @@
         <div class="it_container">
           <span class="delete" onclick="deleOption(this)" title="移除图文"></span>
           <span class="image_area">
-            <img src="<%= path.present? ? path : "/assets/temp.jpg" %>" style="height:195px;border:1px solid gray;"/>
+            <img src="<%= path.present? ? path : "/assets/temp.jpg" %>" style="border:1px solid gray;"/>
             <input type="hidden" name="image_text[img_path][]" class="image_text_input" value="<%= path %>"/>
           </span>
           <textarea class="it_content" name="image_text[content][]" style="margin-bottom:20px"><%= @image_text.content[index] %></textarea>
@@ -59,8 +59,20 @@
       accept: ".picRes > li",
       activeClass: "ui-state-highlight",
       drop: function( event, ui ) {
-        $(this).attr("src", ui.draggable.find("img").attr("src"));
-        $(this).next().val(ui.draggable.find("img").attr("src"));
+        $(this).attr("src", ui.draggable.find("img").attr("data-path-name"));
+        $(this).next().val(ui.draggable.find("img").attr("data-path-name"));
+
+        var imgWidth = $(this).width();
+        var imgHeight = $(this).height();
+        var width;
+        var height;
+        if(imgWidth > imgHeight){
+          width = imgWidth > 300 ? "300px" : (imgWidth + "px");
+          $(this).css({"width": width, "height": "auto"});
+        }else{
+          height = imgHeight > 195 ? "195px" : (imgHeight + "px");
+          $(this).css({"height": height, "width" : "auto"});
+        }
       }
     });
   }

@@ -34,9 +34,53 @@ $(function() {
         accept: ".picRes > li",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            $(this).attr("src", ui.draggable.find("img").attr("src"));
-            $(this).next().val(ui.draggable.find("img").attr("src"));
+            $(this).attr("src", ui.draggable.find("img").attr("data-path-name"));
+            $(this).next().val(ui.draggable.find("img").attr("data-path-name"));
+
+            var imgWidth = $(this).width();
+            var imgHeight = $(this).height();
+            var width;
+            var height;
+            if(imgWidth > imgHeight){
+              width = imgWidth > 300 ? "300px" : (imgWidth + "px");
+              $(this).css({"width": width, "height": "auto"});
+            }else{
+              height = imgHeight > 195 ? "195px" : (imgHeight + "px");
+              $(this).css({"height": height, "width" : "auto"});
+            }
         }
     });
+
+ <% unless @page.new_record? %>
+   $(".image_area img").each(function(){
+    var imgWidth = $(this).width();
+    var imgHeight = $(this).height();
+    var width;
+    var height;
+
+    if(imgWidth > imgHeight){
+      width = imgWidth > 300 ? "300px" : (imgWidth + "px");
+      $(this).css({"width": width, "height": "auto"});
+    }else{
+      height = imgHeight > 195 ? "195px" : (imgHeight + "px");
+      $(this).css({"height": height, "width" : "auto"});
+    }
+
+      });
+<% end %>
+      
+      $(".picRes img").each(function(){
+    var imgWidth = $(this).width();
+    var imgHeight = $(this).height();
+    var width;
+    var height;
+    if(imgWidth > imgHeight){
+      width = imgWidth > 85 ? "85px" : (imgWidth + "px");
+      $(this).css({"width": width, "height": "auto"});
+    }else{
+      height = imgHeight > 90 ? "90px" : (imgHeight + "px");
+      $(this).css({"height": height, "width" : "auto"});
+    }
+  });
 
 });

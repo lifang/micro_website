@@ -195,5 +195,5 @@
     position: relative;
 }
 .img_cont{
-    float: left; width:96px;border: 1px solid #ccc;text-align: center;margin: 0 2px;
+    float: left; width:90px;height:96px;line-height: 96px;border: 1px solid #ccc;text-align: center;margin: 0 2px;
 }

@@ -1,9 +1,9 @@
 // image preview function, demonstrating the ui.dialog used as a modal window
 
 function viewLargerImage( obj ) {
-    var src = $(obj).attr( "src" );
+    var src = $(obj).attr( "data-path-name" );
     var title = $(obj).attr( "alt" );
-    var img = "<img src='" + src +"' alt='"+ title+"' width='600' height='500'/>";
+    var img = "<img class='big-image' src='" + src +"' alt='"+ title+"'/>";
     $( "#viewLarge" ).html(img);
     setTimeout(function() {
         $( "#viewLarge" ).dialog({
