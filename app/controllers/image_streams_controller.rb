@@ -187,7 +187,7 @@ class ImageStreamsController < ApplicationController
 <link href='/allsites/style/iphone4-portrait.css' rel='stylesheet' type='text/css'>
 <style>
 .show_img { width: 320px;}#{image}</style></head>
-<body><article>#{selection}</article></body></html>"
+<body><article><article>#{selection}</article></article></body></html>"
 p "bigcontent",bigcontent
   bigcontent
   end
