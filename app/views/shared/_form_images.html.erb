@@ -1,6 +1,10 @@
 <% objects.each do |img|%>
   <%if which_res(img.path_name)=='img'%>
-    <li class="img_cont"><img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"/></li>
+    <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
+    <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
+    <% if image %>
+      <li class="img_cont"><img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"/></li>
+      <% end %>
     <%end%>
   <%end%>
 
@@ -22,7 +26,7 @@
       $(this).css({"height": height, "width" : "auto"});
     }
   });
- //隐藏弹出框区域，设置可见
+  //隐藏弹出框区域，设置可见
   hide_tab($("#<%= form == "form" ? "form_container" : "image_text_container" %>"));
   $("#<%= form == "form" ? "form_container" : "image_text_container" %>").parents(".second_box").css("visibility", "visible");
 </script>
