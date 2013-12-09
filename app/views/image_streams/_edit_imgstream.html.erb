@@ -23,8 +23,11 @@
 			<li  class="ui-widget-content ui-corner-tr" style='width: 186px;' >
 				<!--截小的图片-->
 				<div style="height:144px;" >
-					
-				   <img  src="<%@image_text.img_path[i]%>" style="width:182px;height:144px; "/>
+					<%img_path=Rails.root.to_s + '/public'+@image_text.img_path[i]%>
+                    <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
+                    <% if image %>
+				   <img  src="<%= @image_text.img_path[i]%>" <%= image&&image["height"]*186/image["width"]>144 ? "height='144' width=#{ image['width']*144/image['height']}" : "width='186' height = #{image['height']*186/image['width']}" %>/>
+				   <%end%>
 				</div>
 				<input  type="hidden" value="<%= @image_text.img_path[i]%>">
 				<a  title="Delete this image" onclick="delete_ele(this)"  class="ui-icon ui-icon-trash">Delete image</a>
