@@ -67,7 +67,15 @@
 			//删除图片
 			function delete_ele(element) {
 				//获取父节点并移除
-				$(element).parent().remove();
+				var filename=$(element).parent();
+				var src=$(filename).find('img');
+				if($(src).attr('src')!= "/assets/temp.jpg" ){
+					if(confirm("是否删除？")){
+						$(element).parent().remove();
+					}
+				}else{
+					$(element).parent().remove();
+				}
 
 			}
 
@@ -98,11 +106,17 @@
 				var flag = true;
 				var liArr = $("#trash").children("ul").children("li");
 				//将有效图片存入字符串
+				var pattern = new RegExp("[`~@#$^&*()=:\\[\\].<>~！%@#￥……&*（）——|{}。，、-]");
 				$.each(liArr, function(index, name) {
 					if (index < liArr.length) {
 						if ($(name).find('img').attr("src") != "/assets/temp.jpg") {
 							src += $(name).find('input').val() + ",";
-							text += $(name).find('textarea').val() + "||";
+							textarea_txt=$(name).find('textarea').val();
+							if($.trim(textarea_txt)!= "" && pattern.test(textarea_txt)){
+                                 tishi_alert("内容不能包含非法字符");
+                                 return fasle;
+                            }
+							text += textarea_txt + "||";
 
 						} else {
 							flag = false;
@@ -111,6 +125,10 @@
 				});
 				if (!flag) {
 					tishi_alert('存在未填充区域！');
+					return false;
+				}
+				if(src==""){
+					tishi_alert('图片流页不能为空');
 					return false;
 				}
 				if ($("#page_type").val() == 'edit') {
@@ -151,7 +169,7 @@
 								tishi_alert("创建成功");
 								location.reload();
 							} else {
-								tishi_alert("创建失败");
+								tishi_alert("创建失败，已存在文件名");
 							}
 						}
 					});

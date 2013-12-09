@@ -49,6 +49,7 @@ var recycle_icon = "<a  title='Recycle this image' onclick='delete_ele(this)' cl
 function deleteImage(name, $item) {
 					//复制本身
 					var ll = $item.clone();
+					var textval=name.find('textarea').val();
 					ll.find("a.ui-icon-circle-plus").remove();
 					ll.find("a.ui-icon-zoomin").remove();
 					/*创造一个新的相同元素
@@ -61,7 +62,9 @@ function deleteImage(name, $item) {
 						//	ll.find("a.ui-icon-trash").remove();
 						var temp = $("*[name='temp_picture']");
 						var f = false;
-						if (temp.length < 2) {
+						/*
+						 * 
+						 if (temp.length < 2) {
 							var li_temp=$("<li class=\"ui-widget-content ui-corner-tr\" style='width: 186px;'></li>");
 							li_temp.html("<img  src=\"/assets/temp.jpg\" style=\"width:182px;height:144px; \"/><a  title=\"Delete this image\" onclick=\"delete_ele(this)\"  class=\"ui-icon ui-icon-trash\">Delete image</a><textarea></textarea><input type=\"hidden\" name=\"temp_picture\" />");
 							var t = li_temp.clone();
@@ -71,6 +74,7 @@ function deleteImage(name, $item) {
 							t1.appendTo($("#trashh"));
 							candrop(t1);
 						}
+						*/
 						name.html(ll.html());
 						 
 						name.find("div").css("height","144px");			  
@@ -84,7 +88,7 @@ function deleteImage(name, $item) {
 							name.animate({
 								width : "186px"
 							});
-							name.append("<textarea></textarea>");
+							name.append("<textarea>"+textval+"</textarea>");
 						});
 					});
 }
