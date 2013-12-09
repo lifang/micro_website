@@ -10,7 +10,7 @@ $(function() {
     $("#close_flash").click(function(){
         $("#flash_field").hide()
     });
-     $("#flash_field").fadeOut(4000);
+     $("#flash_field").fadeOut(2000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });

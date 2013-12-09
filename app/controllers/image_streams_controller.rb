@@ -33,6 +33,8 @@ class ImageStreamsController < ApplicationController
       page_image.img_path=imgarr
       page_image.content=textstr
       page_image.save
+      p '***************************************\n***********************************************',imgarr
+      bag_img_magick imgarr
       content=get_content(imgarr,textstr)
       bigcontent=get_bigcontent(imgarr,textstr)
       save_in_file(content,bigcontent,@site,@page.file_name)
@@ -41,7 +43,26 @@ class ImageStreamsController < ApplicationController
       render :text=>0
     end
   end
-
+  #截取图片
+  def bag_img_magick(imgarr)
+     #图片      
+      imgarr.each do |x|
+        filename=x.split("/")[-1]
+        dirpath=Rails.root.to_s + "/public#{x.split('/')[0...-1].join('/')}"
+        p '文件名',filename,dirpath
+        min_image(Rails.root.to_s + "/public#{x}",filename,dirpath)
+      end
+  end
+ #资源全路径,文件名 ,dir
+  def min_image(ful_path,filename,ful_dir)
+    target_path=ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_min."+filename.split(".")[-1]
+    if !File.exist?(target_path)&&which_res(filename)=='img'
+    image = MiniMagick::Image.open(ful_path)
+    resize = 280 > image["width"] ? image["width"] : 280
+    image.resize resize
+    image.write  ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_min."+filename.split(".")[-1]
+    end
+  end
   #删除图文页
   def destroy
     @site=Site.find(params[:site_id])
@@ -68,9 +89,7 @@ class ImageStreamsController < ApplicationController
     @imgs_path=@site.resources
     
   end
-  
-
-  
+ 
   def edit_update
     name=params[:name]+".html";
     title=params[:title];
@@ -87,6 +106,7 @@ class ImageStreamsController < ApplicationController
       File.delete PUBLIC_PATH + @page.path_name if File.exists?(PUBLIC_PATH + @page.path_name)
       File.delete  bigimg_path if File.exists?(bigimg_path)
       #保存更新完的文件
+      bag_img_magick imgarr
       content=get_content(imgarr,textstr)
       bigcontent=get_bigcontent(imgarr,textstr)
       save_in_file(content,bigcontent,@site,@page.file_name)
@@ -101,7 +121,21 @@ class ImageStreamsController < ApplicationController
   
   #私有方法|||||||||||||||||||||||||||||||||||||||||||||||---------华丽的分割线----------||||||||||||||||||||||||||||||||||||||||||||||
   private
-
+  #
+  def which_res(name)
+    @img_resources=%w[jpg png gif jpeg]
+    @voice_resources=%w[mp3]
+    @video_resoures=%w[mp4 avi rm rmvb]
+    name=name.split('.')[-1]
+    name.downcase!
+    if @img_resources.include?(name)
+      return 'img'
+    elsif @voice_resources.include?(name)
+      return 'voice'
+    else @video_resoures.include?(name)
+      return 'voide'
+    end
+  end
   #保存进
   def save_in_file(content,bigcontent,site,fname)
     site_path = Rails.root.to_s + SITE_PATH % site.root_path

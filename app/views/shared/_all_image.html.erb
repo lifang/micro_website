@@ -1,15 +1,15 @@
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
   <% objects.each do |img|%>
     <%if which_res(img.path_name)=='img'%>
-      <%img_path=Rails.root.to_s + '/public/allsites/'+(deal_img_to_min img.path_name)%>
+      <%img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name)%>
       <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
       <% if image %>
         <li class="ui-widget-content ui-corner-tr">
           <h5 class="ui-widget-header"> <%= img.path_name.split("/")[-1].length>9 ? "#{img.path_name.split('/')[-1][0..8]}..." :img.path_name.split("/")[-1]%> </h5>
           <div style="height:72px;" >
-            <img  onclick="viewLargerImage(this)" src="/allsites/<%=deal_img_to_min img.path_name%>"  alt="<%=img.path_name.split("/")[-1]%>" <%= image&&image["height"]*93/image["width"]>72 ? "height='72' width=#{ image['width']*72/image['height']}" : "width='93' height = #{image['height']*93/image['width']}" %>/>
+            <img  onclick="viewLargerImage(this)" src="/allsites/<%=img.path_name%>"  alt="<%=img.path_name.split("/")[-1]%>" <%= image&&image["height"]*93/image["width"]>72 ? "height='72' width=#{ image['width']*72/image['height']}" : "width='93' height = #{image['height']*93/image['width']}" %>/>
           </div>
-          <input  type="hidden" value="/allsites/<%=img.path_name%>">
+          <input  type="hidden" value="/allsites/<%=img.path_name%>" />
           <a  onclick="viewLargerImage(this)" src="/allsites/<%= img.path_name%>" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
           <!--a  title="Delete this image"  class="ui-icon ui-icon-circle-plus">Delete image</a-->
         </li>
