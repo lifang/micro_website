@@ -13,8 +13,8 @@ en:
 
   devise:
     failure:
-      already_authenticated: '你已经登陆成功.'
-      unauthenticated: '请先登陆或者注册.'
+      already_authenticated: '你已经登录成功.'
+      unauthenticated: '请先登录或者注册.'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
       invalid: '用户名或者密码错误'
@@ -22,11 +22,11 @@ en:
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
     sessions:
-      signed_in: '登陆成功！'
+      signed_in: '登录成功！'
       signed_out: '退出成功！'
     passwords:
       send_instructions: '几分钟后你会收到关于如何重置密码的邮件！'
-      updated: '密码修改成功，请重新登陆.'
+      updated: '密码修改成功，请重新登录.'
       updated_not_active: '密码修改成功.'
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."

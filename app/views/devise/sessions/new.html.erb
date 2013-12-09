@@ -1,5 +1,5 @@
 <div class="login">
-  <h1>登陆</h1>
+  <h1>登录</h1>
 
   <div class="login_info cf">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name),html:{onsubmit: "return check()"})  do |f| %>
@@ -15,7 +15,7 @@
       </ul>
     </div>
     <div class="login_act">
-      <p><%= f.submit "登陆", :class => "login_btn blue_btn" %></p>
+      <p><%= f.submit "登录", :class => "login_btn blue_btn" %></p>
       <p>
         <a class="rsg_btn blue_btn" href="/signup">注册</a>
         <%= link_to "忘记密码", new_password_path(:user) %>
