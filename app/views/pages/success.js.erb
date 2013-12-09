@@ -2,7 +2,8 @@
   hide_tab($("#<%= @page.sub? ? "sub_form" : "form_container" %>"));
   $("#" + <%= @page.id %>).find(".title").text("<%= @page.title %>").end().find(".path").text("<%= "/sites/static" + "?path_name=" + @page.path_name  %>")
   .end().find(".authenticate").text("<%= if_authenticate(@page) %>").end().find(".page_preview").attr("href", "<%= "/sites/static" + "?path_name=" + @page.path_name %>");
-tishi_alert("更新成功！")
+hide_tab($("#sub_form_authenticate"))
+  tishi_alert("更新成功！")
 <% else %>
   window.location.replace("<%= @path %>")
 <% end %>

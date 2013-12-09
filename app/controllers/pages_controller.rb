@@ -188,7 +188,7 @@ class PagesController < ApplicationController
         redirect_to URI.encode("/allsites" + path_name)
       else
         if site.status == Site::STATUS_NAME[:pass_verified]
-          if page.authenticate? && page.sub? && !user_signed_in?
+          if page.authenticate? && !page.form? && !user_signed_in?
             redirect_to '/signin'
           else
             redirect_to URI.encode("/allsites" + path_name)
