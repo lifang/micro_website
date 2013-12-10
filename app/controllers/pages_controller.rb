@@ -2,17 +2,23 @@
 class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site, :except => [:submit_queries]
   caches_action :static
   
   #主页 index
   def index
     @page = @site.pages.main.first
     if @page
-      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
-      @index = index_html.read
-      index_html.close
-      render :edit
+      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
+      if index_html
+        @index = index_html.read
+        index_html.close
+        render :edit
+      else
+        render(:file  => "#{Rails.root}/public/404.html",
+          :layout => nil,
+          :status   => "404 Not Found") 
+      end
     else
       @page = Page.new
       render :new
@@ -163,7 +169,6 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-        p 1111111111111111111111
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
         @notice = 1
       else

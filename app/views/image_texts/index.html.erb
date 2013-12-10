@@ -14,17 +14,20 @@
             <th width="350">操作</th>
           </tr>
           <% @image_texts.each do |page| %>
-            <tr id="<%= page.id %>">
-              <td class="title"><%= page.title %></td>
-              <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
-              <td class="authenticate"><%= if_authenticate(page)%></td>
-              <td>
-                <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
-                <%= link_to "编辑" , edit_site_image_text_path(@site,page),:remote => true, :class => "blue_btn"%>
-                <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
-              </td>
-            </tr>
+            <% page_path = Rails.root.to_s + '/public/allsites/'+page.try(:path_name).to_s %>
+            <% if page.path_name.present? && File.exists?(page_path) %>
+              <tr id="<%= page.id %>">
+                <td class="title"><%= page.title %></td>
+                <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
+                <td class="authenticate"><%= if_authenticate(page)%></td>
+                <td>
+                  <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+                  <%= link_to "编辑" , edit_site_image_text_path(@site,page),:remote => true, :class => "blue_btn"%>
+                  <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
+                  <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </table>
       </div>

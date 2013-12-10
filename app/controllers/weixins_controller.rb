@@ -6,7 +6,7 @@ class WeixinsController < ApplicationController
   require 'openssl'
   require 'net/http/post/multipart'
   skip_before_filter :authenticate_user!, :only => [:accept_token, :accept_message_from_normal_user]
-  ZHUJUN_TOKEN = "zhujun"
+  #ZHUJUN_TOKEN = "zhujun"
 
 
   def accept_message_from_normal_user
@@ -20,7 +20,7 @@ class WeixinsController < ApplicationController
 
   def accept_token
     signature, timestamp, nonce, echostr = params[:signature], params[:timestamp], params[:nonce], params[:echostr]
-    tmp_arr = ["amanda_mfl", timestamp, nonce]
+    tmp_arr = [params[:cweb], timestamp, nonce]
     tmp_arr.sort!
     tmp_str = tmp_arr.join
     tmp_encrypted_str = Digest::SHA1.hexdigest(tmp_str)
