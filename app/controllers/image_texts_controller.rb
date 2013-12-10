@@ -15,21 +15,29 @@ class ImageTextsController < ApplicationController
 
   def create
     img_path = params[:image_text][:img_path]
-    it_content = params[:image_text][:content]
+    it_content = params[:image_text][:content] if params[:image_text][:content]
     params[:image_text].delete(:content) if params[:image_text][:content]
     params[:image_text].delete(:img_path) if params[:image_text][:img_path]
     params[:image_text][:file_name] = params[:image_text][:file_name] + ".html" if params[:image_text][:file_name]
+    @flag = 0
     Page.transaction do
-      @page = @site.pages.create(params[:image_text])
-      if @page.save
-        @page.page_image_texts.create({:img_path => img_path, :content => it_content })
-        content = image_text_content(@page, it_content, img_path, @site) if it_content.present?
-        save_into_file(content, @page, "") if content
-        flash[:notice] = "新建成功!"
-        @path = redirect_path(@page, @site)
-        render :success
+      if it_content.present?
+        @page = @site.pages.create(params[:image_text])
+        if @page.save
+          @page.page_image_texts.create({:img_path => img_path, :content => it_content })
+          content = image_text_content(@page, it_content, img_path, @site) if it_content.present?
+          save_into_file(content, @page, "") if content
+          flash[:notice] = "新建成功!"
+          @path = redirect_path(@page, @site)
+          render :success
+        else
+          @flag = 1
+          @notice = "新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+          render :fail
+        end
       else
-        @notice = "新建失败！ #{@page.errors.messages.values.flatten.join("\\n")}"
+        @flag = 1
+        @notice = "新建失败！ 内容不能为空！"
         render :fail
       end
     end

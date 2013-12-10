@@ -2,7 +2,7 @@
 class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site, :except => [:submit_queries]
   caches_action :static
   
   #主页 index
@@ -10,7 +10,7 @@ class PagesController < ApplicationController
     @page = @site.pages.main.first
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
-      @index = index_html.read
+      @index = index_html.read if File.exists?(index_html)
       index_html.close
       render :edit
     else
@@ -163,7 +163,6 @@ class PagesController < ApplicationController
     page = Page.find_by_id params[:id]
     FormData.transaction do
       if current_user
-        p 1111111111111111111111
         page.form_datas.create(:data_hash => params[:form], :user_id => current_user.id)
         @notice = 1
       else

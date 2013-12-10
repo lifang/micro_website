@@ -114,7 +114,7 @@ function submitForm(obj, flag,id){
     var img=$("#page_img_path").val();
     img=$.trim(img);
     if(img==""){
-        tishi_alert('请输入图片路径');
+        tishi_alert('请拖入图片');
         return false;
     }
     $("#page_title")[0].value=title;    //将去空格的值赋回去
