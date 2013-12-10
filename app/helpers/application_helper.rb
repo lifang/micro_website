@@ -109,18 +109,10 @@ a.each(function(){
         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
         <title>title</title>
         <script src=\"/allsites/js/jQuery-v1.9.0.js\" type=\"text/javascript\"></script>
-
-
-        <!--iphone4横版
-        <link href=\"/allsites/style/iphone4-landscape.css\" rel=\"stylesheet\" type=\"text/css\"
-        media=\"only screen and (max-device-width:480px) and (orientation:landscape), only screen and (max-width:480px) and (orientation:landscape)\">
-
-        <link href=\"/allsites/style/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\"
-        media=\"only screen and (max-device-width:320px) and (orientation:portrait), only screen and (max-width:320px) and (orientation:portrait)\">
-        -->
+        <script src=\"/allsites/js/imgTxt.js\" type=\"text/javascript\"></script>
 
         <!--iphone4竖版-->
-        <link href=\"/allsites/style/iphone4-portrait.css\" rel=\"stylesheet\" type=\"text/css\">
+        <link href=\"/allsites/style/imgTxt.css\" rel=\"stylesheet\" type=\"text/css\">
 
         </head>
 
