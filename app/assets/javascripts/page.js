@@ -169,7 +169,9 @@ function addOption(obj, flag){
 
 //删除选项
 function deleOption(obj){
-    $(obj).parent().remove();
+    if(confirm('确定移除吗？')){
+        $(obj).parent().remove();
+    }  
 }
 function validatePageForm(content)
 {

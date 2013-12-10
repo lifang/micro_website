@@ -9,10 +9,16 @@ class PagesController < ApplicationController
   def index
     @page = @site.pages.main.first
     if @page
-      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
-      @index = index_html.read if File.exists?(index_html)
-      index_html.close
-      render :edit
+      index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
+      if index_html
+        @index = index_html.read
+        index_html.close
+        render :edit
+      else
+        render(:file  => "#{Rails.root}/public/404.html",
+          :layout => nil,
+          :status   => "404 Not Found") 
+      end
     else
       @page = Page.new
       render :new
