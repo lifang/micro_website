@@ -4,8 +4,7 @@ class WeixinsController < ApplicationController
   require 'net/http'
   require "uri"
   require 'openssl'
-  require 'net/http/post/multipart'
-  skip_before_filter :authenticate_user!, :only => [:accept_token, :accept_message_from_normal_user]
+  skip_before_filter :authenticate_user!
   #ZHUJUN_TOKEN = "zhujun"
 
 
@@ -24,9 +23,10 @@ class WeixinsController < ApplicationController
     tmp_arr.sort!
     tmp_str = tmp_arr.join
     tmp_encrypted_str = Digest::SHA1.hexdigest(tmp_str)
-
+p "**************************"
     if request.request_method == "POST" && tmp_encrypted_str == signature
       #render "echo", :formats => :xml, :layout => false
+    p "=================================="
       create_menu
     elsif request.request_method == "GET" && tmp_encrypted_str == signature
       render :text => tmp_encrypted_str == signature ? echostr :  false
@@ -45,13 +45,32 @@ class WeixinsController < ApplicationController
   end
   
   def create_menu
-    if get_access_token and get_access_token["access_token"]
-      menu_str = {:button => [
-        {:type => "click", :name => "Menu1", :key => "MENU1"},{:type => "click", :name => "Menu2", :key => "MENU2"}
-        ]}#.to_json
-      access_token = get_access_token["access_token"]
+  access_token = get_access_token
+    if access_token and access_token["access_token"]
+      menu_str = {:button => [{
+           :name => "课程报名",
+           :sub_button => [
+           {  
+               :type => "view",
+               :name => "最新课程",
+               :url => "http://116.255.202.113/allsites/wansu"
+            },
+            {
+               :type => "view",
+               :name => "优惠课程",
+               :url => "http://116.255.202.113/allsites/wansu"
+            },
+            {
+               :type => "view",
+               :name => "品牌课程",
+               :url => "http://116.255.202.113/allsites/wansu"
+            }]
+       },
+    {:type => "view", :name => "万苏世界", :url => "http://116.255.202.113/allsites/wansu"}]
+        }.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")}
+      
       c_menu_url = "https://api.weixin.qq.com"
-      c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token}"
+      c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token["access_token"]}"
       #params = {:access_token => access_token, :body => menu_str}
       response = create_post_http(c_menu_url ,c_menu_action ,menu_str)
       p "================"
@@ -82,7 +101,9 @@ class WeixinsController < ApplicationController
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     request = Net::HTTP::Post.new(route_action)
-    request.set_form_data(params)
+    request.set_body_internal(params)
+  p "--------pppp"
+  p request.body
     return JSON http.request(request).body
   end
   
