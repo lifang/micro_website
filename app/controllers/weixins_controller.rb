@@ -5,106 +5,119 @@ class WeixinsController < ApplicationController
   require "uri"
   require 'openssl'
   skip_before_filter :authenticate_user!
-  #ZHUJUN_TOKEN = "zhujun"
+  WEIXIN_OPEN_URL = "https://api.weixin.qq.com"
+  APP_ID_AND_SECRET = {:wansu => {:app_id => "wxcbc2e8fb02023e4f", :app_secret => "1243a493f356a0c9ffcc2b7633a78b61"}}
 
-
-  def accept_message_from_normal_user
-    #if accept_token
-    render "echo", :formats => :xml, :layout => false
-    #else
-    # render :text => "error"
-    #end
-
-  end
-
+  #用于处理相应服务号的请求以及一开始配置服务器时候的验证，post 或者 get
   def accept_token
-    signature, timestamp, nonce, echostr = params[:signature], params[:timestamp], params[:nonce], params[:echostr]
-    tmp_arr = [params[:cweb], timestamp, nonce]
-    tmp_arr.sort!
-    tmp_str = tmp_arr.join
-    tmp_encrypted_str = Digest::SHA1.hexdigest(tmp_str)
-p "**************************"
+    signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
+    tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
+
     if request.request_method == "POST" && tmp_encrypted_str == signature
-      #render "echo", :formats => :xml, :layout => false
-    p "=================================="
-      create_menu
-    elsif request.request_method == "GET" && tmp_encrypted_str == signature
+      create_menu(cweb)
+      #render "echo", :formats => :xml, :layout => false  回复信息
+    elsif request.request_method == "GET" && tmp_encrypted_str == signature  #配置服务器token时是get请求
       render :text => tmp_encrypted_str == signature ? echostr :  false
     end
 
   end
   
-  
-  def get_access_token
-    token_url = "https://api.weixin.qq.com"
-    token_action = "/cgi-bin/token?grant_type=client_credential&appid=wxcbc2e8fb02023e4f&secret=1243a493f356a0c9ffcc2b7633a78b61"
-    token_info = create_get_http(token_url ,token_action)
-    p "------------------------"
-    p token_info
+  #根据app_id 和app_secret获取帐号token
+  def get_access_token(cweb)
+    app_id = get_app_id(cweb)
+    app_secret = get_app_secret(cweb)
+    token_action = "/cgi-bin/token?grant_type=client_credential&appid=#{app_id}&secret=#{app_secret}"
+    token_info = create_get_http(WEIXIN_OPEN_URL ,token_action)
     return token_info
   end
-  
-  def create_menu
-  access_token = get_access_token
+
+  #创建自定义菜单
+  def create_menu(cweb)
+    access_token = get_access_token(cweb)
     if access_token and access_token["access_token"]
-      menu_str = {:button => [{
-           :name => "课程报名",
-           :sub_button => [
-           {  
-               :type => "view",
-               :name => "最新课程",
-               :url => "http://116.255.202.113/allsites/wansu"
-            },
-            {
-               :type => "view",
-               :name => "优惠课程",
-               :url => "http://116.255.202.113/allsites/wansu"
-            },
-            {
-               :type => "view",
-               :name => "品牌课程",
-               :url => "http://116.255.202.113/allsites/wansu"
-            }]
-       },
-    {:type => "view", :name => "万苏世界", :url => "http://116.255.202.113/allsites/wansu"}]
-        }.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")}
-      
-      c_menu_url = "https://api.weixin.qq.com"
+      menu_str = get_menu_by_website(cweb)
       c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token["access_token"]}"
-      #params = {:access_token => access_token, :body => menu_str}
-      response = create_post_http(c_menu_url ,c_menu_action ,menu_str)
-      p "================"
-      p response
+      response = create_post_http(WEIXIN_OPEN_URL ,c_menu_action ,menu_str)
       render :text => response.to_s, :layout => false
     else
       render :text => false
     end  
   end
-  
+
+  #发get请求获得access_token
   def create_get_http(url ,route)
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    if uri.port==443
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
+    http = set_http(url)
     request= Net::HTTP::Get.new(route)
-    back_res =http.request(request)
+    back_res = http.request(request)
     return JSON back_res.body
   end
-  
-  def create_post_http(url,route_action,params)
+
+  #发post请求创建自定义菜单
+  def create_post_http(url,route_action,menu_bar)
+    http = set_http(url)
+    request = Net::HTTP::Post.new(route_action)
+    request.set_body_internal(menu_bar)
+    return JSON http.request(request).body
+  end
+
+ #验证请求是否从微信发出
+  def get_signature(cweb, timestamp, nonce)
+    tmp_arr = [cweb, timestamp, nonce]
+    tmp_arr.sort!
+    tmp_str = tmp_arr.join
+    tmp_encrypted_str = Digest::SHA1.hexdigest(tmp_str)
+    tmp_encrypted_str
+  end
+
+  #根据cweb，获得不同的自定义菜单
+  def get_menu_by_website(cweb)
+    case cweb
+    when "wansu" || "xyyd"
+      menu_bar = {:button => [{
+            :name => "课程报名",
+            :sub_button => [
+              {
+                :type => "view",
+                :name => "最新课程",
+                :url => "http://116.255.202.113/allsites/wansu"
+              },
+              {
+                :type => "view",
+                :name => "优惠课程",
+                :url => "http://116.255.202.113/allsites/wansu"
+              },
+              {
+                :type => "view",
+                :name => "品牌课程",
+                :url => "http://116.255.202.113/allsites/wansu"
+              }]
+          },
+          {:type => "view",
+            :name => "万苏世界",
+            :url => "http://116.255.202.113/allsites/wansu"
+          }
+        ]
+      }
+    end
+    menu_bar = menu_bar.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")}
+    menu_bar
+  end
+
+  def get_app_id(cweb)
+    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_id] : APP_ID_AND_SECRET[cweb.to_sym][:app_id]
+  end
+
+  def get_app_secret(cweb)
+    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_secret] : APP_ID_AND_SECRET[cweb.to_sym][:app_secret]
+  end
+
+  def set_http(url)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port==443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    request = Net::HTTP::Post.new(route_action)
-    request.set_body_internal(params)
-  p "--------pppp"
-  p request.body
-    return JSON http.request(request).body
+    http
   end
-  
 end
