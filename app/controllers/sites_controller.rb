@@ -12,7 +12,6 @@ class SitesController < ApplicationController
         @site.name=params[:site][:name].split(' ').join
         @site.root_path=params[:site][:root_path].gsub(/\/+/, "")
         @site.notes=params[:site][:notes]
-        @site.status=0
         @site.user_id=current_user.id
         respond_to do |format|
           if @site && @site.save
@@ -26,8 +25,9 @@ class SitesController < ApplicationController
                 f.write("  ")
               end
             end
+            @site.update_attribute(:status, Site::STATUS_NAME[:new])
+
             flash[:success]='创建成功'
-            #  redirect_to root_path
           else
             flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
           end
