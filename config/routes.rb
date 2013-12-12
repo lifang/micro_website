@@ -33,7 +33,10 @@ MicroWebsite::Application.routes.draw do
     end
     resource :posts do
       collection do
-        get :index
+        get :index, :bbs
+      end
+      member do
+        get :bbs_detail
       end
     end
     
@@ -53,11 +56,11 @@ MicroWebsite::Application.routes.draw do
     resources :image_streams do
       #对集合进行操作
       collection do
-      get :img_stream
+        get :img_stream
       end
       #对单个进行操作
       member do
-      get :edit_itpage
+        get :edit_itpage
       end
     end
     resources :image_texts do
@@ -69,26 +72,13 @@ MicroWebsite::Application.routes.draw do
       end
     end
   end
-match "/weixins/accept_token" => "weixins#accept_token"
-  resources :weixins do
-    collection do
-
-      post :accept_message_from_normal_user
-    end
-  end
-
-  resources :weixin do
-    collection do
-      get :accept_token
-      post :accept_message_from_normal_user
-    end
-  end
+  match "/weixins/accept_token" => "weixins#accept_token"
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-devise_scope :user do
-  root to: "devise/sessions#new"
-end
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
 
   # See how all your routes lay out with "rake routes"
 
@@ -96,5 +86,5 @@ end
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
- # match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
+  # match '/:path_name',:to => "pages#static", :path_name => /\w+\/.+\.html/
 end

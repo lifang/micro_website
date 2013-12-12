@@ -12,31 +12,30 @@ class User < ActiveRecord::Base
     :recoverable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :phone, :email, :password, :password_confirmation, :login,:types,:status
+  attr_accessible :name, :phone, :email, :password, :password_confirmation, :login
   attr_accessor :login
+  after_create :set_type_and_status
+  
   def is_user_exist
     user =User.where('name=? or email=?',self.name,self.email)
-    p 333333333,user
     if user!=[]
       if is_exist(user)
         self.errors.add(:email , "或者用户名已经存在！" )
         return false
       end
     end
-    
-    p 1111111111111
+
     true
   end
   def is_exist(user)
-    p 44444444444
     user.each do |u|
-      p u.status
       if u.status!=-1
         return true
       end    
     end
      return false
   end
+  
   def admin
     self.types == TYPES[:admin]
   end
@@ -70,6 +69,13 @@ class User < ActiveRecord::Base
 
     clean_up_passwords
     result
+  end
+
+  private
+  def set_type_and_status
+    self.status = STATUS_NAME[:normal]
+    self.types = TYPES[:mormal]
+    self.save
   end
 
 end

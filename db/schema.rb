@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122064631) do
+ActiveRecord::Schema.define(:version => 20131212022111) do
 
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
@@ -22,6 +22,12 @@ ActiveRecord::Schema.define(:version => 20131122064631) do
   end
 
   add_index "form_datas", ["page_id"], :name => "index_form_datas_on_page_id"
+
+  create_table "page_image_texts", :force => true do |t|
+    t.integer "page_id"
+    t.text    "img_path"
+    t.text    "content"
+  end
 
   create_table "pages", :force => true do |t|
     t.string   "title"
@@ -39,6 +45,25 @@ ActiveRecord::Schema.define(:version => 20131122064631) do
   add_index "pages", ["authenticate"], :name => "index_pages_on_authenticate"
   add_index "pages", ["site_id"], :name => "index_pages_on_site_id"
   add_index "pages", ["types"], :name => "index_pages_on_types"
+
+  create_table "posts", :force => true do |t|
+    t.string   "post_content"
+    t.integer  "post_status"
+    t.integer  "site_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "title"
+    t.string   "post_img"
+  end
+
+  create_table "replies", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "reply_content"
+    t.integer  "send_open_id"
+    t.integer  "target_open_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "resources", :force => true do |t|
     t.string   "path_name"

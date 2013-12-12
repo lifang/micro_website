@@ -2,18 +2,20 @@
 class PostsController < ApplicationController
   layout 'sites'
   SITE_PATH = "/public/allsites/%s/"
+  before_filter :get_site
+
   def index
-    @site=Site.find(params[:site_id])
+   # @site=Site.find(params[:site_id])
     @posts=@site.posts
   end
 
   def new
-    @site=Site.find(params[:site_id])
+    #@site=Site.find(params[:site_id])
 
   end
 
   def create
-    @site=Site.find(params[:site_id])
+    #@site=Site.find(params[:site_id])
     @post=@site.posts.build
     @post.title=params[:posts][:title]
     @post.post_content=params[:posts][:post_content]
@@ -37,10 +39,24 @@ class PostsController < ApplicationController
     @post=Post.find(params[:id])
     post_img=@post.post_img
     if @post.destroy
+      
+    end
   end
   def edit
   end
 
   def show
+  end
+
+  def bbs
+    top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
+    @posts = @site.posts.order("created_at desc").limit(3)
+    @post = top_post ? top_post : @posts[0]
+   
+    render "/bbs/index", :layout => false
+  end
+
+  def bbs_detail
+    @post = Post.find_by_id(params[:id])
   end
 end
