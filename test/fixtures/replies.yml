@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  post_id: 1
+  reply_content: MyString
+  send_open_id: 1
+  target_open_id: 1
+
+two:
+  post_id: 1
+  reply_content: MyString
+  send_open_id: 1
+  target_open_id: 1

@@ -39,8 +39,6 @@ class WeixinsController < ApplicationController
     token_url = "https://api.weixin.qq.com"
     token_action = "/cgi-bin/token?grant_type=client_credential&appid=wxcbc2e8fb02023e4f&secret=1243a493f356a0c9ffcc2b7633a78b61"
     token_info = create_get_http(token_url ,token_action)
-    p "------------------------"
-    p token_info
     return token_info
   end
   
@@ -54,8 +52,6 @@ class WeixinsController < ApplicationController
       c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token}"
       #params = {:access_token => access_token, :body => menu_str}
       response = create_post_http(c_menu_url ,c_menu_action ,menu_str)
-      p "================"
-      p response
       render :text => response.to_s, :layout => false
     else
       render :text => false

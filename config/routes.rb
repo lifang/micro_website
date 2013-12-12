@@ -1,4 +1,6 @@
 MicroWebsite::Application.routes.draw do
+  
+
   devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations",:sessions=>'sessions'} do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
@@ -29,6 +31,8 @@ MicroWebsite::Application.routes.draw do
     member do
       post :verify_site
     end
+    resource :posts
+    
     resources :resources
     resources :pages do
       resources :form_datas
