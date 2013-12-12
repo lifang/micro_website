@@ -22,7 +22,6 @@ class PostsController < ApplicationController
     @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
     @post.post_img=@full_path
     @post.post_status=0
-    @post.praise_number=0
     if @post.save
       FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
       file=File.new(@full_path,'wb')
@@ -37,6 +36,7 @@ class PostsController < ApplicationController
   def destroy
     @post=Post.find(params[:id])
     post_img=@post.post_img
+    if @post.destroy
   end
   def edit
   end
