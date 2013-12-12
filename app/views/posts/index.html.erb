@@ -1,2 +1,17 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="main_container">
+	<table>
+		<tr><td>序号</td><td>标题</td><td>内容</td><td>发表时间</td><td>操作</td></tr>
+		
+<%@posts.each do |p|%>
+<tr>
+	<td></td>
+	<td><%=p.title%></td>
+	<td><%= raw(p.post_content)%></td>
+	<td></td>
+	<td></td>
+</tr>
+
+
+<%end%>
+	</table>
+</div>

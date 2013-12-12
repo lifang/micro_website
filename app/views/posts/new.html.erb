@@ -1,2 +1,27 @@
-<%=form_for(@post) do |f|%>
+<div class="main_container">
+<%=form_for(:posts,:url => site_posts_path(@site), :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+<%=f.label 'title' %>
+<%=f.text_field :title %>
+<legend>
+            在这你可以上传图片
+          </legend>
+          <div class="fileBox" style="width:300px;">
+            <input type="text" class="fileText_1" id="resource_c" />
+            <button class="fileBtn_1 blue_btn"  >浏览...</button>
+            <%=f.file_field :post_img , class:"file_1" %>
+            </div>
+<br/><br/>
+<textarea class="it_content" name="posts[post_content]" style="margin-bottom:20px"></textarea>
+<%=f.submit '新建'%>
 <%end%>
+</div>
+<script>
+	KindEditor.create($(".it_content").last(), {
+        resizeMode : 1,
+        width : "400px",
+        items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist']
+    });
+</script>

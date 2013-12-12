@@ -31,7 +31,11 @@ MicroWebsite::Application.routes.draw do
     member do
       post :verify_site
     end
-    resource :posts
+    resource :posts do
+      collection do
+        get :index
+      end
+    end
     
     resources :resources
     resources :pages do
