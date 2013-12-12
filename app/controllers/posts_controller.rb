@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_filter :get_site
 
   def index
-   # @site=Site.find(params[:site_id])
+    # @site=Site.find(params[:site_id])
     @posts=@site.posts
   end
 
@@ -57,10 +57,20 @@ class PostsController < ApplicationController
 
   def bbs
     top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
-    @posts = @site.posts.order("created_at desc").limit(3)
+    @post_total = @site.posts.length
+    @posts = @site.posts.order("created_at desc").limit(3).offset(0)
     @post = top_post ? top_post : @posts[0]
-   
+    @page = 1
     render "/bbs/index", :layout => false
+  end
+
+  def see_more
+    #i, page
+    page = params[:page].to_i
+    @post_total = @site.posts.length
+    @posts = @site.posts.order("created_at desc").limit(3).offset(page * 3)
+    @page = page + 1
+    render "/bbs/post"
   end
 
   def bbs_detail
