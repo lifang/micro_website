@@ -1,0 +1,198 @@
+@charset "utf-8";
+/* CSS Document */
+/*论坛*/
+.bbs_title { font-size: 0; overflow: hidden; text-align: center; position: relative;}
+.bbs_title img { margin: 0 auto; font-size: 0;}
+.bbs_title_text { 
+    font-size: 14px; 
+	background: url(/assets/black.png) repeat;
+	height: 30px; 
+	line-height: 30px; 
+	padding: 0 10px;
+	position: absolute; 
+	left: 0px; 
+	bottom: 0px;
+	width: 98%;
+	text-align: left;
+	color: #FFF;
+}
+.bbs_list:after {
+	display: block;
+	overflow:hidden;
+	clear: both;
+	height:0;
+	visibility:hidden;
+	content:".";
+}
+.bbs_list { border: 1px #a0a0a0 solid; margin: 10px; padding: 5px; overflow: hidden;}
+.bbs_list_avatar { width:80px; height: 80px; font-size: 0; float: left;}
+.bbs_list_avatar img { width: 80px;}
+.bbs_list_con {
+	overflow: hidden;
+	padding-left: 10px;
+}
+.bbs_list_con h1 { 
+    width: 140px;
+	margin-bottom: 5px;
+	font-size: 16px;
+	overflow: hidden;
+	white-space: nowrap; 
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;    
+}
+.bbs_list_con h1.video_icon { 
+    padding-right: 20px; 
+	background: url(/assets/video_icon.png) no-repeat right center;
+	background-size: 20px auto;
+}
+
+.list_text { height: 50px; line-height: 18px;}
+.list_func { font-size: 10px; height: 25px; line-height: 25px;}
+.list_func span, .list_func a { margin: 0 5px; height: 25px; display: inline-block;}
+.list_func .list_good { 
+    float: right; 
+	background: url(/assets/good_icon.png) no-repeat 0 center;
+	background-size: 15px 15px;
+	padding-left: 20px;
+}
+.list_func .list_mess {
+	float: right; 
+	background: url(/assets/mess_icon.png) no-repeat 0 7px;
+	background-size: 15px 15px;
+	padding-left: 20px;
+}
+/*加载更多*/
+.bbs_dropDown { 
+    border: 1px #CCCCCC solid; 
+	margin: 10px; 
+	padding: 5px; 
+	overflow: hidden; 
+	text-align: center;
+	color: #999;
+}
+
+/*bbs内容*/
+.bbs_title_good { 
+    width: 50px; 
+	height: 30px; 
+	display: block;
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	border-radius: 10px;
+	background: url(/assets/bbs_title_good.png) no-repeat center center rgba(51,51,51,0.8);
+	background-size: 16px 15px;
+	box-shadow: 0 0 3px rgba(255,255,255,0.8);
+}
+.bbs_title_good00 {
+	background: url(/assets/bbs_title_good00.png) no-repeat center center rgba(51,51,51,0.8);
+	background-size: 16px 15px;
+}
+.bbs_body { overflow: hidden; padding: 5px;}
+.bbs_h { height: 40px; border-left: 5px #333333 solid; padding-left: 5px;}
+.bbs_h h1 { font-size: 18px; height: 30px; line-height: 30px;}
+.bbs_h p { font-size: 10px; height: 10px; line-height: 10px; color: #999;}
+
+.bbs_text { padding: 5px 10px;}
+.bbs_text p { margin-bottom: 10px;}
+
+.bbs_foot {}
+.bbs_foot:after {
+	display: block;
+	overflow:hidden;
+	clear: both;
+	height:0;
+	visibility:hidden;
+	content:".";
+}
+.bbs_mess_bar { height: 30px; background: #333; position: relative;}
+.bbs_mess_bar_num { 
+	background: url(/assets/mess_icon.png) no-repeat right 5px;
+	background-size: 10px 10px;
+	font-size: 24px;
+	color: #FFF;
+	padding-right: 15px;
+	float: right;
+	margin-right: 10px;
+}
+.bbs_mess_bar_j {
+	width: 19px;
+	height: 13px;
+    position: absolute; 
+	bottom: -13px; 
+	right: 35px;
+	background: url(/assets/bbs_mess_bar_j.png) no-repeat;
+	background-size: 19px 13px;
+}
+
+/*bbs回复*/
+.bbs_messBox { padding: 20px 10px; border-bottom: 1px #a0a0a0 solid; position: relative;}
+.bbs_messBox:after {
+	display: block;
+	overflow:hidden;
+	clear: both;
+	height:0;
+	visibility:hidden;
+	content:".";
+}
+.bbs_floor { 
+    position: absolute; 
+	top: 20px; 
+	right: 0px;
+	border: 1px #CCC solid;
+	border-right: none;
+	font-size: 16px;
+	padding: 0 5px;
+}
+
+.bbs_messBox_userAvatar { 
+    float: left; 
+	padding: 1px; 
+	border:1px #a0a0a0 solid; 
+	font-size: 0; 
+	background: #FFF;
+}
+.bbs_messBox_userAvatar img { width: 50px; height: 50px;}
+
+.bbs_messBox_userMess { overflow: hidden; padding-left: 10px;}
+.bbs_manageToUser { font-size: 12px;}
+.bbs_manageToUser span { margin: 0 5px;}
+
+.bbs_messBox_text { padding: 10px 20px 10px 0;}
+
+.bbs_messBox_func { height: 30px; line-height: 30px;}
+.bbs_messBox_func_time { font-size: 10px; color: #999; float: left;}
+.bbs_messBox_func_btn { float: right;}
+.bbs_messBox_func_btn button {
+	height: 28px;
+	line-height: 28px;
+	width: 80px;
+}
+
+.bbs_clickDown { 
+    width: 120px; 
+	height: 30px; 
+	line-height: 30px; 
+	background: url(/assets/arrows.png) no-repeat 0px center;
+	background-size: 13px 6px;
+	text-align: center;
+	color: #999;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.bbs_textarea { padding: 10px;}
+.bbs_textarea h1 { height: 30px; line-height: 30px; font-size: 18px;}
+.bbs_textarea textarea { width: 96%; height: 100px; color: #999; padding: 5px;}
+.bbs_textarea_btn { height: 35px; margin: 10px 0; text-align: center;}
+.bbs_textarea_btn a, .bbs_textarea_btn button {
+	height: 32px;
+	line-height: 32px;
+	width: 100px;
+	display: inline-block;
+	margin: 0 10px;
+}
+.bbs_list a{
+    text-decoration: none;
+    color: #333;
+}
