@@ -36,10 +36,17 @@ class PostsController < ApplicationController
     end
   end
   def destroy
+    @site=Site.find(params[:site_id])
     @post=Post.find(params[:id])
-    post_img=@post.post_img
+    post_img = @post.post_img
     if @post.destroy
-      
+
+      flash[:success]="删除成功"
+      FileUtils.rm post_img
+      redirect_to site_posts_path(@site)
+    else
+      flash[:success]="删除失败"
+      render 'index'
     end
   end
   def edit
