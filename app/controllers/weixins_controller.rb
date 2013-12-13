@@ -80,22 +80,22 @@ class WeixinsController < ApplicationController
               {
                 :type => "view",
                 :name => "最新课程",
-                :url => "http://116.255.202.113/allsites/wansu"
+                :url => "http://116.255.202.113/sites/static?path_name=/wansu/newCourse.html"
               },
               {
                 :type => "view",
                 :name => "优惠课程",
-                :url => "http://116.255.202.113/allsites/wansu"
+                :url => "http://116.255.202.113/sites/static?path_name=/wansu/yhCourse.html"
               },
               {
                 :type => "view",
                 :name => "品牌课程",
-                :url => "http://116.255.202.113/allsites/wansu"
+                :url => "http://116.255.202.113/sites/static?path_name=/wansu/brandCourse.html"
               }]
           },
           {:type => "view",
             :name => "万苏世界",
-            :url => "http://116.255.202.113/allsites/wansu"
+            :url => "http://116.255.202.113/sites/static?path_name=/wansu/index.html"
           }
         ]
       }
