@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   layout 'sites'
   SITE_PATH = "/public/allsites/%s/"
   before_filter :get_site
+  before_filter :change_page, :only => [:see_more, :bbs]
 
   def index
     # @site=Site.find(params[:site_id])
@@ -56,10 +57,8 @@ class PostsController < ApplicationController
   end
 
   def bbs
-    top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
-    @post_total = @site.posts.length
-    @posts = @site.posts.order("created_at desc").limit(3).offset(0)
-    @post = top_post ? top_post : @posts[0]
+    @posts = @posts.order("created_at desc").limit(3).offset(0)
+    @post = @top_post ? @top_post : @posts[0]
     @page = 1
     render "/bbs/index", :layout => false
   end
@@ -67,13 +66,19 @@ class PostsController < ApplicationController
   def see_more
     #i, page
     page = params[:page].to_i
-    @post_total = @site.posts.length
-    @posts = @site.posts.order("created_at desc").limit(3).offset(page * 3)
+    @posts = @posts.order("created_at desc").limit(3).offset(page * 3)
     @page = page + 1
-    render "/bbs/post"
+    render :partial => "/bbs/post", :layout => false
   end
 
   def bbs_detail
     @post = Post.find_by_id(params[:id])
+  end
+
+  private
+  def change_page
+    @top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
+    @posts = @site.posts.where("id != ?", @top_post.try(:id))
+    @post_total = @posts.length
   end
 end

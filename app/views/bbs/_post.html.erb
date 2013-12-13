@@ -3,7 +3,7 @@
     <div class="bbs_list_avatar"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><img src="<%= post.post_img %>"/></a></div>
     <div class="bbs_list_con">
       <h1 class="video_icon"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= post.title %></a></h1>
-      <div class="list_text"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= post.title %></a></div>
+      <div class="list_text"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= post.post_content.truncate(40, separator: ' ') %></a></div>
       <div class="list_func">
         <span class="list_time"><%= post.created_at.strftime("%Y-%m-%d") %></span>
         <a href="#" class="list_mess"><%= post.comments_count %></a>
@@ -11,4 +11,7 @@
       </div>
     </div>
   </section>
+<% end %>
+<% if @post_total > 3 * @page %>
+  <section class="bbs_dropDown" onclick="seeMore(this)" data-page-total="<%= @post_total %>" data-page="<%= @page %>" data-url='<%= see_more_site_posts_path(@site)+"?page=#{@page}" %>'>加载更多...</section>
 <% end %>

@@ -69,6 +69,7 @@
 	overflow: hidden; 
 	text-align: center;
 	color: #999;
+        cursor: pointer;
 }
 
 /*bbs内容*/
