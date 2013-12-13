@@ -1,0 +1,9 @@
+<article>
+  <section class="bbs_title">
+    <% if @post %>
+      <a href="<%= bbs_detail_site_post_path(@site, @post) %>"><img src="<%= @post.post_img %>" /><div class="bbs_title_text"><%= @post.title %></div></a>
+      <% end %>
+  </section>
+  <%= render :partial => "/bbs/posts/post"  %>
+</article>
+

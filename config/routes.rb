@@ -38,6 +38,11 @@ MicroWebsite::Application.routes.draw do
       member do
         get :bbs_detail
       end
+      resources :replies do
+        collection do
+          get :see_more
+        end
+      end
     end
     
     resources :resources

@@ -1,0 +1,18 @@
+<% @comments.each_with_index do |comment| %>
+  <div class="bbs_messBox">
+    <div class="bbs_floor"><%= @comment_count %></div>
+    <!--<div class="bbs_messBox_userAvatar"><img src="images/user.jpg"></div> -->
+    <div class="bbs_messBox_userMess">
+      <!--<div class="bbs_manageToUser"><span>&lt;美业之星&gt;</span>回复<span>&lt;Darcy&gt;</span></div>-->
+      <div class="bbs_messBox_text"><%= comment.reply_content %></div>
+      <div class="bbs_messBox_func">
+        <div class="bbs_messBox_func_time"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") if  comment.created_at %></div>
+        <div class="bbs_messBox_func_btn"><button class="btn">回复</button></div>
+      </div>
+    </div>
+  </div>
+  <% @comment_count = @comment_count - 1 %>
+<% end %>
+<% if @comments_total > 3 * @page %>
+  <div class="bbs_clickDown" onclick="seeMoreComment(this)" data-url="<%= see_more_site_post_replies_path(@site, @post) %>">点击加载更多...</div>
+<% end %>

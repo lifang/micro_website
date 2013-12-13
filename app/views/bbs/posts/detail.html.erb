@@ -1,0 +1,34 @@
+<article>
+  <section class="bbs_title">
+    <img src="<%= @post.post_img %>"/>
+    <a href="#" class="bbs_title_good"><%= @post.praise_number %></a>
+  </section>
+  <section class="bbs_body">
+    <div class="bbs_h">
+      <h1><%= @post.title %></h1>
+      <p><%= @post.created_at.strftime("%Y-%m-%d") if  @post.created_at %></p>
+    </div>
+    <div class="bbs_text">
+      <%= @post.post_content %>
+    </div>
+  </section>
+  <section class="bbs_foot">
+    <div class="bbs_mess_bar">
+      <div class="bbs_mess_bar_num"><%= @post.comments_count %></div>
+      <div class="bbs_mess_bar_j"></div>
+    </div>
+    <%= render "/bbs/comments/comment" %>
+    <div class="bbs_textarea">
+      <h1>评论：</h1>
+      <%= form_for :comment, :url => "#{site_post_replies_path(@site, @post)}", :html => {:remote => true, :method => :post } do |f| %>
+        <%= f.text_area :reply_content, :placeholder => "回复内容需在50字以内" %>
+        <div class="bbs_textarea_btn">
+          <!--<a href="#" class="btn">成为会员</a>-->
+          <button type="submit" class="btn">发表评论</button>
+        </div>
+      <% end %>
+    </div>
+
+  </section>
+
+</article>

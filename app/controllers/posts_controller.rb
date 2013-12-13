@@ -59,20 +59,25 @@ class PostsController < ApplicationController
   def bbs
     @posts = @posts.order("created_at desc").limit(3).offset(0)
     @post = @top_post ? @top_post : @posts[0]
-    @page = 1
-    render "/bbs/index", :layout => false
+    @page = 1 #帖子初始第一页
+    render "/bbs/posts/index", :layout => 'bbs'
   end
 
   def see_more
-    #i, page
+    # page
     page = params[:page].to_i
     @posts = @posts.order("created_at desc").limit(3).offset(page * 3)
-    @page = page + 1
-    render :partial => "/bbs/post", :layout => false
+    @page = page + 1 #帖子增加页数
+    render :partial => "/bbs/posts/post", :layout => false
   end
 
   def bbs_detail
     @post = Post.find_by_id(params[:id])
+    comments = @post.replies.verified
+    @comments = comments.order("created_at desc").limit(3).offset(0)
+    @page = 1 #帖子初始第一页
+    @comments_total = comments.count
+    render "/bbs/posts/detail", :layout => 'bbs'
   end
 
   private
