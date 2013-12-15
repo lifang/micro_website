@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   SITE_PATH = "/public/allsites/%s/"
   before_filter :get_site
   before_filter :change_page, :only => [:see_more, :bbs]
-
+  skip_before_filter :authenticate_user!, :only => [:bbs, :see_more, :bbs_detail]
   def index
     # @site=Site.find(params[:site_id])
     @posts=@site.posts
@@ -99,5 +99,9 @@ class PostsController < ApplicationController
     @top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
     @tmp_posts = @top_post ?  @site.posts.where("id != ?", @top_post.try(:id)).order("created_at desc") : @site.posts.order("created_at desc")
     
+  end
+
+  def get_site
+    @site = Site.find_by_id params[:site_id]
   end
 end

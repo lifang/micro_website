@@ -29,4 +29,8 @@ class RepliesController < ApplicationController
   def get_post
     @post = Post.find_by_id(params[:post_id])
   end
+  
+  def get_site
+    @site = Site.find_by_id params[:site_id]
+  end
 end
