@@ -19,8 +19,9 @@ class RepliesController < ApplicationController
     comments = @post.replies.verified
     @comments_total = comments.count
     @comments = comments.order("created_at desc").limit(3).offset(page * 3)
-    @page = page + 1 #帖子翻页
+    
     @comments_count = @comments_total - page * 3
+    @page = page + 1 #帖子翻页
     render :partial => "/bbs/comments/comment", :layout => false
   end
 

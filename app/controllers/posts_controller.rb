@@ -57,8 +57,17 @@ class PostsController < ApplicationController
   end
 
   def bbs
-    @posts = @posts.order("created_at desc").limit(3).offset(0)
-    @post = @top_post ? @top_post : @posts[0]
+    if @top_post
+      @post = @top_post
+      @post_total = @tmp_posts.length
+      @posts = @tmp_posts.limit(3).offset(0)
+    else
+      @post = @tmp_posts[0]
+      @posts = @posts = @tmp_posts.where("id not in (#{@post.id})").limit(3).offset(0)
+      @post_total = @tmp_posts.length - 1
+    end
+    
+    #@post = @top_post ? @top_post : @posts[0]
     @page = 1 #帖子初始第一页
     render "/bbs/posts/index", :layout => 'bbs'
   end
@@ -66,7 +75,12 @@ class PostsController < ApplicationController
   def see_more
     # page
     page = params[:page].to_i
-    @posts = @posts.order("created_at desc").limit(3).offset(page * 3)
+    @posts = @tmp_posts.limit(3).offset(page * 3)
+    unless @top_post
+      @post = @tmp_posts[0]
+      @posts = @tmp_posts.where("id not in (#{@post.id})").limit(3).offset(page * 3)
+      @post_total = @tmp_posts.length - 1
+    end
     @page = page + 1 #帖子增加页数
     render :partial => "/bbs/posts/post", :layout => false
   end
@@ -76,14 +90,14 @@ class PostsController < ApplicationController
     comments = @post.replies.verified
     @comments = comments.order("created_at desc").limit(3).offset(0)
     @page = 1 #帖子初始第一页
-    @comments_total = comments.count
+    @comments_total = @comments_count = comments.count
     render "/bbs/posts/detail", :layout => 'bbs'
   end
 
   private
   def change_page
     @top_post = @site.posts.where("post_status = ?", Post::STATUS[:top])[0]
-    @posts = @site.posts.where("id != ?", @top_post.try(:id))
-    @post_total = @posts.length
+    @tmp_posts = @top_post ?  @site.posts.where("id != ?", @top_post.try(:id)).order("created_at desc") : @site.posts.order("created_at desc")
+    
   end
 end

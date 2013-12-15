@@ -1,6 +1,6 @@
 <% @comments.each_with_index do |comment| %>
   <div class="bbs_messBox">
-    <div class="bbs_floor"><%= @comment_count %></div>
+    <div class="bbs_floor"><%= @comments_count %></div>
     <!--<div class="bbs_messBox_userAvatar"><img src="images/user.jpg"></div> -->
     <div class="bbs_messBox_userMess">
       <!--<div class="bbs_manageToUser"><span>&lt;美业之星&gt;</span>回复<span>&lt;Darcy&gt;</span></div>-->
@@ -11,8 +11,8 @@
       </div>
     </div>
   </div>
-  <% @comment_count = @comment_count - 1 %>
+  <% @comments_count = @comments_count - 1 %>
 <% end %>
 <% if @comments_total > 3 * @page %>
-  <div class="bbs_clickDown" onclick="seeMoreComment(this)" data-url="<%= see_more_site_post_replies_path(@site, @post) %>">点击加载更多...</div>
+  <div class="bbs_clickDown" onclick="seeMoreComment(this)" data-url="<%= see_more_site_post_replies_path(@site, @post)+"?page=#{@page}" %>">点击加载更多...</div>
 <% end %>

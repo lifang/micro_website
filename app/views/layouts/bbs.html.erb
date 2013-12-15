@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <%= javascript_include_tag "application" %>
     <link href="/assets/bbs.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/style.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/common.css" rel="stylesheet" type="text/css"/>
   </head>
 
   <body>
     <%= yield %>
-</body>
+    <div class="tab_alert" style="width:100%;position: absolute; z-index: 100; display:none">
+      <div style="font-size:20px;margin: 200px auto;width: 300px;background: #3696E0;padding: 20px;">
+        <span class="close" id="close_flash" style="float:right;" ></span>
+        <div class="alert_h">
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
