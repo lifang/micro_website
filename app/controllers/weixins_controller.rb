@@ -21,7 +21,7 @@ class WeixinsController < ApplicationController
     end
 
   end
-  
+
   #根据app_id 和app_secret获取帐号token
   def get_access_token(cweb)
     app_id = get_app_id(cweb)
@@ -38,11 +38,10 @@ class WeixinsController < ApplicationController
       menu_str = get_menu_by_website(cweb)
       c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token["access_token"]}"
       response = create_post_http(WEIXIN_OPEN_URL ,c_menu_action ,menu_str)
-
       render :text => response.to_s, :layout => false
     else
       render :text => false
-    end  
+    end
   end
 
   #发get请求获得access_token
@@ -72,8 +71,8 @@ class WeixinsController < ApplicationController
 
   #根据cweb，获得不同的自定义菜单
   def get_menu_by_website(cweb)
-    case cweb
-    when "wansu" || "xyyd"
+
+    if cweb == "wansu" || cweb == "xyyd"
       menu_bar = {:button => [{
             :name => "课程报名",
             :sub_button => [
