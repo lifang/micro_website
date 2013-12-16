@@ -37,6 +37,7 @@ MicroWebsite::Application.routes.draw do
       end
       member do
         get :bbs_detail
+        post :star
       end
       resources :replies do
         collection do

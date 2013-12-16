@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   SITE_PATH = "/public/allsites/%s/"
   before_filter :get_site
   before_filter :change_page, :only => [:see_more, :bbs]
-  skip_before_filter :authenticate_user!, :only => [:bbs, :see_more, :bbs_detail]
+  skip_before_filter :authenticate_user!, :only => [:bbs, :see_more, :bbs_detail, :star]
   def index
     # @site=Site.find(params[:site_id])
     @posts=@site.posts
@@ -63,7 +63,7 @@ class PostsController < ApplicationController
       @posts = @tmp_posts.limit(3).offset(0)
     else
       @post = @tmp_posts[0]
-      @posts = @posts = @tmp_posts.where("id not in (#{@post.id})").limit(3).offset(0)
+      @posts = @posts = @tmp_posts.where("id not in (#{@post.id})").limit(3).offset(0) if @post
       @post_total = @tmp_posts.length - 1
     end
     
@@ -75,8 +75,11 @@ class PostsController < ApplicationController
   def see_more
     # page
     page = params[:page].to_i
-    @posts = @tmp_posts.limit(3).offset(page * 3)
-    unless @top_post
+    if @top_post
+      @post = @top_post
+      @post_total = @tmp_posts.length
+      @posts = @tmp_posts.limit(3).offset(page * 3)
+    else
       @post = @tmp_posts[0]
       @posts = @tmp_posts.where("id not in (#{@post.id})").limit(3).offset(page * 3)
       @post_total = @tmp_posts.length - 1
@@ -87,11 +90,26 @@ class PostsController < ApplicationController
 
   def bbs_detail
     @post = Post.find_by_id(params[:id])
-    comments = @post.replies.verified
+    comments = @post.replies
     @comments = comments.order("created_at desc").limit(3).offset(0)
     @page = 1 #帖子初始第一页
-    @comments_total = @comments_count = comments.count
+    @comments_total = @comments_count = comments.length
     render "/bbs/posts/detail", :layout => 'bbs'
+  end
+
+  def star
+    @post = Post.find_by_id(params[:id])
+    if @post
+      if params[:flag] == "1"
+        @post.update_attribute(:praise_number, @post.praise_number + 1)
+      else
+        @post.update_attribute(:praise_number, @post.praise_number - 1)
+      end
+      msg = "success"
+    else
+      msg = "error"
+    end
+    render :text => msg
   end
 
   private

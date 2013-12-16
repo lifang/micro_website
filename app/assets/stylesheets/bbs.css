@@ -73,21 +73,23 @@
 }
 
 /*bbs内容*/
-.bbs_title_good { 
-    width: 50px; 
-	height: 30px; 
+.bbs_star{
+    width: 50px;
+	height: 30px;
 	display: block;
 	position: absolute;
 	bottom: 10px;
 	right: 20px;
 	border-radius: 10px;
-	background: url(/assets/bbs_title_good.png) no-repeat center center rgba(51,51,51,0.8);
-	background-size: 16px 15px;
+        background-size: 16px 15px;
 	box-shadow: 0 0 3px rgba(255,255,255,0.8);
 }
-.bbs_title_good00 {
+.bbs_star_none{
+	background: url(/assets/bbs_title_good.png) no-repeat center center rgba(51,51,51,0.8);
+}
+.bbs_star_good {
 	background: url(/assets/bbs_title_good00.png) no-repeat center center rgba(51,51,51,0.8);
-	background-size: 16px 15px;
+	
 }
 .bbs_body { overflow: hidden; padding: 5px;}
 .bbs_h { height: 40px; border-left: 5px #333333 solid; padding-left: 5px;}
@@ -196,4 +198,8 @@
 .bbs_list a{
     text-decoration: none;
     color: #333;
+}
+.ui-widget-header{
+  border: 1px solid #333;
+  background: #333 url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x;
 }

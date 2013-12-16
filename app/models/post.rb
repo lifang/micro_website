@@ -16,6 +16,6 @@ class Post < ActiveRecord::Base
   end
 
   def comments_count
-    @comments_count ||= Reply.includes(:post).where(:post_id => self.id).verified.length
+    @comments_count ||= Reply.includes(:post).where(:post_id => self.id).length
   end
 end
