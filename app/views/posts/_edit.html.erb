@@ -1,0 +1,34 @@
+<%=form_for(:posts,:url => site_post_path(@site,@post),:method=>'put',:html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+<div class="second_content second_content2">
+              <span class="close" onclick="cancle_post_edit()">关闭</span>
+              <h1>编辑主题</h1>
+              <h2>
+                主题：<input type="text" name="posts[title]" id="post_title" value="<%=@post.title%>"/>
+                <div class="fileBox" style="width:300px; margin-left: 100px;">
+                  <input type="text" class="fileText_1" value="点此上传图片"/>
+                  <button class="fileBtn_1 blue_btn" >浏览...</button>
+                  <input type="file" name="posts[post_img]" class="file_1" />
+                </div>
+              </h2>
+              <img id="post_img" width="100" height="100" src="<%=@post.post_img%>"/>
+              <textarea class="it_content" name="posts[post_content]" id="post_content" style="margin-bottom:50px;width:600px;">
+              <%=@post.post_content%>
+              </textarea>
+              <input type="hidden" name="posts[id]" id="post_id" />
+              <div class="uinfo_act">
+                <input type="submit" class="blue_btn"   value="提交" />
+                <input type="button" class="blue_btn" onclick="cancle_post_edit()" value="取消" />
+              </div>
+</div>
+<%end%>
+<script>
+            KindEditor.create($(".it_content").last(), {
+              resizeMode : 1,
+              width : "800px",
+              height:'200px',
+              items : [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist']
+            });
+          </script>
