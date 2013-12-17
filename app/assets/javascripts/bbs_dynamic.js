@@ -98,8 +98,9 @@ function toggleStar(obj){
         flag = 0;
     }
     $.ajax({
+        async:true,
         url: $(obj).attr("data-url"),
-        type: "POST",
+        type: "GET",
         dataType: "text",
         data:{
             flag : flag
