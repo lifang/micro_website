@@ -1,0 +1,19 @@
+<%=form_for(:posts,:url => site_posts_path(@site), :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+<%=f.label 'title' %>
+<%=f.text_field :title ,value:(@post.title unless @post.nil?)%>
+<%= select('posts', "post_status", {"不置顶" => '0', "置顶" => '1'}) %>
+<legend>
+            在这你可以上传图片
+          </legend>
+          <div class="fileBox" style="width:300px;">
+            <input type="text" class="fileText_1" id="resource_c" />
+            <button class="fileBtn_1 blue_btn"  >浏览...</button>
+            <%=f.file_field :post_img , class:"file_1" %>
+            </div>
+<br/><br/>
+<div id='imgarea'>
+	<img src='<%=@post.post_img unless @post.nil?%>'/>
+</div>
+<textarea class="it_content" name="posts[post_content]" style="margin-bottom:20px"><%=@post.post.content unless @post.nil?%></textarea>
+<%=f.submit '新建'%>
+<%end%>

@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:bbs, :see_more, :bbs_detail, :star]
   def index
     # @site=Site.find(params[:site_id])
-    @posts=@site.posts
+    @posts=@site.posts.order("created_at desc")
   end
 
   def new
@@ -23,10 +23,12 @@ class PostsController < ApplicationController
     @post.title=params[:posts][:title]
     @post.post_content=params[:posts][:post_content]
     @tmp = params[:posts][:post_img]
+    @post.praise_number=0;
     @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs"
     @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
     @post.post_img="/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
-    @post.post_status=0
+    #是否置顶
+    @post.post_status=params[:posts][:post_status]
     if @post.save
       FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
       file=File.new(@full_path,'wb')
@@ -38,8 +40,9 @@ class PostsController < ApplicationController
       render 'index'
     end
   end
+  
   def destroy
-    @site=Site.find(params[:site_id])
+    #@site=Site.find(params[:site_id])
     @post=Post.find(params[:id])
     post_img = @post.post_img
     if @post.destroy
@@ -51,6 +54,7 @@ class PostsController < ApplicationController
       render 'index'
     end
   end
+  
   def delete_post
     destroy
   end
@@ -82,11 +86,16 @@ class PostsController < ApplicationController
     end
 
   end
+  
   def top
     change_top 1
   end
+  
   def untop
     change_top 0
+  end
+  def edit
+    @post=Post.find(params[:id])
   end
 
   def change_top(flag)

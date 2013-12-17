@@ -7,7 +7,7 @@
       <div class="floor_txt">
         <%img_path=Rails.root.to_s + '/public'+(@post.post_img)%>
         <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
-        <img src="<%=@post.post_img%>" width="<%= image['width']<600? image['width']:600 %>px" /><br/>
+        <img src="<%=@post.post_img%>" width="<%= image['width']<580? image['width']:580 %>px" /><br/>
         <%=raw @post.post_content%>
       </div>
       <div class="floor_act">
@@ -44,10 +44,10 @@
             <%end%>
           </div>
         </div>
-        <div class="second_box wp" style="position: fixed;" >
+        <div class="second_box wp"  style="position: fixed;" >
 
         </div>
        <!--编辑-->
-        <div class="second_box theme_edt" style="position: fixed;">
+        <div class="second_box theme_edt" id="edit_post_div" style="position: fixed;">
 
         </div>

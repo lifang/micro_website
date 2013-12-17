@@ -2,6 +2,7 @@
   <h1><%=link_to @site.name,site_pages_path(@site) %>><%=link_to '论坛',site_posts_path(@site) %></h1>
   <div class="set_btn cf"><button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
 
+
   <ul class="forum_list">
     <%  @posts.each do |p|%>
       <li class="theme">
@@ -14,11 +15,11 @@
               <span class="zding" >置顶</span>
             <%end%>
           </div>
-          <div class="theme_author"><span title="作者：xxx">xxx</span></div>
+          <div class="theme_author"><span title="作者：xxx">收藏数：<%=p.praise_number%></span></div>
         </div>
         <div>
           <div class="theme_txt"><span><%=raw(p.post_content)%>...</span></div>
-          <div class="theme_lastreply"><span class="reply_name" title="回复数">回复数：<%=p.praise_number%></span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
+          <div class="theme_lastreply"><span class="reply_name" title="回复数">回复数：<%=p.comments_count%></span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
         </div>
       </li>
     <%end%>
@@ -29,7 +30,7 @@
 
 <div class="second_box new_theme">
   <%=form_for(:posts,:url => site_posts_path(@site), :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
-    <div class="second_content second_content2">
+    <div class="second_content second_content2" id="creat_post_div">
       <span class="close" >关闭</span>
       <h1>创建讨论帖</h1>
       <h2>
