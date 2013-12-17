@@ -1,2 +1,4 @@
 tishi_alert("发布成功");
 $(".comment_container").html('<%= j (render "/bbs/comments/comment") %>');
+$(".bbs_mess_bar_num").text("<%= @comments_total %>");
+$("#comment_reply_content").val("");

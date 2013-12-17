@@ -7,7 +7,10 @@
       </div>
       <% if @page.style? %>
         <div>
-          拷贝 <input type="text" style="width: 500px;" value='<link href="/allsites/<%= @site.root_path %>/style.css" rel="stylesheet" type="text/css" />'/>，粘贴到主页或者子页的"head"标签内
+          拷贝 <input type="text" style="width: 600px; height: 30px " value='<link href="/allsites/<%= @site.root_path %>/style.css" rel="stylesheet" type="text/css" />'/>，粘贴到主页或者子页的"head"标签内
+        </div>
+        <div>
+          拷贝jquery mobile样式 <input type="text" style="width: 600px; height: 30px " value='<link href="/allsites/style/jquery.mobile-1.3.2.css" rel="stylesheet" type="text/css" />'/>，粘贴到主页或者子页的"head"标签内
         </div>
       <% end %>
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>

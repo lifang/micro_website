@@ -58,7 +58,7 @@ function appendEditor(){
     KindEditor.create($(".it_content").last(), {
         resizeMode : 1,
         width : "400px",
-        items : [
+        items : ['source',
         'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
         'insertunorderedlist']

@@ -1,5 +1,33 @@
 @charset "utf-8";
 /* CSS Document */
+* { padding: 0; margin: 0;}
+body { font-family:"微软雅黑", "宋体", Arial; background: #ffffff; font-size: 14px;}
+img { border: none;}
+li { list-style: none;}
+a { text-decoration: none; color: #333;}
+input,button,select,textarea,img{outline:none}
+button { border: none; cursor: pointer;}
+
+.btn {
+	border: 1px #a0a0a0 solid;
+	text-align: center;
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e9e9e9));
+	background:-moz-linear-gradient(top, #ffffff,#e9e9e9);
+	background:-ms-linear-gradient(top, #ffffff, #e9e9e9);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e9e9e9,grandientType=1);
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e9e9e9,grandientType=1);
+}
+
+
+article { overflow: hidden; position: relative;}
+article:after{
+	display: block;
+	overflow:hidden;
+	clear: both;
+	height:0;
+	visibility:hidden;
+	content:".";
+}
 /*论坛*/
 .bbs_title { font-size: 0; overflow: hidden; text-align: center; position: relative;}
 .bbs_title img { margin: 0 auto; font-size: 0;}
@@ -202,4 +230,12 @@
 .ui-widget-header{
   border: 1px solid #333;
   background: #333 url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x;
+}
+.close, .delete {
+background: url('/assets/close.png') no-repeat;
+cursor: pointer;
+display: block;
+height: 17px;
+text-indent: -999px;
+width: 17px;
 }
