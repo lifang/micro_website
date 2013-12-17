@@ -1,14 +1,18 @@
-  <div class="bbs_messBox">
-    <div class="bbs_floor"><%= @comments_count %></div>
-    <!--<div class="bbs_messBox_userAvatar"><img src="images/user.jpg"></div> -->
-    <div class="bbs_messBox_userMess">
-      <% if comment.target_open_id.present? %>
+<div class="bbs_messBox">
+  <div class="bbs_floor"><%= @comments_count %></div>
+  <!--<div class="bbs_messBox_userAvatar"><img src="images/user.jpg"></div> -->
+  <div class="bbs_messBox_userMess">
+    <% if comment.target_open_id.present? %>
       <div class="bbs_manageToUser"><span>&lt;<%= comment.send_open_id.to_s + " 楼" %>&gt;</span>回复<span>&lt;<%= comment.target_open_id.to_s  + " 楼" %>&gt;</span></div>
-      <% end %>
-      <div class="bbs_messBox_text"><%= comment.reply_content %></div>
-      <div class="bbs_messBox_func">
-        <div class="bbs_messBox_func_time"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") if  comment.created_at %></div>
-        <div class="bbs_messBox_func_btn"><button class="btn" onclick="replyComment('<%= @comments_count %>')">回复</button></div>
+    <% end %>
+    <div class="bbs_messBox_text"><%= comment.show_content %></div>
+    <div class="bbs_messBox_func">
+      <div class="bbs_messBox_func_time"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") if  comment.created_at %></div>
+      <div class="bbs_messBox_func_btn">
+        <% if comment.pass? %>
+          <button class="btn" onclick="replyComment('<%= @comments_count %>')">回复</button>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
