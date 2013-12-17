@@ -150,7 +150,7 @@ class PostsController < ApplicationController
   def bbs_detail
     @post = Post.find_by_id(params[:id])
     comments = @post.replies
-    @comments = comments.order("created_at desc").limit(3).offset(0)
+    @comments = comments.order("created_at desc").limit(6).offset(0)
     @page = 1 #帖子初始第一页
     @comments_total = @comments_count = comments.length
     render "/bbs/posts/detail", :layout => 'bbs'
