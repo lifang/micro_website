@@ -2,6 +2,7 @@
   <% objects.each do |img|%>
     <%if which_res(img.path_name)=='img'%>
       <%img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name)%>
+      <%#利用minimagic获取图片信息%>
       <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
       <% if image %>
         <li class="ui-widget-content ui-corner-tr">

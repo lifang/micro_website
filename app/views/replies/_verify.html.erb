@@ -1,0 +1,10 @@
+<div class="second_content">
+  <span class="close" onclick="cancle_post_edit()">关闭</span>
+  <div id="verify_site">
+    <div style="background:wihte;text-align: center;">
+      <h2>审核</h2>
+      <%= link_to '通过',verifyt_site_post_reply_path(@site,@post,@reply),class:"blue_btn"%>
+        <%= link_to '不通过',verifyf_site_post_reply_path(@site,@post,@reply),class:"blue_btn"%>
+        </div>
+      </div>
+    </div>

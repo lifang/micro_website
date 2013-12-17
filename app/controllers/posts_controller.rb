@@ -14,7 +14,9 @@ class PostsController < ApplicationController
     #@site=Site.find(params[:site_id])
 
   end
-
+  def edit
+    @post=Post.find(params[:id])
+  end
   def create
     #@site=Site.find(params[:site_id])
     @post=@site.posts.build
@@ -23,7 +25,7 @@ class PostsController < ApplicationController
     @tmp = params[:posts][:post_img]
     @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs"
     @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
-    @post.post_img=@full_path
+    @post.post_img="/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
     @post.post_status=0
     if @post.save
       FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
@@ -41,19 +43,67 @@ class PostsController < ApplicationController
     @post=Post.find(params[:id])
     post_img = @post.post_img
     if @post.destroy
-
       flash[:success]="删除成功"
-      FileUtils.rm post_img
+      FileUtils.rm Rails.root.to_s+"/public"+post_img
       redirect_to site_posts_path(@site)
     else
       flash[:success]="删除失败"
       render 'index'
     end
   end
-  def edit
+  def delete_post
+    destroy
+  end
+  
+  def update
+    @post=Post.find(params[:id])
+    title=params[:posts][:title]
+    post_content=params[:posts][:post_content]
+    temp=@post_img
+    post_img = @post.post_img
+    @tmp = params[:posts][:post_img]
+    p 111111111111111111111111111111111111111111111111111111,@tmp.nil?,222222222222222,post_img
+    if !@tmp.nil?
+      @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs"
+      @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
+      post_img="/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
+    end
+    if @post.update_attributes(title:title,post_content:post_content,post_img:post_img)
+      if !@tmp.nil?
+        file=File.new(@full_path,'wb')
+        FileUtils.rm (Rails.root.to_s+"/public"+temp) unless temp.nil?
+        FileUtils.cp @tmp.path,file
+      end
+      flash[:success]="成功"
+      redirect_to site_posts_path(@site)
+    else
+      flash[:success]="shibai"
+      render 'index'
+    end
+
+  end
+  def top
+    change_top 1
+  end
+  def untop
+    change_top 0
   end
 
+  def change_top(flag)
+    @site =Site.find(params[:site_id])
+    @post =Post.find(params[:id])
+    if @post.update_attribute(:post_status,flag)
+      flash[:success]='修改成功'
+      redirect_to site_posts_path(@site)
+    else
+      flash[:error]=' 修改失败'
+      render 'index'
+    end
+  end
   def show
+    @site =Site.find(params[:site_id])
+    @post =Post.find(params[:id])
+    @replies = @post.replies
   end
 
   def bbs

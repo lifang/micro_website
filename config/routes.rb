@@ -26,6 +26,9 @@ MicroWebsite::Application.routes.draw do
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'
   match 'image_text_page' ,to: 'image_streams#create_imgtxt' , via: 'post'
   match 'imgtxt_edit_update' ,to: 'image_streams#edit_update' ,via: 'post'
+  match '/delete_post' ,to: 'posts#delete_post' ,via: 'get'
+  match '/top' ,to: 'posts#top' ,via: 'get'
+  match '/untop' ,to: 'posts#untop' ,via: 'get'
   # Sample resource route with options:
   resources :sites do
     member do
@@ -42,6 +45,9 @@ MicroWebsite::Application.routes.draw do
       resources :replies do
         collection do
           get :see_more
+        end
+        member do
+          get :verifyt,:verifyf,:verify
         end
       end
     end

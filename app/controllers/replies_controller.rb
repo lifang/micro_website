@@ -1,3 +1,4 @@
+#encoding:utf-8
 class RepliesController < ApplicationController
   skip_before_filter :authenticate_user!
   before_filter :get_site
@@ -31,17 +32,49 @@ class RepliesController < ApplicationController
     @page = page + 1 #帖子翻页
     render :partial => "/bbs/comments/comment", :layout => false
   end
-
+  def destroy
+    @post =Post.find(params[:post_id])
+    @reply=Reply.find(params[:id])
+    if @reply.update_attribute(:status,3)
+      flash[:success]="删除成功"
+      redirect_to site_post_path(@site,@post)
+    else
+      flash[:success]="删除失败"
+      render 'posts/show'
+    end
+  end
+  def verify
+    @post =Post.find(params[:post_id])
+    @reply=Reply.find(params[:id])
+  end
+  def verifyt
+    change_verify 1
+  end
+  def verifyf
+    change_verify 2
+  end
   def reply_comment_new
     
     render "/bbs/comments/reply_comment"
   end
-
   def reply_comment_create
     
   end
 
   private
+  def change_verify(flag)
+     @site =Site.find(params[:site_id])
+     @post =Post.find(params[:post_id])
+     @reply =Reply.find(params[:id])
+     p 1111111111111111111111111222222225454646545421,@reply,flag
+     if @reply.update_attribute(:status,flag)
+        flash[:success]='审核成功'
+        redirect_to site_post_path(@site,@post)
+     else
+        flash[:error]='审核失败'
+        redirect_to site_post_path(@site,@post)
+     end
+  end
   def get_post
     @post = Post.find_by_id(params[:post_id])
   end

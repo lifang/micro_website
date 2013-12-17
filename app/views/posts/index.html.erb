@@ -1,17 +1,83 @@
 <div class="main_container">
-	<table>
-		<tr><td>序号</td><td>标题</td><td>内容</td><td>发表时间</td><td>操作</td></tr>
-		
-<%@posts.each do |p|%>
-<tr>
-	<td></td>
-	<td><%=p.title%></td>
-	<td><%= raw(p.post_content)%></td>
-	<td></td>
-	<td><%=link_to '删除','#',method: :delete %></td>
-</tr>
+  <h1><%=link_to @site.name,site_pages_path(@site) %>><%=link_to '论坛',site_posts_path(@site) %></h1>
+  <div class="set_btn cf"><button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
 
+  <ul class="forum_list">
+    <%  @posts.each do |p|%>
+      <li class="theme">
+        <span class="close" onclick="delete_post('<%=@site.id%>','<%=p.id%>') ">关闭</span>
+        <div>
+          <div class="theme_tit">
+            <%=link_to p.title,site_post_path(@site,p)%>
+            <span class="jing">精</span>
+            <%if p.post_status==1%>
+              <span class="zding" >置顶</span>
+            <%end%>
+          </div>
+          <div class="theme_author"><span title="作者：xxx">xxx</span></div>
+        </div>
+        <div>
+          <div class="theme_txt"><span><%=raw p.post_content%></span></div>
+          <div class="theme_lastreply"><span class="reply_name" title="最后回复：xxx">xxx</span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
+        </div>
+      </li>
+    <%end%>
 
-<%end%>
-	</table>
+  </ul>
+
 </div>
+
+<div class="second_box new_theme">
+  <%=form_for(:posts,:url => site_posts_path(@site), :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+    <div class="second_content second_content2">
+      <span class="close" >关闭</span>
+      <h1>创建讨论帖</h1>
+      <h2>
+        <span>标题：<input class="check_input" name="posts[title]" type="text" /></span>
+        <div class="fileBox" style="width:300px; margin-left: 100px;">
+          <input type="text" class="fileText_1" value="点此上传图片"/>
+          <button class="fileBtn_1 blue_btn" >浏览...</button>
+          <%=f.file_field :post_img , class:"file_1" %>
+          </div>
+        </h2>
+        <div style="width:800px;margin:auto;">
+          <textarea class="it_content"  name="posts[post_content]" style="margin-bottom:20px"></textarea>
+        </div>
+        <div class="uinfo_act">
+          <input type="button" class="blue_btn" onclick="check_new_post()" value="新建" />
+          <input type="button" class="blue_btn" onclick="cancle_post_edit()" value="取消" />
+        </div>
+      </div>
+    <%end%>
+  </div>
+  <script>
+    var editor =KindEditor.create($(".it_content").last(), {
+      resizeMode : 1,
+      width : "800px",
+      height :'200px',
+      items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist']
+    });
+    function check_new_post(){
+      var input=$(".second_box.new_theme").find('.check_input').val();
+      var file=$(".second_box.new_theme").find('.fileText_1').val();
+      if($.trim(input)==''){
+        tishi_alert('标题不能为空！');
+        return false;
+      }
+      var re=file.split('.')[file.split('.').length-1];
+      if(file=='' || !re.match(/jpg|gif|png/i)){
+        tishi_alert('文件不能为空且为图片！');
+        return false;
+      }
+      if(editor.text()==""){
+        tishi_alert('内容不能为空！');
+        return false;
+      }
+      $(".it_content").html(editor.html());
+      $(".second_box.new_theme form").submit();
+    }
+  </script>
+

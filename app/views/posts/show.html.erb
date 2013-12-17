@@ -1,2 +1,53 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="main_container">
+  <h1><%=link_to @site.name,site_pages_path(@site) %>><%=link_to '论坛',site_posts_path(@site) %>><%=@post.title%></h1>
+  <div class="theme_det">
+    <h1><%=@post.title%></h1>
+    <div class="floor">
+      <div class="floor_name">层主</div>
+      <div class="floor_txt">
+        <%img_path=Rails.root.to_s + '/public'+(@post.post_img)%>
+        <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
+        <img src="<%=@post.post_img%>" width="<%= image['width']<600? image['width']:600 %>px" /><br/>
+        <%=raw @post.post_content%>
+      </div>
+      <div class="floor_act">
+        <%=link_to '编辑',edit_site_post_path(@site,@post),remote:true,class:'blue_btn'%>
+          <%=link_to '删除',site_post_path(@site,@post),confirm:'是否确认删除？',method: :delete,class:"blue_btn"%>
+            <%if @post.post_status==0%>
+              <button class="blue_btn" onclick="to_top('<%=@site.id%>','<%=@post.id%>')">置顶</button>
+            <%else%>
+              <button class="blue_btn" onclick="unto_top('<%=@site.id%>','<%=@post.id%>')">取消置顶</button>
+            <%end%>
+          </div>
+        </div>
+        <!--回复-->
+        <%i=1;%>
+        <% @replies.each do |reply| %>
+          <% if reply.status!=3 %>
+            <%i+=1%>
+            <div class="floor">
+              <div class="floor_name">
+                <%=i%>楼(状态：<%= reply.status==2 ? '审核未通过':'已审核通过' %>)
+              </div>
+              <div class="floor_txt">
+                <%=reply.reply_content%>
+              </div>
+
+              <div class="floor_act">
+                <%=link_to '审核' ,verify_site_post_reply_path(@site,@post,reply),remote:true,class:"blue_btn"%>
+
+                  <%=  link_to '删除',site_post_reply_path(@site,@post,reply),confirm:'是否确认删除？',method: :delete,class:"blue_btn"%>
+                  </div>
+                </div>
+
+              <%end%>
+            <%end%>
+          </div>
+        </div>
+        <div class="second_box wp" style="position: fixed;" >
+
+        </div>
+       <!--编辑-->
+        <div class="second_box theme_edt" style="position: fixed;">
+
+        </div>

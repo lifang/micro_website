@@ -22,3 +22,33 @@ $(function(){
 		$(this).addClass("bbs_title_good00");	
 	});	
 })
+
+function delete_post(site,post){
+     if(confirm('确定删除？'))
+     window.location.href="/delete_post?site_id="+site+"&id="+post;
+}
+function to_top(site,post){
+    if(confirm('确定置顶？'))
+     window.location.href="/top?site_id="+site+"&id="+post;
+}
+function unto_top(site,post){
+    if(confirm('确定取消置顶？'))
+     window.location.href="/untop?site_id="+site+"&id="+post;
+}
+function show_post_info(id,title,content,img){
+    $("#post_title").val(title);
+    $("#post_img").attr("src",img);
+    $("#post_id").val(id);
+    $("#post_content").text(content);
+
+     $(".second_bg").show();
+     $(".second_box.theme_edt").show();
+}
+
+function cancle_post_edit(){
+    $(".second_bg").hide();
+    $(".second_box.theme_edt").hide();
+    $(".second_box.new_theme").hide();
+    $(".second_box.wp").hide();
+}
+

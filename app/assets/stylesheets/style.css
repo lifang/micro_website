@@ -205,6 +205,16 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     position: relative;
     width: 450px;
 }
+.second_c {
+    background-color: #FCFCFC;
+    border: 1px solid #CBD5D9;
+    border-radius: 5px;
+    margin: 100px auto;
+    max-height: 500px;
+    padding: 10px;
+    position: absolute;
+    width: 450px;
+}
 .second_box .page_txt {
     height: 280px;
 }
