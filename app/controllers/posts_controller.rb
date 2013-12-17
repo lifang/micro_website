@@ -31,10 +31,10 @@ class PostsController < ApplicationController
       FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
       file=File.new(@full_path,'wb')
       FileUtils.cp @tmp.path,file
-      flash[:success]="成功"
+      flash[:success]="创建成功"
       redirect_to site_posts_path(@site)
     else
-      flash[:success]="shibai"
+      flash[:success]="创建失败"
       render 'index'
     end
   end
@@ -74,10 +74,10 @@ class PostsController < ApplicationController
         FileUtils.rm (Rails.root.to_s+"/public"+temp) unless temp.nil?
         FileUtils.cp @tmp.path,file
       end
-      flash[:success]="成功"
+      flash[:success]="编辑成功"
       redirect_to site_posts_path(@site)
     else
-      flash[:success]="shibai"
+      flash[:success]="编辑失败"
       render 'index'
     end
 

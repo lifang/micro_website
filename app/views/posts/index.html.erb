@@ -17,8 +17,8 @@
           <div class="theme_author"><span title="作者：xxx">xxx</span></div>
         </div>
         <div>
-          <div class="theme_txt"><span><%=raw p.post_content%></span></div>
-          <div class="theme_lastreply"><span class="reply_name" title="最后回复：xxx">xxx</span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
+          <div class="theme_txt"><span><%=raw(p.post_content)%>...</span></div>
+          <div class="theme_lastreply"><span class="reply_name" title="回复数">回复数：<%=p.praise_number%></span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
         </div>
       </li>
     <%end%>

@@ -36,6 +36,7 @@ class RepliesController < ApplicationController
     @post =Post.find(params[:post_id])
     @reply=Reply.find(params[:id])
     if @reply.update_attribute(:status,3)
+      @post.update_attribute(:praise_number,@post.praise_number-1)
       flash[:success]="删除成功"
       redirect_to site_post_path(@site,@post)
     else

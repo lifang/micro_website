@@ -11,18 +11,20 @@
                 </div>
               </h2>
               <!--img id="post_img" width="100" height="100" src="<%@post.post_img%>"/-->
+
               <textarea class="it_content" name="posts[post_content]" id="post_content" style="margin-bottom:50px;width:600px;">
               <%=@post.post_content%>
               </textarea>
+
               <input type="hidden" name="posts[id]" id="post_id" />
               <div class="uinfo_act">
-                <input type="submit" class="blue_btn"   value="提交" />
+                <input type="button" class="blue_btn" onclick="check_eidt_post()"  value="提交" />
                 <input type="button" class="blue_btn" onclick="cancle_post_edit()" value="取消" />
               </div>
 </div>
 <%end%>
 <script>
-            KindEditor.create($(".it_content").last(), {
+           editor= KindEditor.create($(".it_content").last(), {
               resizeMode : 1,
               width : "800px",
               height:'200px',
@@ -31,4 +33,18 @@
                 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
                 'insertunorderedlist']
             });
+
+      function check_eidt_post(){
+      var input=$("#post_title").val();
+      if($.trim(input)==''){
+        tishi_alert('标题不能为空！');
+        return false;
+      }
+      if(editor.text()==""){
+        tishi_alert('内容不能为空！');
+        return false;
+      }
+      $(".it_content").html(editor.html());
+      $(".second_box.theme_edt form").submit();
+    }
           </script>
