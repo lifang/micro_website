@@ -65,7 +65,7 @@ function replyComment(num){
 
 function checkLength( o, max ) {
     if($.trim(o.val()) == ""){
-       updateTips( "回复内容不能为空." );
+        updateTips( "回复内容不能为空." );
     }
     else if ( o.val().length > max ) {
         o.addClass( "ui-state-error" );
@@ -97,16 +97,33 @@ function toggleStar(obj){
         $(obj).removeClass("bbs_star_good");
         flag = 0;
     }
-        $.ajax({
+    $.ajax({
         url: $(obj).attr("data-url"),
         type: "POST",
         dataType: "text",
-        data:{flag : flag},
+        data:{
+            flag : flag
+        },
         success:function(data){
-           //alert(data);
+        //alert(data);
         },
         error:function(data){
             alert("error");
         }
     })
+}
+
+function checkText(obj){
+    var content = $(obj).parents("form").find("#comment_reply_content");
+    if($.trim(content.val()) == ""){
+        tishi_alert( "回复内容不能为空." );
+        return false;
+    }
+    else if ( content.val().length > 50 ) {
+        
+        tishi_alert( "回复内容不能超过" + 50 + "." );
+        return false;
+    } else {
+        return true;
+    }
 }

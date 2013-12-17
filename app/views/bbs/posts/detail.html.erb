@@ -26,7 +26,7 @@
         <%= f.text_area :reply_content, :placeholder => "回复内容需在50字以内" %>
         <div class="bbs_textarea_btn">
           <!--<a href="#" class="btn">成为会员</a>-->
-          <button type="submit" class="btn">发表评论</button>
+          <button type="submit" class="btn" onclick="return checkText(this)">发表评论</button>
         </div>
       <% end %>
     </div>
