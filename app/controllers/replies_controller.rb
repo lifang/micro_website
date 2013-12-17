@@ -13,7 +13,7 @@ class RepliesController < ApplicationController
       #@path = bbs_detail_site_post_path(@site, @post)
       
       comments = @post.replies
-      @comments = comments.order("created_at desc").limit(3).offset(0)
+      @comments = comments.order("created_at desc").limit(6).offset(0)
       @page = 1 #帖子初始第一页
       @comments_total = @comments_count = comments.length
       render "/bbs/comments/success"
@@ -27,8 +27,8 @@ class RepliesController < ApplicationController
     page = params[:page].to_i
     comments = @post.replies
     @comments_total = comments.count
-    @comments = comments.order("created_at desc").limit(3).offset(page * 3)
-    @comments_count = @comments_total - page * 3
+    @comments = comments.order("created_at desc").limit(6).offset(page * 6)
+    @comments_count = @comments_total - page * 6
     @page = page + 1 #帖子翻页
     render :partial => "/bbs/comments/comment", :layout => false
   end
