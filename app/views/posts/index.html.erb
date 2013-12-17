@@ -1,6 +1,6 @@
 <div class="main_container">
   <h1><%=link_to @site.name,site_pages_path(@site) %>><%=link_to '论坛',site_posts_path(@site) %></h1>
-  <div class="set_btn cf"><button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
+  <div class="set_btn cf"><%=link_to '预览',bbs_site_posts_path(@site),class:'blue_btn'%> <button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
 
 
   <ul class="forum_list">
@@ -23,7 +23,9 @@
         </div>
       </li>
     <%end%>
-
+<div class="digg_pagination" style="margin:0 auto;text-align: center;">
+          <%= will_paginate  :previous_label=>'上一页',:next_label=>'下一页'%>
+        </div>
   </ul>
 
 </div>

@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:bbs, :see_more, :bbs_detail, :star]
   def index
     # @site=Site.find(params[:site_id])
-    @posts=@site.posts.order("created_at desc")
+    @posts=@site.posts.order("created_at desc").paginate(page:params[:page],:per_page => 9)
   end
 
   def new
@@ -19,14 +19,15 @@ class PostsController < ApplicationController
   end
   def create
     #@site=Site.find(params[:site_id])
+    @time=(Time.now.to_f * 1000000).to_i
     @post=@site.posts.build
     @post.title=params[:posts][:title]
     @post.post_content=params[:posts][:post_content]
     @tmp = params[:posts][:post_img]
     @post.praise_number=0;
     @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs"
-    @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
-    @post.post_img="/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
+    @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/#{@time}"+@tmp.original_filename
+    @post.post_img="/allsites/"+ @site.root_path+"/bbs/#{@time}"+@tmp.original_filename
     #是否置顶
     @post.post_status=params[:posts][:post_status]
     if @post.save
@@ -66,7 +67,6 @@ class PostsController < ApplicationController
     temp=@post_img
     post_img = @post.post_img
     @tmp = params[:posts][:post_img]
-    p 111111111111111111111111111111111111111111111111111111,@tmp.nil?,222222222222222,post_img
     if !@tmp.nil?
       @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs"
       @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/"+@tmp.original_filename
@@ -88,6 +88,10 @@ class PostsController < ApplicationController
   end
   
   def top
+    @p=Post.where('post_status = 1')
+    if @p 
+      @p[0].update_attribute(:post_status,0)
+    end
     change_top 1
   end
   
@@ -102,10 +106,10 @@ class PostsController < ApplicationController
     @site =Site.find(params[:site_id])
     @post =Post.find(params[:id])
     if @post.update_attribute(:post_status,flag)
-      flash[:success]='修改成功'
+      flash[:success]='置顶成功'
       redirect_to site_posts_path(@site)
     else
-      flash[:error]=' 修改失败'
+      flash[:error]='置顶失败'
       render 'index'
     end
   end
