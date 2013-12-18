@@ -196,7 +196,7 @@ class PagesController < ApplicationController
           if page.authenticate? && !page.form? && !user_signed_in?
             redirect_to '/signin'
           else
-            redirect_to URI.encode("/allsites" + path_name) + "#mp.weixin.qq.com"
+            redirect_to URI.encode("/allsites" + path_name)
           end
         else
           redirect_to '/303.html', :layout => false
