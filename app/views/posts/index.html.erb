@@ -1,6 +1,6 @@
 <div class="main_container">
-  <h1><%=link_to @site.name,site_pages_path(@site) %>><%=link_to '论坛',site_posts_path(@site) %></h1>
-  <div class="set_btn cf"><%=link_to '预览',bbs_site_posts_path(@site),class:'blue_btn'%> <button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
+  <h1><%=link_to @site.name,site_pages_path(@site) %> <%=link_to '论坛',site_posts_path(@site) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <font size=2>(论坛路径：<%=bbs_site_posts_url(@site)%>)</font></h1>
+  <div class="set_btn cf"><%=link_to '预览',bbs_site_posts_path(@site),class:'blue_btn',target:'_blank'%> <button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
 
 
   <ul class="forum_list">
@@ -18,7 +18,7 @@
           <div class="theme_author"><span title="作者：xxx">收藏数：<%=p.praise_number%></span></div>
         </div>
         <div>
-          <div class="theme_txt"><span><%=raw(p.post_content)%>...</span></div>
+          <div class="theme_txt"><span><%= (strip_tags p.post_content).length > 10 ? "#{(strip_tags p.post_content)[0..9]}...":(strip_tags p.post_content) %></span></div>
           <div class="theme_lastreply"><span class="reply_name" title="回复数">回复数：<%=p.comments_count%></span><span class="reply_time"><%=p.created_at.to_s[0..10]%></span></div>
         </div>
       </li>
@@ -71,8 +71,8 @@
         return false;
       }
       var re=file.split('.')[file.split('.').length-1];
-      if(file=='' || !re.match(/jpg|gif|png/i)){
-        tishi_alert('文件不能为空且为图片！');
+      if(file=='' || !re.match(/jpg|gif|png|bmp/i)){
+        tishi_alert('文件不能为空且为(jpg,gif,png,bmp)图片！');
         return false;
       }
       if(editor.text()==""){

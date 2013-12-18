@@ -29,15 +29,18 @@ class PostsController < ApplicationController
     @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/bbs/#{@time}"+@tmp.original_filename
     @post.post_img="/allsites/"+ @site.root_path+"/bbs/#{@time}"+@tmp.original_filename
     #是否置顶
-    @post.post_status=params[:posts][:post_status]
-    if @post.save
+    @post.post_status=0
+    if @tmp.size>0&&@post.save
       FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
       file=File.new(@full_path,'wb')
       FileUtils.cp @tmp.path,file
       flash[:success]="创建成功"
       redirect_to site_posts_path(@site)
     else
-      flash[:success]="创建失败"
+      if @tmp.size==0
+        tag='图片大小为0'
+      end
+      flash[:success]="创建失败#{tag}"
       render 'index'
     end
   end
@@ -89,13 +92,14 @@ class PostsController < ApplicationController
   
   def top
     @p=Post.where('post_status = 1')
-    if @p 
+    if !@p[0].nil? 
       @p[0].update_attribute(:post_status,0)
     end
     change_top 1
   end
   
   def untop
+    @tag='取消'
     change_top 0
   end
   def edit
@@ -106,10 +110,10 @@ class PostsController < ApplicationController
     @site =Site.find(params[:site_id])
     @post =Post.find(params[:id])
     if @post.update_attribute(:post_status,flag)
-      flash[:success]='置顶成功'
+      flash[:success]="#{@tag}置顶成功"
       redirect_to site_posts_path(@site)
     else
-      flash[:error]='置顶失败'
+      flash[:error]="#{@tag}置顶失败"
       render 'index'
     end
   end
