@@ -24,6 +24,8 @@ li { list-style: none;}
 }
 .theme:hover .close { display:block;}
 .theme_tit { display: inline-block; width: 70%; overflow: hidden;}
+.theme_tit a { color: blue;}
+.theme_tit a:hover { text-decoration: underline;}
 .theme_author { width: 25%; display: inline-block; overflow: hidden;}
 .theme_txt { display: inline-block; width: 70%; overflow: hidden;}
 .theme_lastreply { width: 25%; display: inline-block; overflow: hidden;}
