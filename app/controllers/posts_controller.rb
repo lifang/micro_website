@@ -118,9 +118,15 @@ class PostsController < ApplicationController
     end
   end
   def show
-    @site =Site.find(params[:site_id])
-    @post =Post.find(params[:id])
+    @site =Site.find_by_id(params[:site_id])
+    @post =Post.find_by_id(params[:id])
+    if @site.nil? || @post.nil?
+      render(:file  => "#{Rails.root}/public/404.html",
+             :layout => nil,
+             :status   => "404 Not Found")
+    else
     @replies = @post.replies
+    end
   end
 
   def bbs
