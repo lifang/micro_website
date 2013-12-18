@@ -120,8 +120,8 @@ article:after{
 	
 }
 .bbs_body { overflow: hidden; padding: 5px;}
-.bbs_h { height: 40px; border-left: 5px #333333 solid; padding-left: 5px;}
-.bbs_h h1 { font-size: 18px; height: 30px; line-height: 30px;}
+.bbs_h {border-left: 5px #333333 solid; padding-left: 5px;}
+.bbs_h h1 { font-size: 18px; line-height: 24px; margin-bottom:5px;}
 .bbs_h p { font-size: 10px; height: 10px; line-height: 10px; color: #999;}
 
 .bbs_text { padding: 5px 10px;}

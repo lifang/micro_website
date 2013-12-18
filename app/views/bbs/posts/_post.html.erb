@@ -3,7 +3,7 @@
     <div class="bbs_list_avatar"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><img src="<%= post.post_img %>"/></a></div>
     <div class="bbs_list_con">
       <h1 class="video_icon"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= post.title %></a></h1>
-      <div class="list_text"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= raw(post.post_content).truncate(30, :seperator => ".") %></a></div>
+      <div class="list_text"><a href="<%= bbs_detail_site_post_path(@site, post) %>"><%= strip_tags(truncate(post.post_content, length: 30)) %></a></div>
       <div class="list_func">
         <span class="list_time"><%= post.created_at.strftime("%Y-%m-%d") if  post.created_at %></span>
         <a href="#" class="list_mess"><%= post.comments_count %></a>

@@ -38,7 +38,7 @@
 <div id="dialog-reply-form" class="dialog-reply-form" title="回复几楼" style="display: none">
   <p class="validateTips"></p>
   <%= form_for :comment, :url => "#{site_post_replies_path(@site, @post)}", :html => {:remote => true, :method => :post } do |f| %>
-    <%= f.text_area :reply_content, :cols => 32, :rows => 10, :id => "reply_content", :placeholder => "回复内容需在50字以内" %>
+    <%= f.text_area :reply_content, :cols => 31, :rows => 9, :id => "reply_content", :placeholder => "回复内容需在50字以内" %>
     <%= f.hidden_field :target_open_id, :id => "target_person" %>
   <% end %>
 </div>
