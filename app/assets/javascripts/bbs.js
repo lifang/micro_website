@@ -50,5 +50,8 @@ function cancle_post_edit(){
     $(".second_box.theme_edt").hide();
     $(".second_box.new_theme").hide();
     $(".second_box.wp").hide();
+    $(".second_box.new_theme").find('.check_input').val("");
+    $(".second_box.new_theme").find('.fileText_1').val("点此上传图片");
+    editor.text("");
 }
 
