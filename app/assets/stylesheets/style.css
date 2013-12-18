@@ -80,7 +80,7 @@ h2 input { font-size: 16px;}
 .user_name:hover .user_act { display: block; position: absolute; background: #29a7e1; color: #ffffff; left: 30px; top: 32px; padding: 0 10px; }
 .user a { color: #f2f2f2;}
 .nav { height:50px; line-height:50px; background:#29A7E1;}
-.menu { width:1000px; margin: 0 auto;}
+.menu { width:1000px; margin: 0 auto; position: relative;}
 .menu li { float: left; margin: 0px 10px 0 0;}
 .menu li a { 
     color: #6CD6D6; 
@@ -275,3 +275,15 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 
  .page_tit .scd_btn { float: right; margin: 5px 22px; line-height: 20px;}
  .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 30px; line-height: 30px; padding: 0 10px;}
+
+.menuBox1 { display: none;}
+.menuLi1:hover .menuBox1 {
+    background: none repeat scroll 0 0 #328BD5;
+    color: #FFFFFF;
+    display: block;
+    left: 0px;
+    padding: 0 10px;
+    position: absolute;
+    top: 50px;
+}
+.menu li .menuBox1 a:hover { color: #edf0f1; background:#3BB9EA;}

@@ -1,36 +1,66 @@
 <div class="head">
-  <div class="head_box">
-    <div class="logo">微网站</div>
-    <div class="user">
-      <% if current_user %>
-        <div class="user_name"><%= current_user.name %>
-          <ul class="user_act">
-            <%= link_to("/change", :remote => true) do %>
-              <li>编辑</li>
-            <% end %>
+	<div class="head_box">
+		<div class="logo">
+			微网站
+		</div>
+		<div class="user">
+			<% if current_user %>
+			<div class="user_name">
+				<%= current_user.name %>
+				<ul class="user_act">
+					<%= link_to("/change", :remote => true) do %>
+					<li>
+						编辑
+					</li>
+					<% end %>
 
-            <%= link_to("/change_password", :remote => true) do %>
-              <li>修改密码</li>
-            <% end %>
-          </ul>
-        </div>
-        <div class="user_logout"><a href="/signout">退出</a></div>
-      <% else %>
-        <div class="user_name"><a href="/signup">注册</a></div>
-        <div class="user_logout"><a href="/signin">登录</a></div>
-      <% end %>
-    </div>
-  </div>
-  <div class="nav">
-    <div class="menu cf">
-      <ul>
-        <% if current_user &&  !current_user.admin %>
-          <li><a href="/sites" class="<%= controller_name == "users" ? "" : "hover" %>">站点</a></li>
-        <% end %>
-        <% if current_user && current_user.admin %>
-          <li><a href="/user/manage/1" class="<%= controller_name == "users" ? "hover" : "" %>">用户</a></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
+					<%= link_to("/change_password", :remote => true) do %>
+					<li>
+						修改密码
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<div class="user_logout">
+				<a href="/signout">退出</a>
+			</div>
+			<% else %>
+			<div class="user_name">
+				<a href="/signup">注册</a>
+			</div>
+			<div class="user_logout">
+				<a href="/signin">登录</a>
+			</div>
+			<% end %>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="menu cf">
+			<ul>
+				<% if current_user &&  !current_user.admin %>
+				<li class="menuLi1">
+					<a href="/sites" class="<%= controller_name == "users" ? "" : "hover" %>">站点</a>
+					<% if !@site.nil?%>
+					<div class="menuBox1">
+						<ul>
+							<li>
+								<%=link_to '站点详情',site_pages_path(@site) %>
+							</li>
+							<li>
+								<%=link_to '论坛',site_posts_path(@site),target:'_blank' %>
+							</li>
+						</ul>
+					</div>
+					<%end%>
+				</li>
+				<% end %>
+				<% if current_user && current_user.admin %>
+				<li>
+					<a href="/user/manage/1" class="<%= controller_name == "users" ? "hover" : "" %>">用户</a>
+				</li>
+				<% end %>
+			</ul>
+
+		</div>
+	</div>
 </div>

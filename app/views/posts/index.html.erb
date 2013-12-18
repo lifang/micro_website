@@ -1,5 +1,5 @@
 <div class="main_container">
-  <h1><%=link_to @site.name,site_pages_path(@site) %> <%=link_to '论坛',site_posts_path(@site) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <font size=2>(论坛路径：<%=bbs_site_posts_url(@site)%>)</font></h1>
+  <h1><%=link_to "#{@site.name}论坛",site_posts_path(@site) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <font size=2>(论坛路径：<%=bbs_site_posts_url(@site)%>)</font></h1>
   <div class="set_btn cf"><%=link_to '预览',bbs_site_posts_path(@site),class:'blue_btn',target:'_blank'%> <button class="blue_btn scd_btn" name="new_theme">新建讨论帖</button></div>
 
 
