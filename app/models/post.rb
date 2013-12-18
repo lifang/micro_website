@@ -2,7 +2,7 @@
 class Post < ActiveRecord::Base
   include ChangeHandler
   attr_accessible :post_content, :post_status, :site_id ,:title , :post_img
-  has_many :replies
+  has_many :replies, :dependent => :destroy
 
   STATUS = {:normal => 0, :top => 1}
   status_arr = ["normal", "top"]
