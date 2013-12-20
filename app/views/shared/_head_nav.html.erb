@@ -44,10 +44,10 @@
 					<div class="menuBox1 ">
 						<ul>
 							<li style="<%= controller.controller_name != "posts" ? "background:#3BB9EA;":"" %>" >
-								<%=link_to '站点详情',site_pages_path(@site) %>
+								<%=link_to "#{@site.name}站点详情",site_pages_path(@site) %>
 							</li>
 							<li style="<%= controller.controller_name == "posts" ? "background:#3BB9EA;":"" %>">
-								<%=link_to '论坛',site_posts_path(@site) %>
+								<%=link_to "#{@site.name}论坛",site_posts_path(@site) %>
 							</li>
 						</ul>
 					</div>
