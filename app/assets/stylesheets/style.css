@@ -94,7 +94,7 @@ h2 input { font-size: 16px;}
 .menu li a.hover, .menu li a:hover { color: #edf0f1; background:#4AC8F9;}
 
 /* 主内容 */
-.main_container { width: 1000px; margin: 0 auto; padding: 140px 0 10px;}
+.main_container { width: 1000px; margin: 0 auto; padding: 190px 0 10px;}
 .set_btn { float: right; margin-top: -36px;}
 
 .con_box {
@@ -277,7 +277,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
  .page_txt a, .page_txt button,.page_txt input[type=submit],.page_txt input[type=button] { display: inline-block; height: 30px; line-height: 30px; padding: 0 10px;}
 
 .menuBox1 { display: none;}
-.menuLi1:hover .menuBox1 {
+.menuLi1.hover .menuBox1 {
     background: none repeat scroll 0 0 #328BD5;
     color: #FFFFFF;
     display: block;
