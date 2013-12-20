@@ -95,7 +95,7 @@ h2 input { font-size: 16px;}
 .menu li a.hover, .menu li a:hover { color: #edf0f1; background:#4AC8F9;}
 
 /* 主内容 */
-.main_container { width: 1000px; margin: 0 auto; padding: 140px 0 10px;}
+.main_container { width: 1000px; margin: 0 auto; padding: 190px 0 10px;}
 .set_btn { float: right; margin-top: -36px;}
 
 .con_box {
