@@ -209,7 +209,7 @@ article:after{
 
 .bbs_textarea { padding: 10px;}
 .bbs_textarea h1 { height: 30px; line-height: 30px; font-size: 18px;}
-.bbs_textarea textarea { width: 96%; height: 100px; color: #999; padding: 5px;}
+.bbs_textarea textarea { width: 96%; height: 100px; color: #999; padding: 5px;border: 1px #A0A0A0 solid;}
 .bbs_textarea_btn { height: 35px; margin: 10px 0; text-align: center;}
 .bbs_textarea_btn a, .bbs_textarea_btn button {
 	height: 32px;
