@@ -130,6 +130,7 @@ class PostsController < ApplicationController
   end
 
   def bbs
+    @title = "#{@site.name}论坛"
     if @top_post
       @post = @top_post
       @post_total = @tmp_posts.length
@@ -162,6 +163,7 @@ class PostsController < ApplicationController
   end
 
   def bbs_detail
+    @title = "#{@site.name}论坛"
     @post = Post.find_by_id(params[:id])
     if @post
       comments = @post.replies

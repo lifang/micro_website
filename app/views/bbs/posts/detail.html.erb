@@ -35,16 +35,20 @@
 
 </article>
 
-<div id="dialog-reply-form" class="dialog-reply-form" title="回复几楼" style="display: none">
-  <p class="validateTips"></p>
-  <%= form_for :comment, :url => "#{site_post_replies_path(@site, @post)}", :html => {:remote => true, :method => :post } do |f| %>
-    <%= f.text_area :reply_content, :cols => 31, :rows => 9, :id => "reply_content", :placeholder => "回复内容需在50字以内" %>
-    <%= f.hidden_field :target_open_id, :id => "target_person" %>
-  <% end %>
+<div class="second_box">
+  <div class="second_content" style="width: 300px;background: #ffffff;">
+    <span class="close" >关闭</span>
+    <h2 class="title"></h2>
+    <div id="dialog-reply-form">
+      <%= form_for :comment, :url => "#{site_post_replies_path(@site, @post)}", :html => {:remote => true, :method => :post } do |f| %>
+        <%= f.text_area :reply_content, :cols => 31, :rows => 9, :id => "reply_content", :placeholder => "回复内容需在50字以内" %>
+        <%= f.hidden_field :target_open_id, :id => "target_person" %>
+
+      <div class="bbs_textarea_btn">
+                  <button class="btn" type="submit" onclick="return checkDialogText(this)">回复</button>
+              </div>
+        
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<script>
-  $(function() {
-
-  });
-</script>

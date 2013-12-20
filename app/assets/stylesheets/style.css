@@ -257,9 +257,54 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .page_txt legend { font-size: 16px; line-height: 32px; position: relative; top: 1px;}
 .insertDiv { height: 210px; overflow: auto; }
 .insertBox { width: 75%; margin: 10px auto 0; border: 1px solid #C2C2C2; position: relative; padding: 5px 20px;} 
-.inputArea { margin: 8px; border: 1px dashed #003333; width: 350px; background: #f5f5f5; color: #a7a7a7; display: inline-block;}
-.second_content input.txtArea { margin: 8px; border: 1px solid #003333; display: none; width: 350px; }
+/*.inputArea { margin: 8px; border: 1px dashed #003333; width: 350px; background: #f5f5f5; color: #a7a7a7; display: inline-block;}
+.second_content input.txtArea { margin: 8px; border: 1px solid #003333; display: none; width: 350px; }*/
+/* form 后台表单样式*/
+.selectBox .titBox {
+ border: 1px solid #C2C2C2;
+ background: url(/assets/select_icon2.png) no-repeat 295px center;
+ -webkit-background-size:25px 24px;
+ -o-background-size:25px 24px;
+ background-size:25px 24px;
+}
+.selectBox .optionBox { position: relative; border: 1px solid #C2C2C2; border-top: 0;}
 
+.second_content .deleteOption{
+ overflow: hidden;
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    background: url(/assets/minus.png) no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    text-indent: -999px;
+    width: 17px;
+ padding: 0;
+}
+.second_content .add_option{
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    background: url(/assets/add.png) no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    text-indent: -999px;
+    width: 17px;
+ padding: 0;
+}
+.insertBox .close,.insertBox .delete {
+    overflow: hidden;
+    position: absolute;
+ padding: 0;
+    right: -8px;
+    top: -8px;
+}
+.inputArea { margin: 8px; border: 1px dashed #003333; width: 80%; background: #f5f5f5; color: #a7a7a7; display: inline-block;}
+
+.second_content input.txtArea { margin: 8px; border: 1px solid #003333; display: none; width: 80%; }
 .forgetPass {
  width: 400px;
  height: auto;

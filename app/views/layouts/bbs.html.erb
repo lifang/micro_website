@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>万苏论坛</title>
+    <title><%= @title || "论坛" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <%= javascript_include_tag "application" %>
     <link href="/assets/bbs.css" rel="stylesheet" type="text/css"/>
@@ -12,6 +12,9 @@
 
   <body>
     <%= yield %>
+
+    <div class="second_bg"></div>
+    
     <div class="tab_alert" style="width:100%;position: absolute; z-index: 100; display:none">
       <div style="font-size:20px;margin: 200px auto;width: 300px;background: #3696E0;padding: 20px;">
         <span class="close" id="close_flash" style="float:right;" ></span>

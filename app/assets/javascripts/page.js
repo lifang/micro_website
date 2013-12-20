@@ -6,7 +6,98 @@
 
 //判断非法字符
 var pattern = new RegExp("[`~@#$^&*()=:;,\\[\\].<>~！%@#￥……&*（）——|{}。，、-]");
-var patten_html = new RegExp("[.]")
+var patten_html = new RegExp("[.]");
+
+//表单元素
+var inputEle = "<div class='insertBox inputBox'>\n\
+                  <span class='delete' onclick='deleOption(this)' title='移除栏目'></span>\n\
+                  <div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div>\n\
+                  <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' />\n\
+                  <input type='text' class='newNameClass' />\n\
+                </div>";
+
+var radioEle = "<div class='insertBox radioBox'>\n\
+                    <span class='delete' onclick='deleOption(this)' title='移除栏目'></span>\n\
+                    <span class='add_option' onclick='addOption(this, 2)' title='添加选项'></span>\n\
+                    <div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div>\n\
+                    <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' />\n\
+                    <div class='pr'>\n\
+                        <input type='radio' class='newNameClass' />\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>\n\
+                    <div class='pr'>\n\
+                        <input type='radio' class='newNameClass' />\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>\n\
+                </div>";
+
+var checkboxEle = "<div class='insertBox checkboxBox'>\n\
+                        <span class='delete' onclick='deleOption(this)' title='移除栏目'></span>\n\
+                        <span class='add_option' onclick='addOption(this, 3)' title='添加选项'></span>\n\
+                        <div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div>\n\
+                        <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)'/>\n\
+                        <div class='pr'>\n\
+                            <input type='checkbox' class='newNameClass'/>\n\
+                            <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                            <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                            <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                        </div>\n\
+                        <div class='pr'>\n\
+                            <input type='checkbox' class='newNameClass'/>\n\
+                            <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                            <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                            <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                        </div>\n\
+                    </div>";
+
+var selectEle = "<div class='insertBox selectBox'>\n\
+                    <span class='delete' onclick='deleOption(this)' title='移除栏目'></span>\n\
+                    <div class='titBox'>\n\
+                        <span class='add_option' onclick='addOption(this, 4)' title='添加选项'></span>\n\
+                        <div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div>\n\
+                        <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0);iniSelect(this)' />\n\
+                    </div>\n\
+                    <div class='optionBox'>\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>\n\
+                    <div class='optionBox'>\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>\n\
+                    <div class='optionBox'>\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>\n\
+                </div>";
+
+var radioOption = "<div class='pr'>\n\
+                        <input type='radio' class='newNameClass' />\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>";
+
+var checkboxOption = "<div class='pr'>\n\
+                        <input type='checkbox' class='newNameClass'/>\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                      </div>";
+
+var selectOption = " <div class='optionBox'>\n\
+                        <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
+                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
+                    </div>";
+
 
 function changeUrl(obj, site_id, flag, page_id){
     var tf_flag;
@@ -24,25 +115,32 @@ function changeUrl(obj, site_id, flag, page_id){
 }
 
 function show_tag(obj){
+    var tab = obj.parents(".second_box")
+    var scolltop = document.body.scrollTop|document.documentElement.scrollTop;
+    var win_height = document.documentElement.clientHeight;//jQuery(document).height();
+    var z_layer_height = tab.height();
+    tab.css('top',(win_height-z_layer_height)/2 + scolltop);
+    var doc_width = $(document).width();
+    var layer_width = tab.width();
+    tab.css('left',(doc_width-layer_width)/2);
     obj.parent(".second_content").show();
-    obj.parents(".second_box").show();
+    tab.show();
     $(".second_bg").show();
 }
+
 function hide_tab(obj){
     obj.parent(".second_content").hide();
     obj.parents(".second_box").hide();
     $(".second_bg").hide();
 }
 
-var inputEle = "<div class='insertBox inputBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><input type='text' class='newNameClass' /></div>";
+function addSelectOption(obj){
+    
+}
 
-var radioEle = "<div class='insertBox radioBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 2)' title='添加选项'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' /><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
-
-var checkboxEle = "<div class='insertBox checkboxBox'><span class='delete' onclick='deleOption(this)' title='移除栏目'></span><span class='add_option' onclick='addOption(this, 3)' title='添加选项'></span><div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div><input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)'/><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div><div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div></div>";
-
-var radioOption = "<div><input type='radio' class='newNameClass' /><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div>";
-
-var checkboxOption = "<div><input type='checkbox' class='newNameClass'/><div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div><input class='txtArea' type='text' onblur='hideInput(this, 1)'/><span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span></div>";
+function iniSelect(obj){
+   $("obj").parent(".titBox").next().attr("name")
+}
 
 function addQuestion(type){
     var newEle;
@@ -69,6 +167,13 @@ function addQuestion(type){
             newEle.find(".textQuestion").attr("name", "form[checkbox_" + checkboxCount + "_value]");
             newEle.find(".newNameClass").attr("name", "form[checkbox_" + checkboxCount + "][]");
             break;
+        case 4:  //select
+            $(".insertDiv").append(selectEle);
+            var selectCount = $(".insertDiv").find(".selectBox").length;
+            newEle = $(".insertDiv .insertBox ").last();
+            newEle.find(".textQuestion").attr("name", "form[select_" + selectCount + "_value]");
+            newEle.find(".newNameClass").attr("name", "form[select_" + selectCount + "][]");
+        break;
         default:
             $(".insertDiv").append(inputEle);
     }

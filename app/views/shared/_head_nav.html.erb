@@ -43,10 +43,10 @@
 					<% if !@site.nil?%>
 					<div class="menuBox1 ">
 						<ul>
-							<li style="<%= controller.controller_name != "posts" ? "background:#3BB9EA;":"" %>" >
+							<li class="<%= controller.controller_name != "posts" ? "second_menu_focus":"" %>" >
 								<%=link_to "#{@site.name}站点详情",site_pages_path(@site) %>
 							</li>
-							<li style="<%= controller.controller_name == "posts" ? "background:#3BB9EA;":"" %>">
+							<li class="<%= controller.controller_name == "posts" ? "second_menu_focus":"" %>">
 								<%=link_to "#{@site.name}论坛",site_posts_path(@site) %>
 							</li>
 						</ul>

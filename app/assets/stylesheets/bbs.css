@@ -68,11 +68,6 @@ article:after{
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;    
 }
-.bbs_list_con h1.video_icon { 
-    padding-right: 20px; 
-	background: url(/assets/video_icon.png) no-repeat right center;
-	background-size: 20px auto;
-}
 
 .list_text { height: 50px; line-height: 18px;}
 .list_func { font-size: 10px; height: 25px; line-height: 25px;}
@@ -238,4 +233,38 @@ display: block;
 height: 17px;
 text-indent: -999px;
 width: 17px;
+}
+/*弹窗*/
+.second_box { width:100%; height:100%; z-index:99; position: absolute; top:0; display: none; }
+.second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000;
+opacity: 0.3; display: none; filter: alpha(opacity=30);}
+.second_content {
+    background-color: #FCFCFC;
+    border: 1px solid #CBD5D9;
+    border-radius: 5px;
+    margin: 100px auto;
+    max-height: 500px;
+    padding: 10px;
+    position: relative;
+    width: 450px;
+}
+.second_c {
+    background-color: #FCFCFC;
+    border: 1px solid #CBD5D9;
+    border-radius: 5px;
+    margin: 100px auto;
+    max-height: 500px;
+    padding: 10px;
+    position: absolute;
+    width: 450px;
+}
+.second_box .page_txt {
+    height: 280px;
+}
+.second_content.second_content2 { width: 900px; }
+.second_content .close,.delete {
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 12px;
 }

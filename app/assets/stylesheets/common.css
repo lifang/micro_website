@@ -197,3 +197,12 @@
 .img_cont{
     float: left; width:90px;height:96px;line-height: 96px;border: 1px solid #ccc;text-align: center;margin: 0 2px;
 }
+.menu li.second_menu_focus{
+    background:#3BB9EA;
+}
+.menu li.second_menu_focus a{
+    color:#edf0f1
+}
+.pr{
+    position: relative
+}
