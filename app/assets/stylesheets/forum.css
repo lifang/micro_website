@@ -58,7 +58,7 @@ li { list-style: none;}
     position: absolute;
     right: 10px;
     top: 10px;
-
+}
 .floor:hover .close { display:block;}
 .floor_name { width: 15%; display: inline-block; padding: 10px;}
 .floor_txt { width: 60%; display: inline-block; min-height: 100px; background: #fff; padding: 10px;}
