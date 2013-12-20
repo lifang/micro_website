@@ -2,7 +2,7 @@
   <%= render :partial => "/bbs/comments/single_comment", :locals => {:comment => comment} %>
   <% @comments_count = @comments_count - 1 %>
 <% end %>
-<% if @comments_total > 3 * @page %>
+<% if @comments_total > 6 * @page %>
   <div class="bbs_clickDown" onclick="seeMoreComment(this)" data-url="<%= see_more_site_post_replies_path(@site, @post)+"?page=#{@page}" %>">点击加载更多...</div>
 <% end %>
   
