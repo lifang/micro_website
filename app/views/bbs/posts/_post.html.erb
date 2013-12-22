@@ -1,5 +1,5 @@
 <% @posts.each do |post| %>
-<a href="<%= bbs_detail_site_post_path(@site, post) %>">
+<a href="<%= bbs_detail_site_post_path(@site, post) %>" class="bbs-a">
   <section class="bbs_list">
     <div class="bbs_list_avatar"><img src="<%= post.post_img %>"/></div>
     <div class="bbs_list_con">

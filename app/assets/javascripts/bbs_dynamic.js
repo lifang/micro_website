@@ -11,7 +11,7 @@ function seeMorePost(obj){
         dataType: "html",
         success:function(data){   
             $(".bbs_dropDown").remove();
-            $(".bbs_list").last().after(data);
+            $(".bbs-a").last().after(data);
         },
         error:function(data){
             alert("error");
