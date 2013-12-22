@@ -59,24 +59,29 @@ var selectEle = "<div class='insertBox selectBox'>\n\
                     <div class='titBox'>\n\
                         <span class='add_option' onclick='addOption(this, 4)' title='添加选项'></span>\n\
                         <div class='inputArea questionTitle' ondblclick='showInput(this)'>双击输入问题</div>\n\
-                        <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0);iniSelect(this)' />\n\
+                        <input class='txtArea textQuestion' type='text' onblur='hideInput(this, 0)' />\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
-                </div>";
+                </div>\n\
+                   <select class='newNameClass form-select'>\n\
+                      <option></option>\n\
+                      <option></option>\n\
+                      <option></option>\n\
+                   </select>";
 
 var radioOption = "<div class='pr'>\n\
                         <input type='radio' class='newNameClass' />\n\
@@ -97,7 +102,6 @@ var selectOption = " <div class='optionBox'>\n\
                         <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>";
-
 
 function changeUrl(obj, site_id, flag, page_id){
     var tf_flag;
@@ -135,11 +139,9 @@ function hide_tab(obj){
 }
 
 function addSelectOption(obj){
-    
-}
-
-function iniSelect(obj){
-   $("obj").parent(".titBox").next().attr("name")
+    var input_value = $(obj).val();
+    $(obj).parents(".selectBox").find("select").find('option:empty').first().val(input_value);
+    $(obj).parents(".selectBox").find("select").find('option:empty').first().text(input_value);
 }
 
 function addQuestion(type){
@@ -172,8 +174,8 @@ function addQuestion(type){
             var selectCount = $(".insertDiv").find(".selectBox").length;
             newEle = $(".insertDiv .insertBox ").last();
             newEle.find(".textQuestion").attr("name", "form[select_" + selectCount + "_value]");
-            newEle.find(".newNameClass").attr("name", "form[select_" + selectCount + "][]");
-        break;
+            newEle.find("select").attr("name", "form[select_" + selectCount + "]");
+            break;
         default:
             $(".insertDiv").append(inputEle);
     }

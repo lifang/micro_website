@@ -206,3 +206,6 @@
 .pr{
     position: relative
 }
+.form-select{
+    display:none
+}
