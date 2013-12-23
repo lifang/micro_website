@@ -76,12 +76,13 @@ var selectEle = "<div class='insertBox selectBox'>\n\
                         <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
+                    <select class='newNameClass form-select'>\n\
+                      <option></option>\n\
+                      <option></option>\n\
+                      <option></option>\n\
+                    </select>\n\
                 </div>\n\
-                   <select class='newNameClass form-select'>\n\
-                      <option></option>\n\
-                      <option></option>\n\
-                      <option></option>\n\
-                   </select>";
+                  ";
 
 var radioOption = "<div class='pr'>\n\
                         <input type='radio' class='newNameClass' />\n\
@@ -97,9 +98,9 @@ var checkboxOption = "<div class='pr'>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                       </div>";
 
-var selectOption = " <div class='optionBox'>\n\
+var selectOption = "<div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>";
 
@@ -174,7 +175,7 @@ function addQuestion(type){
             var selectCount = $(".insertDiv").find(".selectBox").length;
             newEle = $(".insertDiv .insertBox ").last();
             newEle.find(".textQuestion").attr("name", "form[select_" + selectCount + "_value]");
-            newEle.find("select").attr("name", "form[select_" + selectCount + "]");
+            newEle.find(".newNameClass").attr("name", "form[select_" + selectCount + "]");
             break;
         default:
             $(".insertDiv").append(inputEle);
@@ -266,17 +267,28 @@ function addOption(obj, flag){
         var label_radio = $(obj).parents(".radioBox").find(".textQuestion").first();
         var last_radio = $(obj).parents(".radioBox").find(".newNameClass").last();
         last_radio.attr("name", label_radio.attr("name").replace("_value", ""));
-    }else{ //checkbox
+    }else if(flag == 3){ //checkbox
         $(obj).parents(".checkboxBox").append(checkboxOption);
         var label_checkbox = $(obj).parents(".checkboxBox").find(".textQuestion").first();
         var last_checkbox = $(obj).parents(".checkboxBox").find(".newNameClass").last();
         last_checkbox.attr("name", label_checkbox.attr("name").replace("_value", "") + "[]");
+    }else if(flag == 4){ //select
+        $(obj).parents(".selectBox").find(".optionBox").last().after(selectOption);
+        $(obj).parents(".selectBox").find("select").append("<option></option>")
     }
 }
 
 //删除选项
 function deleOption(obj){
     if(confirm('确定移除吗？')){
+        if($(obj).parent().hasClass("optionBox")){
+            var optionValue = $(obj).parent().find(".txtArea").val();
+            if(optionValue == "" ){
+                $(obj).parents(".selectBox").find("select").find('option:empty').first().remove();
+            }else{
+                $(obj).parents(".selectBox").find("option[value='" + optionValue + "']").remove()
+            }
+        }
         $(obj).parent().remove();
     }  
 }
