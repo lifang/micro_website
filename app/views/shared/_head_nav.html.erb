@@ -39,15 +39,15 @@
 			<ul>
 				<% if current_user &&  !current_user.admin %>
 				<li class="menuLi1 hover">
-					<a href="/sites" class="<%= controller_name == "users" ? "" : "hover" %>">站点</a>
+					<a href="/sites" class="<%= controller_name == "users" ? "" : "hover" %>">站点<%= ">#{@site.name}" if !@site.nil? %></a>
 					<% if !@site.nil?%>
 					<div class="menuBox1 ">
 						<ul>
 							<li class="<%= controller.controller_name != "posts" ? "second_menu_focus":"" %>" >
-								<%=link_to "#{@site.name}站点详情",site_pages_path(@site) %>
+								<%=link_to "站点详情",site_pages_path(@site) %>
 							</li>
 							<li class="<%= controller.controller_name == "posts" ? "second_menu_focus":"" %>">
-								<%=link_to "#{@site.name}论坛",site_posts_path(@site) %>
+								<%=link_to "论坛",site_posts_path(@site) %>
 							</li>
 						</ul>
 					</div>
