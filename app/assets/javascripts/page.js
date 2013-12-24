@@ -63,17 +63,17 @@ var selectEle = "<div class='insertBox selectBox'>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <select class='newNameClass form-select'>\n\
@@ -100,7 +100,7 @@ var checkboxOption = "<div class='pr'>\n\
 
 var selectOption = "<div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>";
 
@@ -211,9 +211,12 @@ function hideInput(obj, flag){
             if(checkbox){
                 checkbox.val(input_value);
             }
+            if($(obj).parent().hasClass("optionBox")){
+              addSelectOption(obj);
+            }
         }
         $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();
-    } 
+    }
 }
 
 //提交表单验证 #TODO非空验证
