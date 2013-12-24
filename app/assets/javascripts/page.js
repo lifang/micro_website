@@ -141,8 +141,12 @@ function hide_tab(obj){
 
 function addSelectOption(obj){
     var input_value = $(obj).val();
-    $(obj).parents(".selectBox").find("select").find('option:empty').first().val(input_value);
-    $(obj).parents(".selectBox").find("select").find('option:empty').first().text(input_value);
+    var option_box = $(obj).parent();
+    var index = option_box.parents(".selectBox").find(".optionBox").index(option_box);
+    var optionFirst = $(obj).parents(".selectBox").find("select").find('option')[index];
+
+    $(optionFirst).val(input_value);
+    $(optionFirst).text(input_value);
 }
 
 function addQuestion(type){
@@ -282,16 +286,15 @@ function addOption(obj, flag){
 function deleOption(obj){
     if(confirm('确定移除吗？')){
         if($(obj).parent().hasClass("optionBox")){
-            var optionValue = $(obj).parent().find(".txtArea").val();
-            if(optionValue == "" ){
-                $(obj).parents(".selectBox").find("select").find('option:empty').first().remove();
-            }else{
-                $(obj).parents(".selectBox").find("option[value='" + optionValue + "']").remove()
-            }
+            var option_box = $(obj).parent();
+            var index = option_box.parents(".selectBox").find(".optionBox").index(option_box);
+            var optionFirst = $(obj).parents(".selectBox").find("select").find('option')[index];
+            $(optionFirst).remove();
         }
         $(obj).parent().remove();
     }  
 }
+
 function validatePageForm(content)
 {
     var title = $.trim($("#page_title").val());
