@@ -5,7 +5,8 @@ class Site < ActiveRecord::Base
   STATUS_NAME = {:new => 0, :unverified => 1, :wait_verified => 2, :pass_verified => 3, :fail_varified => 4}
   STATUS_VALUE =[0,1,2,3,4]
   
-  has_many :posts
+  has_many :awards ,dependent: :destroy
+  has_many :posts ,dependent: :destroy
   has_many :resources ,dependent: :destroy
   has_many :pages ,dependent: :destroy
   belongs_to :user
