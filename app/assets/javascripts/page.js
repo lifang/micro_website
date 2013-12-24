@@ -63,17 +63,17 @@ var selectEle = "<div class='insertBox selectBox'>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>\n\
                     <select class='newNameClass form-select'>\n\
@@ -100,7 +100,7 @@ var checkboxOption = "<div class='pr'>\n\
 
 var selectOption = "<div class='optionBox'>\n\
                         <div class='inputArea' ondblclick='showInput(this)'>双击输入选项</div>\n\
-                        <input class='txtArea' type='text' onblur='hideInput(this, 1);addSelectOption(this)'/>\n\
+                        <input class='txtArea' type='text' onblur='hideInput(this, 1)'/>\n\
                         <span class='deleteOption' onclick='deleOption(this)' title='去除选项'></span>\n\
                     </div>";
 
@@ -141,8 +141,12 @@ function hide_tab(obj){
 
 function addSelectOption(obj){
     var input_value = $(obj).val();
-    $(obj).parents(".selectBox").find("select").find('option:empty').first().val(input_value);
-    $(obj).parents(".selectBox").find("select").find('option:empty').first().text(input_value);
+    var option_box = $(obj).parent();
+    var index = option_box.parents(".selectBox").find(".optionBox").index(option_box);
+    var optionFirst = $(obj).parents(".selectBox").find("select").find('option')[index];
+
+    $(optionFirst).val(input_value);
+    $(optionFirst).text(input_value);
 }
 
 function addQuestion(type){
@@ -207,9 +211,12 @@ function hideInput(obj, flag){
             if(checkbox){
                 checkbox.val(input_value);
             }
+            if($(obj).parent().hasClass("optionBox")){
+              addSelectOption(obj);
+            }
         }
         $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();
-    } 
+    }
 }
 
 //提交表单验证 #TODO非空验证
@@ -282,16 +289,15 @@ function addOption(obj, flag){
 function deleOption(obj){
     if(confirm('确定移除吗？')){
         if($(obj).parent().hasClass("optionBox")){
-            var optionValue = $(obj).parent().find(".txtArea").val();
-            if(optionValue == "" ){
-                $(obj).parents(".selectBox").find("select").find('option:empty').first().remove();
-            }else{
-                $(obj).parents(".selectBox").find("option[value='" + optionValue + "']").remove()
-            }
+            var option_box = $(obj).parent();
+            var index = option_box.parents(".selectBox").find(".optionBox").index(option_box);
+            var optionFirst = $(obj).parents(".selectBox").find("select").find('option')[index];
+            $(optionFirst).remove();
         }
         $(obj).parent().remove();
     }  
 }
+
 function validatePageForm(content)
 {
     var title = $.trim($("#page_title").val());
