@@ -17,7 +17,7 @@
 					<%@awards.each do |award|%>
 					<tr>
 						<td><%=award.name%></td>
-						<td><%=award.begin_date%>--<%=award.end_date%></td>
+						<td><%=award.begin_date%>到<%=award.end_date%></td>
 						<td>
 							<%award.award_infos.each do |a_info|%>
 				            <li>
@@ -28,7 +28,7 @@
 						<td><%=award.total_number%></td>
 						<td>
 							<%=link_to '编辑',edit_site_award_path(@site,award),remote:true,class:"blue_btn scd_btn", name:"addGgl"%>
-			                <%=link_to '删除',site_award_path(@site,award),method: :delete, class:"blue_btn"%>
+			                <%=link_to '删除',site_award_path(@site,award),confirm:'是否删除？',method: :delete, class:"blue_btn"%>
 							 
 						</td>
 					</tr>

@@ -46,7 +46,7 @@ class AwardsController < ApplicationController
 
   def update
     @award=Award.find_by_id(params[:id])
-    name=params[:award][:begin_date]
+    name=params[:award][:name]
     total_number=params[:award][:total_number]
     begin_date=params[:award][:begin_date]
     end_date=params[:award][:end_date]
