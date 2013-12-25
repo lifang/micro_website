@@ -2,7 +2,7 @@
 	
 		<span class="close" onclick="cancle_award_page()">关闭</span>
 		<%=form_for [@site,@award] do |f|%>
-		<h1>添加/编辑刮刮乐</h1>
+		<h1><%=  controller.action_name=='new' ? '添加':'编辑'%>刮刮乐</h1>
 		<li>
 			<label>抽奖名称：</label>
 			<%=f.text_field :name%>
@@ -47,7 +47,9 @@
 </div>
 <script>
     $( "#datepicker" ).datepicker();
-	$( "#datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd" );
 	$( "#datepicker1" ).datepicker();
+	$( "#datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd" );
 	$( "#datepicker1" ).datepicker("option", "dateFormat", "yy-mm-dd" );
+	$( "#datepicker" ).val('<%=@award.begin_date%>');
+	$( "#datepicker1" ).val('<%=@award.end_date%>');
 </script>
