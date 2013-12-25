@@ -13,8 +13,8 @@
         </li>
         <li class="listLi">
            	<label>奖项设置：</label>
-           		<input type="button" class="blue_btn" onclick="add_award_item()" value="添一项"/>
-           		<input type="button" class="blue_btn" onclick="remove_award_item()" value="移一项"/>
+           		<input type="button" style="background:#328BD5;font-size: 12px;color:white;padding:5px;" onclick="add_award_item()" value="添一项"/>
+           		<input type="button" style="background:#328BD5;font-size: 12px;color:white;padding:5px;" onclick="remove_award_item()" value="移一项"/>
           	<ul class="award_item">
           		<%if @award.award_infos.length==0%>
 				<li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]" /></li>
