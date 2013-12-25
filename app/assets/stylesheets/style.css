@@ -333,3 +333,9 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     top: 50px;
 }
 .menu li .menuBox1 a:hover { color: #edf0f1; background:#3BB9EA;}
+/* 弹窗有时间列表的 */
+.dataLi span { margin: 0 17px;}
+.listLi label { display: block; float: left;}
+.listLi ul { overflow: hidden;}
+.listLi ul li { font-size: 14px; line-height: 32px;}
+.listLi input { width: 151px; margin: 0 10px;}

@@ -1,0 +1,51 @@
+<div class="second_content second_content2"> 
+	
+		<span class="close" onclick="cancle_award_page()">关闭</span>
+		<%=form_for [@site,@award] do |f|%>
+		<h1>添加/编辑刮刮乐</h1>
+		<li>
+			<label>抽奖名称：</label>
+			<%=f.text_field :name%>
+		</li>
+		<li class="dataLi">
+       		<label>有效期：</label>
+            <%=f.text_field :begin_date ,id:"datepicker" %><span>到</span><%=f.text_field :end_date ,id:"datepicker1"%>
+        </li>
+        <li class="listLi">
+           	<label>奖项设置：</label>
+           		<input type="button" class="blue_btn" onclick="add_award_item()" value="添一项"/>
+           		<input type="button" class="blue_btn" onclick="remove_award_item()" value="移一项"/>
+          	<ul class="award_item">
+          		<%if @award.award_infos.length==0%>
+				<li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]" /></li>
+				<li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]"/></li>
+				<li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]"/></li>
+				<%else%>
+                <%@award.award_infos.each do |a_info|%>
+				<li>
+					<input type="hidden" class="award_item_id" name="info_id[]" value="<%= a_info.id%>">
+					奖项名：
+					<input type="text" name="name[]" value=<%= a_info.name%> />
+					奖项内容：
+					<input type="text" name="content[]" value=<%= a_info.content%> />
+					奖项数：
+					<input type="text" name="number[]" value=<%= a_info.number%> />
+					<br>
+				</li>
+				<%end%>
+				<%end%>
+			</ul>
+        </li>
+		<li>
+           	<label>奖券数：</label>
+          	<%=f.text_field :total_number %>
+        </li>
+		<div class="uinfo_act">
+			<input type="button" class="blue_btn" onclick="check_award_form()" value='提交'/>
+		</div>
+		<%end%>
+</div>
+<script>
+	$( "#datepicker" ).datepicker();
+	$( "#datepicker1" ).datepicker();
+</script>
