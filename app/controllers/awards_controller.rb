@@ -1,5 +1,6 @@
 #encoding:utf-8
 class AwardsController < ApplicationController
+  skip_before_filter :authenticate_user!, :only => [:show]
   before_filter :get_site
   layout 'sites'
   def index
@@ -61,34 +62,42 @@ class AwardsController < ApplicationController
   end
 
   def show
-    award = Award.find_by_id(params[:id])
+    @award = Award.find_by_id(params[:id])
     current_time = Time.now.strftime("%Y-%m-%d")
-    if award
-      if current_time >= award.begin_date.to_s && current_time <= award.end_date.to_s
-        award_infos = award.award_infos
-        total_num = award.total_number
-        has_award_num = award_infos.sum(:number)
-        no_award_num = total_num - has_award_num
+    if @award
+      if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
+        award_infos = @award.award_infos
+        total_num = @award.total_number #总的奖券数
+        no_operation_number = @award.no_operation_number  #剩余的奖券
+        #TODO
+        #减去user_awards里面的记录
+        has_award_num = award_infos.sum(:number) #有奖的奖券总数
+        no_award_num = no_operation_number - has_award_num  #无奖的奖券总数
+        #所有索引放进一个string
         award_str = ""
         award_infos.each do |ai|
           award_str << (ai.award_index.to_s) * ai.number
         end
         award_str << "0" * no_award_num  #无奖项默认0
-        award_arr = award_str.split("")
+        award_arr = award_str.split("")  #string 转换程数组
+
+        #乱序数组三次，随机索引数
         award_index = award_arr.shuffle.shuffle.shuffle[rand(total_num)]  #抽取出来的奖项索引
-        @tt = award_index
+        
         if award_index == "0"
-          @img = "/assets/thanks.png"
+          @img = "/assets/thanks.png"  #谢谢参与
         else
-          award_info = award.award_infos.where("award_index = ?", award_index.to_i)[0]
+          award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
           @img = award_info.img if award_info
         end
       else
-        @img = false
+        @img = false  #奖券未开始或者已经过期
       end
       render :layout => false
     else
-      render :file => ""
+      render(:file  => "#{Rails.root}/public/404.html",
+          :layout => nil,
+          :status   => "404 Not Found") 
     end
     
   end

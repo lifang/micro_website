@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>gua</title>
+    <title><%= @award.name %></title>
     <%= javascript_include_tag "jquery", "wScratchPad" %>
     <style type="text/css">
       * { padding: 0; margin: 0;}
@@ -12,7 +12,6 @@
   <body>
     <div class="content-box">
       <div id="wScratchPad" style="display:inline-block; position:relative;"></div>
-      <p><%= @tt %></p>
     </div>
     <script type="text/javascript">
 <% if @img %>
