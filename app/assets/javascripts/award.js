@@ -5,7 +5,7 @@ function add_award_item(){
 	award.append(li);
 }
 function remove_award_item(lii){
-//	var ul=$(".award_item");
+	var ul=$(".award_item");
 //	var li=$(".award_item >li");
         var li=$(lii).parent();
 
