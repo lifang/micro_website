@@ -35,6 +35,12 @@
             <%= status_desc s.status%>
           </dd>
           <dt>
+            cweb：
+          </dt>
+          <dd>
+<%=s.cweb%>&nbsp;
+          </dd>
+          <dt>
             备注：
           </dt>
           <dd>
@@ -42,7 +48,7 @@
           </dd>
         </dl>
         <div class="box_act">
-          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
+          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>','<%=s.cweb%>')">
             编辑
           </a>
 
@@ -127,6 +133,11 @@
         <li>
           <%= f.label '根目录：'%>
           <%= f.text_field :root_path %>&nbsp;<span id="must_fix" class="check">*</span>
+        </li>
+        <li>
+          <%= f.label 'cweb：'%>
+          <%= f.text_field :cweb%>
+
         </li>
         <li>
           <%= f.label '备注：'%>
