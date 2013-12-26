@@ -15,7 +15,7 @@
 					</tr>
 					<%@awards.each do |award|%>
 					<tr>
-						<td><%=award.name%></td>
+						<td><%= link_to award.name, site_award_path(@site,award), "target" => "_blank" %></td>
 						<td><%=award.begin_date%>到<%=award.end_date%></td>
 
 						<td>

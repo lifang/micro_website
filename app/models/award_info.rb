@@ -16,8 +16,8 @@ class AwardInfo < ActiveRecord::Base
         c.pointsize "24"
         c.font ("/usr/share/fonts/xpfonts/MSYHBD.TTF")
         c.encoding "utf-8"
-        c.fill "black"
-        c.draw "text 10,0 '#{self.name}'"
+        c.fill "#ff0084"
+        c.draw "text 0,0 '#{self.name}'"
       end
       FileUtils.mkdir_p(award_path) unless Dir.exists?(award_path)
       img.write("#{award_path}" + "#{self.id}.png")
