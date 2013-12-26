@@ -339,6 +339,10 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .listLi ul { overflow: hidden;}
 .listLi ul li { font-size: 14px; line-height: 32px; position: relative;}
 .listLi .close {right: 5px; top: 6px;}
-.listLi input { width: 151px; margin: 0 10px;}
-.addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
+.listLi input { width: 139px; margin: 0 10px;}
+.addjx {border: 1px dashed;
+       width: 210px;
+       margin-left: 152px;
+       margin-top: 5px;
+       font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
 .addjx span { cursor: pointer;}
