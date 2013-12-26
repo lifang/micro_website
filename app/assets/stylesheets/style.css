@@ -229,7 +229,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
 .second_content h2 { text-align: center; font-size: 18px; line-height: 36px;}
 .second_content li { font-size: 18px;}
-.second_content li input { font-size: 18px;}
+.second_content li input { font-size: 16px; padding: 3px;}
 .second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
 .second_content input { width: 200px; border: 1px solid #003333; }
 .second_content input[type=radio],.second_content input[type=checkbox] { width: 30px; border: none;}
@@ -337,5 +337,8 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .dataLi span { margin: 0 17px;}
 .listLi label { display: block; float: left;}
 .listLi ul { overflow: hidden;}
-.listLi ul li { font-size: 14px; line-height: 32px;}
+.listLi ul li { font-size: 14px; line-height: 32px; position: relative;}
+.listLi .close {right: 5px; top: 6px;}
 .listLi input { width: 151px; margin: 0 10px;}
+.addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
+.addjx span { cursor: pointer;}
