@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AwardsController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:show]
-  before_filter :get_site, :except => [:show]
+  skip_before_filter :authenticate_user!, :only => [:show, :record_award, :get_award_url]
+  before_filter :get_site, :except => [:show, :record_award, :get_award_url]
   layout 'sites'
   def index
     @awards=@site.awards
@@ -63,6 +63,7 @@ class AwardsController < ApplicationController
 
   def show
     @award = Award.find_by_id(params[:id])
+    @open_id = params[:open_id]
     current_time = Time.now.strftime("%Y-%m-%d")
     if @award
       if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
@@ -100,6 +101,18 @@ class AwardsController < ApplicationController
           :status   => "404 Not Found") 
     end
     
+  end
+
+  def record_award
+    
+  end
+
+  def get_award_url
+    site_root_path = params[:site_root_path]
+    site = Site.find_by_root_path(site_root_path)
+    current_time = Time.now.strftime("%Y-%m-%d")
+    award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
+    render :text => award ? site_award_url(site, award) : "none"
   end
 
   private
