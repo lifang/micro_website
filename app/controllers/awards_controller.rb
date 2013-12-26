@@ -63,48 +63,68 @@ class AwardsController < ApplicationController
 
   def show
     @award = Award.find_by_id(params[:id])
-    @open_id = params[:open_id]
+    @open_id = params[:secret_key]
     current_time = Time.now.strftime("%Y-%m-%d")
     if @award
       if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
         award_infos = @award.award_infos
-        total_num = @award.total_number #总的奖券数
-        no_operation_number = @award.no_operation_number  #剩余的奖券
-        #TODO
-        #减去user_awards里面的记录
-        has_award_num = award_infos.sum(:number) #有奖的奖券总数
-        no_award_num = no_operation_number - has_award_num  #无奖的奖券总数
-        #所有索引放进一个string
-        award_str = ""
-        award_infos.each do |ai|
-          award_str << (ai.award_index.to_s) * ai.number
-        end
-        award_str << "0" * no_award_num  #无奖项默认0
-        award_arr = award_str.split("")  #string 转换程数组
-
-        #乱序数组三次，随机索引数
-        award_index = award_arr.shuffle.shuffle.shuffle[rand(total_num)]  #抽取出来的奖项索引
+        user_award = UserAward.where(:open_id => @open_id, :award_info_id => award_infos.map(&:id))[0] #用户是否刮过
+        if !user_award
+          total_num = @award.total_number #总的奖券数
+          no_operation_number = @award.no_operation_number  #剩余的奖券
+          has_award_num = award_infos.sum(:number) #有奖的奖券总数
+          #TODO
+          #减去user_awards里面的记录
         
-        if award_index == "0"
-          @img = "/assets/thanks.png"  #谢谢参与
+
+          no_award_num = no_operation_number - has_award_num  #无奖的奖券总数
+          #所有索引放进一个string
+          award_str = ""
+          award_infos.each do |ai|
+            award_str << (ai.award_index.to_s) * ai.number
+          end
+          award_str << "0" * no_award_num  #无奖项默认0
+          award_arr = award_str.split("")  #string 转换程数组
+
+          #乱序数组三次，随机索引数
+          award_index = award_arr.shuffle.shuffle.shuffle[rand(total_num)]  #抽取出来的奖项索引
+        
+          if award_index == "0"
+            @status = 0  #未中奖
+            @img = "/assets/thanks.png"  #谢谢参与
+          else
+            @status = 1  #中奖
+            @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
+            @img = @award_info.img if @award_info
+          end
         else
-          award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
-          @img = award_info.img if award_info
+          award_info = user_award.award_info
+          @status = 2  #已经抽过奖
         end
       else
-        @img = false  #奖券未开始或者已经过期
+        @status = 3  #奖券未开始或者已经过期
+        @img = false 
       end
       render :layout => false
     else
       render(:file  => "#{Rails.root}/public/404.html",
-          :layout => nil,
-          :status   => "404 Not Found") 
+        :layout => nil,
+        :status   => "404 Not Found")
     end
     
   end
 
   def record_award
-    
+    begin
+      UserAward.transaction do
+        UserAward.create(:open_id => params[:opent_id], :award_info_id => params[:award_info_id])
+        award = Award.find_by_id(params[:award_id])
+        award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
+      end
+      render :text => "success"
+    rescue
+      render :text => "error"
+    end
   end
 
   def get_award_url

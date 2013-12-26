@@ -14,7 +14,7 @@
       <div id="wScratchPad" style="display:inline-block; position:relative;"></div>
     </div>
     <script type="text/javascript">
-<% if @img %>
+<% if @status == 0 || @status == 1 %>
     var sp = $("#wScratchPad").wScratchPad({
       image: '<%= @img %>',
       image2: '/assets/gua.png',
@@ -24,27 +24,29 @@
       scratchDown: function(e, percent){alert(1)},
       scratchMove: function(e, percent){alert(2);$("#percent_scratched").html(percent)},
       scratchUp: function(e, percent){
-        /*   var open_id = "";
-              var award_info_id = "";
-
-              $.ajax({
-                url: "",
-                type: "post",
-                dataType: "html",
-                data:{ open_id : open_id, award_info_id : award_info_id},
-                success:function(data){
-                  $(".bbs_dropDown").remove();
-                  $(".bbs-a").last().after(data);
-                },
-                error:function(data){
-                  alert("error");
-                }
-              });
-         */
+        var open_id = "<%= @open_id %>";
+        var award_info_id = "<%= @award_info.id %>";
+        var award_id = "<%= @award.id %>";
+        $.ajax({
+          url: "/record_award",
+          type: "post",
+          dataType: "html",
+          data:{ open_id : open_id, award_info_id : award_info_id, award_id: award_id},
+          success:function(data){
+            $(".bbs_dropDown").remove();
+            $(".bbs-a").last().after(data);
+          },
+          error:function(data){
+            alert("error");
+          }
+        });
+         
       }
 
     });
-    <% else %>
+<% elsif @status == 2 %>
+   alert("已经抽过奖")
+<% elsif @status == 3 %>
     $("#wScratchPad").text("活动已过期或者还未开始")
 <% end %>
     </script>
