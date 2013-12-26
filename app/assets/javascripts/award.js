@@ -1,17 +1,19 @@
 function add_award_item(){
 	var award=$(".award_item");
 	var li =$("<li></li>");
-	li.html("奖项名：<input type='text' name='name[]'> 奖项内容：  <input type='text' name='content[]'>奖项数：<input type='text' name='number[]'><br> ");
+	li.html("奖项名：<input type='text' name='name[]'> 奖项内容：  <input type='text' name='content[]'>奖项数：<input type='text' name='number[]'><span class='close' title='删除该奖项' onclick='remove_award_item(this)'></span> ");
 	award.append(li);
 }
-function remove_award_item(){
-	var ul=$(".award_item");
-	var li=$(".award_item >li");
-	var id=$(li[li.length-1]).find('.award_item_id').val();
+function remove_award_item(lii){
+//	var ul=$(".award_item");
+//	var li=$(".award_item >li");
+        var li=$(lii).parent();
+
+	var id=$(li).find('.award_item_id').val();
 	if(id!=null){
 		ul.prepend($("<input type='hidden' name='remove_id[]' value='"+id+"'>"));
 	}
-	$(li[li.length-1]).remove();
+	$(li).remove();
 }
 function cancle_award_page(){
 	$(".second_bg").hide();
