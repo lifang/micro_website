@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AwardsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:show]
-  before_filter :get_site
+  before_filter :get_site, :except => [:show]
   layout 'sites'
   def index
     @awards=@site.awards
