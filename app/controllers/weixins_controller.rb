@@ -97,7 +97,7 @@ class WeixinsController < ApplicationController
     end
     current_time = Time.now.strftime("%Y-%m-%d")
     award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
-    return award ? request.host + "/sites/static?path_name=/#{site.root_path}/guaguale.html" : false
+    return award ? request.host + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
   end
   
 end

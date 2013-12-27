@@ -75,9 +75,7 @@ class AwardsController < ApplicationController
           no_award_num = total_num - has_award_num  #无奖的奖券总数
           
           no_operation_number = @award.no_operation_number  #剩余的奖券
-          scratched_award_infos = UserAward.where("award_id = ?", @award.id) #刮过的，所有的奖券
-          scratched_has_award_infos = UserAward.where("award_id = ? and award_info_id is not null", @award.id) #刮过的，有奖的奖券
-          scratched_no_award_infos = scratched_award_infos - scratched_has_award_infos  #刮过的，无奖的奖券
+          scratched_award_infos, scratched_has_award_infos,scratched_no_award_infos = get_scratched_award(@award)
           
           scratched_has_award_infos_hash = scratched_has_award_infos.group_by{|ua| ua.award_info_id} #刮过的，有奖的奖券,奖券id分类
           
@@ -90,17 +88,13 @@ class AwardsController < ApplicationController
             else
               left_number = ai.number
             end
-            p 2222222222222222222
-            p left_number
+
             award_str << (ai.award_index.to_s) * left_number
           end
           left_no_scratched_no_award_num = no_award_num - scratched_no_award_infos.length  #剩余的未刮过的无奖奖券
-          p 33333333333333333333
-          p left_no_scratched_no_award_num
           award_str << "0" * left_no_scratched_no_award_num  #无奖项默认0
-          award_arr = award_str.split("")  #string 转换程数组
-          p 11111111111
-          p no_operation_number
+          award_arr = award_str.split("")  #string 转换成数组
+
 
           #乱序数组三次，随机索引数
           award_index = award_arr.shuffle.shuffle[rand(no_operation_number)]  #抽取出来的奖项索引
@@ -155,47 +149,54 @@ class AwardsController < ApplicationController
   end
   
   def record_award
-    #begin
-    open_id = params[:open_id]
-    award_id = params[:award_id]
-    award_info_id = params[:award_info_id]
-    # UserAward.transaction do
-    p "----------------"
-    p open_id
-    if open_id.present? && open_id != "null"
-      p "+++++++++++++++++++++++"
-      #发送验证码开始
+    begin
+      open_id, award_id,award_info_id  = params[:open_id], params[:award_id], params[:award_info_id]
       award = Award.find_by_id(award_id)
-      site = award.site
-      cweb = site.cweb
-      access_token = get_access_token(cweb)
-      p 111111111111111111111
-      p access_token
-      if access_token and access_token["access_token"]
-        send_message_action = "/cgi-bin/message/custom/send?access_token=#{access_token["access_token"]}"
-        token = get_random_value
-        message = {
-          :touser => open_id,
-          :msgtype => "text",
-          :text => {:content => token}
-        }.to_json
-        response = create_post_http(WEIXIN_OPEN_URL ,send_message_action ,message)
-        p 2222222222222222222222222
-        p response
-        if response["errmsg"] == "ok"
-          #发送验证码结束
-          UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
-            :secret_code => token, :if_checked => false)
-          
-          award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
+      award_info = AwardInfo.find_by_id(award_info_id)
+      user_award = UserAward.where(:open_id => open_id, :award_id => award_id)[0] #当前open_id是否刮过
+      unless user_award.present?
+        UserAward.transaction do
+          if open_id.present? && open_id != "null"
+            if award_info_id.present? #抽到奖
+             
+             # 修改成接收手机号码作为secret_code存入数据库
+
+#              #抽到奖的话，发送验证码开始
+#              site = award.site
+#              cweb = site.cweb
+#              access_token = get_access_token(cweb)
+#              if access_token and access_token["access_token"]
+#                send_message_action = "/cgi-bin/message/custom/send?access_token=#{access_token["access_token"]}"
+#                token = get_random_value
+#                message = {
+#                  :touser => open_id,
+#                  :msgtype => "text",
+#                  :text => {:content => "恭喜你，在 #{award.name} 活动中了#{award_info.name}！凭借中奖截图以及以下兑换码领奖：" + token}
+#                }.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")} #有中文的话转码
+#                response = create_post_http(WEIXIN_OPEN_URL ,send_message_action ,message)
+#                #发送验证码结束
+                if response["errmsg"] == "ok"
+                  #记录 刮刮记录
+                  UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
+                    :secret_code => token, :if_checked => false)
+                  #减少奖券数量
+                  award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
+                end
+              end
+            else #没抽到奖
+              #记录 刮刮记录
+              UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
+                :secret_code => token, :if_checked => false)
+              #减少奖券数量
+              award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
+            end
+          end
         end
       end
+      render :text => "success"
+    rescue
+      render :text => "error"
     end
-    # end
-    render :text => "success"
-    #    rescue
-    #      render :text => "error"
-    #    end
   end
 
   def get_award_url
@@ -270,5 +271,14 @@ class AwardsController < ApplicationController
         AwardInfo.find_by_id(rid).destroy
       end
     end
+  end
+
+  def get_scratched_award(award)
+    tmp_arr = []
+       scratched_award_infos = UserAward.where("award_id = ?", @award.id) #刮过的，所有的奖券
+       scratched_has_award_infos = UserAward.where("award_id = ? and award_info_id is not null", @award.id) #刮过的，有奖的奖券
+       scratched_no_award_infos = scratched_award_infos - scratched_has_award_infos  #刮过的，无奖的奖券
+    tmp_arr << scratched_award_infos << scratched_has_award_infos << scratched_no_award_infos
+    tmp_arr
   end
 end
