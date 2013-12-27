@@ -19,7 +19,9 @@ MicroWebsite::Application.routes.draw do
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"
-  match "/get_token", :to => "pages#get_token", :as => "get_token"
+  match "/get_token", :to => "pages#get_token", :as => "get_token", via: 'get'
+  match "/get_award_url", :to => "awards#get_award_url", :as => "get_award_url", via: 'get'
+  match "/record_award", :to => "awards#record_award", :as => "record_award", via: 'post'
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'

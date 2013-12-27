@@ -196,7 +196,7 @@ class PagesController < ApplicationController
           if page.authenticate? && !page.form? && !user_signed_in?
             redirect_to '/signin'
           else
-            redirect_to URI.encode("/allsites" + path_name)
+            redirect_to URI.encode("/allsites" + path_name + (params[:secret_key].present? ? "?secret_key=" + params[:secret_key] : ""))
           end
         else
           redirect_to '/303.html', :layout => false

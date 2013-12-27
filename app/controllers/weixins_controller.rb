@@ -12,10 +12,22 @@ class WeixinsController < ApplicationController
   def accept_token
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
-
+    p params[:xml][:MsgType]
+    p params[:xml][:Content]
     if request.request_method == "POST" && tmp_encrypted_str == signature
-      create_menu(cweb)
-      #render "echo", :formats => :xml, :layout => false  回复信息
+      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"
+        create_menu(cweb)
+      elsif params[:xml][:MsgType] == "text" && params[:xml][:Content] == "参与"
+        open_id = params[:xml][:FromUserName]
+        link = get_valid_award(cweb)
+        p 11111111111111
+        p link + "?secret_key=" + open_id
+        @link = link ? link + "&secret_key=" + open_id : "暂无活动"
+        render "echo", :formats => :xml, :layout => false        #回复信息
+      else
+        render :text => "success"
+      end
+
     elsif request.request_method == "GET" && tmp_encrypted_str == signature  #配置服务器token时是get请求
       render :text => tmp_encrypted_str == signature ? echostr :  false
     end
@@ -60,7 +72,7 @@ class WeixinsController < ApplicationController
     return JSON http.request(request).body
   end
 
- #验证请求是否从微信发出
+  #验证请求是否从微信发出
   def get_signature(cweb, timestamp, nonce)
     tmp_arr = [cweb, timestamp, nonce]
     tmp_arr.sort!
@@ -120,4 +132,14 @@ class WeixinsController < ApplicationController
     end
     http
   end
+
+  def get_valid_award(cweb)
+    if cweb == "wansu" || cweb == "xyyd"
+      site = Site.find_by_cweb("xyyd")
+      current_time = Time.now.strftime("%Y-%m-%d")
+      award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
+    end
+    return award ? request.host + "/sites/static?path_name=/#{site.root_path}/刮刮乐.html" : false
+  end
+  
 end
