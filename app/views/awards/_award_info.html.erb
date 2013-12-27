@@ -1,0 +1,22 @@
+<div class="second_content second_content2" id="it_award_info">
+		<span class="close" onclick="cancle_award_page()">关闭</span>
+		<h1><span><%=@award.name%></span>(<span><%="#{@award.begin_date}~#{@award.end_date}"%></span>)</h1>
+		<table class="table1">
+			<tr>
+				<th>奖项</th>
+				<th>获奖人</th>
+			</tr>
+                        <%if !@awards_is.nil?%>
+                        <%  @awards_is.each do |a,awards| %>
+			<tr>
+				<td><%=get_award_info(@award_infos,a)%></td>
+				<td>
+                                  <%awards.each do |award|%>
+                                    <%=award.open_id%> <br/>
+                                  <%end%>
+                                </td>
+			</tr>
+                        <%end%>
+                        <%end%>
+		</table>
+	</div>

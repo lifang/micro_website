@@ -114,7 +114,16 @@ class AwardsController < ApplicationController
     
   end
   def win_award_info
-    
+    @award=Award.find_by_id(params[:award_id])
+    @award_infos =AwardInfo.where("award_id = #{params[:award_id]}")
+    award_info_id=[]
+    @award_infos.each do |f|
+      award_info_id<<f.id
+    end
+    p 11111111111111,award_info_id
+    @userinfos =UserAward.where( "award_info_id in ( #{award_info_id.join(',')} )")
+    @awards_is = @userinfos.group_by{|a| a[:award_info_id]} unless @award_infos.nil?
+    p 22226546542222,@awards_is
   end
 
   def record_award

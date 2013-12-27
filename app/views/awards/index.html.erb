@@ -30,9 +30,9 @@
 						</td>
 						<td><%=award.total_number%></td>
 						<td>
-							<%=link_to '编辑',edit_site_award_path(@site,award),remote:true,class:"blue_btn scd_btn", name:"addGgl"%>
-                                                  <button class="blue_btn scd_btn" name="resInfo">获奖信息</button>
-			                <%=link_to '删除',site_award_path(@site,award),confirm:'是否删除？',method: :delete, class:"blue_btn"%>
+					         <%=link_to '编辑',edit_site_award_path(@site,award),remote:true,class:"blue_btn scd_btn", name:"addGgl"%>
+                                                 <%=link_to '获奖信息',site_award_win_award_info_path(@site,award),remote:true,class:'blue_btn scd_btn'%>
+			                         <%=link_to '删除',site_award_path(@site,award),confirm:'是否删除？',method: :delete, class:"blue_btn"%>
 							 
 						</td>
 					</tr>
@@ -49,20 +49,5 @@
 </div>
 
 <div class="second_box resInfo">
-	<div class="second_content second_content2">
-		<span class="close" >关闭</span>
-		<h1><span>奖项名</span>(<span>有效期</span>)</h1>
-		<table class="table1">
-			<tr>
-				<th>一等奖（手机）</th>
-				<th>一等奖（手机）</th>
-				<th>一等奖（手机）</th>
-			</tr>
-			<tr>
-				<td>aa</td>
-				<td>ss</td>
-				<td>dd</td>
-			</tr>
-		</table>
-	</div>
+	
 </div>

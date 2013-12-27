@@ -18,6 +18,7 @@ function remove_award_item(lii){
 function cancle_award_page(){
 	$(".second_bg").hide();
 	$(".second_box.addGgl").hide();
+        $(".second_box.resInfo").hide();
 }
 function check_award_form(){
 	var name=$("input[name='name[]']");
