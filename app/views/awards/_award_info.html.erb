@@ -9,7 +9,7 @@
                         <%if !@awards_is.nil?%>
                         <%  @awards_is.each do |a,awards| %>
 			<tr>
-				<td><%=get_award_info(@award_infos,a)%></td>
+				<td><%=get_award_info(@award_infos,a)%>（<%=awards.length%>人）</td>
 				<td>
                                   <%awards.each do |award|%>
                                     <%=award.open_id%> 
