@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title><%= @award.name %></title>
     <%= javascript_include_tag "jquery", "wScratchPad" %>
     <style type="text/css">
@@ -14,41 +15,47 @@
       <div id="wScratchPad" style="display:inline-block; position:relative;"></div>
     </div>
     <script type="text/javascript">
+      var open_id = "<%= @open_id %>";
+      if(open_id != "null"){
 <% if @status == 0 || @status == 1 %>
-    var sp = $("#wScratchPad").wScratchPad({
-      image: '<%= @img %>',
-      image2: '/assets/gua.png',
-      width: '190',
-      height: '41',
+      var sp = $("#wScratchPad").wScratchPad({
+        image: '<%= @img %>',
+        image2: '/assets/gua.png',
+        width: '190',
+        height: '41',
        
-      scratchDown: function(e, percent){alert(1)},
-      scratchMove: function(e, percent){alert(2);$("#percent_scratched").html(percent)},
-      scratchUp: function(e, percent){
-        var open_id = "<%= @open_id %>";
-        var award_info_id = "<%= @award_info.id %>";
-        var award_id = "<%= @award.id %>";
-        $.ajax({
-          url: "/record_award",
-          type: "post",
-          dataType: "html",
-          data:{ open_id : open_id, award_info_id : award_info_id, award_id: award_id},
-          success:function(data){
-            $(".bbs_dropDown").remove();
-            $(".bbs-a").last().after(data);
-          },
-          error:function(data){
-            alert("error");
-          }
-        });
-         
-      }
+        scratchDown: function(e, percent){alert(1)},
+        scratchMove: function(e, percent){alert(2);$("#percent_scratched").html(percent)},
+        scratchUp: function(e, percent){
+          var award_info_id = "<%= @award_info.try(:id) %>";
+          var award_id = "<%= @award.id %>";
+        
+          $.ajax({
+            url: "/record_award",
+            type: "post",
+            dataType: "text",
+            data:{ open_id : open_id, award_info_id : award_info_id, award_id: award_id},
+            success:function(data){
+              $(".bbs_dropDown").remove();
+              $(".bbs-a").last().after(data);
+            },
+            error:function(data){
+              alert("error");
+            }
+          });
+      
+        }
 
-    });
+      });
+
 <% elsif @status == 2 %>
-   alert("已经抽过奖")
+      alert("已经抽过奖")
 <% elsif @status == 3 %>
-    $("#wScratchPad").text("活动已过期或者还未开始")
+      $("#wScratchPad").text("活动已过期或者还未开始")
 <% end %>
+  }else{
+    alert("对不起，你没有权限抽奖")
+  }
     </script>
   </body>
 </html>
