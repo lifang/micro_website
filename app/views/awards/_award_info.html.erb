@@ -12,7 +12,7 @@
 				<td><%=get_award_info(@award_infos,a)%>（<%=awards.length%>人）</td>
 				<td>
                                   <%awards.each do |award|%>
-                                    <%=award.open_id%> 
+                                    OpenId: <%=award.open_id%> 安全号：<%=award.secret_code%>
                                     <% if award.if_checked %>
                                       <font color="red">已领取</font>
                                     <%else%>
