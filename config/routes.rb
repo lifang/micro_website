@@ -32,6 +32,7 @@ MicroWebsite::Application.routes.draw do
   resources :sites do
     member do
       post :verify_site
+      get :win_award_info
     end
     resources :awards
     resources :posts do

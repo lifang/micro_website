@@ -101,7 +101,9 @@ class AwardsController < ApplicationController
     end
     
   end
-
+  def win_award_info
+    
+  end
   private
 
   def save_award_item
