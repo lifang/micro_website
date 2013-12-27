@@ -16,7 +16,7 @@
                                     <% if award.if_checked %>
                                       <font color="red">已领取</font>
                                     <%else%>
-                                      <%=link_to '领取',"/obtain_award?id=#{award.id}&site_id=#{@site.id}",class:'blue_btn'%>
+                                      <%=link_to '领取',"/obtain_award?id=#{award.id}&site_id=#{@site.id}",class:'blue_btn',style:'padding:2px;'%>
                                     <%end%>
                                     <br/>
                                   <%end%>
