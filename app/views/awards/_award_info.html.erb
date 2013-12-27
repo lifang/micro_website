@@ -12,7 +12,13 @@
 				<td><%=get_award_info(@award_infos,a)%></td>
 				<td>
                                   <%awards.each do |award|%>
-                                    <%=award.open_id%> <br/>
+                                    <%=award.open_id%> 
+                                    <% if award.if_checked %>
+                                      <font color="red">已领取</font>
+                                    <%else%>
+                                      <%=link_to '领取',"/obtain_award?id=#{award.id}&site_id=#{@site.id}",class:'blue_btn'%>
+                                    <%end%>
+                                    <br/>
                                   <%end%>
                                 </td>
 			</tr>

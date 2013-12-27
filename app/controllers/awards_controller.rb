@@ -137,12 +137,23 @@ class AwardsController < ApplicationController
     @award_infos.each do |f|
       award_info_id<<f.id
     end
-    p 11111111111111,award_info_id
     @userinfos =UserAward.where( "award_info_id in ( #{award_info_id.join(',')} )")
     @awards_is = @userinfos.group_by{|a| a[:award_info_id]} unless @award_infos.nil?
-    p 22226546542222,@awards_is
   end
-
+  #领奖
+  def obtain_award
+    p 1111111111111111111535423
+    @user_award=UserAward.find_by_id(params[:id])
+    if @user_award && @user_award.update_attribute(:if_checked,true)
+      flash[:success]='领取成功'
+      
+      redirect_to site_awards_path(@site)
+    else
+      flash[:success]='领取失败'
+      render 'index'
+    end
+  end
+  
   def record_award
     #begin
     open_id = params[:open_id]
