@@ -22,6 +22,7 @@ MicroWebsite::Application.routes.draw do
   match "/get_token", :to => "pages#get_token", :as => "get_token", via: 'get'
   match "/get_award_url", :to => "awards#get_award_url", :as => "get_award_url", via: 'get'
   match "/record_award", :to => "awards#record_award", :as => "record_award", via: 'post'
+  match "/check_if_watch", :to => "awards#check_if_watch", :as => "check_if_watch", via: 'get'
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'

@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AwardsController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:show, :record_award, :get_award_url]
-  before_filter :get_site, :except => [:show, :record_award, :get_award_url]
+  skip_before_filter :authenticate_user!, :only => [:show, :record_award, :get_award_url, :check_if_watch]
+  before_filter :get_site, :except => [:show, :record_award, :get_award_url, :check_if_watch]
   layout 'sites'
   def index
     @awards=@site.awards
@@ -89,25 +89,26 @@ class AwardsController < ApplicationController
               left_number = ai.number
             end
 
-            award_str << (ai.award_index.to_s) * left_number
+            award_str << (ai.award_index.to_s) * left_number if left_number > 0
           end
           left_no_scratched_no_award_num = no_award_num - scratched_no_award_infos.length  #剩余的未刮过的无奖奖券
-          award_str << "0" * left_no_scratched_no_award_num  #无奖项默认0
+          award_str << "0" * left_no_scratched_no_award_num  if left_no_scratched_no_award_num> 0 #无奖项默认0
           award_arr = award_str.split("")  #string 转换成数组
-
-
-          #乱序数组三次，随机索引数
-          award_index = award_arr.shuffle.shuffle[rand(no_operation_number)]  #抽取出来的奖项索引
-        
-          if award_index == "0"
-            @status = 0  #未中奖
-            @img = "/assets/thanks.png"  #谢谢参与
+          if award_arr.present?
+            #乱序数组两次，随机索引数
+            award_index = award_arr.shuffle.shuffle[rand(no_operation_number)]  #抽取出来的奖项索引
+            # award_index = 1
+            if award_index == "0"
+              @status = 0  #未中奖
+              @img = "/assets/thanks.png"  #谢谢参与
+            else
+              @status = 1  #中奖
+              @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
+              @img = @award_info.img if @award_info
+            end
           else
-            @status = 1  #中奖
-            @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
-            @img = @award_info.img if @award_info
+            @status = 4  #奖券已抽完
           end
-
         else
           award_info = user_award.award_info
           @status = 2  #已经抽过奖
@@ -124,6 +125,7 @@ class AwardsController < ApplicationController
     end
     
   end
+  
   def win_award_info
     @award=Award.find_by_id(params[:award_id])
     @award_infos =AwardInfo.where("award_id = #{params[:award_id]}")
@@ -134,9 +136,9 @@ class AwardsController < ApplicationController
     @userinfos =UserAward.where( "award_info_id in ( #{award_info_id.join(',')} )")
     @awards_is = @userinfos.group_by{|a| a[:award_info_id]} unless @award_infos.nil?
   end
+  
   #领奖
   def obtain_award
-    p 1111111111111111111535423
     @user_award=UserAward.find_by_id(params[:id])
     if @user_award && @user_award.update_attribute(:if_checked,true)
       flash[:success]='领取成功'
@@ -150,52 +152,41 @@ class AwardsController < ApplicationController
   
   def record_award
     begin
-      open_id, award_id,award_info_id  = params[:open_id], params[:award_id], params[:award_info_id]
+      open_id, award_id, award_info_id, phone = params[:open_id], params[:award_id], params[:award_info_id], params[:phone]
       award = Award.find_by_id(award_id)
-      award_info = AwardInfo.find_by_id(award_info_id)
       user_award = UserAward.where(:open_id => open_id, :award_id => award_id)[0] #当前open_id是否刮过
       unless user_award.present?
         UserAward.transaction do
           if open_id.present? && open_id != "null"
             if award_info_id.present? #抽到奖
-             
-             # 修改成接收手机号码作为secret_code存入数据库
+              # 接收手机号码作为secret_code存入数据库
 
-#              #抽到奖的话，发送验证码开始
-#              site = award.site
-#              cweb = site.cweb
-#              access_token = get_access_token(cweb)
-#              if access_token and access_token["access_token"]
-#                send_message_action = "/cgi-bin/message/custom/send?access_token=#{access_token["access_token"]}"
-#                token = get_random_value
-#                message = {
-#                  :touser => open_id,
-#                  :msgtype => "text",
-#                  :text => {:content => "恭喜你，在 #{award.name} 活动中了#{award_info.name}！凭借中奖截图以及以下兑换码领奖：" + token}
-#                }.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")} #有中文的话转码
-#                response = create_post_http(WEIXIN_OPEN_URL ,send_message_action ,message)
-#                #发送验证码结束
-                if response["errmsg"] == "ok"
-                  #记录 刮刮记录
-                  UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
-                    :secret_code => token, :if_checked => false)
-                  #减少奖券数量
-                  award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
-                end
-              end
+              # 记录 刮刮记录
+              UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
+                :secret_code => phone, :if_checked => false)
+              #减少奖券数量
+              award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
             else #没抽到奖
               #记录 刮刮记录
               UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
-                :secret_code => token, :if_checked => false)
+                :secret_code => nil, :if_checked => false)
               #减少奖券数量
               award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
             end
           end
         end
+      else
+        user_award.update_attribute(:secret_code, phone)
       end
-      render :text => "success"
+      msg = "success"
     rescue
-      render :text => "error"
+      msg = "error"
+    end
+    respond_to do |f|
+      f.text{
+        render :text => msg
+      }
+      f.js{}
     end
   end
 
@@ -205,6 +196,12 @@ class AwardsController < ApplicationController
     current_time = Time.now.strftime("%Y-%m-%d")
     award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
     render :text => award ? site_award_url(site, award) : "none"
+  end
+
+  def check_if_watch
+    open_id = params[:secret_token]
+    ua = UserAward.find_by_open_id(open_id)
+    render :text => ua ? "1" : "0"
   end
 
   private
@@ -275,9 +272,9 @@ class AwardsController < ApplicationController
 
   def get_scratched_award(award)
     tmp_arr = []
-       scratched_award_infos = UserAward.where("award_id = ?", @award.id) #刮过的，所有的奖券
-       scratched_has_award_infos = UserAward.where("award_id = ? and award_info_id is not null", @award.id) #刮过的，有奖的奖券
-       scratched_no_award_infos = scratched_award_infos - scratched_has_award_infos  #刮过的，无奖的奖券
+    scratched_award_infos = UserAward.where("award_id = ?", @award.id) #刮过的，所有的奖券
+    scratched_has_award_infos = UserAward.where("award_id = ? and award_info_id is not null", @award.id) #刮过的，有奖的奖券
+    scratched_no_award_infos = scratched_award_infos - scratched_has_award_infos  #刮过的，无奖的奖券
     tmp_arr << scratched_award_infos << scratched_has_award_infos << scratched_no_award_infos
     tmp_arr
   end
