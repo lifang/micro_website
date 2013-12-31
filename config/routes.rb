@@ -12,7 +12,7 @@ MicroWebsite::Application.routes.draw do
   post "user/disable/:uid", :to=>"users#disable"
   post "user/enable/:uid", :to=>"users#enable"
   get "user/delete/:uid", :to=>"users#delete"
-
+  match 'obtain_award', :to=>'awards#obtain_award' ,via: 'get'
   post "site/verify/:sid",:to=>"sites#verify"
   post "site/change_status/:sid/:status",:to=>"sites#change_status"
   match "/sites/static", :to => "pages#static"
@@ -34,9 +34,11 @@ MicroWebsite::Application.routes.draw do
   resources :sites do
     member do
       post :verify_site
+      
+    end
+    resources :awards do
       get :win_award_info
     end
-    resources :awards
     resources :posts do
       collection do
         get :bbs, :see_more
