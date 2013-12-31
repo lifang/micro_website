@@ -16,9 +16,7 @@ class WeixinsController < ApplicationController
       elsif params[:xml][:MsgType] == "text" && params[:xml][:Content] == "参与"
         open_id = params[:xml][:FromUserName]
         link = get_valid_award(cweb)
-        p 11111111111111
-        p link + "&secret_key=" + open_id
-        @link = link ? link + "&secret_key=" + open_id : "暂无活动"
+        @link = link ? link + "&secret_key=" + open_id : "0"
         render "echo", :formats => :xml, :layout => false        #回复信息
       else
         render :text => "success"
@@ -63,22 +61,22 @@ class WeixinsController < ApplicationController
               {
                 :type => "view",
                 :name => "最新课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/newCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/newCourse.html#mp.weixin.qq.com"
               },
               {
                 :type => "view",
                 :name => "优惠课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/yhCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/yhCourse.html#mp.weixin.qq.com"
               },
               {
                 :type => "view",
                 :name => "品牌课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/brandCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/brandCourse.html#mp.weixin.qq.com"
               }]
           },
           {:type => "view",
             :name => "万苏世界",
-            :url => "http://116.255.202.113/sites/static?path_name=/wansu/index.html"
+            :url => MW_URL + "/sites/static?path_name=/wansu/index.html"
           }
         ]
       }
@@ -95,7 +93,7 @@ class WeixinsController < ApplicationController
     end
     current_time = Time.now.strftime("%Y-%m-%d")
     award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
-    return award ? request.host + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
+    return award ? MW_URL + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
   end
   
 end

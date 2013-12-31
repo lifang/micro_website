@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   APP_ID_AND_SECRET = {:wansu => {:app_id => "wxcbc2e8fb02023e4f", :app_secret => "1243a493f356a0c9ffcc2b7633a78b61"},
                        :senvern => {:app_id => "wx4179ca59f560599b", :app_secret => "e5080f5963ead815439875eb0fdc66d7"}
                        }
+  MW_URL = "http://www.sunworldmedia.com/"
   
   require "fileutils"
   require 'net/http'
@@ -80,11 +81,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_app_id(cweb)
-    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_id] : APP_ID_AND_SECRET[cweb.to_sym][:app_id]
+    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_id] : APP_ID_AND_SECRET[cweb.to_sym] && APP_ID_AND_SECRET[cweb.to_sym][:app_id]
   end
 
   def get_app_secret(cweb)
-    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_secret] : APP_ID_AND_SECRET[cweb.to_sym][:app_secret]
+    (cweb == "wansu" || cweb == "xyyd") ? APP_ID_AND_SECRET[:wansu][:app_secret] : APP_ID_AND_SECRET[cweb.to_sym] && APP_ID_AND_SECRET[cweb.to_sym][:app_secret]
   end
 
   #发get请求获得access_token
