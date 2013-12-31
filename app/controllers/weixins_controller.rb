@@ -10,8 +10,6 @@ class WeixinsController < ApplicationController
   def accept_token
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
-    p params[:xml][:MsgType]
-    p params[:xml][:Content]
     if request.request_method == "POST" && tmp_encrypted_str == signature
       if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"
         create_menu(cweb)
