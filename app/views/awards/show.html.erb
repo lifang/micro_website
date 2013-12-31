@@ -44,6 +44,16 @@
                         success:function(data){
                           if(award_info_id != "null" && award_info_id !="" && percent > 30 && !data['saved_phone']){
                             //show popup enter phone number
+                            var windowHeight = Math.max(window.parent.document.body.scrollHeight, $(window.parent.document).height());
+                            var windowWidth = window.parent.document.documentElement.clientWidth;
+                            $(".mask", window.parent.document).css("height",windowHeight);
+	                    $(".mask", window.parent.document).css("width",windowWidth);
+
+                            var tabHeight = $(".tab").height();
+                            var tabWidth = $(".tab").width();
+                            $(".tab").css("top",(windowHeight - tabHeight)/2);
+                            $(".tab").css("left",(windowWidth - tabWidth)/2);
+
                             $(".mask", window.parent.document).show();
                             $(".save_phone", window.parent.document).show();
                             $("#mphone",  window.parent.document).val("");

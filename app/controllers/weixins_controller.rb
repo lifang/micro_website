@@ -12,7 +12,17 @@ class WeixinsController < ApplicationController
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
     if request.request_method == "POST" && tmp_encrypted_str == signature
       if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"
-        create_menu(cweb)
+        
+        if cweb == "dknbj"
+          @message = "欢迎关注迪卡侬沈阳滂江店
+
+点击右上角2次，就能把迪卡侬沈阳滂江店分享跟朋友们
+
+新年礼券活动1月1日马上开始，回复【参与】查看吧"
+          render "welcome"  , :formats => :xml, :layout => false        #欢迎信息
+        else
+          create_menu(cweb)
+        end
       elsif params[:xml][:MsgType] == "text" && params[:xml][:Content] == "参与"
         open_id = params[:xml][:FromUserName]
         link = get_valid_award(cweb)
