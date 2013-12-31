@@ -29,33 +29,55 @@
         scratchUp: function(e, percent){
           var award_info_id = "<%= @award_info.try(:id) %>";
           var award_id = "<%= @award.id %>";
-        
+          var percent = percent;
+          dataHash = { open_id : open_id, award_info_id : award_info_id, award_id: award_id}
           $.ajax({
             url: "/record_award",
             type: "post",
             dataType: "text",
-            data:{ open_id : open_id, award_info_id : award_info_id, award_id: award_id},
+            data: dataHash,
             success:function(data){
-              $(".bbs_dropDown").remove();
-              $(".bbs-a").last().after(data);
+              if(award_info_id != "null" && percent > 30 ){
+                //show popup enter phone number
+                $(".mask", window.parent.document).show();
+                $(".save_phone", window.parent.document).show();
+                $("#mphone",  window.parent.document).val("");
+                $("#open_id",  window.parent.document).val(open_id);
+                $("#award_id",  window.parent.document).val(award_id);
+                $("#award_info_id",  window.parent.document).val(award_info_id);
+              }
             },
             error:function(data){
               alert("error");
             }
           });
-      
+        
+
         }
 
       });
 
 <% elsif @status == 2 %>
-      alert("已经抽过奖")
+      $(".mask", window.parent.document).show();
+      $(".message", window.parent.document).text("你已经抽过奖").parents(".tishi").show();
 <% elsif @status == 3 %>
-      $("#wScratchPad").text("活动已过期或者还未开始")
+      $(".mask", window.parent.document).show();
+      $(".message", window.parent.document).text("活动已过期或者还未开始").parents(".tishi").show();
+      // $("#wScratchPad").text("活动已过期或者还未开始")
+<% elsif @status == 4 %>
+      $(".mask", window.parent.document).show();
+      $(".message", window.parent.document).text("奖券已抽完").parents(".tishi").show();
 <% end %>
-  }else{
-    alert("对不起，你没有权限抽奖")
   }
+  else{
+    $(".mask", window.parent.document).show();
+    $(".message", window.parent.document).text("对不起，你没有权限抽奖").parents(".tishi").show();
+  }
+
+                  $(".gray_btn", window.parent.document).click(function(){
+                  $(".mask", window.parent.document).hide();
+                  $(".tab", window.parent.document).hide();
+                })
     </script>
   </body>
 </html>

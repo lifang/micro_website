@@ -67,7 +67,6 @@ class RepliesController < ApplicationController
      @site =Site.find(params[:site_id])
      @post =Post.find(params[:post_id])
      @reply =Reply.find(params[:id])
-     p 1111111111111111111111111222222225454646545421,@reply,flag
      if @reply.update_attribute(:status,flag)
         flash[:success]='审核成功'
         redirect_to site_post_path(@site,@post)

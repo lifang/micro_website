@@ -115,6 +115,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_random_value
-    Digest::SHA2.hexdigest(Time.now.to_s)
+    Digest::SHA2.hexdigest(Time.now.to_s)[-8..-1]
   end
 end
