@@ -3,7 +3,7 @@ class CreateKeywords < ActiveRecord::Migration
     create_table :keywords do |t|
       t.integer :site_id
       t.string :keyword
-      t.integer :micro_message_id
+      t.string :micro_message_id
 
       t.timestamps
     end
