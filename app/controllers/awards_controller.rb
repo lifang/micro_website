@@ -160,15 +160,14 @@ class AwardsController < ApplicationController
           if open_id.present? && open_id != "null"
             if award_info_id.present? #抽到奖
               # 接收手机号码作为secret_code存入数据库
-
               # 记录 刮刮记录
-              UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
+              user_award = UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
                 :secret_code => phone, :if_checked => false)
               #减少奖券数量
               award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
             else #没抽到奖
               #记录 刮刮记录
-              UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
+              user_award = UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
                 :secret_code => nil, :if_checked => false)
               #减少奖券数量
               award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
@@ -176,15 +175,15 @@ class AwardsController < ApplicationController
           end
         end
       else
-        user_award.update_attribute(:secret_code, phone)
+        user_award.update_attribute(:secret_code, phone) if phone
       end
       msg = "success"
     rescue
       msg = "error"
     end
     respond_to do |f|
-      f.text{
-        render :text => msg
+      f.json{
+        render :json => {:msg => msg, :saved_phone => user_award.secret_code.present? ? true : false}
       }
       f.js{}
     end

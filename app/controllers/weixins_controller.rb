@@ -10,17 +10,23 @@ class WeixinsController < ApplicationController
   def accept_token
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
-    p params[:xml][:MsgType]
-    p params[:xml][:Content]
     if request.request_method == "POST" && tmp_encrypted_str == signature
       if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"
-        create_menu(cweb)
+        
+        if cweb == "dknbj"
+          @message = "欢迎关注迪卡侬沈阳滂江店
+
+点击右上角2次，就能把迪卡侬沈阳滂江店分享跟朋友们
+
+新年礼券活动1月1日马上开始，回复【参与】查看吧"
+          render "welcome"  , :formats => :xml, :layout => false        #欢迎信息
+        else
+          create_menu(cweb)
+        end
       elsif params[:xml][:MsgType] == "text" && params[:xml][:Content] == "参与"
         open_id = params[:xml][:FromUserName]
         link = get_valid_award(cweb)
-        p 11111111111111
-        p link + "&secret_key=" + open_id
-        @link = link ? link + "&secret_key=" + open_id : "暂无活动"
+        @link = link ? link + "&secret_key=" + open_id : "0"
         render "echo", :formats => :xml, :layout => false        #回复信息
       else
         render :text => "success"
@@ -65,22 +71,22 @@ class WeixinsController < ApplicationController
               {
                 :type => "view",
                 :name => "最新课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/newCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/newCourse.html#mp.weixin.qq.com"
               },
               {
                 :type => "view",
                 :name => "优惠课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/yhCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/yhCourse.html#mp.weixin.qq.com"
               },
               {
                 :type => "view",
                 :name => "品牌课程",
-                :url => "http://116.255.202.113/sites/static?path_name=/wansu/brandCourse.html#mp.weixin.qq.com"
+                :url => MW_URL + "/sites/static?path_name=/wansu/brandCourse.html#mp.weixin.qq.com"
               }]
           },
           {:type => "view",
             :name => "万苏世界",
-            :url => "http://116.255.202.113/sites/static?path_name=/wansu/index.html"
+            :url => MW_URL + "/sites/static?path_name=/wansu/index.html"
           }
         ]
       }
@@ -97,7 +103,7 @@ class WeixinsController < ApplicationController
     end
     current_time = Time.now.strftime("%Y-%m-%d")
     award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
-    return award ? request.host + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
+    return award ? MW_URL + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
   end
   
 end

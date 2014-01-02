@@ -3,6 +3,6 @@
   <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
   <CreateTime><%= Time.now.to_i %></CreateTime>
   <MsgType><![CDATA[text]]></MsgType>
-  <Content><% if @link == "0" %>暂无活动<% else %> &lt;a href="<%= @link %>"&gt;点击参与&lt;/a&gt;<% end %></Content>
+  <Content><![CDATA[<%= @message %>]]></Content>
   <FuncFlag>0</FuncFlag>
 </xml>
