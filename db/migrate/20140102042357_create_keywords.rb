@@ -4,7 +4,7 @@ class CreateKeywords < ActiveRecord::Migration
       t.integer :site_id
       t.string :keyword
       t.string :micro_message_id
-
+      t.boolean :types
       t.timestamps
     end
   end

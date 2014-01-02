@@ -1,0 +1,28 @@
+<%=form_for(@micro_imgtext) do |f|%>
+<div class="twEditItem">
+  <label>标题：</label><%=f.text_area :title%>
+</div>
+<div class="twEditItem cf">
+  <label>上传图片：</label>
+  <div class="fileBox" style="width:300px;">
+    <input type="text" class="fileText_1" />
+    <button class="fileBtn_1 blue_btn" >浏览...</button>
+    <input type="file" class="file_1" name="micro_imgtext[img_path]" />
+  </div>
+</div>
+<div class="twEditItem">
+  <label>&nbsp;</label>
+  <img src="images/zujun_show_2.png" height="200" />
+</div>
+<div class="twEditItem">
+  <label>内容：</label>
+  <textarea name="micro_imgtext[content]"></textarea>
+</div>
+<div class="twEditItem">
+  <label>Url：</label>
+  <%=f.text_area :url%>
+</div>
+<div class="twEditAction">
+  <button class="blue_btn">提交</button>
+</div>
+<%end%>

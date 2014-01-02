@@ -1,2 +1,49 @@
-<h1>MicroImgtexts#index</h1>
-<p>Find me in app/views/micro_imgtexts/index.html.erb</p>
+ <div class="main_container">
+    	<h1>站点详情</h1>
+		<div class="tabDiv used">
+			<div class="page_content">
+				<div class="twList">
+					<div class="twBox">
+						<img src="/assets/zujun_show_2.png" width="400" />
+						<div class="twTit">1</div>
+						<div class="twBoxAct">
+							<span class="twBoxEdit" title="编辑"></span>
+							<span class="twBoxDet" title="删除"></span>
+						</div>
+					</div>
+					<div class="twBox newtw" title="点击新建图文消息">
+						<%=link_to '+' ,new_site_micro_imgtext_path(@site),remote:true%>
+					</div>
+				</div>
+				<div class="twEdit">
+					<div class="twEditItem">
+						<label>标题：</label><input type="text" />
+					</div>
+					<div class="twEditItem cf">
+						<label>上传图片：</label>
+						<div class="fileBox" style="width:300px;">
+							<input type="text" class="fileText_1" />
+							<button class="fileBtn_1 blue_btn" >浏览...</button>
+							<input type="file" class="file_1" />
+						</div>
+						<button class="blue_btn up_btn" style="margin-top: 6px;">导入</button>
+					</div>
+					<div class="twEditItem">
+						<label>&nbsp;</label>
+						<img src="images/zujun_show_2.png" height="200" />
+					</div>
+					<div class="twEditItem">
+						<label>内容：</label>
+						<textarea></textarea>
+					</div>
+					<div class="twEditItem">
+						<label>Url：</label>
+						<input type="text" />
+					</div>
+					<div class="twEditAction">
+						<button class="blue_btn">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
