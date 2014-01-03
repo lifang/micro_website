@@ -286,4 +286,16 @@ function tishi_alert(message){
 
 }
 
+$(".msgBoxEdit").on("click",function(){
+  $(this).parents(".tabDiv").removeClass("used");
+  $(".tabDiv:last").addClass("used");
+ });
 
+ $(".autoReplyBox").on("click",function(){
+  if($(this).hasClass("showAll")){
+   $(".autoReplyBox").removeClass("showAll");
+  }else{
+   $(".autoReplyBox").removeClass("showAll");
+   $(this).addClass("showAll");
+  }
+ });

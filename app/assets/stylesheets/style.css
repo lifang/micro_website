@@ -347,20 +347,56 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
        font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
 .addjx span { cursor: pointer;}
 
- /* 图文消息 */
+/* 图文消息列表 */
+.left_half,.right_half { float: left;}
+.msgBox { width: 450px; margin: 8px; background: #fff; overflow: hidden; position: relative; padding: 5px;}
+.msgBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.msgBox:hover .go { display: block;}
+.go { display: block; width: 50px; height: 50px; background: url(../images/go.png); background-size: 50px 50px;}
+.msgBox .go { position: absolute; right: 10px; top: 30px; display: none;}
+.msgBoxAct { text-align: center;}
+.msgBoxAct button { margin: 0 10px;}
+
+/* 图文消息块 */
 .twList { width: 400px; float: left; padding: 10px 0;}
 .twEdit { overflow: hidden; padding: 10px;}
 .twEditItem { margin: 5px;}
-.twEditItem label { font-size: 18px; display: inline-block; width: 100px; float: left; line-height: 31px;}
+.twEditItem label { font-size: 18px; display: inline-block; width: 90px; float: left; line-height: 31px;}
 .twEditItem input { border: 1px solid #CDCDCD; height: 29px; width: 209px;}
-.twEditItem textarea { border: 1px solid #CDCDCD; height: 150px; width: 400px; resize: none; overflow: auto; padding: 5px;}
-.twEditAction { text-align: center;}
-.twBox { height: 150px; margin-bottom: 10px; background: #fff; overflow: hidden; position: relative;}
+.twEditItem textarea { border: 1px solid #CDCDCD; height: 130px; width: 320px; resize: none; overflow: auto; padding: 5px;}
+.twEditAction { text-align: center; padding: 5px;}
+.twBox { width: 400px; height: 150px; margin: 0 auto 10px; background: #fff; overflow: hidden; position: relative; border: 1px solid #C2C2C2;}
 .twBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.twBox img { width: 400px;}
+.twBox2 img { width: 100px; float: right;}
+.twTit2 { overflow: hidden; padding: 5px;}
 .twTit { height: 25px; line-height: 25px; width: 100%; position: absolute; bottom: 0; background: #333; opacity: 0.7; filter: alpha(opacity=70); color: #fff; padding: 0 5px;}
 .newtw { font-size: 120px; line-height: 130px; color: #E2E2E2; text-align: center; border: 1px dashed #C2C2C2;}
 .twBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); text-align: center; display: none;}
 .twBoxEdit { display: inline-block; width: 50px; height: 50px; background: url(/assets/edit.png); background-size: 50px 50px;}
 .twBoxDet { display: inline-block; width: 50px; height: 50px; background: url(/assets/delete.png); background-size: 50px 50px;}
-.twBoxAct span { margin: 50px 20px;}
+.twBoxAct div { margin: 50px 20px; cursor: pointer;}
 .twBox:hover .twBoxAct { display: block;}
+
+
+/* 自动回复 */
+.autoReplyBox { height: 100px; min-height: 100px; margin: 10px 0; background: #fff; overflow: hidden; position: relative; padding: 5px;}
+.autoReplyBox.showAll { height: auto; overflow: auto;}
+.autoReplyBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+
+.autoReplyBox:hover .twBoxAct { display: block;}
+.autoReplyBox .twBoxAct span { margin: 25px;}
+.autoReplyBox .autoReplyBoxAct { position: absolute; right: 10px; top: 10px; display: none;}
+.autoReplyBox:hover .autoReplyBoxAct { display: block;}
+
+.replyInfo { width: 400px; float: left;}
+.chooseArea { overflow: hidden;}
+.replyEditAction { padding: 5px; text-align: center; width: 400px;}
+
+.newMsg {
+    color: #A3A3A3;
+    font-size: 80px;
+    height: 100px;
+    line-height: 80px;
+    text-align: center;
+}

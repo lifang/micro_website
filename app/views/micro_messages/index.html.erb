@@ -1,3 +1,60 @@
 <div class="main_container ">
+  <%=render 'micro_messages/tabs'%>
 
+  <div class="tabDiv used">
+    <div class="page_content">
+
+
+      <div class="left_half">
+        <div class="msgBox newMsg">
+          <%=link_to '+',new_site_micro_message_path(@site)%>
+        </div>
+        <%i=1%>
+        <%@micro_messages.each do |m|%>
+          <%  if i%2==1 %>
+            <div class="msgBox">
+              <%m.micro_imgtexts.each do |micro_imgtext|%>
+              <div class="twBox">
+                <img src="<%=micro_imgtext.img_path%>" />
+                <div class="twTit"><%=micro_imgtext.content%></div>
+              </div>
+              <%end%>
+              <div class="msgBoxAct">
+                <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
+                
+                <button class="blue_btn">删除</button>
+              </div>
+            </div>
+          <%end%>
+          <%i+=1%>
+        <%end%>
+      </div>
+
+
+      <div class="right_half">
+        <%j=1%>
+        <%@micro_messages.each do |m|%>
+          <%  if j%2==0 %>
+            <div class="msgBox">
+              <%m.micro_imgtexts.each do |micro_imgtext|%>
+              <div class="twBox">
+                <img src="<%=micro_imgtext.img_path%>" />
+                <div class="twTit"><%=micro_imgtext.content%></div>
+              </div>
+              <%end%>
+              <div class="msgBoxAct">
+                <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
+                <button class="blue_btn">删除</button>
+              </div>
+            </div>
+          <%end%>
+          <%j+=1%>
+        <%end%>
+      </div>
+
+
+
+
+    </div>
+  </div>
 </div>

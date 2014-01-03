@@ -40,8 +40,9 @@ MicroWebsite::Application.routes.draw do
       post :verify_site
       
     end
-    resources :micro_messages
+    resources :micro_messages 
     resources :micro_imgtexts
+    
 
     resources :awards do
       get :win_award_info

@@ -1,0 +1,32 @@
+<%=form_for(:micro_imgtexts,url: site_micro_imgtext_path , :html =>{:multipart => true, :id => "uploadmicro"},method: :put) do |f|%>
+<div class="twEditItem">
+  <label>标题：</label><%=f.text_field :title,value:@micro_imgtext.title%>
+</div>
+<div class="twEditItem cf">
+  <label>替换图片：</label>
+  <div class="fileBox" style="width:300px;">
+    <input type="text" class="fileText_1" value="<%=@micro_imgtext.img_path%>"/>
+    <button class="fileBtn_1 blue_btn" >浏览...</button>
+    <input type="file" class="file_1" name="micro_imgtexts[img_path]" />
+  </div>
+</div>
+<div class="twEditItem">
+  <label>&nbsp;</label>
+
+
+  <img src="<%=@micro_imgtext.img_path%>" height="200" />
+</div>
+<div class="twEditItem">
+  <label>内容：</label>
+  <textarea name="micro_imgtexts[content]"><%=@micro_imgtext.content%></textarea>
+</div>
+<div class="twEditItem">
+  <label>Url：</label>
+  <%=f.text_field :url ,value:@micro_imgtext.url%>
+</div>
+<div class="twEditAction">
+  <button class="blue_btn">添加模块</button>
+</div>
+<input type="hidden" value="<%= @micro_message.id unless @micro_message.nil?  %>" name="micro_message_id"/>
+<input type="hidden" value="<%= @micro_imgtext.id unless @micro_imgtext.nil?  %>" name="micro_imgtext_id"/>
+<%end%>
