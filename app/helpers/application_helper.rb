@@ -1,6 +1,6 @@
 #encoding: utf-8
 module ApplicationHelper
-
+  include ActionView::Helpers::OutputSafetyHelper
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
   end
@@ -99,8 +99,9 @@ a.each(function(){
       if img.present?
         image_text << '<img src="' + img + '" width="320" />'
       end
-      image_text << '<p>' + it_content[index] + '</p>'
+      image_text << '<p>' + CGI.unescapeHTML(it_content[index]) + '</p>'
     end
+
     content = "
     <!doctype html>
         <html>

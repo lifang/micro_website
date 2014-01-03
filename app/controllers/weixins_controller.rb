@@ -4,6 +4,7 @@ class WeixinsController < ApplicationController
   require 'net/http'
   require "uri"
   require 'openssl'
+  include Constant
   skip_before_filter :authenticate_user!
 
   #用于处理相应服务号的请求以及一开始配置服务器时候的验证，post 或者 get
@@ -11,27 +12,32 @@ class WeixinsController < ApplicationController
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
     if request.request_method == "POST" && tmp_encrypted_str == signature
-      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"
+      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复
+        return_message = get_return_message(cweb, "auto")  #获得自动回复消息
+        define_render(return_message) #返回渲染方式 :  text/news
+        create_menu(cweb)  #创建自定义菜单
+
+      elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
+        content = params[:xml][:Content]
+        return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         
-        if cweb == "dknbj"
-          @message = "欢迎关注迪卡侬沈阳滂江店
-
-点击右上角2次，就能把迪卡侬沈阳滂江店分享跟朋友们
-
-新年礼券活动1月1日马上开始，回复【参与】查看吧"
-          render "welcome"  , :formats => :xml, :layout => false        #欢迎信息
+        if cweb == "dknbj" && params[:xml][:Content] == "参与"
+          open_id = params[:xml][:FromUserName]
+          link = get_valid_award(cweb)
+          @link = link ? link + "&secret_key=" + open_id : "0"
+          if @link == "0"
+            @message = "暂无活动"
+          else
+            @message = "&lt;a href='#{@link}'&gt;点击参与&lt;/a&gt;"
+          end
+          xml = teplate_xml
+          render :xml => xml
         else
-          create_menu(cweb)
+          define_render(return_message) #返回渲染方式 :  text/news
         end
-      elsif params[:xml][:MsgType] == "text" && params[:xml][:Content] == "参与"
-        open_id = params[:xml][:FromUserName]
-        link = get_valid_award(cweb)
-        @link = link ? link + "&secret_key=" + open_id : "0"
-        render "echo", :formats => :xml, :layout => false        #回复信息
       else
-        render :text => "success"
+        render :text => "ok"
       end
-
     elsif request.request_method == "GET" && tmp_encrypted_str == signature  #配置服务器token时是get请求
       render :text => tmp_encrypted_str == signature ? echostr :  false
     end
@@ -46,9 +52,9 @@ class WeixinsController < ApplicationController
       menu_str = get_menu_by_website(cweb)
       c_menu_action = "/cgi-bin/menu/create?access_token=#{access_token["access_token"]}"
       response = create_post_http(WEIXIN_OPEN_URL ,c_menu_action ,menu_str)
-      render :text => response.to_s, :layout => false
+      # render :text => response.to_s, :layout => false
     else
-      render :text => false
+      #render :text => false
     end
   end
 
@@ -105,5 +111,35 @@ class WeixinsController < ApplicationController
     award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
     return award ? MW_URL + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
   end
-  
+
+  def define_render(return_message)
+    if return_message
+      micro_message, micro_image_text = return_message
+      if micro_message.text?
+        @message = micro_image_text[0].content
+        xml = teplate_xml
+        render :xml => xml        #关注 自动回复的文字消息
+      else
+        @items = micro_image_text
+        render "news" , :formats => :xml, :layout => false  #关注 自动回复的图文消息
+      end
+    else
+      render :text => "ok"
+    end
+  end
+
+  def teplate_xml
+    template_xml = <<Text
+<xml>
+  <ToUserName><![CDATA[#{params[:xml][:FromUserName]}]]></ToUserName>
+  <FromUserName><![CDATA[#{params[:xml][:ToUserName]}]]></FromUserName>
+  <CreateTime>#{Time.now.to_i}</CreateTime>
+  <MsgType><![CDATA[text]]></MsgType>
+  <Content>#{@message}</Content>
+  <FuncFlag>0</FuncFlag>
+</xml>
+Text
+    template_xml
+  end
+
 end

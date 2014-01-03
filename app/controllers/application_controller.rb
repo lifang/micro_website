@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   #微信基本url信息
   WEIXIN_OPEN_URL = "https://api.weixin.qq.com"
   APP_ID_AND_SECRET = {:wansu => {:app_id => "wxcbc2e8fb02023e4f", :app_secret => "1243a493f356a0c9ffcc2b7633a78b61"},
-                       :senvern => {:app_id => "wx4179ca59f560599b", :app_secret => "e5080f5963ead815439875eb0fdc66d7"}
-                       }
+    :senvern => {:app_id => "wx4179ca59f560599b", :app_secret => "e5080f5963ead815439875eb0fdc66d7"}
+  }
   MW_URL = "http://www.sunworldmedia.com/"
   
   require "fileutils"
@@ -115,7 +115,20 @@ class ApplicationController < ActionController::Base
     http
   end
 
-  def get_random_value
-    Digest::SHA2.hexdigest(Time.now.to_s)[-8..-1]
+  #根据微信 cweb，获取自动回复的消息
+  def get_return_message(cweb, flag, content=nil)
+    site = Site.find_by_cweb(cweb)
+    if flag == "auto"
+      message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
+    else
+      message = Keyword.find_by_site_id_and_types_and_keyword(site.id, Keyword::TYPE[:keyword], content) #查询是否有关键词对应回复
+    end
+    if message
+      micro_message = message.micro_message  #获取对应的消息记录
+      micro_it = micro_message.micro_imgtexts if micro_message
+      return [micro_message, micro_it]
+    else
+     return false
+    end
   end
 end
