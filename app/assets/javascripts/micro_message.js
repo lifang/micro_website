@@ -34,24 +34,24 @@ function check_new_micro_imgtexts(value){
     var title=$("#micro_imgtexts_title").val();
     
     if( $.trim(title)=="" ){
-        alert('标题不能为空！');
+        tishi_alert('标题不能为空！');
         return false;
     }
      var file=$(".fileText_1").val();
   
     if($.trim(file)==""){
-        alert('请选择文件！');
+        tishi_alert('请选择文件！');
         return false;
     }
     var content=$("#micro_imgtexts_img_path").val();
 
     if($.trim(content)==""){
-        alert('内容不能为空！');
+        tishi_alert('内容不能为空！');
         return false;
     }
     var url=$("#micro_imgtexts_url").val();
     if($.trim(url)==""){
-        alert('url不能为空！');
+        tishi_alert('url不能为空！');
         return false;
     }
     $("#uploadmicro").submit();

@@ -6,7 +6,7 @@ class MicroImgtextsController < ApplicationController
   def index
   end
   def new
-    p 11111111111111111111,params
+
     @micro_message = MicroMessage.find(params[:format]) unless params[:format].nil?
   end
   def create
