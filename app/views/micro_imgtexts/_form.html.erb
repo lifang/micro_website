@@ -7,12 +7,12 @@
   <div class="fileBox" style="width:300px;">
     <input type="text" class="fileText_1" />
     <button class="fileBtn_1 blue_btn" >浏览...</button>
-    <input type="file" class="file_1" name="micro_imgtexts[img_path]" />
+    <input type="file" class="file_1" id="micro_imgtexts_img_path" name="micro_imgtexts[img_path]" />
   </div>
 </div>
 <div class="twEditItem">
   <label>&nbsp;</label>
-  <img src="images/zujun_show_2.png" height="200" />
+  <img src="/assets/black.png" height="200" />
 </div>
 <div class="twEditItem">
   <label>内容：</label>
@@ -23,7 +23,8 @@
   <%=f.text_field :url%>
 </div>
 <div class="twEditAction">
-  <button class="blue_btn">添加模块</button>
+  <input type="button" onclick="check_new_micro_imgtexts(this)" value="添加模块" class="blue_btn"/>
+  
 </div>
 <input type="hidden" value="<%= @micro_message.id unless @micro_message.nil?  %>" name="micro_message_id"/>
 <%end%>

@@ -35,7 +35,7 @@ class MicroImgtextsController < ApplicationController
         redirect_to edit_site_micro_message_path(@site,@micro_message)
       else
         flash[:error]='新建消息模块失败'
-      render 'micro_messages/new'
+        render 'micro_messages/new'
       end
     else
       flash[:error]='只允许（gif，png，jpg）图片'
@@ -52,26 +52,54 @@ class MicroImgtextsController < ApplicationController
     
     @micro_message = MicroMessage.find(params[:micro_message_id])
     @micro_imgtext = MicroImgtext.find(params[:micro_imgtext_id])
-    p 222222222222222333,params,@micro_imgtext
+    
     @tmp = params[:micro_imgtexts][:img_path]
     if @tmp.nil?
-       @micro_imgtext.update_attributes(title:params[:micro_imgtexts][:title],
-         content:params[:micro_imgtexts][:content],
-         url:params[:micro_imgtexts][:url])
-       flash[:success]='只允许（gif，png，jpg）图片'
-       redirect_to edit_site_micro_message_path(@site,@micro_message)
+      @micro_imgtext.update_attributes(title:params[:micro_imgtexts][:title],
+        content:params[:micro_imgtexts][:content],
+        url:params[:micro_imgtexts][:url])
+      flash[:success]='更新成功'
+      redirect_to edit_site_micro_message_path(@site,@micro_message)
     else
-    #图片类别
-    @img_resources =%w[jpg png gif jpeg]
-    postfix_name = @tmp.original_filename.split('.')[-1].downcase
-    @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
-    @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{@micro_message.id}"+@tmp.original_filename
-    @micro_imgtext.img_path ="/allsites/"+ @site.root_path+"/micro_message/#{@micro_message.id}"+@tmp.original_filename
+      #图片类别
+      @img_resources =%w[jpg png gif jpeg]
+      postfix_name = @tmp.original_filename.split('.')[-1].downcase
+      @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
+      @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{@micro_message.id}"+@tmp.original_filename
+      #更新后的路径
+      img_path ="/allsites/"+ @site.root_path+"/micro_message/#{@micro_message.id}"+@tmp.original_filename
+      #原先的图片路径
+      @Original_img_true_path = Rails.root.to_s+"/public"+ @micro_imgtext.img_path
+      #如果图片符合规则
+      if @img_resources.include?(postfix_name)
+        @micro_imgtext.update_attributes(title:params[:micro_imgtexts][:title],
+          content:params[:micro_imgtexts][:content],
+          img_path:img_path,
+          url:params[:micro_imgtexts][:url])
+        #处理文件
+        FileUtils.rm @Original_img_true_path 
+        file=File.new(@full_path,'wb')
+        FileUtils.cp @tmp.path,file
+
+        flash[:success]='更新成功'
+        redirect_to edit_site_micro_message_path(@site,@micro_message)
+      else
+        flash[:error]='只允许（gif，png，jpg）图片'
+      render 'micro_messages/edit'
+      end
     end
   end
 
   def destroy
-    
+ 
+    @micro_message = MicroMessage.find(params[:micro_message_id])
+    @micro_imgtext = MicroImgtext.find(params[:micro_imgtext_id])
+    if @micro_imgtext && @micro_imgtext.destroy
+      render :text=>1
+    else
+      render :text=>0
+    end
+
   end
 
 

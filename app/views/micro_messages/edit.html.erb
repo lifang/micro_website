@@ -1,7 +1,7 @@
 <div class="main_container">
   <%=render 'micro_messages/tabs'%>
   <div class="tabDiv used">
-    <div class="page_content">
+    <div class="page_content"  >
       <div class="twList">
         <%@micro_imgtextss.each do |micro_imgtext|%>
         <div class="twBox">
@@ -9,7 +9,7 @@
           <div class="twTit"><%=micro_imgtext.title%></div>
           <div class="twBoxAct">
             <div class="twBoxEdit" title="编辑" onclick="edit_micro_imgtext(<%=@site.id%>,<%=@micro_message.id%>,<%=micro_imgtext.id%>)"></div>
-            <div class="twBoxDet" title="删除"></div>
+            <div class="twBoxDet" title="删除"  onclick="delete_micro_imgtext(<%=@site.id%>,<%=@micro_message.id%>,<%=micro_imgtext.id%>)"></div>
           </div>
         </div>
         <%end%>
