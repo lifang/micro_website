@@ -13,7 +13,7 @@
         <%@micro_messages.each do |m|%>
           <%  if i%2==1 %>
             <div class="msgBox">
-              <%m.micro_imgtexts.each do |micro_imgtext|%>
+              <%get_by_group(@micro_imgtextss,m.id).each do |micro_imgtext|%>
               <div class="twBox">
                 <img src="<%=micro_imgtext.img_path%>" />
                 <div class="twTit"><%=micro_imgtext.content%></div>
@@ -36,7 +36,7 @@
         <%@micro_messages.each do |m|%>
           <%  if j%2==0 %>
             <div class="msgBox">
-              <%m.micro_imgtexts.each do |micro_imgtext|%>
+              <%get_by_group(@micro_imgtextss,m.id).each do |micro_imgtext|%>
               <div class="twBox">
                 <img src="<%=micro_imgtext.img_path%>" />
                 <div class="twTit"><%=micro_imgtext.content%></div>
@@ -44,7 +44,8 @@
               <%end%>
               <div class="msgBoxAct">
                 <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
-                <button class="blue_btn">删除</button>
+                 <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
+               
               </div>
             </div>
           <%end%>

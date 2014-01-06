@@ -131,4 +131,15 @@ a.each(function(){
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     content
   end
+
+  #根据分组id得到组员
+  def get_by_group(group_members,id)
+    group_members.each do |gid,group_member|
+      print "-#{gid}-"
+      if gid == id
+        return group_member
+      end
+    end
+    nil
+  end
 end
