@@ -1,0 +1,76 @@
+<div class="main_container ">
+  <%=render 'micro_messages/tabs'%>
+
+  <%= link_to "新增关键词回复", new_site_weixin_reply_path(@site) %>
+  <!-- 自动回复 -->
+  <div class="autoReplyBox" style="height:auto">
+    <h1>关注后回复：</h1>
+    <div>
+      <button class="blue_btn" onclick="show_tag($('#micro_text'));">文字</button>
+      <button class="blue_btn" onclick="show_tag($('#micro_image_text'));">图文</button>
+    </div>
+
+    <div class="auto_message">
+      <% if @auto_micro_message %>
+        <% if @auto_micro_message.image_text? %>
+          <div class="msgBox">
+            <% @auto_micro_imagetexts.each do |ami| %>
+              <div class="twBox">
+                <img src="<%= ami.img_path %>" />
+                <div class="twTit"><%= ami.title %></div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <%= @auto_micro_imagetexts[0].content %>
+        <% end %>
+      <% end %>
+    </div>
+    <div>
+      <button class="blue_btn">删除</button>
+      <button class="blue_btn">保存</button>
+    </div>
+  </div>
+
+  <!-- 关键词回复 -->
+</div>
+
+<div class="second_box">
+  <div class="second_content" style="width:800px; min-height:560px">
+    <span class="close" >关闭</span>
+    <div id="micro_image_text">
+      <% @micro_imagetexts.each do |micor_message_id, micro_image_texts| %>
+      <div class="boxContainer">
+        <div class="msgBox" onmouseover="showMask(this)" onmouseout="hideMask(this)" onclick="selectBox(this)">
+          <% micro_image_texts.each do |ami| %>
+            <div class="twBox">
+              <img src="<%= ami.img_path %>" />
+              <div class="twTit"><%= ami.title %></div>
+            </div>
+          <% end if @micro_imagetexts.present? %>
+          <div class="appmsg_mask"></div>
+          <i class="icon_appmsg_selected">已选择</i>
+          <input type="hidden" class="micor_message_id" value="<%= micor_message_id %>"/>
+        </div>
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <button class="blue_btn" onclick="setChoose($('#micro_image_text'), 0)">确定</button>
+      <button class="blue_btn" onclick="hide_tab($('#micro_image_text'))">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="second_box">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <div id="micro_text">
+      <textarea cols="40" rows="10" class="micro_text"></textarea>
+    </div>
+    <div>
+      <button class="blue_btn" onclick="setChoose($('#micro_text'), 1)">确定</button>
+      <button class="blue_btn" onclick="hide_tab($('#micro_text'))">取消</button>
+    </div>
+  </div>
+</div>

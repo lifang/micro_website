@@ -45,6 +45,8 @@ MicroWebsite::Application.routes.draw do
     resources :micro_messages 
     resources :micro_imgtexts
     resources :keywords
+    resources :weixin_replies
+
 
     resources :awards do
       get :win_award_info
