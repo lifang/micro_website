@@ -194,6 +194,7 @@ fieldset.page_tit {
 
 /*弹窗*/
 .second_box { width:100%; height:100%; z-index:99; position: absolute; top:0; display: none; }
+.second_box.second_box2 { position: fixed;}
 .second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000;
 opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content {
@@ -346,28 +347,27 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
        margin-top: 5px;
        font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
 .addjx span { cursor: pointer;}
-
 /* 图文消息列表 */
 .left_half,.right_half { float: left;}
-.msgBox { width: 450px; margin: 8px; background: #fff; overflow: hidden; position: relative; padding: 5px;}
+.msgBox { width: 402px; margin: 8px; background: #fff; overflow: hidden; position: relative; padding: 5px;}
 .msgBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
 .msgBox:hover .go { display: block;}
-.go { display: block; width: 50px; height: 50px; background: url(../images/go.png); background-size: 50px 50px;}
+.go { display: block; width: 50px; height: 50px; background: url(/assets/go.png); background-size: 50px 50px;}
 .msgBox .go { position: absolute; right: 10px; top: 30px; display: none;}
 .msgBoxAct { text-align: center;}
 .msgBoxAct button { margin: 0 10px;}
 
-/* 图文消息块 */
-.twList { width: 400px;
-display: inline-block;
-padding: 10px 0;}
-.twEdit {
-padding: 10px;
+.newMsg {
+    color: #A3A3A3;
+    font-size: 80px;
+    height: 100px;
+    line-height: 80px;
+    text-align: center;
+}
 
-display: inline-block;
-position: absolute;
-top: 0;
-left: 471px;}
+/* 图文消息块 */
+.twList { width: 400px; float: left; padding: 10px 0;}
+.twEdit { overflow: hidden; padding: 10px;}
 .twEditItem { margin: 5px;}
 .twEditItem label { font-size: 18px; display: inline-block; width: 90px; float: left; line-height: 31px;}
 .twEditItem input { border: 1px solid #CDCDCD; height: 29px; width: 209px;}
@@ -378,7 +378,9 @@ left: 471px;}
 .twBox img { width: 400px;}
 .twBox2 img { width: 100px; float: right;}
 .twTit2 { overflow: hidden; padding: 5px;}
-.twTit { height: 25px; line-height: 25px; width: 100%; position: absolute; bottom: 0; background: #333; opacity: 0.7; filter: alpha(opacity=70); color: #fff; padding: 0 5px;}
+.twCont { overflow: hidden; padding: 5px;}
+.twTit { height: 25px; line-height: 25px; width: 100%; position: absolute; bottom: 0; background: #333; opacity: 0.7; filter: alpha(opacity=70); color: #fff; text-indent: 10px;}
+
 .newtw { font-size: 120px; line-height: 130px; color: #E2E2E2; text-align: center; border: 1px dashed #C2C2C2;}
 .twBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); text-align: center; display: none;}
 .twBoxEdit { display: inline-block; width: 50px; height: 50px; background: url(/assets/edit.png); background-size: 50px 50px;}
@@ -388,23 +390,41 @@ left: 471px;}
 
 
 /* 自动回复 */
-.autoReplyBox { height: 100px; min-height: 100px; margin: 10px 0; background: #fff; overflow: hidden; position: relative; padding: 5px;}
-.autoReplyBox.showAll { height: auto; overflow: auto;}
+.addrule { margin: 10px 0; text-align: right; }
+.autoReplyBox { margin: 10px 0; background: #fff; position: relative; padding: 5px; font-size: 14px;}
+.autoReplyBox1 { color: #F30;}
+.autoReplyBox1 h1 { color: #F30;}
 .autoReplyBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.arItem { line-height: 32px; margin: 3px;}
+.arItem label { float: left; width: 150px;}
+.arItem div { overflow: hidden;}
+.arItem input { padding: 6px;}
 
-.autoReplyBox:hover .twBoxAct { display: block;}
-.autoReplyBox .twBoxAct span { margin: 25px;}
-.autoReplyBox .autoReplyBoxAct { position: absolute; right: 10px; top: 10px; display: none;}
-.autoReplyBox:hover .autoReplyBoxAct { display: block;}
+.autoReplyBox .toggleAct { position: absolute; right: 10px; top: 10px; display: none;}
+.autoReplyBox:hover .toggleAct { display: block;}
+
+.addGjz { margin-left: 100px;}
+.gjzBox span { padding: 0 5px; margin: 0 3px; background: #d2d2d2;}
+.gjzBox span:hover { box-shadow: 0 0 2px rgba(0,0,0,0.7); cursor: pointer;}
+
+.wzAdd textarea,.wzxxEdit textarea { border: 1px solid #CDCDCD; height: 130px; width: 320px; resize: none; overflow: auto; padding: 5px; display: block; margin: 5px auto;}
 
 .replyInfo { width: 400px; float: left;}
-.chooseArea { overflow: hidden;}
-.replyEditAction { padding: 5px; text-align: center; width: 400px;}
+.chooseArea { height: 360px; overflow: auto;}
+.replyEditAction { padding: 5px; text-align: center; }
+.msgBoxChosen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); display: none;}
+.msgBox:hover .msgBoxChosen { display: block;}
+.msgBoxChosen.curr { display: block;}
+.msgBoxChosen.curr .chosen { display: block;}
+.chosen { display: block; width: 75px; height: 60px; background: url(/assets/chosen.png); background-size: 75px 60px; margin: 50px auto; display: none;}
 
-.newMsg {
-    color: #A3A3A3;
-    font-size: 80px;
-    height: 100px;
-    line-height: 80px;
-    text-align: center;
-}
+.wzxxBox { position: relative;}
+.wzxxBox:hover .wzxxBoxAct { display: block;}
+.wzxxBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; text-align: right;}
+.wzxxBoxEdit { display: inline-block; width: 30px; height: 30px; background: url(/assets/edit2.png); background-size: 30px 30px;}
+.wzxxBoxDet { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete2.png); background-size: 30px 30px;}
+
+.msgBox { position: relative;}
+.msgBox:hover .msgBoxAct { display: block;}
+.msgBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); display: none; text-align: right;}
+.msgBoxDel { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete.png); background-size: 30px 30px; margin: 10px;}

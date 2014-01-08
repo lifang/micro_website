@@ -1,37 +1,38 @@
-
-    <div class="page_content ">
-      <div class="page_tit">
-			<%=link_to '新建图片流页' ,new_site_image_stream_path(@site),:remote => true,  class:"blue_btn scd_btn" %>
-      </div>
-      <div class="page_txt">
-        <table class="table1" >
-          <tr>
-            <th width="100">标题</th>
-            <th width="300">路径</th>
-            <th width="50">访问控制</th>
-            <th width="300">操作</th>
-          </tr>
-
-          <% @image_stream_pages.each do |page| %>
-          <tr id="<%= page.id %>">
-              <td class="title"><%= page.title %></td>
-              <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
-              <td class="authenticate"><%= if_authenticate(page) %></td>
-              <td>
-                <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
-                <%= link_to "编辑" , edit_itpage_site_image_stream_path(@site,page), :remote => true, :class => "blue_btn"%>
-                <%= link_to "删除" , site_image_stream_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
-                <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name, :target =>"_blank" , :class => "blue_btn page_preview"%>
-              </td>
-            </tr>
-          <% end %>
-        </table>          
-      </div>
-
-      <div class="clear"></div>
-      <div class="digg_pagination" style="margin:0 auto;text-align: center;">
-      <%= will_paginate  @image_stream_pages,:previous_label=>'上一页',:next_label=>'下一页'%>
-      </div>
-      <div class="page_act"></div>
+<div class="page_content ">
+  <div class="page_tit">
+    <%=link_to '新建图片流页' ,new_site_image_stream_path(@site),:remote => true,  class:"blue_btn scd_btn" %>
     </div>
+    <div class="page_txt">
+      <table class="table1" >
+        <tr>
+          <th width="100">标题</th>
+          <th width="300">路径</th>
+          <th width="50">访问控制</th>
+          <th width="300">操作</th>
+        </tr>
+
+        
+        
+        <% @image_stream_pages.each do |page| %>
+          <tr id="<%= page.id %>">
+            <td class="title"><%= page.title %></td>
+            <td class="path"><%= "/sites/static" + "?path_name=" + page.path_name %></td>
+            <td class="authenticate"><%= if_authenticate(page) %></td>
+            <td>
+              <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
+              <%= link_to "编辑" , edit_itpage_site_image_stream_path(@site,page), :remote => true, :class => "blue_btn"%>
+              <%= link_to "删除" , site_image_stream_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
+              <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name, :target =>"_blank" , :class => "blue_btn page_preview"%>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
   
+    <div class="clear"></div>
+    <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+      <%= will_paginate  @image_stream_pages,:previous_label=>'上一页',:next_label=>'下一页'%>
+    </div>
+    <div class="page_act"></div>
+</div>

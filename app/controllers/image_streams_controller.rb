@@ -1,12 +1,24 @@
 #encoding:utf-8
 class ImageStreamsController < ApplicationController
+  require 'will_paginate/array'
   before_filter :get_site
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
   layout 'sites'
   def new
     @site=Site.find(params[:site_id])
-    @imgs_path=@site.resources
+    #@imgs_path=@site.resources
+    #@imgs_path =@site.resources.paginate(:page=>params[:page],:per_page=>12,:conditions =>"path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>9)
+    
+
+  end
+  #给图片流进行分页（shared/all_img）
+  def change
+    @site=Site.find(params[:site_id])
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>9)
   end
 
   def img_stream
@@ -86,7 +98,8 @@ class ImageStreamsController < ApplicationController
     @page = Page.find(params[:id])
     @image_text=PageImageText.find_by_page_id(params[:id])
     @site=Site.find(params[:site_id])
-    @imgs_path=@site.resources
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>9)
     
   end
  

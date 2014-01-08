@@ -1,10 +1,5 @@
 MicroWebsite::Application.routes.draw do
 
-
-
-
-  get "keywords/index"
-
   devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations",:sessions=>'sessions'} do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
@@ -44,7 +39,6 @@ MicroWebsite::Application.routes.draw do
     end
     resources :micro_messages 
     resources :micro_imgtexts
-    resources :keywords
     resources :weixin_replies
 
 
@@ -77,7 +71,7 @@ MicroWebsite::Application.routes.draw do
         post :preview
       end
       member do
-        get :sub_edit,:form_edit, :if_authenticate, :sub_preview
+        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change
         post :submit_queries
       end
     end
@@ -89,7 +83,7 @@ MicroWebsite::Application.routes.draw do
       end
       #对单个进行操作
       member do
-        get :edit_itpage
+        get :edit_itpage,:change
       end
     end
     resources :image_texts do
@@ -98,6 +92,7 @@ MicroWebsite::Application.routes.draw do
       end
       member do
         put :it_preview
+        get :change
       end
     end
   end
