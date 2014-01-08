@@ -1,172 +1,115 @@
 <div class="main_container ">
   <%=render 'micro_messages/tabs'%>
 
- 
-
   <div class="tabDiv used">
     <div class="page_content">
-      <div class="addrule"><button class="blue_btn">添加规则</button></div>
-      <div class="autoReplyBox autoReplyBox1">
-        <h1>规则一：关注后回复</h1>
-        <div class="arItem">
-          <label>关注后回复</label>
-          <div><span>&nbsp;</span></div>
-        </div>
-        <div class="arItem">
-          <label>回复内容：</label>
-          <div><span>2条（一条文字，一条图文）</span></div>
-        </div>
-        <div class="toggleAct">
-          <button class="blue_btn">展开</button>
-        </div>
-      </div>
-      <div class="autoReplyBox">
-        <h1>规则二：ss</h1>
-        <div class="arItem">
-          <label>关键字：</label>
-          <div><span>1</span><span>2</span></div>
-        </div>
-        <div class="arItem">
-          <label>回复内容：</label>
-          <div><span>2条（一条文字，一条图文）</span></div>
-        </div>
-        <div class="toggleAct">
-          <button class="blue_btn">展开</button>
-        </div>
-      </div>
-      <div class="autoReplyBox autoReplyEdit">
-        <h1>规则二：ss</h1>
-        <div class="arItem cf">
-          <label>规则名：</label>
-          <div><input type="text" value="ss" /></div>
-        </div>
-        <div class="arItem">
-          <label>关键字：</label>
-          <div class="gjzBox">
-            <span class="scd_btn" name="gjzDel">1</span><span>2</span><span>大声疾呼</span>
-            <button class="blue_btn addGjz scd_btn" name="gjzAdd">添加关键字</button>
+      <div class="addrule"><button class="blue_btn" onclick="appendNewKeyword('<%= @site.id %>')">添加关键字回复</button></div>
+
+      <!-- 自动回复 -->
+      <ul>
+      <li class="auto_block">
+        <div class="autoReplyBox autoReplyBox1">
+          <div class="arItem cf">
+            <label>关注后回复</label>
+            <div><span>&nbsp;</span></div>
+          </div>
+          <div class="arItem cf">
+            <label>回复内容：</label>
+            <div><span><% if @auto_micro_message %>(一条<%= @auto_micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
+          </div>
+          <div class="toggleAct">
+            <button class="blue_btn">删除</button>
+            <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
           </div>
         </div>
-        <div class="arItem">
-          <label>回复内容：</label>
-          <div>
+        <div class="autoReplyBox autoReplyBox1" style="display:none">
+          <div class="arItem cf">
+            <label>关注后回复</label>
+            <div><span>&nbsp;</span></div>
+          </div>
+
+          <div class="arItem cf">
+            <label>回复内容：</label>
             <div>
-              <button class="blue_btn scd_btn" name="wzAdd">添加文字</button>
-              <button class="blue_btn scd_btn" name="autoReplyBoxEdit">添加图文</button>
-            </div>
-            <div class="wzxxBox">
-              <span>文字消息1</span>
-              <div class="wzxxBoxAct">
-                <div class="wzxxBoxEdit scd_btn" name="wzxxEdit" title="编辑"></div>
-                <div class="wzxxBoxDet" title="删除"></div>
+              <div>
+                <button class="blue_btn scd_btn" onclick="show_tag($('#micro_text'), 'auto_block', 'text');">添加文字</button>
+                <button class="blue_btn scd_btn" onclick="show_tag($('#micro_image_text'), 'auto_block', 'imagetext');">添加图文</button>
               </div>
-            </div>
-            <div class="wzxxBox"><span>文字消息2</span></div>
-            <div class="msgBox">
-              <div class="twBox">
-                <img src="images/zujun_show_2.png" />
-                <div class="twTit">1</div>
-                <div class="twCont">sss</div>
-              </div>
-              <div class="twBox2">
-                <img src="images/zujun_show_2.png" />
-                <div class="twTit2">1</div>
-                <div class="twCont">sss</div>
-              </div>
-              <div class="msgBoxAct">
-                <div class="msgBoxDel" title="删除"></div>
+
+              <div class="auto_message">
+                <% if @auto_micro_message && @auto_micro_imagetexts %>
+                  <%= render :partial => "/weixin_replies/micro_message", :locals => {:mi => @auto_micro_imagetexts, :mm => @auto_micro_message} %>
+                <% end %>
               </div>
             </div>
           </div>
+          <div class="autoReplyBoxAct arItem">
+            <label>&nbsp;</label>
+            <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_replies_path(@site) %>', 'auto', 'new')">保存</button>
+          </div>
+
+          <div class="toggleAct">
+            <button class="blue_btn">删除</button>
+            <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
+          </div>
+
+
         </div>
-        <div class="autoReplyBoxAct arItem">
-          <label>&nbsp;</label>
-          <button class="blue_btn">保存</button>
-          <button class="blue_btn">删除</button>
-        </div>
-        <div class="toggleAct">
-          <button class="blue_btn">收起</button>
-        </div>
-      </div>
+      </li>
+      </ul>
+      <!-- 关键词回复 -->
+      <ul class="keyword_list">
+        <%= render "keyword_list" %>
+      </ul>
+
     </div>
   </div>
 
-
-
 </div>
 
-<div class="second_bg"></div>
-<div class="second_box second_box2 autoReplyBoxEdit" style="">
+<div class="second_box">
   <div class="second_content second_content2">
     <span class="close" >关闭</span>
     <h1>添加图文消息</h1>
-    <div class="chooseArea">
-
-      <div class="left_half">
-        <div class="msgBox">
-          <div class="twBox">
-            <img src="images/zujun_show_2.png" />
-            <div class="twTit">1</div>
-          </div>
-          <div class="msgBoxChosen">
-            <div class="chosen"></div>
-          </div>
-        </div>
-        <div class="msgBox">
-          <div class="twBox">
-            <img src="images/zujun_show_2.png" />
-            <div class="twTit">1</div>
-          </div>
-          <div class="msgBoxChosen curr">
-            <div class="chosen"></div>
-          </div>
-        </div>
-        <div class="msgBox">
-          <div class="twBox">
-            <img src="images/zujun_show_2.png" />
-            <div class="twTit">1</div>
-          </div>
-        </div>
-      </div>
-      <div class="right_half">
-        <div class="msgBox">
-          <div class="twBox">
-            <img src="images/zujun_show_2.png" />
-            <div class="twTit">1</div>
-          </div>
-          <div class="twBox twBox2">
-            <img src="images/zujun_show_2.png" />
-            <div class="twTit2">1</div>
-          </div>
-        </div>
+    <div id="micro_image_text">
+      <% i = 0 %>
+      <div class="chooseArea">
+        <% @micro_imagetexts.each do |micor_message_id, micro_image_texts| %>
+          <% if i%2 == 0 %>
+            <div class="left_half">
+              <div class="boxContainer">
+                <%= render :partial => '/micro_imgtexts/for_select_imagetext', :locals => {:micro_image_texts => micro_image_texts, :micor_message_id => micor_message_id} %>
+              </div>
+            </div>
+          <% else %>
+            <div class="right_half">
+              <div class="boxContainer">
+                <%= render :partial => '/micro_imgtexts/for_select_imagetext', :locals => {:micro_image_texts => micro_image_texts, :micor_message_id => micor_message_id}%>
+              </div>
+            </div>
+          <% end %>
+          <% i += 1 %>
+        <% end %>
       </div>
     </div>
     <div class="replyEditAction">
-      <button class="blue_btn">提交</button>
+      <button class="blue_btn confirm_btn">确定</button>
+      <button class="blue_btn cancel_btn" onclick="hide_tab($('#micro_image_text'))">取消</button>
     </div>
   </div>
 </div>
-<div class="second_box second_box2 gjzDel">
+
+<div class="second_box wzAdd">
   <div class="second_content">
     <span class="close" >关闭</span>
-    <h1>是否删除+名字？</h1>
-    <div class="second_box_act">
-      <button class="blue_btn">确定</button>
-      <button class="blue_btn">取消</button>
+    <h1>添加文字消息</h1>
+    <div id="micro_text">
+      <textarea  class="micro_text"></textarea>
     </div>
-  </div>
-</div>
-<div class="second_box second_box2 gjzAdd">
-  <div class="second_content">
-    <span class="close" >关闭</span>
-    <h1>添加关键字</h1>
-    <li>
-      <label>添加关键字：</label>
-      <input type="text" />
-    </li>
     <div class="second_box_act">
-      <button class="blue_btn">确定</button>
-      <button class="blue_btn">取消</button>
+      <button class="blue_btn confirm_btn">确定</button>
+      <button class="blue_btn cancel_btn" onclick="hide_tab($('#micro_text'))">取消</button>
+
     </div>
   </div>
 </div>

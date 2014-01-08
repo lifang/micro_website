@@ -9,8 +9,8 @@ class MicroMessagesController < ApplicationController
       arr<<x.id
     end
     arr=arr.join(",")
-    @micro_imgtexts = ( MicroImgtext.where("micro_message_id in (#{arr})") )unless arr.nil?
-    @micro_imgtextss = @micro_imgtexts.group_by{|s| s[:micro_message_id]}
+    @micro_imgtexts = MicroImgtext.where("micro_message_id in (#{arr})") if arr.present?
+    @micro_imgtextss = @micro_imgtexts.group_by{|s| s[:micro_message_id]} if @micro_imgtexts
   end
 
   def new
