@@ -64,6 +64,7 @@ function setChoose(obj, flag, location){
         li.find(".msgBox").append(image_text_del_cover);
     }else{ //文字
         var text = obj.find(".micro_text").val();
+        text = HTMLEnCode(text);
         li.html(text_del_cover);
         li.find(".wzxxBox span").text(text);
     }
@@ -203,3 +204,17 @@ function delLi(obj){
         $(obj).parents("li").remove();
     }
 }
+//转义字符串
+function HTMLEnCode(str)
+   {
+         var    s    =    "";
+         if    (str.length    ==    0)    return    "";
+         s    =    str.replace(/&/g,    "&gt;");
+         s    =    s.replace(/</g,        "&lt;");
+         s    =    s.replace(/>/g,        "&gt;");
+         s    =    s.replace(/    /g,        "&nbsp;");
+         s    =    s.replace(/\'/g,      "&#39;");
+         s    =    s.replace(/\"/g,      "&quot;");
+         s    =    s.replace(/\n/g,      "<br>");
+         return    s;
+   }

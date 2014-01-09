@@ -20,14 +20,14 @@ class WeixinRepliesController < ApplicationController
   end
 
   def destroy
-     keyword = Keyword.find_by_id params[:id]
-     micro_message = keyword.micro_message
-     if micro_message.text?
-       micro_message.destroy
-     end
-     keyword.destroy
-     flash[:notice] = "删除成功"
-     redirect_to site_weixin_replies_path(@site)
+    keyword = Keyword.find_by_id params[:id]
+    micro_message = keyword.micro_message
+    if micro_message.text?
+      micro_message.destroy
+    end
+    keyword.destroy
+    flash[:notice] = "删除成功"
+    redirect_to site_weixin_replies_path(@site)
   end
 
   def create
@@ -65,8 +65,14 @@ class WeixinRepliesController < ApplicationController
         keyword = Keyword.find_by_id params[:id]
         if text.present? #文字回复
           micro_message = keyword.micro_message
-          micro_message.micro_imgtexts[0].update_attribute(:content, text) if micro_message && micro_message.micro_imgtexts[0]
-          keyword.update_attributes({:keyword => keyword_param})
+          if micro_message && micro_message.micro_imgtexts[0]
+            micro_message.micro_imgtexts[0].update_attribute(:content, text)
+            keyword.update_attributes({:keyword => keyword_param})
+          else
+            micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
+            micro_message.micro_imgtexts.create(:content => text ) if micro_message
+            keyword.update_attributes({:micro_message_id => micro_message.id, :keyword => keyword_param})
+          end
         else
           keyword.update_attributes({:micro_message_id => micro_message_id, :keyword => keyword_param})
         end

@@ -121,7 +121,8 @@ class ApplicationController < ActionController::Base
     if flag == "auto"
       message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
     else
-      message = Keyword.find_by_site_id_and_types_and_keyword(site.id, Keyword::TYPE[:keyword], content) #查询是否有关键词对应回复
+      keyword = content.gsub(/[%_]/){|x| '\\' + x}
+      message = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword}%'", site.id)[0] #查询是否有关键词对应回复
     end
     if message
       micro_message = message.micro_message  #获取对应的消息记录
