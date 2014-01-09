@@ -29,8 +29,8 @@
                 <%end%>
               <%end%>
               <div class="msgBoxAct">
-                <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
-                  <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
+              <%=link_to raw("<img src='/assets/edit.png' width='50px' />"),edit_site_micro_message_path(@site,m)%>
+                      <%=link_to raw("<img src='/assets/delete.png' width='50px' />"),site_micro_message_path(@site,m),method: :delete%>
 
                   </div>
                 </div>
@@ -61,8 +61,8 @@
                     <%end%>
                   <%end%>
                   <div class="msgBoxAct">
-                    <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
-                      <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
+                    <%=link_to raw("<img src='/assets/edit.png' width='50px' />"),edit_site_micro_message_path(@site,m)%>
+                      <%=link_to raw("<img src='/assets/delete.png' width='50px' />"),site_micro_message_path(@site,m),method: :delete%>
 
                       </div>
                     </div>
