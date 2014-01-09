@@ -63,7 +63,9 @@
       </ul>
       <!-- 关键词回复 -->
       <ul class="keyword_list">
-        <%= render "keyword_list" %>
+        <% if @key_replies %>
+          <%= render "keyword_list" %>
+        <% end %>
       </ul>
 
     </div>

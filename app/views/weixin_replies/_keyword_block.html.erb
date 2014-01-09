@@ -47,7 +47,7 @@ index ||= 0
     </div>
     <div class="autoReplyBoxAct arItem">
       <label>&nbsp;</label>
-      <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit')">保存</button>
+      <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit', '<%= index %>')">保存</button>
     </div>
     <div class="toggleAct">
       <% if kr %>
