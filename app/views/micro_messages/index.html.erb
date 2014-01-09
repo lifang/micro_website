@@ -30,7 +30,7 @@
               <%end%>
               <div class="msgBoxAct">
               <%=link_to raw("<img src='/assets/edit.png' width='50px' />"),edit_site_micro_message_path(@site,m)%>
-                      <%=link_to raw("<img src='/assets/delete.png' width='50px' />"),site_micro_message_path(@site,m),method: :delete%>
+                      <%=link_to raw("<img src='/assets/delete.png' width='50px' />"),site_micro_message_path(@site,m),method: :delete, confirm: "确定删除？"%>
 
                   </div>
                 </div>

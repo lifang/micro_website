@@ -9,6 +9,7 @@
       <div class="twBox2">
         <img src="<%= kmi.img_path %>" />
         <div class="twTit2"><%= kmi.title %></div>
+        <div class="twCont"><%= truncate(kmi.content, :length => 30) %></div>
       </div>
     <% end %>
   <% end %>

@@ -7,55 +7,59 @@
 
       <!-- 自动回复 -->
       <ul>
-      <li class="auto_block">
-        <div class="autoReplyBox autoReplyBox1">
-          <div class="arItem cf">
-            <label>关注后回复</label>
-            <div><span>&nbsp;</span></div>
-          </div>
-          <div class="arItem cf">
-            <label>回复内容：</label>
-            <div><span><% if @auto_micro_message %>(一条<%= @auto_micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
-          </div>
-          <div class="toggleAct">
-            <button class="blue_btn">删除</button>
-            <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
-          </div>
-        </div>
-        <div class="autoReplyBox autoReplyBox1" style="display:none">
-          <div class="arItem cf">
-            <label>关注后回复</label>
-            <div><span>&nbsp;</span></div>
-          </div>
-
-          <div class="arItem cf">
-            <label>回复内容：</label>
-            <div>
-              <div>
-                <button class="blue_btn scd_btn" onclick="show_tag($('#micro_text'), 'auto_block', 'text');">添加文字</button>
-                <button class="blue_btn scd_btn" onclick="show_tag($('#micro_image_text'), 'auto_block', 'imagetext');">添加图文</button>
-              </div>
-
-              <div class="auto_message">
-                <% if @auto_micro_message && @auto_micro_imagetexts %>
-                  <%= render :partial => "/weixin_replies/micro_message", :locals => {:mi => @auto_micro_imagetexts, :mm => @auto_micro_message} %>
-                <% end %>
-              </div>
+        <li class="auto_block">
+          <div class="autoReplyBox autoReplyBox1">
+            <div class="arItem cf">
+              <label>关注后回复</label>
+              <div><span>&nbsp;</span></div>
+            </div>
+            <div class="arItem cf">
+              <label>回复内容：</label>
+              <div><span><% if @auto_micro_message %>(一条<%= @auto_micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
+            </div>
+            <div class="toggleAct">
+              <% if @auto_reply %>
+                <%= link_to "清空", site_weixin_reply_path(@site, @auto_reply), :method => :delete, :confirm => "确定清空？", :class => "blue_btn"  %>
+              <% end %>
+              <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
             </div>
           </div>
-          <div class="autoReplyBoxAct arItem">
-            <label>&nbsp;</label>
-            <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_replies_path(@site) %>', 'auto', 'new')">保存</button>
+          <div class="autoReplyBox autoReplyBox1" style="display:none">
+            <div class="arItem cf">
+              <label>关注后回复</label>
+              <div><span>&nbsp;</span></div>
+            </div>
+
+            <div class="arItem cf">
+              <label>回复内容：</label>
+              <div>
+                <div>
+                  <button class="blue_btn scd_btn" onclick="show_tag($('#micro_text'), 'auto_block', 'text');">添加文字</button>
+                  <button class="blue_btn scd_btn" onclick="show_tag($('#micro_image_text'), 'auto_block', 'imagetext');">添加图文</button>
+                </div>
+
+                <div class="auto_message">
+                  <% if @auto_micro_message && @auto_micro_imagetexts %>
+                    <%= render :partial => "/weixin_replies/micro_message", :locals => {:mi => @auto_micro_imagetexts, :mm => @auto_micro_message} %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="autoReplyBoxAct arItem">
+              <label>&nbsp;</label>
+              <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_replies_path(@site) %>', 'auto', 'new')">保存</button>
+            </div>
+
+            <div class="toggleAct">
+              <% if @auto_reply %>
+                <%= link_to "清空", site_weixin_reply_path(@site, @auto_reply), :method => :delete, :confirm => "确定清空？", :class => "blue_btn"  %>
+              <% end %>
+              <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
+            </div>
+
+
           </div>
-
-          <div class="toggleAct">
-            <button class="blue_btn">删除</button>
-            <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
-          </div>
-
-
-        </div>
-      </li>
+        </li>
       </ul>
       <!-- 关键词回复 -->
       <ul class="keyword_list">
@@ -167,4 +171,4 @@
 
 
 
- 
+

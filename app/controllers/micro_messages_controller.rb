@@ -3,7 +3,7 @@ class MicroMessagesController < ApplicationController
   before_filter :get_site
   layout 'sites'
   def index
-    @micro_messages =@site.micro_messages
+    @micro_messages =@site.micro_messages.image_text
     arr=[]
     @micro_messages.each  do |x|
       arr<<x.id
@@ -29,9 +29,14 @@ class MicroMessagesController < ApplicationController
     if !@micro_messages.nil?
       @img_texts =@micro_messages.micro_imgtexts
       @img_texts.each do |img_text|
-        img_text.destroy
         original_img_true_path = Rails.root.to_s+"/public"+ img_text.img_path
         FileUtils.rm original_img_true_path if File::exist?( original_img_true_path )
+      end
+      keyword = @micro_messages.keyword
+      if keyword.auto?
+        keyword.destroy
+      else
+        keyword.update_attribute(:micro_message_id, nil)
       end
       @micro_messages.destroy
       flash[:success]="删除成功！"

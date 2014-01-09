@@ -108,14 +108,14 @@ var keywordBlock = '<li>\n\
       <div><span></span></div>\n\
     </div>\n\
       <div class="toggleAct">\n\
-      <button class="blue_btn">删除</button>\n\
+      <button class="blue_btn" onclick="delLi(this)">删除</button>\n\
       <button class="blue_btn" onclick="toggleDetail(this)">展开</button>\n\
     </div>\n\
 </div>\n\
   <div class="autoReplyBox">\n\
     <div class="arItem cf">\n\
       <label>关键字：</label>\n\
-      <div><input type="text"class="keyword" name="keyword" value="" /></div>\n\
+      <div><input type="text"class="keyword" name="keyword" value="" />（多个请用逗号分隔）</div>\n\
     </div>\n\
     <div class="arItem">\n\
       <label>回复内容：</label>\n\
@@ -133,7 +133,7 @@ var keywordBlock = '<li>\n\
       <button class="blue_btn save_btn">保存</button>\n\
     </div>\n\
     <div class="toggleAct">\n\
-      <button class="blue_btn">删除</button>\n\
+      <button class="blue_btn" onclick="delLi(this)">删除</button>\n\
       <button class="blue_btn" onclick="toggleDetail(this)">收起</button>\n\
     </div>\n\
 </div>\n\
@@ -169,7 +169,9 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
         var micro_message_id = "";
         var text = "";
         var flag = auto_or_keyword;
+        //alert(keywordEle.val())
         var keyword = keywordEle ? keywordEle.val() : "";
+        //alert(keyword)
         if(micro_message.length != 0){
             micro_message_id = micro_message.val();
         }else{
@@ -178,7 +180,7 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
         $.ajax({
             url: url,
             type: new_or_edit == "new" ? "POST" : "PUT",
-            dataType: "text",
+            dataType: "script",
             data: {
                 micro_message_id: micro_message_id,
                 text: text,
@@ -186,11 +188,18 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
                 keyword: keyword
             },
             success:function(data){
-               window.location.reload();
+            //tishi_alert("保存成功")
+            // window.location.reload();
             },
             error:function(data){
-                //alert("error");
+            //alert("error");
             }
         })
+    }
+}
+//关键字未保存 删除
+function delLi(obj){
+    if(confirm("确定移除？")){
+        $(obj).parents("li").remove();
     }
 }

@@ -1,5 +1,5 @@
 class MicroMessage < ActiveRecord::Base
-  has_many :micro_imgtexts
+  has_many :micro_imgtexts, :dependent => :destroy
   has_one :keyword
   belongs_to :site
   attr_accessible :content, :img_path, :mtype, :site_id, :title, :url 
