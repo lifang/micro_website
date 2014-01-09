@@ -116,7 +116,7 @@ var keywordBlock = '<li>\n\
   <div class="autoReplyBox">\n\
     <div class="arItem cf">\n\
       <label>关键字：</label>\n\
-      <div><input type="text"class="keyword" name="keyword" value="" />（多个请用逗号分隔）</div>\n\
+      <div><input type="text"class="keyword" name="keyword" value="" />（多个请用逗号或者空格分隔）</div>\n\
     </div>\n\
     <div class="arItem">\n\
       <label>回复内容：</label>\n\
