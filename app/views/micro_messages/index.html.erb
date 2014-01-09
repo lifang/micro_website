@@ -16,13 +16,13 @@
               <%get_by_group(@micro_imgtextss,m.id).each_with_index do |micro_imgtext,index|%>
                 <%if index==0%>
                   <div class="twBox">
-                    <img src="<%=micro_imgtext.img_path%>" />
+                    <img src="<%=get_min1_by_imgpath micro_imgtext.img_path%>" />
                     <div class="twTit"><%=micro_imgtext.title%></div>
                     <div class="twCont"><%=micro_imgtext.content%></div>
                   </div>
                 <%else%>
                   <div class="twBox2">
-                    <img src="<%=micro_imgtext.img_path%>" />
+                    <img src="<%=get_min2_by_imgpath micro_imgtext.img_path%>" />
                     <div class="twTit2"><%=micro_imgtext.title%></div>
                     <div class="twCont"><%=micro_imgtext.content%></div>
                   </div>
@@ -48,13 +48,13 @@
                   <%get_by_group(@micro_imgtextss,m.id).each_with_index do |micro_imgtext,index|%>
                     <%if index==0%>
                       <div class="twBox">
-                        <img src="<%=micro_imgtext.img_path%>" />
+                        <img src="<%=get_min1_by_imgpath micro_imgtext.img_path%>" />
                         <div class="twTit"><%=micro_imgtext.title%></div>
                         <div class="twCont"><%=micro_imgtext.content%></div>
                       </div>
                     <%else%>
                       <div class="twBox2">
-                        <img src="<%=micro_imgtext.img_path%>" />
+                        <img src="<%=get_min2_by_imgpath micro_imgtext.img_path%>" />
                         <div class="twTit2"><%=micro_imgtext.title%></div>
                         <div class="twCont"><%=micro_imgtext.content%></div>
                       </div>

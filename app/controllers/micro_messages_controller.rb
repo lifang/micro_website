@@ -32,6 +32,8 @@ class MicroMessagesController < ApplicationController
         img_text.destroy
         original_img_true_path = Rails.root.to_s+"/public"+ img_text.img_path
         FileUtils.rm original_img_true_path if File::exist?( original_img_true_path )
+        FileUtils.rm get_min1_by_imgpath original_img_true_path if File::exist?( get_min1_by_imgpath original_img_true_path )
+        FileUtils.rm get_min2_by_imgpath original_img_true_path if File::exist?( get_min2_by_imgpath original_img_true_path )  
       end
       @micro_messages.destroy
       flash[:success]="删除成功！"
@@ -41,4 +43,6 @@ class MicroMessagesController < ApplicationController
       redirect_to site_micro_messages_path(@site)
     end
   end
+
+
 end

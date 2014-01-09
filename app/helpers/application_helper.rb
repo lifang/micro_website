@@ -142,4 +142,14 @@ a.each(function(){
     end
     nil
   end
+
+  def get_min1_by_imgpath(imgname1)
+     img=imgname1.split(".")
+     img[0...-1].join('.')+"_min1."+img[-1]
+  end
+  def get_min2_by_imgpath(imgname1)
+     img=imgname1.split(".")
+     img[0...-1].join('.')+"_min2."+img[-1]
+  end
+
 end

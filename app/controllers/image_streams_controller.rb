@@ -61,7 +61,6 @@ class ImageStreamsController < ApplicationController
       imgarr.each do |x|
         filename=x.split("/")[-1]
         dirpath=Rails.root.to_s + "/public#{x.split('/')[0...-1].join('/')}"
-        p '文件名',filename,dirpath
         min_image(Rails.root.to_s + "/public#{x}",filename,dirpath)
       end
   end
