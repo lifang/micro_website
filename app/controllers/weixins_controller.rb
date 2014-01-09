@@ -4,7 +4,6 @@ class WeixinsController < ApplicationController
   require 'net/http'
   require "uri"
   require 'openssl'
-  include Constant
   skip_before_filter :authenticate_user!
 
   #用于处理相应服务号的请求以及一开始配置服务器时候的验证，post 或者 get
