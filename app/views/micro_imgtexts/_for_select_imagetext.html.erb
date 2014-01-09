@@ -9,6 +9,7 @@
       <div class="twBox2">
         <img src="<%= mit.img_path %>" />
         <div class="twTit2"><%= mit.title %></div>
+        <div class="twCont"><%= truncate(mit.content, :length => 30) %></div>
       </div>
     <% end %>
   <% end if @micro_imagetexts.present? %>

@@ -7,8 +7,8 @@ index ||= 0
   <div class="autoReplyBox">
     <div class="arItem cf">
       <label>关键字：</label>
-      <div>
-        <% kr.keyword.split(",").each do |k| %>
+      <div class="gjzBox">
+        <% kr.keyword.split("，").each do |k| %>
           <span><%= k %></span>
         <% end if kr.present? %>
       </div>
@@ -20,14 +20,16 @@ index ||= 0
       <div><span><% if micro_message %>(一条<%= micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
     </div>
     <div class="toggleAct">
-      <button class="blue_btn">删除</button>
+      <% if kr %>
+        <%= link_to "删除", site_weixin_reply_path(@site, kr), :method => :delete, :confirm => "确定删除？", :class => "blue_btn"  %>
+      <% end %>
       <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
     </div>
   </div>
   <div class="autoReplyBox" style="display:none">
     <div class="arItem">
       <label>关键字：</label>
-      <div><input type="text" name="keyword" value="<%= kr.present? ? kr.keyword : '' %>" /></div>
+      <div><input type="text" name="keyword" class="keyword" value="<%= kr.present? ? kr.keyword : '' %>" />（多个请用逗号分隔）</div>
     </div>
     <div class="arItem">
       <label>回复内容：</label>
@@ -48,7 +50,9 @@ index ||= 0
       <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit')">保存</button>
     </div>
     <div class="toggleAct">
-      <button class="blue_btn">删除</button>
+      <% if kr %>
+        <%= link_to "删除", site_weixin_reply_path(@site, kr), :method => :delete, :confirm => "确定删除？", :class => "blue_btn"  %>
+      <% end %>
       <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
     </div>
   </div>

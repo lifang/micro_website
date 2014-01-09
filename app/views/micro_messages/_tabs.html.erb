@@ -3,7 +3,7 @@
       <span><%=link_to '图文消息',site_micro_messages_path(@site)%></span>
     </li>
     <li class="theTab <%= controller_name == "weixin_replies" ? 'used' : '' %>">
-      <span><%= link_to "自动回复", site_weixin_replies_path(@site) %></span>
+      <span><%= link_to "消息回复", site_weixin_replies_path(@site) %></span>
     </li>
   </ul>
   <hr class="tab_line" />

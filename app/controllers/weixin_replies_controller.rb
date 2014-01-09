@@ -1,10 +1,11 @@
+#encoding: utf-8
 class WeixinRepliesController < ApplicationController
   before_filter :get_site
   layout "sites"
   def index
     #自动回复
-    auto_reply = @site.keywords.auto[0]
-    @auto_micro_message = auto_reply.micro_message if auto_reply
+    @auto_reply = @site.keywords.auto[0]
+    @auto_micro_message = @auto_reply.micro_message if @auto_reply
     @auto_micro_imagetexts = @auto_micro_message.micro_imgtexts if @auto_micro_message
 
     #关键詞回复
@@ -18,47 +19,62 @@ class WeixinRepliesController < ApplicationController
     
   end
 
-  def new
-    
-  end
-
-  def edit
-    
+  def destroy
+     keyword = Keyword.find_by_id params[:id]
+     micro_message = keyword.micro_message
+     if micro_message.text?
+       micro_message.destroy
+     end
+     keyword.destroy
+     flash[:notice] = "删除成功"
+     redirect_to site_weixin_replies_path(@site)
   end
 
   def create
     micro_message_id, text, flag, keyword = params[:micro_message_id], params[:text], params[:flag], params[:keyword] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword)
-    Keyword.transaction do
-      if text.present? #文字回复
-        micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
-        micro_message_id = micro_message.id if micro_message
-        micro_imagetext = micro_message.micro_imgtexts.create(:content => text ) if micro_message
-      end
-      if flag == 'auto'  #自动回复
-        auto_message = @site.keywords.auto[0]
-        if auto_message.present?
-          reply = auto_message.update_attribute(:micro_message_id, micro_message_id)
-        else
-          reply = @site.keywords.create(:micro_message_id => micro_message_id, :types => Keyword::TYPE[:auto])
+    begin
+      Keyword.transaction do
+        if text.present? #文字回复
+          micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
+          micro_message_id = micro_message.id if micro_message
+          micro_message.micro_imgtexts.create(:content => text ) if micro_message
         end
-      else #关键字回复
-        reply = @site.keywords.create(:micro_message_id => micro_message_id, :keyword => keyword, :types => Keyword::TYPE[:keyword])
+        if flag == 'auto'  #自动回复
+          auto_message = @site.keywords.auto[0]
+          if auto_message.present?
+            auto_message.update_attribute(:micro_message_id, micro_message_id)
+          else
+            @site.keywords.create(:micro_message_id => micro_message_id, :types => Keyword::TYPE[:auto])
+          end
+        else #关键字回复
+          @site.keywords.create(:micro_message_id => micro_message_id, :keyword => keyword, :types => Keyword::TYPE[:keyword])
+        end
+        
       end
-      render :text => reply ? "success" : "error"
+      flash[:notice] = "保存成功"
+      render :success
+    rescue
+      render :failed
     end
   end
 
-  def update
-    micro_message_id, text, flag, keyword = params[:micro_message_id], params[:text], params[:flag], params[:keyword] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword)
-    Keyword.transaction do
-      keyword = Keyword.find_by_id params[:id]
-      if text.present? #文字回复
-        micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
-        micro_message_id = micro_message.id if micro_message
-        micro_imagetext = micro_message.micro_imgtexts.create(:content => text ) if micro_message
+  def update  #关键字更新
+    micro_message_id, text, flag, keyword_param = params[:micro_message_id], params[:text], params[:flag], params[:keyword] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword)
+    begin
+      Keyword.transaction do
+        keyword = Keyword.find_by_id params[:id]
+        if text.present? #文字回复
+          micro_message = keyword.micro_message
+          micro_message.micro_imgtexts[0].update_attribute(:content, text) if micro_message && micro_message.micro_imgtexts[0]
+          keyword.update_attributes({:keyword => keyword_param})
+        else
+          keyword.update_attributes({:micro_message_id => micro_message_id, :keyword => keyword_param})
+        end
       end
-      reply = keyword.update_attributes({:micro_message_id => micro_message_id, :keyword => keyword})
-      render :text => reply ? "success" : "error"
+      flash[:notice] = "保存成功"
+      render :success
+    rescue
+      render :failed
     end
   end
 end
