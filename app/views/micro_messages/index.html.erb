@@ -13,49 +13,67 @@
         <%@micro_messages.each do |m|%>
           <%  if i%2==1 %>
             <div class="msgBox">
-              <%get_by_group(@micro_imgtextss,m.id).each do |micro_imgtext|%>
-              <div class="twBox">
-                <img src="<%=micro_imgtext.img_path%>" />
-                <div class="twTit"><%=micro_imgtext.content%></div>
-              </div>
+              <%get_by_group(@micro_imgtextss,m.id).each_with_index do |micro_imgtext,index|%>
+                <%if index==0%>
+                  <div class="twBox">
+                    <img src="<%=micro_imgtext.img_path%>" />
+                    <div class="twTit"><%=micro_imgtext.title%></div>
+                    <div class="twCont"><%=micro_imgtext.content%></div>
+                  </div>
+                <%else%>
+                  <div class="twBox2">
+                    <img src="<%=micro_imgtext.img_path%>" />
+                    <div class="twTit2"><%=micro_imgtext.title%></div>
+                    <div class="twCont"><%=micro_imgtext.content%></div>
+                  </div>
+                <%end%>
               <%end%>
               <div class="msgBoxAct">
                 <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
-                <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
-                
+                  <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
+
+                  </div>
+                </div>
+              <%end if @micro_messages.present?%>
+              <%i+=1%>
+            <%end%>
+          </div>
+
+
+          <div class="right_half">
+            <%j=1%>
+            <%@micro_messages.each do |m|%>
+              <%  if j%2==0 %>
+                <div class="msgBox">
+                  <%get_by_group(@micro_imgtextss,m.id).each_with_index do |micro_imgtext,index|%>
+                    <%if index==0%>
+                      <div class="twBox">
+                        <img src="<%=micro_imgtext.img_path%>" />
+                        <div class="twTit"><%=micro_imgtext.title%></div>
+                        <div class="twCont"><%=micro_imgtext.content%></div>
+                      </div>
+                    <%else%>
+                      <div class="twBox2">
+                        <img src="<%=micro_imgtext.img_path%>" />
+                        <div class="twTit2"><%=micro_imgtext.title%></div>
+                        <div class="twCont"><%=micro_imgtext.content%></div>
+                      </div>
+                    <%end%>
+                  <%end%>
+                  <div class="msgBoxAct">
+                    <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
+                      <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
+
+                      </div>
+                    </div>
+                  <%end%>
+                  <%j+=1%>
+                <%end%>
               </div>
+
+
+
+
             </div>
-          <%end if @micro_messages.present?%>
-          <%i+=1%>
-        <%end%>
-      </div>
-
-
-      <div class="right_half">
-        <%j=1%>
-        <%@micro_messages.each do |m|%>
-          <%  if j%2==0 %>
-            <div class="msgBox">
-              <%get_by_group(@micro_imgtextss,m.id).each do |micro_imgtext|%>
-              <div class="twBox">
-                <img src="<%=micro_imgtext.img_path%>" />
-                <div class="twTit"><%=micro_imgtext.content%></div>
-              </div>
-              <%end%>
-              <div class="msgBoxAct">
-                <%=link_to '编辑',edit_site_micro_message_path(@site,m),class:"blue_btn msgBoxEdit"%>
-                 <%=link_to '删除',site_micro_message_path(@site,m),method: :delete,class:'blue_btn'%>
-               
-              </div>
-            </div>
-          <%end%>
-          <%j+=1%>
-        <%end%>
-      </div>
-
-
-
-
-    </div>
-  </div>
-</div>
+          </div>
+        </div>
