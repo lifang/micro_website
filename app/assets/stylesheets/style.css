@@ -374,6 +374,8 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .twEditItem textarea { border: 1px solid #CDCDCD; height: 130px; width: 320px; resize: none; overflow: auto; padding: 5px;}
 .twEditAction { text-align: center; padding: 5px;}
 .twBox { width: 400px; height: 150px; margin: 0 auto 10px; background: #fff; overflow: hidden; position: relative; border: 1px solid #C2C2C2;}
+.twBox2 { width: 400px; height: 150px; margin: 0 auto 10px; background: #fff; overflow: hidden; position: relative; border: 1px solid #C2C2C2;}
+
 .twBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
 .twBox img { width: 400px;}
 .twBox2 img { width: 100px; float: right;}
@@ -387,6 +389,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .twBoxDet { display: inline-block; width: 50px; height: 50px; background: url(/assets/delete.png); background-size: 50px 50px;}
 .twBoxAct div { margin: 50px 20px; cursor: pointer;}
 .twBox:hover .twBoxAct { display: block;}
+.twBox2:hover .twBoxAct { display: block;}
 
 
 /* 自动回复 */

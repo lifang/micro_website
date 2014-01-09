@@ -23,7 +23,7 @@
   <%=f.text_field :url ,value:@micro_imgtext.url%>
 </div>
 <div class="twEditAction">
-    <input type="button" onclick="check_new_micro_imgtexts(this)" value="添加模块" class="blue_btn"/>
+    <input type="button" onclick="check_new_micro_imgtexts(this)" value="更新模块" class="blue_btn"/>
 </div>
 <input type="hidden" value="<%= @micro_message.id unless @micro_message.nil?  %>" name="micro_message_id"/>
 <input type="hidden" value="<%= @micro_imgtext.id unless @micro_imgtext.nil?  %>" name="micro_imgtext_id"/>

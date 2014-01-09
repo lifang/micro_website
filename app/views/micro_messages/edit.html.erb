@@ -3,7 +3,8 @@
   <div class="tabDiv used">
     <div class="page_content"  >
       <div class="twList">
-        <%@micro_imgtextss.each do |micro_imgtext|%>
+        <%@micro_imgtextss.each_with_index do |micro_imgtext,index|%>
+        <%if index==0%>
         <div class="twBox">
           <img src="<%=micro_imgtext.img_path%>" width="400" />
           <div class="twTit"><%=micro_imgtext.title%></div>
@@ -12,6 +13,17 @@
             <div class="twBoxDet" title="删除"  onclick="delete_micro_imgtext(<%=@site.id%>,<%=@micro_message.id%>,<%=micro_imgtext.id%>)"></div>
           </div>
         </div>
+        <%else%>
+        <div class="twBox2">
+          <img src="<%=micro_imgtext.img_path%>" width="400" />
+          <div class="twTit2"><%=micro_imgtext.title%></div>
+          <div class="twCont"><%=micro_imgtext.content%></div>
+          <div class="twBoxAct">
+            <div class="twBoxEdit" title="编辑" onclick="edit_micro_imgtext(<%=@site.id%>,<%=@micro_message.id%>,<%=micro_imgtext.id%>)"></div>
+            <div class="twBoxDet" title="删除"  onclick="delete_micro_imgtext(<%=@site.id%>,<%=@micro_message.id%>,<%=micro_imgtext.id%>)"></div>
+          </div>
+        </div>
+        <%end%>
         <%end%>
         <div class="twBox newtw" title="点击新建图文消息">
           <%=link_to '+' ,new_site_micro_imgtext_path(@site,@micro_message),remote:true%>
