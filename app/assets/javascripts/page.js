@@ -119,8 +119,9 @@ function changeUrl(obj, site_id, flag, page_id){
     return tf_flag;
 }
 
-function show_tag(obj){
-    var tab = obj.parents(".second_box")
+//show_tag($('#micro_text'), 'auto_block', 'text')  新建关键字或者自动回复消息
+function show_tag(obj, location, text_or_it){
+    var tab = obj.parents(".second_box");
     var scolltop = document.body.scrollTop|document.documentElement.scrollTop;
     var win_height = document.documentElement.clientHeight;//jQuery(document).height();
     var z_layer_height = tab.height();
@@ -130,6 +131,11 @@ function show_tag(obj){
     tab.css('left',(doc_width-layer_width)/2);
     obj.parent(".second_content").show();
     tab.show();
+    if(text_or_it){
+        obj.parent(".second_content").find(".confirm_btn").bind('click',function(){
+            setChoose(obj, text_or_it == 'text' ? 1 : 0, location)
+        })
+    }
     $(".second_bg").show();
 }
 
@@ -212,7 +218,7 @@ function hideInput(obj, flag){
                 checkbox.val(input_value);
             }
             if($(obj).parent().hasClass("optionBox")){
-              addSelectOption(obj);
+                addSelectOption(obj);
             }
         }
         $(obj).parent().children(".inputArea").text($.trim(input_value)=="" ? "双击输入问题或选项" : input_value).show();

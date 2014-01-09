@@ -1,0 +1,55 @@
+<% 
+kr ||= nil
+index ||= 0
+@key_micro_imagetexts ||= {}
+%>
+<li class="key_<%= index %>">
+  <div class="autoReplyBox">
+    <div class="arItem cf">
+      <label>关键字：</label>
+      <div>
+        <% kr.keyword.split(",").each do |k| %>
+          <span><%= k %></span>
+        <% end if kr.present? %>
+      </div>
+    </div>
+    <!-- 根据keyword获取回复的消息 -->
+    <% micro_message = kr.micro_message if kr.present? %>
+    <div class="arItem cf">
+      <label>回复内容：</label>
+      <div><span><% if micro_message %>(一条<%= micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
+    </div>
+    <div class="toggleAct">
+      <button class="blue_btn">删除</button>
+      <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
+    </div>
+  </div>
+  <div class="autoReplyBox" style="display:none">
+    <div class="arItem">
+      <label>关键字：</label>
+      <div><input type="text" name="keyword" value="<%= kr.present? ? kr.keyword : '' %>" /></div>
+    </div>
+    <div class="arItem">
+      <label>回复内容：</label>
+      <div>
+        <div>
+          <button class="blue_btn add_text" onclick="show_tag($('#micro_text'), $(this).parents('li').attr('class'), 'text');">添加文字</button>
+          <button class="blue_btn add_imagetext" onclick="show_tag($('#micro_image_text'), $(this).parents('li').attr('class'), 'imagetext');">添加图文</button>
+        </div>
+        <div class="auto_message">
+          <% if micro_message && @key_micro_imagetexts && @key_micro_imagetexts[micro_message.id] %>
+            <%= render :partial => "/weixin_replies/micro_message", :locals => {:mi => @key_micro_imagetexts[micro_message.id], :mm => micro_message} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="autoReplyBoxAct arItem">
+      <label>&nbsp;</label>
+      <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit')">保存</button>
+    </div>
+    <div class="toggleAct">
+      <button class="blue_btn">删除</button>
+      <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
+    </div>
+  </div>
+</li>

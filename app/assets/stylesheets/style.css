@@ -400,8 +400,9 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .arItem div { overflow: hidden;}
 .arItem input { padding: 6px;}
 
-.autoReplyBox .toggleAct { position: absolute; right: 10px; top: 10px; display: none;}
-.autoReplyBox:hover .toggleAct { display: block;}
+
+.autoReplyBox .toggleAct { position: absolute; right: 10px; top: 10px;}
+/*.autoReplyBox:hover .toggleAct { display: block;}*/
 
 .addGjz { margin-left: 100px;}
 .gjzBox span { padding: 0 5px; margin: 0 3px; background: #d2d2d2;}
@@ -427,4 +428,8 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .msgBox { position: relative;}
 .msgBox:hover .msgBoxAct { display: block;}
 .msgBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); display: none; text-align: right;}
+
 .msgBoxDel { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete.png); background-size: 30px 30px; margin: 10px;}
+.second_box_act { border-top: 1px solid #c2c2c2; text-align: center; padding: 5px;}
+.second_box_act span { padding: 5px 20px; color: #000;}
+

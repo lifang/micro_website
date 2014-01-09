@@ -1,0 +1,18 @@
+<div class="msgBox" onmouseover="showMask(this)" onmouseout="hideMask(this)" onclick="selectBox(this)">
+  <% micro_image_texts.each_with_index do |mit, index| %>
+    <% if index == 0 %>
+      <div class="twBox">
+        <img src="<%= mit.img_path %>" />
+        <div class="twTit"><%= mit.title %></div>
+      </div>
+    <% else %>
+      <div class="twBox2">
+        <img src="<%= mit.img_path %>" />
+        <div class="twTit2"><%= mit.title %></div>
+      </div>
+    <% end %>
+  <% end if @micro_imagetexts.present? %>
+  <div class="appmsg_mask"></div>
+  <i class="icon_appmsg_selected">已选择</i>
+  <input type="hidden" class="micor_message_id" value="<%= micor_message_id %>"/>
+</div>

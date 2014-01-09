@@ -210,8 +210,9 @@
     display:none
 }
 .auto_message{
-    min-height: 400px;
-    border: 1px solid #333;
+    min-height: 300px;
+    border: 1px solid #999;
+    margin: 10px 0;
 }
 .appmsg_mask {
     display: none;
@@ -244,4 +245,7 @@
     height: 60px;
     vertical-align: middle;
     display: inline-block;
+}
+.autoReplyEdit{
+    display: none;
 }

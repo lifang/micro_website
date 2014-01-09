@@ -1,0 +1,20 @@
+<div class="msgBox">
+  <% mi.each_with_index do |kmi, index| %>
+    <% if index == 0 %>
+      <div class="twBox">
+        <img src="<%= kmi.img_path %>" />
+        <div class="twTit"><%= kmi.title %></div>
+      </div>
+    <% else %>
+      <div class="twBox2">
+        <img src="<%= kmi.img_path %>" />
+        <div class="twTit2"><%= kmi.title %></div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="msgBoxAct">
+    <div class="msgBoxDel" title="删除" onclick="delImagetext(this)"></div>
+  </div>
+</div>
+
+
