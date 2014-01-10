@@ -3,7 +3,3 @@
     <%= render :partial => 'keyword_block', :locals => {:kr => kr, :index => index + 1} %>
   </div>
 <% end %>
-<div class="clear"></div>
-<div class="digg_pagination" style="margin:0 auto;text-align: center;">
-  <%= will_paginate @key_replies ,:previous_label=>'上一页', :next_label=>'下一页' %>
-</div>

@@ -9,7 +9,7 @@ class WeixinRepliesController < ApplicationController
     @auto_micro_imagetexts = @auto_micro_message.micro_imgtexts if @auto_micro_message
 
     #关键詞回复
-    @key_replies = @site.keywords.includes(:micro_message).keyword.paginate(:per_page => 2, :page => params[:page])
+    @key_replies = @site.keywords.includes(:micro_message).keyword.paginate(:per_page => 9, :page => params[:page])
     key_micro_messages = MicroMessage.where(:id => @key_replies.map(&:micro_message_id))
     @key_micro_imagetexts = MicroImgtext.where(:micro_message_id => key_micro_messages.map(&:id)).group_by{|mm| mm.micro_message_id}
 
