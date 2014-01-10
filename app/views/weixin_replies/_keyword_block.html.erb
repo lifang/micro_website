@@ -8,7 +8,7 @@ index ||= 0
     <div class="arItem cf">
       <label>关键字：</label>
       <div class="gjzBox">
-        <% kr.keyword.split("，").each do |k| %>
+        <% kr.keyword.split(%r{[,|，|\s]}).each do |k| %>
           <span><%= k %></span>
         <% end if kr.present? %>
       </div>
@@ -29,7 +29,7 @@ index ||= 0
   <div class="autoReplyBox" style="display:none">
     <div class="arItem">
       <label>关键字：</label>
-      <div><input type="text" name="keyword" class="keyword" value="<%= kr.present? ? kr.keyword : '' %>" />（多个请用逗号分隔）</div>
+      <div><input type="text" name="keyword" class="keyword" value="<%= kr.present? ? kr.keyword : '' %>" />（多个请用逗号或者空格分隔）</div>
     </div>
     <div class="arItem">
       <label>回复内容：</label>
@@ -47,7 +47,7 @@ index ||= 0
     </div>
     <div class="autoReplyBoxAct arItem">
       <label>&nbsp;</label>
-      <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit')">保存</button>
+      <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_reply_path(@site, kr) %>', 'keyword', 'edit', '<%= index %>')">保存</button>
     </div>
     <div class="toggleAct">
       <% if kr %>

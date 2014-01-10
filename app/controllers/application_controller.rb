@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   APP_ID_AND_SECRET = {:wansu => {:app_id => "wxcbc2e8fb02023e4f", :app_secret => "1243a493f356a0c9ffcc2b7633a78b61"},
     :senvern => {:app_id => "wx4179ca59f560599b", :app_secret => "e5080f5963ead815439875eb0fdc66d7"}
   }
-  MW_URL = "http://web.sunworldmedia.com/"
   
   require "fileutils"
   require 'net/http'
@@ -119,13 +118,20 @@ class ApplicationController < ActionController::Base
   def get_return_message(cweb, flag, content=nil)
     site = Site.find_by_cweb(cweb)
     if flag == "auto"
-      message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
+      return_message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
     else
-      keyword = content.gsub(/[%_]/){|x| '\\' + x}
-      message = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword}%'", site.id)[0] #查询是否有关键词对应回复
+      keyword_param = content.gsub(/[%_]/){|x| '\\' + x}
+      messages = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword_param}%'", site.id) #查询是否有关键词对应回复
+      for message in messages
+        keywords_arr = message.keyword.split(%r{[,|，|\s]})
+        if keywords_arr.include?(keyword_param)
+          return_message = message
+          break
+        end
+      end
     end
-    if message
-      micro_message = message.micro_message  #获取对应的消息记录
+    if return_message
+      micro_message = return_message.micro_message  #获取对应的消息记录
       micro_it = micro_message.micro_imgtexts if micro_message
       return [micro_message, micro_it]
     else

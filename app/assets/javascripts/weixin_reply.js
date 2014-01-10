@@ -116,7 +116,7 @@ var keywordBlock = '<li>\n\
   <div class="autoReplyBox">\n\
     <div class="arItem cf">\n\
       <label>关键字：</label>\n\
-      <div><input type="text"class="keyword" name="keyword" value="" />（多个请用逗号分隔）</div>\n\
+      <div><input type="text"class="keyword" name="keyword" value="" />（多个请用逗号或者空格分隔）</div>\n\
     </div>\n\
     <div class="arItem">\n\
       <label>回复内容：</label>\n\
@@ -160,7 +160,7 @@ function appendNewKeyword(site_id){
     });
 }
 
-function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
+function saveAutoReply(obj, url, auto_or_keyword, new_or_edit, li_index){
     var autoMessage = $(obj).parents(".autoReplyBox").find(".auto_message");
     var keywordEle = $(obj).parents(".autoReplyBox").find(".keyword");
     if($.trim(autoMessage.html()) == ""){
@@ -172,6 +172,7 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
         var flag = auto_or_keyword;
         //alert(keywordEle.val())
         var keyword = keywordEle ? keywordEle.val() : "";
+        var li_index = li_index ? li_index : -1;
         //alert(keyword)
         if(micro_message.length != 0){
             micro_message_id = micro_message.val();
@@ -186,7 +187,8 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit){
                 micro_message_id: micro_message_id,
                 text: text,
                 flag: flag,
-                keyword: keyword
+                keyword: keyword,
+                index: li_index
             },
             success:function(data){
             //tishi_alert("保存成功")

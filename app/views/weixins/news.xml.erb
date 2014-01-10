@@ -9,7 +9,7 @@
 <item>
 <Title><![CDATA[<%= item[:title] %>]]></Title>
 <Description><![CDATA[<%= item[:content] %>]]></Description>
-<PicUrl><![CDATA[<%= get_min1_by_imgpath(item[:img_path]) %>]]></PicUrl>
+<PicUrl><![CDATA[<%= ApplicationHelper::MW_URL + get_min1_by_imgpath(item[:img_path]) %>]]></PicUrl>
 <Url><![CDATA[<%= item[:url] %>]]></Url>
 </item>
   <% end %>

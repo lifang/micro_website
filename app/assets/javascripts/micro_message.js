@@ -13,20 +13,21 @@ function edit_micro_imgtext(sid,mmsid,mimgid){
 }
 
 function delete_micro_imgtext(sid,mmsid,mimgid){
-
-    $.ajax({
-        async:true,
-        type : 'delete',
-        url:'/sites/'+sid+'/micro_imgtexts/'+mmsid,
-        dataType:"text",
-        data  :"&site_id=" + sid +"&micro_message_id=" + mmsid +"&micro_imgtext_id=" + mimgid,
-        success:function(data){
-            if(data==1){
-                tishi_alert('删除成功！');
-                location.reload();
+    if(confirm("确认删除？")){
+        $.ajax({
+            async:true,
+            type : 'delete',
+            url:'/sites/'+sid+'/micro_imgtexts/'+mmsid,
+            dataType:"text",
+            data  :"&site_id=" + sid +"&micro_message_id=" + mmsid +"&micro_imgtext_id=" + mimgid,
+            success:function(data){
+                if(data==1){
+                    tishi_alert('删除成功！');
+                    location.reload();
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function check_new_micro_imgtexts(value){

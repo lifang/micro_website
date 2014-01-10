@@ -1,6 +1,7 @@
 #encoding: utf-8
 module ApplicationHelper
   include ActionView::Helpers::OutputSafetyHelper
+  MW_URL = "http://web.sunworldmedia.com/"
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
   end

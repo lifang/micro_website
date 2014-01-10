@@ -1,3 +1,5 @@
 <% @key_replies.each_with_index do |kr, index| %>
-   <%= render :partial => 'keyword_block', :locals => {:kr => kr, :index => index + 1} %>
+  <div id="li_<%= kr.id %>">
+    <%= render :partial => 'keyword_block', :locals => {:kr => kr, :index => index + 1} %>
+  </div>
 <% end %>
