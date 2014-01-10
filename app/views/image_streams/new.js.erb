@@ -66,7 +66,7 @@ function deleteImage(name, $item) {
 						 * 
 						 if (temp.length < 2) {
 							var li_temp=$("<li class=\"ui-widget-content ui-corner-tr\" style='width: 186px;'></li>");
-							li_temp.html("<img  src=\"/assets/temp.jpg\" style=\"width:182px;height:144px; \"/><a  title=\"Delete this image\" onclick=\"delete_ele(this)\"  class=\"ui-icon ui-icon-trash\">Delete image</a><textarea></textarea><input type=\"hidden\" name=\"temp_picture\" />");
+							li_temp.html("<img  src='/assets/temp.jpg' style='width:182px;height:144px; '/><a  title='Delete this image' onclick='delete_ele(this)'  class='ui-icon ui-icon-trash'>Delete image</a><textarea></textarea><input type=\"hidden\" name=\"temp_picture\" />");
 							var t = li_temp.clone();
 							candrop(t);
 							t.appendTo($("#trashh"));
