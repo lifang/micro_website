@@ -119,6 +119,7 @@ class MicroImgtextsController < ApplicationController
       render :text=>0
     end
   end
+  #删除图片
   def destroy_Original_img original_img_true_path
     FileUtils.rm original_img_true_path if File::exist?( original_img_true_path )
     FileUtils.rm get_min1_by_imgpath original_img_true_path if File::exist?(get_min1_by_imgpath original_img_true_path)

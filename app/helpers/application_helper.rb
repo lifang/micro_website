@@ -135,14 +135,13 @@ a.each(function(){
   #根据分组id得到组员
   def get_by_group(group_members,id)
     group_members.each do |gid,group_member|
-      print "-#{gid}-"
       if gid == id
         return group_member
       end
     end
     nil
   end
-
+#得到mini_magic变得两种小图
   def get_min1_by_imgpath(imgname1)
      img=imgname1.split(".")
      img[0...-1].join('.')+"_min1."+img[-1]
