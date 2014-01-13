@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140102085129) do
+ActiveRecord::Schema.define(:version => 20140113025042) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20140102085129) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.boolean  "mtype"
+    t.integer  "mtype"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -102,11 +102,11 @@ ActiveRecord::Schema.define(:version => 20140102085129) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number"
+    t.integer  "praise_number", :default => 0
   end
 
   create_table "replies", :force => true do |t|
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20140102085129) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
     t.string   "cweb"
+    t.integer  "template"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
@@ -147,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20140102085129) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.string   "open_id"
+    t.integer  "open_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "award_id"
