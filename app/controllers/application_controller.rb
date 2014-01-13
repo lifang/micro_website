@@ -139,5 +139,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #返回资源图片
+  def return_site_images(site)
+    @imgs_pathes = site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+  end
   
 end

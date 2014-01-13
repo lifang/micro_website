@@ -8,6 +8,8 @@ class PagesController < ApplicationController
   #主页 index
   def index
     @page = @site.pages.main.first
+    @imgs = return_site_images(@site)
+    @imgs = @imgs.paginate(:page =>1,:per_page=>12)
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
       if index_html
@@ -59,6 +61,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_id params[:id]
     old_page_file_name = @page.file_name
     if @page && @page.update_attributes(params[:page])
+      @site.update_attribute(:template, params[:site][:template].to_i) if @page.main?
       unless @page.main?
         content = modifyContent(@page, content, @site.id,@page.form? ? img : "") if content
       end
