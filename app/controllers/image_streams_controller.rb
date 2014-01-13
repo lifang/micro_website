@@ -98,8 +98,7 @@ class ImageStreamsController < ApplicationController
     @image_text=PageImageText.find_by_page_id(params[:id])
     @site=Site.find(params[:site_id])
     @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>9)
-    
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>9)
   end
  
   def edit_update
