@@ -12,6 +12,7 @@ class SitesController < ApplicationController
         @site.name=params[:site][:name].split(' ').join
         @site.root_path=params[:site][:root_path].gsub(/\/+/, "")
         @site.notes=params[:site][:notes]
+        @site.cweb=params[:site][:cweb]
         @site.user_id=current_user.id
         respond_to do |format|
           if @site && @site.save
@@ -40,14 +41,13 @@ class SitesController < ApplicationController
   end
 
   def update
-    p 11111111111111111111
     @site=Site.find_by_name(params[:origin_name])
     name=params[:site][:name].split(' ').join
     @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
+    cweb=params[:site][:cweb]
     notes=params[:site][:notes]
     respond_to do |format|
-      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes)
-        p 1111111111122222222222
+      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb)
         flash[:success]='更新成功'
       end
       format.js

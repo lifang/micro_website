@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title><%= @award.name %></title>
+    <%= javascript_include_tag "jquery", "wScratchPad" %>
+    <style type="text/css">
+      * { padding: 0; margin: 0;}
+    </style>
+  </head>
+
+  <body>
+    <div class="content-box">
+      <div id="wScratchPad" style="display:inline-block; position:relative;"></div>
+    </div>
+    
+  </body>
+</html>
+<script type="text/javascript">
+      $(window.parent.document).ready(function(){
+
+      var open_id = "<%= @open_id %>";
+      if(open_id != "null"){
+              <% if @status == 0 || @status == 1 %>
+                  var sp = $("#wScratchPad").wScratchPad({
+                    image: '<%= @img %>',
+                    image2: '/assets/gua.png',
+                    width: '190',
+                    height: '41',
+
+                    scratchDown: function(e, percent){},
+                    scratchMove: function(e, percent){},
+                    scratchUp: function(e, percent){
+                      var award_info_id = "<%= @award_info.try(:id) %>";
+                      var award_id = "<%= @award.id %>";
+                      var percent = percent;
+                      dataHash = { open_id : open_id, award_info_id : award_info_id, award_id: award_id}
+                      $.ajax({
+                        url: "/record_award",
+                        type: "post",
+                        dataType: "json",
+                        data: dataHash,
+                        success:function(data){
+                          if(award_info_id != "null" && award_info_id !="" && percent > 30 && !data['saved_phone']){
+                            //show popup enter phone number
+                            var windowHeight = Math.max(window.parent.document.body.scrollHeight, $(window.parent.document).height());
+                            var windowWidth = window.parent.document.documentElement.clientWidth;
+                            $(".mask", window.parent.document).css("height",windowHeight);
+	                    $(".mask", window.parent.document).css("width",windowWidth);
+
+                            var tabHeight = $(".tab").height();
+                            var tabWidth = $(".tab").width();
+                            $(".tab").css("top",(windowHeight - tabHeight)/2);
+                            $(".tab").css("left",(windowWidth - tabWidth)/2);
+
+                            $(".mask", window.parent.document).show();
+                            $(".save_phone", window.parent.document).show();
+                            $("#mphone",  window.parent.document).val("");
+                            $("#open_id",  window.parent.document).val(open_id);
+                            $("#award_id",  window.parent.document).val(award_id);
+                            $("#award_info_id",  window.parent.document).val(award_info_id);
+                          }
+                        },
+                        error:function(data){
+                          //alert("error");
+                        }
+                      });
+
+
+                    }
+
+                  });
+
+            <% elsif @status == 2 %>
+                  $(".mask", window.parent.document).show();
+                  $(".message", window.parent.document).text("你已经抽过奖").parents(".tishi").show();
+            <% elsif @status == 3 %>
+                  $(".mask", window.parent.document).show();
+                  $(".message", window.parent.document).text("活动已过期或者还未开始").parents(".tishi").show();
+                  // $("#wScratchPad").text("活动已过期或者还未开始")
+            <% elsif @status == 4 %>
+                  $(".mask", window.parent.document).show();
+                  $(".message", window.parent.document).text("奖券已抽完").parents(".tishi").show();
+            <% end %>
+        }
+      else{
+        $(".mask", window.parent.document).show();
+        $(".message", window.parent.document).text("对不起，你没有权限抽奖").parents(".tishi").show();
+      }
+
+                  $(".gray_btn", window.parent.document).click(function(){
+                  $(".mask", window.parent.document).hide();
+                  $(".tab", window.parent.document).hide();
+                })
+
+                 })
+    </script>

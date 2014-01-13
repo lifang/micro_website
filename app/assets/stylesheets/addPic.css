@@ -57,4 +57,9 @@ body { font-family: "微软雅黑", "宋体", Arial; font-size: 12px; background
 .picPosition .delpicp { background: url(/assets/close.png) no-repeat; display: none; overflow: hidden; height: 17px; width: 17px; text-indent: -999px; position: absolute; left: 160px; top: 2px; cursor: pointer;}
 .picPosition:hover .delpicp { display: block;}
 
+.pagination {
+display: block;
+background: white;
+}
+
 

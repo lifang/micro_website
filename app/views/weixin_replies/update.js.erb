@@ -1,0 +1,3 @@
+$("#li_<%= @keyword.id %>").html("<%= j (render :partial => 'keyword_block', :locals => {:kr => @keyword, :index => @index + 1}) %>")
+$("#micro_image_text").find(".appmsg_mask").hide();
+$("#micro_image_text").find(".icon_appmsg_selected").hide();

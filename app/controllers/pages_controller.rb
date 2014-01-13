@@ -124,8 +124,17 @@ class PagesController < ApplicationController
   #表单 index
   def form
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
-    @imgs_path=@site.resources
+   # @imgs_path=@site.resources
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+
     render "/pages/form/form"
+  end
+  #给图片流进行分页（shared/all_img）
+  def change
+    @site=Site.find(params[:site_id])
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
   end
 
   #表单 new
@@ -196,7 +205,7 @@ class PagesController < ApplicationController
           if page.authenticate? && !page.form? && !user_signed_in?
             redirect_to '/signin'
           else
-            redirect_to URI.encode("/allsites" + path_name)
+            redirect_to URI.encode("/allsites" + path_name + (params[:secret_key].present? ? "?secret_key=" + params[:secret_key] : ""))
           end
         else
           redirect_to '/303.html', :layout => false

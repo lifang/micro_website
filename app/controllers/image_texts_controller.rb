@@ -6,7 +6,17 @@ class ImageTextsController < ApplicationController
   def index
     @title = "微网站-图文"
     @image_texts = @site.pages.image_text.order("created_at desc").paginate(:page => params[:page], :per_page => 10)
-    @imgs_path = @site.resources
+    #@imgs_path = @site.resources
+
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
+  end
+
+  #给图片流进行分页（shared/all_img）
+  def change
+    @site=Site.find(params[:site_id])
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
   end
 
   def new

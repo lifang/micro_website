@@ -158,7 +158,7 @@ h2 input { font-size: 16px;}
 }
 .tab_line { background: #328BD5; height: 3px; border: none;}
 
-.page_content { border: 1px solid #C2C2C2; padding: 0 20px;}
+.page_content { border: 1px solid #C2C2C2; padding: 0 20px;position: relative;min-height: 550px;}
 .page_tit { height: 36px;}
 fieldset.page_tit {
     border: 1px solid #C2C2C2;
@@ -194,6 +194,7 @@ fieldset.page_tit {
 
 /*弹窗*/
 .second_box { width:100%; height:100%; z-index:99; position: absolute; top:0; display: none; }
+.second_box.second_box2 { position: fixed;}
 .second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000;
 opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content {
@@ -229,7 +230,7 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
 .second_content h2 { text-align: center; font-size: 18px; line-height: 36px;}
 .second_content li { font-size: 18px;}
-.second_content li input { font-size: 18px;}
+.second_content li input { font-size: 16px; padding: 3px;}
 .second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
 .second_content input { width: 200px; border: 1px solid #003333; }
 .second_content input[type=radio],.second_content input[type=checkbox] { width: 30px; border: none;}
@@ -337,5 +338,101 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .dataLi span { margin: 0 17px;}
 .listLi label { display: block; float: left;}
 .listLi ul { overflow: hidden;}
-.listLi ul li { font-size: 14px; line-height: 32px;}
-.listLi input { width: 151px; margin: 0 10px;}
+.listLi ul li { font-size: 14px; line-height: 32px; position: relative;}
+.listLi .close {right: 5px; top: 6px;}
+.listLi input { width: 139px; margin: 0 10px;}
+.addjx {border: 1px dashed;
+       width: 210px;
+       margin-left: 152px;
+       margin-top: 5px;
+       font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
+.addjx span { cursor: pointer;}
+/* 图文消息列表 */
+.left_half,.right_half { float: left;}
+.msgBox { width: 402px; margin: 8px; background: #fff; overflow: hidden; position: relative; padding: 5px;}
+.msgBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.msgBox:hover .go { display: block;}
+.go { display: block; width: 50px; height: 50px; background: url(/assets/go.png); background-size: 50px 50px;}
+.msgBox .go { position: absolute; right: 10px; top: 30px; display: none;}
+.msgBoxAct { text-align: center;}
+.msgBoxAct button { margin: 0 10px;}
+
+.newMsg {
+    color: #A3A3A3;
+    font-size: 80px;
+    height: 100px;
+    line-height: 80px;
+    text-align: center;
+}
+
+/* 图文消息块 */
+.twList { width: 400px; float: left; padding: 10px 0;}
+.twEdit { overflow: hidden; padding: 10px;}
+.twEditItem { margin: 5px;}
+.twEditItem label { font-size: 18px; display: inline-block; width: 90px; float: left; line-height: 31px;}
+.twEditItem input { border: 1px solid #CDCDCD; height: 29px; width: 209px;}
+.twEditItem textarea { border: 1px solid #CDCDCD; height: 130px; width: 320px; resize: none; overflow: auto; padding: 5px;}
+.twEditAction { text-align: center; padding: 5px;}
+.twBox { width: 400px; height: 150px; margin: 0 auto 10px; background: #fff; overflow: hidden; position: relative; border: 1px solid #C2C2C2;}
+.twBox2 { width: 400px; height: 150px; margin: 0 auto 10px; background: #fff; overflow: hidden; position: relative; border: 1px solid #C2C2C2;}
+
+.twBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.twBox img { width: 400px;}
+.twBox2 img { width: 100px; float: right;}
+.twTit2 { overflow: hidden; padding: 5px;}
+.twCont { overflow: hidden; padding: 5px;}
+.twTit { height: 25px; line-height: 25px; width: 100%; position: absolute; bottom: 0; background: #333; opacity: 0.7; filter: alpha(opacity=70); color: #fff; text-indent: 10px;}
+
+.newtw { font-size: 120px; line-height: 130px; color: #E2E2E2; text-align: center; border: 1px dashed #C2C2C2;}
+.twBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); text-align: center; display: none;}
+.twBoxEdit { display: inline-block; width: 50px; height: 50px; background: url(/assets/edit.png); background-size: 50px 50px;}
+.twBoxDet { display: inline-block; width: 50px; height: 50px; background: url(/assets/delete.png); background-size: 50px 50px;}
+.twBoxAct div { margin: 50px 20px; cursor: pointer;}
+.twBox:hover .twBoxAct { display: block;}
+.twBox2:hover .twBoxAct { display: block;}
+
+
+/* 自动回复 */
+.addrule { margin: 10px 0; text-align: right; }
+.autoReplyBox { margin: 10px 0; background: #fff; position: relative; padding: 5px; font-size: 14px;}
+.autoReplyBox1 { color: #F30;}
+.autoReplyBox1 h1 { color: #F30;}
+.autoReplyBox:hover { box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+.arItem { line-height: 32px; margin: 3px;}
+.arItem label { float: left; width: 150px;}
+.arItem div { overflow: hidden;}
+.arItem input { padding: 6px;}
+
+
+.autoReplyBox .toggleAct { position: absolute; right: 10px; top: 10px;}
+/*.autoReplyBox:hover .toggleAct { display: block;}*/
+
+.addGjz { margin-left: 100px;}
+.gjzBox span { padding: 0 5px; margin: 0 3px; background: #d2d2d2;}
+.gjzBox span:hover { box-shadow: 0 0 2px rgba(0,0,0,0.7); cursor: pointer;}
+
+.wzAdd textarea,.wzxxEdit textarea { border: 1px solid #CDCDCD; height: 130px; width: 320px; resize: none; overflow: auto; padding: 5px; display: block; margin: 5px auto;}
+
+.replyInfo { width: 400px; float: left;}
+.chooseArea { height: 360px; overflow: auto;}
+.replyEditAction { padding: 5px; text-align: center; }
+.msgBoxChosen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); display: none;}
+.msgBox:hover .msgBoxChosen { display: block;}
+.msgBoxChosen.curr { display: block;}
+.msgBoxChosen.curr .chosen { display: block;}
+.chosen { display: block; width: 75px; height: 60px; background: url(/assets/chosen.png); background-size: 75px 60px; margin: 50px auto; display: none;}
+
+.wzxxBox { position: relative;}
+.wzxxBox:hover .wzxxBoxAct { display: block;}
+.wzxxBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; text-align: right;}
+.wzxxBoxEdit { display: inline-block; width: 30px; height: 30px; background: url(/assets/edit2.png); background-size: 30px 30px;}
+.wzxxBoxDet { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete2.png); background-size: 30px 30px;}
+
+.msgBox { position: relative;}
+.msgBox:hover .msgBoxAct { display: block;}
+.msgBoxAct { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2f2f2f; opacity: 0.7; filter: alpha(opacity=70); display: none; text-align: right;}
+
+.msgBoxDel { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete.png); background-size: 30px 30px; margin: 10px;}
+.second_box_act { border-top: 1px solid #c2c2c2; text-align: center; padding: 5px;}
+.second_box_act span { padding: 5px 20px; color: #000;}
+

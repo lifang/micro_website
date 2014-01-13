@@ -1,11 +1,33 @@
-<% objects.each do |img|%>
+<% @imgs_path.each do |img|%>
   <%if which_res(img.path_name)=='img'%>
     <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
     <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
     <% if image %>
-      <li class="img_cont">
+      <li class="img_cont" style="float:none;display:inline-block;">
         <img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"
-             <%= image&&image["height"]/image["width"]>=90/85 ? "height='90' width=#{ image['width']*90/image['height']}" : "width='85' height = #{image['height']*85/image['width']}" %>/></li>
-      <% end %>
-    <%end%>
+             <%= image&&image["height"]/image["width"]>=90/85 ? "height='90' width=#{ image['width']*90/image['height']}" : "width='85' height = #{image['height']*85/image['width']}" %>/>
+      </li>
+    <% end %>
   <%end%>
+<%end%>
+ <%if @imgs_pathes && @imgs_pathes.size>0%>
+       <%=will_paginate @imgs_path,:previous_label=>'上一页',:next_label=>'下一页'  %>
+ <%end%>
+  <script>
+  var aarr = $(".pagination").find("a");
+
+  for(var i=0;i<aarr.length;i++){
+     var href =$(aarr[i]).attr("href");
+     var url=href.split("page=");
+     url=url[url.length-1];
+     var extre="";
+     <%if controller.controller_name=="image_texts"%>
+     extre ="image_texts/";
+     <%end%>
+    
+     var href=extre+url+"/change";
+     
+     $(aarr[i]).attr("data-remote",true);
+     $(aarr[i]).attr("href",href);
+  }
+</script>

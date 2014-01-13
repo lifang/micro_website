@@ -1,0 +1,42 @@
+<div class="second_content second_content2" id="it_award_info">
+		<span class="close" onclick="cancle_award_page()">关闭</span>
+		<h1><span><%=@award.name%></span>(<span><%="#{@award.begin_date}~#{@award.end_date}"%></span>)</h1>
+		<table class="table1">
+			<tr>
+				<th>奖项</th>
+                                <th>
+                                  <span style="width:150px;display:inline-block;">
+                                  手机号
+                                  </span>
+                                  <span style="width:130px;display:inline-block;text-align: left;margin-left: 25px;">
+                                    操作
+                                  </span>
+                                </th>
+			</tr>
+                        <%if !@awards_is.nil?%>
+                        <%  @awards_is.each do |a,awards| %>
+			<tr>
+				<td><%=get_award_info(@award_infos,a)%>（<%=awards.length%>人）</td>
+                                
+				<td>
+                                  
+                                  <%awards.each do |award|%>
+                                  <%=award.secret_code%>
+                                  <span style="width:150px;display:inline-block;">
+                                    <% if award.if_checked %>
+                                      <font color="red" >已领取</font>
+                                    <%else%>
+                                      <%=link_to '领取',"/obtain_award?id=#{award.id}&site_id=#{@site.id}",class:'blue_btn',style:'padding:2px;'%>
+                                    <%end%>
+                                      </span>
+                                    <br/>
+                                  <%end%>
+
+                                </td>
+                               
+                                
+			</tr>
+                        <%end%>
+                        <%end%>
+		</table>
+	</div>

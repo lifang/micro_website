@@ -1,6 +1,7 @@
 #encoding: utf-8
 module ApplicationHelper
-
+  include ActionView::Helpers::OutputSafetyHelper
+  MW_URL = "http://web.sunworldmedia.com/"
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
   end
@@ -99,8 +100,9 @@ a.each(function(){
       if img.present?
         image_text << '<img src="' + img + '" width="320" />'
       end
-      image_text << '<p>' + it_content[index] + '</p>'
+      image_text << '<p>' + CGI.unescapeHTML(it_content[index]) + '</p>'
     end
+
     content = "
     <!doctype html>
         <html>
@@ -130,4 +132,24 @@ a.each(function(){
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     content
   end
+
+  #根据分组id得到组员
+  def get_by_group(group_members,id)
+    group_members.each do |gid,group_member|
+      if gid == id
+        return group_member
+      end
+    end
+    nil
+  end
+#得到mini_magic变得两种小图
+  def get_min1_by_imgpath(imgname1)
+     img=imgname1.split(".")
+     img[0...-1].join('.')+"_min1."+img[-1]
+  end
+  def get_min2_by_imgpath(imgname1)
+     img=imgname1.split(".")
+     img[0...-1].join('.')+"_min2."+img[-1]
+  end
+
 end

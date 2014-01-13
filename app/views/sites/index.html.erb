@@ -35,6 +35,12 @@
             <%= status_desc s.status%>
           </dd>
           <dt>
+          <nobr>公众帐号token：</nobr>
+          </dt>
+          <dd>
+<%=s.cweb%>&nbsp;
+          </dd>
+          <dt>
             备注：
           </dt>
           <dd>
@@ -42,7 +48,7 @@
           </dd>
         </dl>
         <div class="box_act">
-          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>')">
+          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>','<%=s.cweb%>')">
             编辑
           </a>
 
@@ -56,7 +62,7 @@
       </div>
     <%end%>
     <div class="clear"></div>
-    <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+    <div class="digg_pagination" style="width:91%;text-align: center;">
       <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
     </div>
   </div>
@@ -127,6 +133,11 @@
         <li>
           <%= f.label '根目录：'%>
           <%= f.text_field :root_path %>&nbsp;<span id="must_fix" class="check">*</span>
+        </li>
+        <li>
+          <%= f.label '公众帐号token：'%>
+          <%= f.text_field :cweb%>
+
         </li>
         <li>
           <%= f.label '备注：'%>
