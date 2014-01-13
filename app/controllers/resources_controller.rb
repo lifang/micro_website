@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ResourcesController < ApplicationController
-  layout 'pages'
+  layout 'sites'
   SITE_PATH = "/public/allsites/%s/"
   require 'fileutils'
   #  require 'rubygems'

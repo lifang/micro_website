@@ -2,11 +2,11 @@
 <div class="tempChoice">
   <span>模板：</span>
   <% if @page && @page.main? %>
-    <ul>
-      <li class="temp1 hover"></li>
-      <li class="temp2"></li>
-      <li class="temp3"></li>
-      <li class="temp4"></li>
+    <ul class="tmp_list">
+      <li class="temp1 <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "hover" : "" %>"></li>
+      <li class="temp2 <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "hover" : "" %>"></li>
+      <li class="temp3 <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "hover" : "" %>"></li>
+      <li class="temp4 <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "hover" : "" %>"></li>
     </ul>
   <% elsif @page && @page.sub? %>
   <% end %>

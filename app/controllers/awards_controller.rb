@@ -2,7 +2,7 @@
 class AwardsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:show, :record_award, :get_award_url, :check_if_watch]
   before_filter :get_site, :except => [:show, :record_award, :get_award_url, :check_if_watch]
-  layout 'pages'
+  layout 'sites'
   def index
     @awards=@site.awards
   end

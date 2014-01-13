@@ -120,7 +120,9 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .resBtn { width: 140px; height: 45px; border: 2px dashed #fff; margin: 12px 10px; background: url(/assets/v2.0/resourse.png) no-repeat 20px center; color: #fff; font-size: 18px; text-indent: 45px;}
 .leftMenu { padding: 10px; margin: 10px 0;}
 .leftMenu li { height: 40px; line-height: 40px; border-radius: 5px; color: #829095; font-size: 16px; text-indent: 50px;}
+/*amanda1*/
 .leftMenu li.leftItem_selected, .leftMenu li:hover { color: #fff; background-color: #53656c; background-image: url(/assets/v2.0/left_icon1.png);}
+/*amanda1*/
 .leftItem1 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px 9px;}
 .leftItem2 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -37px;}
 .leftItem3 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -85px;}
@@ -161,7 +163,10 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .setBtn { position: absolute; top: 20px; right: 45px;}
 
 /* iphone虚拟 */
+/*amanda1*/
 .iphoneVirtual { width: 320px; height: 568px; margin-top: 20px; position: relative; border: 1px solid #bcbcbc; border-radius: 5px; background-color: #f7f7f7; box-shadow: 0 0 3px rgba(0,0,0,0.3);}
+.main_tab{ display: none; }
+/*amanda1*/
 .iphoneVirtual .homeBg {
     color: #EBEBEB;
     line-height: 400px;

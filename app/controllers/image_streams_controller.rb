@@ -4,7 +4,7 @@ class ImageStreamsController < ApplicationController
   before_filter :get_site
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
-  layout 'pages'
+  layout 'sites'
   def new
     @site=Site.find(params[:site_id])
     #@imgs_path=@site.resources
