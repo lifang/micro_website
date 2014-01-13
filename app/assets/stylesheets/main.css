@@ -187,6 +187,140 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .iv_temp2 .homeNav { width: 77px; height: 77px; line-height: 77px;}
 
 
+.iv_temp3 .homeAd { width: 280px; height: 260px; margin: 10px; padding: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #FFF;}
+.ad_box { font-size: 0; height: 196px; overflow: hidden; position: relative; width: 280px;}
+.ad_box ul { width: 840px; position: relative;}
+.ad_box li { display: inline-block; width: 280px; height: 196px;}
+.ad_box li a { color: #EBEBEB; display: block; font-size: 120px; height: 100%; line-height: 196px; text-align: center; width: 100%; background: #c2c2c2;}
+
+.ad_num { margin-top: 10px; text-align: center; font-size: 0;}
+.ad_num li {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	margin: 0 5px;
+	border-radius: 50%;
+	background: #7E7E80;
+	text-indent: -999px;
+	overflow: hidden;
+}
+.ad_num li.curr { background: #F39801;}
+.addAdPic { margin: 10px 65px;}
+
+.category { margin: 15px 10px; background: #FFF; font-size: 0px;}
+.category li {
+ 	width: 25%;
+	height: 140px;
+	display: inline-block;
+}
+.category li a {
+    background: none repeat scroll 0 0 #CCCCCC;
+    color: #EBEBEB;
+    display: block;
+    font-size: 40px;
+    height: 70px;
+    line-height: 70px;
+    margin: 35px auto 0;
+    text-align: center;
+    width: 75px;
+}
+.category li span { font-size: 12px; line-height: 30px; text-align: center; display: block; }
+
+.nav_d { background: #FFF; font-size: 0px; margin: 0 1px;}
+.nav_d li {
+ 	width: 106px;
+	height: 108px;
+	display: inline-block;
+}
+.nav_d li a {
+    background: none repeat scroll 0 0 #CCCCCC;
+    color: #EBEBEB;
+    display: block;
+    font-size: 40px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    width: 106px;
+}
+.nav_d li span { font-size: 12px; line-height: 28px; text-align: center; display: block; }
+
+
+
+
+
+
+
+
+
+
+/* 图片选择 */
+
+.picChoice { height: 568px; position: absolute; right: 40px; top: 92px; width: 600px;}
+.picBox { width: 140px; height: 140px; border-radius: 5px; background: #f7f7f7; box-shadow: 0 2px 0 rgba(0,0,0,0.3); position: relative; float: left; margin: 5px;}
+.picBox span { display: block; line-height: 22px; background: #eaeaea; color: #65696A; position: absolute; bottom: 0; width: 100%; text-indent: 10px;}
+
+
+
+
+
+
+
+/* second_box */
+.second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; opacity: 0.3; filter: alpha(opacity=30); display: none;}
+.second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
+.second_content {
+    background-color: #fff;
+    border: 1px solid #CBD5D9;
+    border-radius: 5px;
+	width: 450px;
+	max-height: 400px;
+	overflow: auto;
+	margin: 100px auto;
+    padding: 10px;
+	position: relative;
+	font-size: 18px;
+}
+.second_content .close {
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+.second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
+.second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
+.second_content input[type=text]{ width: 200px; border: 1px solid #003333; padding: 5px; }
+.scdBox_act { text-align: center; padding: 10px;}
+
+/* second_box tab */
+.second_content .tabs { font-size: 0; margin: 10px 0; position: relative; }
+.second_content .tab {
+	border: 1px solid #cfcfcf;
+    border-top: 2px solid #0683B1;
+    display: inline-block;
+    font-size: 16px;
+    padding: 6px;
+    text-align: center;
+    width: 90px;
+	cursor: pointer;
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#cccccc));
+	background:-moz-linear-gradient(top, #ffffff,#cccccc);
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#cccccc,grandientType=1);
+}
+.tab:last-child { border-left: none;}
+.second_content .tab.curr { border-bottom: 1px solid #fff; background: #fff; }
+
+.tabsLine {
+    border-top: 1px solid #CFCFCF;
+    left: 208px;
+    position: absolute;
+    top: 35px;
+    width: 238px;
+}
+.second_content .tabDiv { display: none; }
+.second_content .tabDiv.curr { display: block; }
+.tabDiv input[type="radio"] { margin: 0 20px; width: 20px;}
+.tabDiv .radioVal { display: inline-block; line-height: 32px; width: 350px;}
+
 
 
 
