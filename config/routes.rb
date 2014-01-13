@@ -31,11 +31,11 @@ MicroWebsite::Application.routes.draw do
   match '/delete_post' ,to: 'posts#delete_post' ,via: 'get'
   match '/top' ,to: 'posts#top' ,via: 'get'
   match '/untop' ,to: 'posts#untop' ,via: 'get'
+  match '/search_sites' ,to: 'sites#search',via: 'get'
   # Sample resource route with options:
   resources :sites do
     member do
       post :verify_site
-      
     end
     resources :micro_messages 
     resources :micro_imgtexts

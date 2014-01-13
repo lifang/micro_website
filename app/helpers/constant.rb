@@ -9,8 +9,8 @@ module Constant
   }
   Template = {
     :temp1 => 1,
-    :temp2 => 1,
-    :temp3 => 1,
-    :temp4 => 1,
+    :temp2 => 2,
+    :temp3 => 3,
+    :temp4 => 4,
   }
 end

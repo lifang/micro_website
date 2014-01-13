@@ -14,6 +14,7 @@ class SitesController < ApplicationController
         @site.notes=params[:site][:notes]
         @site.cweb=params[:site][:cweb]
         @site.user_id=current_user.id
+        @site.template=params[:site][:template]
         respond_to do |format|
           if @site && @site.save
             #初始化index页面
@@ -102,7 +103,10 @@ class SitesController < ApplicationController
       render :text=>0
     end
   end
-  
+  def search
+    keyword=params[:key]
+    @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC',:conditions=>"name like '#{keyword}%'")
+  end
   private
   def sites_params
     params.require(:site).permit(:name,:root_path,:notes)
