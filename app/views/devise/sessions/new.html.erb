@@ -1,45 +1,32 @@
+<div class="loginBox">
+	<h1>申邑•微网站</h1>
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name),html:{onsubmit: "return check()"})  do |f| %>
+	<div class="loginForm">
+		<%= f.text_field :login, :placeholder =>"用户名或邮箱" , class:"username"%>
+		<%= f.password_field :password ,class:"password"%>
+		<%= f.submit "登录", :class => "loginBtn" %>
 
-<div class="login">
-  <h1>登录</h1>
-
-  <div class="login_info cf">
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name),html:{onsubmit: "return check()"})  do |f| %>
-      <ul>
-        <li>
-          <p><%= f.label :login, "帐号：" %>
-            <%= f.text_field :login, :placeholder =>"用户名或邮箱" %></p>
-        </li>
-
-        <li><%= f.label :password, "密码：" %>
-          <%= f.password_field :password %></li>
-
-      </ul>
-    </div>
-    <div class="login_act">
-      <p><%= f.submit "登录", :class => "login_btn blue_btn" %></p>
-      <p>
-        <a class="rsg_btn blue_btn" href="/signup">注册</a>
-        <%= link_to "忘记密码", new_password_path(:user) %>
-      </p>
-    </div>
-  <% end %>
+		<a class="register" href="/signup">立即注册</a>
+		<%= link_to "忘记密码", new_password_path(:user) %>
+	</div>
+	<% end %>
+	<div class="loginColor"></div>
 </div>
 
 <script>
-	function check(){
-		if($.trim($("#user_login").val()).length==0){
+	function check() {
+		if ($.trim($("#user_login").val()).length == 0) {
 			tishi_alert('提示:\n\n用户名不能为空');
-			return false;	
-		}else if($.trim($("#user_password").val()).length==0){
+			return false;
+		} else if ($.trim($("#user_password").val()).length == 0) {
 			tishi_alert('提示:\n\n密码需要包含至少一个非空白符');
 			return false;
-		}else if($("#user_password").val().length<6){
+		} else if ($("#user_password").val().length < 6) {
 			tishi_alert('提示:\n\n密码长度至少为6');
 			return false;
-			
+
 		}
-		
-	
+
 	}
-	
+
 </script>

@@ -1,0 +1,45 @@
+<div class="leftSide">
+  <div class="resDiv">
+    <%= link_to(site_resources_path(@site)) do %>
+      <button class="resBtn">资源包</button>
+    <% end %>
+  </div>
+  <ul class="leftMenu">
+    <%= link_to(site_pages_path(@site)) do%>
+      <li class="leftItem1 <%= controller_name == "pages" && controller.action_name == "index" ? 'leftItem_selected' : '' %>">
+        首页
+      </li>
+    <% end %>
+    <%= link_to(sub_site_pages_path(@site)) do %>
+      <li class="leftItem2 <%= controller.action_name == "sub" ? 'leftItem_selected' : '' %>">
+        其他页
+      </li>
+    <% end %>
+    <%= link_to(form_site_pages_path(@site)) do%>
+      <li class="leftItem3 <%= controller.action_name == "form" ? 'leftItem_selected' : '' %>">
+        表单
+      </li>
+    <% end %>
+    <%= link_to(img_stream_site_image_streams_path(@site)) do %>
+      <li class="leftItem4 <%= controller_name=="image_streams" ? 'leftItem_selected' : '' %>">
+        图片流
+      </li>
+    <% end %>
+    <%= link_to(site_image_texts_path(@site)) do %>
+      <li class="leftItem5 <%= controller_name == "image_texts" && controller.action_name == "index" ? 'leftItem_selected' : '' %>">
+        图文
+      </li>
+    <% end %>
+    <%=link_to(site_awards_path(@site)) do%>
+      <li class="leftItem6 <%= controller.controller_name == "awards" ? "leftItem_selected":"" %>">
+        刮刮乐
+      </li>
+    <% end %>
+    <li class="leftItem7">奖品</li>
+    <%=link_to site_micro_messages_path(@site) do%>
+      <li class="leftItem7 <%= controller.controller_name == "micro_messages"||controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
+        微信息
+      </li>
+    <% end %>
+  </ul>
+</div>

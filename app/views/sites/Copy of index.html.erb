@@ -1,0 +1,156 @@
+<div class="main_container">
+  <h1>站点汇总</h1>
+  <div class="set_btn cf" name='create'>
+    <button class="blue_btn scd_btn" name="new_point">
+				创建站点
+    </button>
+  </div>
+  <% @sites.each do |s|%>
+    <div class="main_content">
+      <div class="con_box point_box">
+        <span class="close" onclick="delete_site(<%=s.id%>)"></span>
+        <dl>
+          <dt>
+            站点名称：
+          </dt>
+          <dd>
+            <% if s.status==3 %>
+              <a href="/sites/static?path_name=/<%=s.root_path%>/index.html" target="_blank">
+                <%=s.name%>
+              </a>
+            <%else%>
+              <%=s.name%>
+            <%end%>
+          </dd>
+          <dt>
+            根目录：
+          </dt>
+          <dd>
+            <%=s.root_path%>
+          </dd>
+          <dt>
+            状态：
+          </dt>
+          <dd>
+            <%= status_desc s.status%>
+          </dd>
+          <dt>
+          <nobr>公众帐号token：</nobr>
+          </dt>
+          <dd>
+<%=s.cweb%>&nbsp;
+          </dd>
+          <dt>
+            备注：
+          </dt>
+          <dd>
+            <%=s.notes%>
+          </dd>
+        </dl>
+        <div class="box_act">
+          <a name="new_point" class="blue_btn" id='edit' onclick="show_edit_page('<%=s.name%>','<%=s.root_path%>','<%=s.notes%>','<%=s.cweb%>')">
+            编辑
+          </a>
+
+          &nbsp;&nbsp;&nbsp;<%= link_to site_pages_path(s),class:"blue_btn" do %>
+
+              详情
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <%end%>
+    <div class="clear"></div>
+    <div class="digg_pagination" style="width:91%;text-align: center;">
+      <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
+    </div>
+  </div>
+
+
+  <div class="foot"></div>
+
+  <div class="second_box uinfo_chg">
+    <div class="second_content">
+      <span class="close" >关闭</span>
+      <h1>编辑</h1>
+      <li>
+        <label>联系电话：</label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>E-mail：</label>
+        <input type="text" />
+      </li>
+      <div class="uinfo_act">
+        <button class="blue_btn">
+          确认
+        </button>
+        <button class="blue_btn">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="second_box pass_chg">
+    <div class="second_content">
+      <span class="close" ><a href="">关闭</a></span>
+      <h1>修改密码</h1>
+      <li>
+        <label>旧密码：</label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>新密码：</label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>确认：</label>
+        <input type="text" />
+      </li>
+      <div class="uinfo_act">
+        <button class="blue_btn">
+          确认
+        </button>
+        <button class="blue_btn">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="second_box new_point"  >
+    <%=form_for(Site.new,remote:true) do |f|%>
+      <div class="second_content">
+        <span class="close" >关闭</span>
+        <h1 id="site_titile">创建站点(创建后不允许修改)</h1>
+        <div id='fault' style="margin:auto;text-align: center;color:red"> </div>
+        <input type="hidden" value="create" id="site_edit_or_create" name='site[edit_or_create]'/>
+        <li>
+          <%= f.label '站点名称：'%>
+          <%= f.text_field :name %>
+          <input type="hidden" name="origin_name" id='origin_name'/><span class="check">*</span>
+        </li>
+        <li>
+          <%= f.label '根目录：'%>
+          <%= f.text_field :root_path %>&nbsp;<span id="must_fix" class="check">*</span>
+        </li>
+        <li>
+          <%= f.label '公众帐号token：'%>
+          <%= f.text_field :cweb%>
+
+        </li>
+        <li>
+          <%= f.label '备注：'%>
+          <%= f.text_field :notes%>
+
+        </li>
+        <div class="uinfo_act">
+          <%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
+            <input id="create" class="blue_btn" type="button" value="取消"/>
+          </div>
+        </div>
+      <%end%>
+    </div>
+<%=render 'shared/tishi_alert'%>
+
+

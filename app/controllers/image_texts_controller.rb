@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ImageTextsController < ApplicationController
   before_filter :get_site
-  layout 'sites'
+  layout 'pages'
 
   def index
     @title = "微网站-图文"

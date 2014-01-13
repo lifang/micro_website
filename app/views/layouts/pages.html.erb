@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @title || "申邑•微网站" %></title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+<% flash.each do |name, msg| %>
+  <div id="flash_field" style="width:100%;position: fixed; z-index: 4;">
+    <div style="font-size:20px;margin: 200px auto;width: 300px;background: #3696E0;padding: 20px;">
+      <span class="close" id="close_flash" style="float:right;" ></span>
+      <div class="alert_h"><%=msg%></div>
+    </div>
+  </div>
+<% end %>
+
+  	<div class="header">
+		<div class="logo"></div>
+		<div class="menu">
+			<ul>
+				<li class="item1">站点首页</li>
+				<li class="item2">新建站点
+					<ul class="tempBox">
+						<span class="ul_cor"></span>
+						<li class="temp1"></li>
+						<li class="temp2"></li>
+						<li class="temp3"></li>
+						<li class="temp4"></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="userInfo">
+			<span>username</span>|
+			<a href="#">退出</a>
+		</div>
+		<div class="searchBox">
+			<input type="text" />
+			<button class="search_btn">搜索</button>
+		</div>
+	</div>
+    
+    <%= yield %>
+
+
+    <%= render "/shared/pop_container" %>
+   <%= render "/shared/tishi_alert" %>
+  </body>
+</html>

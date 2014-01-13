@@ -1,4 +1,3 @@
- 
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -12,7 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131218033543) do
+ActiveRecord::Schema.define(:version => 20140102085129) do
+
+  create_table "award_infos", :force => true do |t|
+    t.integer  "award_id"
+    t.string   "name"
+    t.string   "content"
+    t.integer  "number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "img"
+    t.integer  "award_index"
+  end
+
+  add_index "award_infos", ["award_id"], :name => "index_award_infos_on_award_id"
+
+  create_table "awards", :force => true do |t|
+    t.integer  "site_id"
+    t.string   "name"
+    t.date     "begin_date"
+    t.date     "end_date"
+    t.integer  "total_number"
+    t.integer  "no_operation_number"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "awards", ["site_id"], :name => "index_awards_on_site_id"
 
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
@@ -23,6 +48,32 @@ ActiveRecord::Schema.define(:version => 20131218033543) do
   end
 
   add_index "form_datas", ["page_id"], :name => "index_form_datas_on_page_id"
+
+  create_table "keywords", :force => true do |t|
+    t.integer  "site_id"
+    t.string   "keyword"
+    t.integer  "micro_message_id"
+    t.boolean  "types"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "micro_imgtexts", :force => true do |t|
+    t.string   "title"
+    t.string   "img_path"
+    t.text     "content"
+    t.string   "url"
+    t.integer  "micro_message_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "micro_messages", :force => true do |t|
+    t.integer  "site_id"
+    t.boolean  "mtype"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "page_image_texts", :force => true do |t|
     t.integer "page_id"
@@ -86,12 +137,25 @@ ActiveRecord::Schema.define(:version => 20131218033543) do
     t.integer  "user_id"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.string   "cweb"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
   add_index "sites", ["root_path"], :name => "index_sites_on_root_path"
   add_index "sites", ["status"], :name => "index_sites_on_status"
   add_index "sites", ["user_id"], :name => "index_sites_on_user_id"
+
+  create_table "user_awards", :force => true do |t|
+    t.integer  "award_info_id"
+    t.string   "open_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "award_id"
+    t.string   "secret_code"
+    t.boolean  "if_checked"
+  end
+
+  add_index "user_awards", ["award_info_id"], :name => "index_user_awards_on_award_info_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

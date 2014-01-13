@@ -1,6 +1,6 @@
 #encoding: utf-8
 module ApplicationHelper
-  include ActionView::Helpers::OutputSafetyHelper
+  include Constant
   MW_URL = "http://web.sunworldmedia.com/"
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
@@ -88,10 +88,6 @@ a.each(function(){
     #TODO正则中文有问题
     content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
     content
-  end
-
-  def create_img_stream_page(src_arr,text_arr,name)
-    
   end
 
   def image_text_content(page, it_content, img_path, site)
