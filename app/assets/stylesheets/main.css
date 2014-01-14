@@ -41,10 +41,10 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 /* login */
 .loginBox { width: 500px; margin: 100px auto 0;}
-.loginBox h1 { 
-	color: #fff; 
-	font-family: 黑体; 
-	font-size: 36px; 
+.loginBox h1 {
+	color: #fff;
+	font-family: 黑体;
+	font-size: 36px;
 	background: url(/assets/v2.0/logo.png) no-repeat 94px center;
 	line-height: 100px;
     padding-left: 100px;
@@ -74,15 +74,22 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .item2 { background: url(/assets/v2.0/item2.png) no-repeat 10px center #373f42; text-indent: 20px; font-size: 16px; position: relative;}
 .item1:hover,.item2:hover { background-color: #404e53;}
 .item2:hover .tempBox { display: block;}
-.tempBox { position: absolute; width: 300px; height: 75px; background: #404e53; border-radius: 5px; top: 70px; left: -80px; display: none; z-index: 2;} 
+.tempBox { position: absolute; width: 300px; height: 75px; background: #404e53; border-radius: 5px; top: 70px; left: -80px; display: none; z-index: 2;}
+.ul_cor_div {
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: -10px;
+    width: 100%;
+}
 .ul_cor {
     border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #404E53;
     border-style: solid;
     border-width: 10px;
-    left: 135px;
+	left: 122px;
     overflow: hidden;
-    position: absolute;
-    top: -20px;
+    position: relative;
+    top: -41px;
 }
 .temp1,.temp2,.temp3,.temp4 { width: 50px; height: 50px; display: inline-block; margin: 12px 5px;}
 .temp1 { background: url(/assets/v2.0/temp1.png) no-repeat 7px center; background-size: 36px 36px; border: 1px solid #404e53; }
@@ -93,15 +100,15 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 .searchBox { margin: 12px 0; float: right; position: relative;}
 .searchBox input { width: 180px; height: 36px; border: 0; border-radius: 18px; line-height: 36px; text-indent: 20px; background: #e4e8e9; color: #888;}
-.search_btn { 
-	position: absolute; 
-	top: 6px; 
-	right: 10px; 
+.search_btn {
+	position: absolute;
+	top: 6px;
+	right: 10px;
 	background: url(/assets/v2.0/search_btn.png) no-repeat 0 center;
-	width: 25px; 
-	height: 24px; 
-	text-indent: -999px; 
-	overflow: hidden; 
+	width: 25px;
+	height: 24px;
+	text-indent: -999px;
+	overflow: hidden;
 	border: 0;
 	cursor: pointer;
 }
@@ -120,9 +127,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .resBtn { width: 140px; height: 45px; border: 2px dashed #fff; margin: 12px 10px; background: url(/assets/v2.0/resourse.png) no-repeat 20px center; color: #fff; font-size: 18px; text-indent: 45px;}
 .leftMenu { padding: 10px; margin: 10px 0;}
 .leftMenu li { height: 40px; line-height: 40px; border-radius: 5px; color: #829095; font-size: 16px; text-indent: 50px;}
-/*amanda1*/
-.leftMenu li.leftItem_selected, .leftMenu li:hover { color: #fff; background-color: #53656c; background-image: url(/assets/v2.0/left_icon1.png);}
-/*amanda1*/
+.leftMenu li:hover { color: #fff; background-color: #53656c; background-image: url(/assets/v2.0/left_icon1.png);}
 .leftItem1 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px 9px;}
 .leftItem2 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -37px;}
 .leftItem3 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -85px;}
@@ -150,8 +155,8 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .point_temp3 { width: 112px; height: 112px; background: url(/assets/v2.0/temp3.png) no-repeat; float: left; margin-right: 20px;}
 .point_temp4 { width: 112px; height: 112px; background: url(/assets/v2.0/temp4.png) no-repeat; float: left; margin-right: 20px;}
 .point_info { overflow: hidden;}
-.point_info p { line-height: 23px; height: 23px; overflow: hidden;} 
-.point_act { padding: 10px; text-align: center;} 
+.point_info p { line-height: 23px; height: 23px; overflow: hidden;}
+.point_act { padding: 10px; text-align: center; margin-top: 15px;}
 .point_box .edit { position: absolute; right: 10px; bottom: 10px;}
 
 /* 首页 */
@@ -163,10 +168,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .setBtn { position: absolute; top: 20px; right: 45px;}
 
 /* iphone虚拟 */
-/*amanda1*/
-.iphoneVirtual { width: 320px; height: 568px; margin-top: 20px; position: relative; border: 1px solid #bcbcbc; border-radius: 5px; background-color: #f7f7f7; box-shadow: 0 0 3px rgba(0,0,0,0.3);}
-.main_tab{ display: none; }
-/*amanda1*/
+.iphoneVirtual { width: 320px; height: 568px; margin-top: 20px; position: relative; border: 1px solid #bcbcbc; border-radius: 5px 5px 0 0; background-color: #f7f7f7; box-shadow: 0 0 3px rgba(0,0,0,0.3);}
 .iphoneVirtual .homeBg {
     color: #EBEBEB;
     line-height: 400px;
@@ -185,7 +187,6 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .iv_temp2 .homeBg { width: 50%;}
 .iv_temp2 .homeMenu { width: 185px; height: 350px; top: 100px; right: 0;}
 .iv_temp2 .homeNav { width: 77px; height: 77px; line-height: 77px;}
-
 
 .iv_temp3 .homeAd { width: 280px; height: 260px; margin: 10px; padding: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #FFF;}
 .ad_box { font-size: 0; height: 196px; overflow: hidden; position: relative; width: 280px;}
@@ -288,7 +289,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 }
 .second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
 .second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
-.second_content input[type=text]{ width: 200px; border: 1px solid #003333; padding: 5px; }
+.second_content input { width: 200px; border: 1px solid #003333; padding: 5px; }
 .scdBox_act { text-align: center; padding: 10px;}
 
 /* second_box tab */
@@ -320,9 +321,4 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .second_content .tabDiv.curr { display: block; }
 .tabDiv input[type="radio"] { margin: 0 20px; width: 20px;}
 .tabDiv .radioVal { display: inline-block; line-height: 32px; width: 350px;}
-
-
-
-
-
 
