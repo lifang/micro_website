@@ -228,4 +228,9 @@ class PagesController < ApplicationController
     render :text => form_authenticity_token
   end
 
+  def save_template3
+    p 111111111111111
+    p params
+  end
+
 end

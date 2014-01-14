@@ -1,4 +1,4 @@
-function submit_model_page(){
+function submit_model_page(site_id){
     var models=$(".main_cont").find(".main_tab");
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
@@ -16,10 +16,14 @@ function submit_model_page(){
     }
 }
 
-function template3_Submit(){
-    var slide_src = "";
-    var middle_src = "";
-    var bottom_src = "";
+function submit_template(site_id, flag){
+    if(flag == 3){
+        template3_Submit(site_id)
+    }
+}
+
+function template3_Submit(site_id){
+    
     var flag = true;
     $(".tmp_280-196 li, .temp75-70 li, .temp106-80 li").each(function(){
         if(typeof($(this).attr("data-src")) == "undefined" || $(this).attr("data-src") == ""){
@@ -29,27 +33,32 @@ function template3_Submit(){
         }else{
             if($(this).parent("ul").hasClass("tmp_280-196")){
                 slide_src = slide_src + "," + $(this).attr("data-src");
+                slide_link = slide_link + "," + $(this).attr("data-href");
             }else if($(this).parent("ul").hasClass("temp75-70")){
                 middle_src = middle_src + "," + $(this).attr("data-src");
+                middle_link = middle_link + "," + $(this).attr("data-href");
             }else{
                 bottom_src = bottom_src + "," + $(this).attr("data-src");
+                bottom_link = bottom_link + "," + $(this).attr("data-href");
             }
         }
     });
 
-/*if(flag){
+if(flag){
+    var src = slide_src
+        var page_content = $(".iv_temp3").html()
         $.ajax({
-        url: $(obj).attr("data-url"),
+        url: "/sites/" + site_id + "/pages/save_template3",
         type: "POST",
-        dataType: "html",
+        dataType: "text",
+        data: {slide_src : slide_src, middle_src:middle_src, bottom_src: bottom_src},
         success:function(data){
-            $(".bbs_dropDown").remove();
-            $(".bbs-a").last().after(data);
+            alert(data)
         },
         error:function(data){
             alert("error");
         }
     })
-}*/
+}
     
 }

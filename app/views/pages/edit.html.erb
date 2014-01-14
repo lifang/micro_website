@@ -35,12 +35,13 @@
     </div>
 
     <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
+      <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
       <div class="homeAd">
         <div class="ad_box">
           <ul class="homeMenutmp3 tmp_280-196">
-            <li><a class="scd_btn">1</a><span class="close"></span></li>
-            <li><a class="scd_btn">2</a><span class="close"></span></li>
-            <li><a class="scd_btn">3</a><span class="close"></span></li>
+            <li><a class="scd_btn">1</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+            <li><a class="scd_btn">2</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+            <li><a class="scd_btn">3</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
           </ul>
         </div>
         <div class="ad_num">
@@ -54,19 +55,22 @@
       </div>
       <div class="category">
         <ul class="temp75-70 temp3Block">
-          <li><a class="scd_btn" name="addLink">1</a></li>
-          <li><a class="scd_btn" name="addLink">2</a></li>
-          <li><a class="scd_btn" name="addLink">3</a></li>
-          <li><a class="scd_btn" name="addLink">4</a></li>
+          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
         </ul>
       </div>
       <div class="nav_d">
         <ul class="temp106-80 temp3Block">
-          <li><a class="scd_btn" name="addLink">1</a></li>
-          <li><a class="scd_btn" name="addLink">2</a></li>
-          <li><a class="scd_btn" name="addLink">3</a></li>
+          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
         </ul>
       </div>
+      <div style="clear:both"></div>
+        <div class="pageAct"><button class="blue_btn" type="submit">保存</button></div>
+      <% end %>
     </div>
 
     <%= render 'shared/form_images',:objects => @imgs %>
@@ -83,7 +87,7 @@
         </div>
       <% end %>
     </div>
-    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page()">保存</button></div>
+    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page('<%= @site_id %>')">保存</button></div>
   </div>
 </div>
 
