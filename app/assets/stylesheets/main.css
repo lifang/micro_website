@@ -127,7 +127,9 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .resBtn { width: 140px; height: 45px; border: 2px dashed #fff; margin: 12px 10px; background: url(/assets/v2.0/resourse.png) no-repeat 20px center; color: #fff; font-size: 18px; text-indent: 45px;}
 .leftMenu { padding: 10px; margin: 10px 0;}
 .leftMenu li { height: 40px; line-height: 40px; border-radius: 5px; color: #829095; font-size: 16px; text-indent: 50px;}
-.leftMenu li:hover { color: #fff; background-color: #53656c; background-image: url(/assets/v2.0/left_icon1.png);}
+/*amanda1*/
+.leftMenu li.leftItem_selected, .leftMenu li:hover { color: #fff; background-color: #53656c; background-image: url(/assets/v2.0/left_icon1.png);}
+/*amanda1*/
 .leftItem1 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px 9px;}
 .leftItem2 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -37px;}
 .leftItem3 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -85px;}
@@ -135,7 +137,6 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .leftItem5 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -187px;}
 .leftItem6 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -235px;}
 .leftItem7 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -273px;}
-
 
 /* point_box */
 .point_box {
@@ -169,6 +170,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 /* iphone虚拟 */
 .iphoneVirtual { width: 320px; height: 568px; margin-top: 20px; position: relative; border: 1px solid #bcbcbc; border-radius: 5px 5px 0 0; background-color: #f7f7f7; box-shadow: 0 0 3px rgba(0,0,0,0.3);}
+
 .iphoneVirtual .homeBg {
     color: #EBEBEB;
     line-height: 400px;
@@ -191,9 +193,15 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .iv_temp3 .homeAd { width: 280px; height: 260px; margin: 10px; padding: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #FFF;}
 .ad_box { font-size: 0; height: 196px; overflow: hidden; position: relative; width: 280px;}
 .ad_box ul { width: 840px; position: relative;}
-.ad_box li { display: inline-block; width: 280px; height: 196px;}
+.ad_box li { /*amanda*/	float: left; width: 280px; height: 196px; position: relative}
 .ad_box li a { color: #EBEBEB; display: block; font-size: 120px; height: 100%; line-height: 196px; text-align: center; width: 100%; background: #c2c2c2;}
-
+.ad_box li .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+}
+.ad_box li:hover .close { display: block;}
 .ad_num { margin-top: 10px; text-align: center; font-size: 0;}
 .ad_num li {
 	width: 10px;
@@ -212,7 +220,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .category li {
  	width: 25%;
 	height: 140px;
-	display: inline-block;
+/*amanda*/	float: left;
 }
 .category li a {
     background: none repeat scroll 0 0 #CCCCCC;
@@ -231,7 +239,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .nav_d li {
  	width: 106px;
 	height: 108px;
-	display: inline-block;
+	/*amanda*/	float: left;
 }
 .nav_d li a {
     background: none repeat scroll 0 0 #CCCCCC;
@@ -256,8 +264,10 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 /* 图片选择 */
 
-.picChoice { height: 568px; position: absolute; right: 40px; top: 92px; width: 610px;}
-.picBox { width: 140px; height: 140px; border-radius: 5px; background: #f7f7f7; box-shadow: 0 2px 0 rgba(0,0,0,0.3); position: relative; float: left; margin: 5px;}
+
+.picChoice { height: 568px; position: absolute; right: 40px; top: 92px; width: 600px;}
+.picBox { text-align: center; width: 140px; height: 140px; border-radius: 5px; background: #f7f7f7; box-shadow: 0 2px 0 rgba(0,0,0,0.3); position: relative; float: left; margin: 5px;}
+
 .picBox span { display: block; line-height: 22px; background: #eaeaea; color: #65696A; position: absolute; bottom: 0; width: 100%; text-indent: 10px;}
 
 
@@ -332,8 +342,8 @@ resize: none;
 padding: 10px;
 margin: 10px 0;
 }
-
-
+.main_tab{ display: none; }
+.pageAct{ padding-top: 20px; text-align:center}
 
  
 

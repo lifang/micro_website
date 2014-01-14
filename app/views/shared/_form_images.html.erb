@@ -10,8 +10,9 @@
       </div>
     <% end %>
   <%end%>
+  <div style="clear: both"></div>
   <%if objects.present?%>
-    <%= will_paginate objects,:previous_label=>'上一页',:next_label=>'下一页', :style => "float:left;display: #{@site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block"}"  %>
+    <%= will_paginate objects,:previous_label=>'上一页',:next_label=>'下一页'  %>
   <%end%>
 </div>
 

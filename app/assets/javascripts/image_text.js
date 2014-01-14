@@ -75,6 +75,42 @@ function it_drop(obj){
     });
 }
 
+function it_drop_75(obj){
+    obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img_src = ui.draggable.find("img").attr("src");
+            $(this).text(" ");
+            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "75px 70px"})
+        }
+    });
+}
+
+function it_drop_106(obj){
+        obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img_src = ui.draggable.find("img").attr("src");
+            $(this).text(" ");
+            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "106px 80px"})
+        }
+    });
+}
+
+function it_drop_280(obj){
+        obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img_src = ui.draggable.find("img").attr("src");
+            $(this).text(" ");
+            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "275px 196px"})
+        }
+    });
+}
+
 function it_drag(obj){
     obj.draggable({
         cancel: "a.ui-icon", // clicking an icon won't initiate dragging

@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   def index
     @page = @site.pages.main.first
     @imgs = return_site_images(@site)
-    @imgs = @imgs.paginate(:page =>1,:per_page=>12)
+    @imgs = @imgs.paginate(:page => 1,:per_page => 12)
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
       if index_html
