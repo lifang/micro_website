@@ -72,4 +72,55 @@ $(function(){
             }
         })
     });
+
+  //切换模板
+  $(".tmp_list li").on("click",function(){
+    var className = $(this).attr("class").split(/\s/)[0];
+    $(".tmp_list li").removeClass("hover");
+    $(".main_cont .main_tab").hide();
+    $(".main_cont .iv_" + className).show();
+    if(className == "temp4"){
+      $(".main_cont .picChoice").hide();
+    }else{
+      $(".main_cont .picChoice").show();
+    }
+
+    $(this).addClass("hover");
+  })
+
+  //加超链接
+  $(".temp3Block li").on("click",function(){
+      var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
+      var index = $("." + spec_className + " li").index($(this));
+      show_tag($("#linkPage"));
+
+      $("#linkPage .cancel").click(function(){
+        hide_tab($("#linkPage"));
+    });
+      $("#linkPage").find(".hiddenIndex").val(index);
+      $("#linkPage").find(".hiddenBlock").val(spec_className);
+  });
 });
+
+function setLink(){
+    var link = "";
+    $(".addLink .tabs").find("span").each(function(){
+        if($(this).hasClass("curr")){
+            if($(this).text() == "站内链接"){
+                checked = $(".addLink input[name=insite_link]:checked");
+                link = checked.length > 0 ? checked.val() : "";
+            }else{
+                link = $(".addLink input[name=outside_link]").val()
+            }
+        }
+    });
+    if(link != ""){
+       var spec_className = $("#linkPage").find(".hiddenBlock").val();
+       var index = $("#linkPage").find(".hiddenIndex").val();
+       $($("." + spec_className + " li")[index]).attr("data-href", link);
+       hide_tab($("#linkPage"));
+    }else{
+       tishi_alert("未选择链接！")
+    }
+   
+}

@@ -83,6 +83,7 @@ function it_drop_75(obj){
         drop: function( event, ui ) {
             var img_src = ui.draggable.find("img").attr("src");
             $(this).text(" ");
+            $(this).parent("li").attr("data-src", img_src)
             $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "75px 70px"})
         }
     });
@@ -95,6 +96,7 @@ function it_drop_106(obj){
         drop: function( event, ui ) {
             var img_src = ui.draggable.find("img").attr("src");
             $(this).text(" ");
+            $(this).parent("li").attr("data-src", img_src)
             $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "106px 80px"})
         }
     });
@@ -107,6 +109,7 @@ function it_drop_280(obj){
         drop: function( event, ui ) {
             var img_src = ui.draggable.find("img").attr("src");
             $(this).text(" ");
+            $(this).parent("li").attr("data-src", img_src)
             $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "275px 196px"})
         }
     });
