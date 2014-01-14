@@ -1,4 +1,4 @@
-<div class="picChoice" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
+<div class="picChoice picRes" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
   <% objects.each do |img|%>
     <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
     <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
@@ -11,7 +11,7 @@
     <% end %>
   <%end%>
   <%if objects.present?%>
-    <%= will_paginate objects,:previous_label=>'上一页',:next_label=>'下一页', :style => "display: #{@site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block"}"  %>
+    <%= will_paginate objects,:previous_label=>'上一页',:next_label=>'下一页', :style => "float:left;display: #{@site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block"}"  %>
   <%end%>
 </div>
 
