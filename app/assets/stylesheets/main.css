@@ -322,3 +322,18 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .tabDiv input[type="radio"] { margin: 0 20px; width: 20px;}
 .tabDiv .radioVal { display: inline-block; line-height: 32px; width: 350px;}
 
+/*amanda*/
+.page_txt {
+border: 1px solid #C2C2C2;
+background: #ffffff;
+width: 98%;
+overflow: auto;
+resize: none;
+padding: 10px;
+margin: 10px 0;
+}
+
+
+
+ 
+
