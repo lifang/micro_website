@@ -218,7 +218,9 @@ class PagesController < ApplicationController
       render Rails.root.to_s + '/public/404.html', :layout => false
     end
   end
+  def model_page
 
+  end
 
   #get form authenticity_token  hack of CSRF
   def get_token

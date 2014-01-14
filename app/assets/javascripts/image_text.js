@@ -24,6 +24,7 @@ function it_drop(obj){
             var parent =$(this).parent().attr("class")
             if(parent == 'homeBg'){
                 $(this).next().html("<img src="+ui.draggable.find("img").attr("src")+" />");
+                $(this).html("");
                 var img=$(this).next().find("img");
                 $(img).css({
                     "width": "320px",

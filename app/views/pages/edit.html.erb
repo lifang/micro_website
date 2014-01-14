@@ -1,12 +1,13 @@
 
 
 <div class="main_container">
+  <input type="hidden" value="<%=@site.id%>" id="site_id" />
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
     <%= render '/shared/page_title' %>
     <div class="iphoneVirtual iv_temp1 main_tab" style="display: <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "block" : "none" %>">
       <div class="homeBg">
-        <span  name="div" height="400px" style=" position: absolute;left:0px;width:320px ">+</span>
+        <span  name="div"  style=" position: absolute;left:0px;width:320px; height:400px;">+</span>
         <div></div>
       </div>
       <ul class="homeMenu">
@@ -82,7 +83,7 @@
         </div>
       <% end %>
     </div>
-    <div class="pageAct"><button class="blue_btn">保存</button></div>
+    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page()">保存</button></div>
   </div>
 </div>
 
