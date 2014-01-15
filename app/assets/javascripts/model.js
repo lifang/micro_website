@@ -6,19 +6,22 @@ function submit_model_page(site_id){
                 var bigimg =$(models[i]).children(".homeBg").find("div").find("img");
                 bigimg = $(bigimg).attr("src");
                 var imgarr = $(models[i]).children(".homeMenu").find("li").find("img");
-                var imgstr="";
+                var alinkarr = $(models[i]).children(".homeMenu").find("input");
+                var imgstr ="",alinkstr ="";
                 for(var i=0;i<imgarr.length;i++){
-                    imgstr+=$(imgarr[i]).attr("src")+","
+                    imgstr+=$(imgarr[i]).attr("src")+"|||";
+                    alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
                 }
                 var html_content = $(models[i]).html();
-                alert(bigimg+imgstr);
+                alert(alinkstr+"--"+imgstr);
                 
                 $.ajax({
                     async:true,
                     type : 'post',
                     url:'/model_page',
                     dataType:"json",
-                    data  :"site_id="+$("#site_id").val()+"&template=1&bigimg="+bigimg+"&imgstr="+imgstr+"&html_content="+html_content,
+                    data  :"site_id="+$("#site_id").val()+"&template=1&bigimg="+bigimg+"&imgstr="+imgstr
+                       +"&alinkstr="+alinkstr +"&html_content="+html_content,
                     success:function(data){
                         if(data==1){
                             tishi_alert("success!");

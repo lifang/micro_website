@@ -220,24 +220,56 @@ class PagesController < ApplicationController
     end
   end
   def model_page
+    @page = Page.where("site_id=#{@site.id} and types=0")[0]
+    if @page.nil?
+      @page = Page.create(title: "index",file_name: "index.html",types:0,site_id: @site.id,path_name:"/public/allsites/#{@site.path_name}/index.html");
+    end
     template =params[:template]
     bigimg =params[:bigimg]
     imgstr = params[:imgstr]
-    imgarr = imgstr.split(",");
+    alinkstr = params[:alinkstr]
+    imgarr = imgstr.split("|||")
+    alinkarr = alinkstr.split("|||")
     html_content = params[:html_content]
-    @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/template"
-    if template == Constant::Template[:temp1]
-      
-
+    @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
+    p 11111111111111111,template,Constant::Template[:temp1]
+    if template.to_i == Constant::Template[:temp1]
+      p "this is template 1----->"
+       if @site.update_attribute(:template,template ) && @page.update_attribute( :page_html,html_content)
+          #截背景图片
+          #bigimg_min_image bigimg,get_filename(bigimg),@tmp_dir
+          #截小图
+          imgarr.each do |img|
+            model1_min_image(Rails.root.to_s + "/public#{img}",get_filename(img),@tmp_dir)
+          end
+          html_content = model1_html @site,bigimg,imgarr,alinkarr
+          #保存成为index
+          save_as_index @site,html_content
+          render text:1
+       else
+          render text:0
+       end
+    else
+      render text:0
     end
-
-    render text:1
-
+ 
   end
-  #资源全路径,文件名 ,dir
-  def min_image(ful_path,filename,ful_dir)
-    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_bg."+filename.split(".")[-1]
-    if !File.exist?(target_path)&&which_res(filename)=='img'
+  def get_filename(file_path)
+    file_path.split("/")[-1]
+  end
+  #资源全路径,文件名 ,dir 背景解图
+#  def bigimg_min_image(ful_path,filename,ful_dir)
+#    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_bg."+filename.split(".")[-1]
+#    if !File.exist?(target_path)&&which_res(filename)=='img'
+#    image = MiniMagick::Image.open(ful_path)
+#    image.resize "640x1136"
+#    image.write  target_path
+#    end
+#  end
+  #model1截图
+  def model1_min_image(ful_path,filename,ful_dir)
+    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_m1."+filename.split(".")[-1]
+    if !File.exist?(target_path)
     image = MiniMagick::Image.open(ful_path)
     image.resize "186x186"
     image.write  target_path

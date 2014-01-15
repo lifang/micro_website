@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 $(function(){
-	/*design*/
+    /*design*/
     $(".second_box .close").click(function(){
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
@@ -31,7 +31,7 @@ $(function(){
     });
 
     $(".leftSide").css("height",$(document).height() - 60 +"px");
-/**/
+    /**/
     $(".ad_num").on("click","li",function(){
         if(!$(this).hasClass("curr")){
             $(".ad_num li").removeClass("curr");
@@ -73,34 +73,54 @@ $(function(){
         })
     });
 
-  //切换模板
-  $(".tmp_list li").on("click",function(){
-    var className = $(this).attr("class").split(/\s/)[0];
-    $(".tmp_list li").removeClass("hover");
-    $(".main_cont .main_tab").hide();
-    $(".main_cont .iv_" + className).show();
-    if(className == "temp4"){
-      $(".main_cont .picChoice").hide();
-    }else{
-      $(".main_cont .picChoice").show();
-    }
+    //切换模板
+    $(".tmp_list li").on("click",function(){
+        var className = $(this).attr("class").split(/\s/)[0];
+        $(".tmp_list li").removeClass("hover");
+        $(".main_cont .main_tab").hide();
+        $(".main_cont .iv_" + className).show();
+        if(className == "temp4"){
+            $(".main_cont .picChoice").hide();
+        }else{
+            $(".main_cont .picChoice").show();
+        }
 
-    $(this).addClass("hover");
-  })
+        $(this).addClass("hover");
+    })
 
-  //加超链接
-  $(".temp3Block li").on("click",function(){
-      var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
-      var index = $("." + spec_className + " li").index($(this));
-      show_tag($("#linkPage"));
+    //加超链接
+    $(".temp3Block li").on("click",function(){
+        var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
+        var index = $("." + spec_className + " li").index($(this));
+        show_tag($("#linkPage"));
 
-      $("#linkPage .cancel").click(function(){
-        hide_tab($("#linkPage"));
+        $("#linkPage .cancel").click(function(){
+            hide_tab($("#linkPage"));
+        });
+        $("#linkPage").find(".hiddenIndex").val(index);
+        $("#linkPage").find(".hiddenBlock").val(spec_className);
     });
-      $("#linkPage").find(".hiddenIndex").val(index);
-      $("#linkPage").find(".hiddenBlock").val(spec_className);
-  });
+    //加超链接
+    $(".homeMenu a").on("click",function(){
+        var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
+      
+        var index = $("." + spec_className + " a").index($(this));
+        
+        show_tag($("#linkPage"));
+
+        $("#linkPage .cancel").click(function(){
+            hide_tab($("#linkPage"));
+        });
+
+        $("#linkPage").find(".hiddenIndex").val(index);
+        $("#linkPage").find(".hiddenBlock").val(spec_className);
+    });
+
+
+
+
 });
+
 
 function setLink(){
     var link = "";
@@ -115,12 +135,19 @@ function setLink(){
         }
     });
     if(link != ""){
-       var spec_className = $("#linkPage").find(".hiddenBlock").val();
-       var index = $("#linkPage").find(".hiddenIndex").val();
-       $($("." + spec_className + " li")[index]).attr("data-href", link);
-       hide_tab($("#linkPage"));
+        var spec_className = $("#linkPage").find(".hiddenBlock").val();
+        var index = $("#linkPage").find(".hiddenIndex").val();
+        if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
+            alert(spec_className);
+            $($("." + spec_className + " input")[index]).attr("data-href", link);
+            hide_tab($("#linkPage"));
+        }else{
+            $($("." + spec_className + " li")[index]).attr("data-href", link);
+            hide_tab($("#linkPage"));
+        }
+      
     }else{
-       tishi_alert("未选择链接！")
+        tishi_alert("未选择链接！")
     }
    
 }
