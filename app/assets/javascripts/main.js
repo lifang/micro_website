@@ -86,17 +86,6 @@ $(function() {
         }
     });
     //显示创建站点
-    /*$(".scd_btn").click(function() {
-        $(".second_bg").show();
-        $(".second_box." + $(this).attr("name")).show();
-        $("#site_titile").html('创建站点（根目录创建后不可修改）');
-        $('#site_edit_or_create').val('create');
-        $('#site_root_path').removeAttr("readonly");
-        $('#must_fix').show();
-        text_value("", '', '');
-    })*/
-
-   
 
     $(".file_1").change(function() {
         $(this).parents(".fileBox").find(".fileText_1").val($(this).val());

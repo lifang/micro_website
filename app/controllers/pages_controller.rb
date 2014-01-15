@@ -10,6 +10,7 @@ class PagesController < ApplicationController
     @page = @site.pages.main.first
     @imgs = return_site_images(@site)
     @imgs = @imgs.paginate(:page => 1,:per_page => 12)
+    @sub_pages = @site.pages.sub
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
       if index_html
@@ -245,6 +246,11 @@ class PagesController < ApplicationController
   #get form authenticity_token  hack of CSRF
   def get_token
     render :text => form_authenticity_token
+  end
+
+  def save_template3
+    p 111111111111111
+    p params
   end
 
 end

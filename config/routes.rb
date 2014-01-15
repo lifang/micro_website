@@ -69,7 +69,7 @@ MicroWebsite::Application.routes.draw do
       resources :form_datas
       collection do
         get :sub, :form, :style, :sub_new,  :form_new
-        post :preview
+        post :preview, :save_template3
       end
       member do
         get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change

@@ -35,12 +35,13 @@
     </div>
 
     <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
+      <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
       <div class="homeAd">
         <div class="ad_box">
-          <ul class="homeMenu tmp_280-196">
-            <li><a class="scd_btn">1</a><span class="close"></span></li>
-            <li><a class="scd_btn">2</a><span class="close"></span></li>
-            <li><a class="scd_btn">3</a><span class="close"></span></li>
+          <ul class="homeMenutmp3 tmp_280-196">
+            <li><a class="scd_btn">1</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+            <li><a class="scd_btn">2</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+            <li><a class="scd_btn">3</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
           </ul>
         </div>
         <div class="ad_num">
@@ -53,20 +54,23 @@
         <button class="addAdPic blue_btn">添加图片</button>
       </div>
       <div class="category">
-        <ul class="temp75-70">
-          <li><a class="scd_btn" name="addLink">1</a></li>
-          <li><a class="scd_btn" name="addLink">2</a></li>
-          <li><a class="scd_btn" name="addLink">3</a></li>
-          <li><a class="scd_btn" name="addLink">4</a></li>
+        <ul class="temp75-70 temp3Block">
+          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
         </ul>
       </div>
       <div class="nav_d">
-        <ul class="temp106-80">
-          <li><a class="scd_btn" name="addLink">1</a></li>
-          <li><a class="scd_btn" name="addLink">2</a></li>
-          <li><a class="scd_btn" name="addLink">3</a></li>
+        <ul class="temp106-80 temp3Block">
+          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
         </ul>
       </div>
+      <div style="clear:both"></div>
+        <div class="pageAct"><button class="blue_btn" type="submit">保存</button></div>
+      <% end %>
     </div>
 
     <%= render 'shared/form_images',:objects => @imgs %>
@@ -83,7 +87,7 @@
         </div>
       <% end %>
     </div>
-    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page()">保存</button></div>
+    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page('<%= @site_id %>')">保存</button></div>
   </div>
 </div>
 
@@ -91,23 +95,26 @@
   <div class="second_content">
     <span class="close" >关闭</span>
     <h1>菜单一链接</h1>
+    <div id="linkPage">
     <div class="tabs">
       <span class="tab curr">站内链接</span>
       <span class="tab">站外链接</span>
       <div class="tabsLine"></div>
     </div>
-
+    <input type="hidden" class="hiddenIndex" />
+    <input type="hidden" class="hiddenBlock" />
     <div class="tabDiv curr">
-      <input type="radio" name="" /><span class="radioVal">站内链接1</span>
-      <input type="radio" name="" /><span class="radioVal">站内链接2</span>
-      <input type="radio" name="" /><span class="radioVal">站内链接3</span>
+      <% @sub_pages.each do |page| %>
+        <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
+      <% end %>
     </div>
     <div class="tabDiv">
-      <label>站外链接输入：</label><input type="text" />
+      <label>站外链接输入：</label><input type="text" name="outside_link" />
     </div>
     <div class="scdBox_act">
-      <button class="blue_btn">确认</button>
-      <button class="blue_btn">取消</button>
+      <button class="blue_btn" onclick="setLink()">确认</button>
+      <button class="blue_btn cancel">取消</button>
+    </div>
     </div>
   </div>
 </div>
@@ -134,17 +141,4 @@
   it_drop_106($input_106);
   it_drop_280($input_280);
 
-  $(".tmp_list li").click(function(){
-    var className = $(this).attr("class").split(/\s/)[0];
-    $(".tmp_list li").removeClass("hover");
-    $(".main_cont .main_tab").hide();
-    $(".main_cont .iv_" + className).show();
-    if(className == "temp4"){
-      $(".main_cont .picChoice").hide();
-    }else{
-      $(".main_cont .picChoice").show();
-    }
-
-    $(this).addClass("hover");
-  })
 </script>
