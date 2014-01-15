@@ -82,4 +82,10 @@ module PagesHelper
   def get_m1_img filename
     filename.split(".")[0...-1].join(".")+"_m1."+filename.split(".")[-1]
   end
+
+  def page_html_deal page_html
+    page_html =page_html.gsub(/\|\|/,";");
+    raw page_html
+  end
+  
 end

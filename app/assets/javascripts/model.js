@@ -39,6 +39,7 @@ function submit_template1_2(models,template){
         alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
     }
     var html_content = $(models).html();
+    html_content = html_content.replace(/;/g, "||");
     $.ajax({
         async:true,
         type : 'post',

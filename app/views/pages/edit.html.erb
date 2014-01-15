@@ -6,76 +6,84 @@
   <div class="main_cont">
     <%= render '/shared/page_title' %>
     <div class="iphoneVirtual iv_temp1 main_tab" style="display: <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "block" : "none" %>">
-      <div class="homeBg">
-        <span  name="div"  style=" position: absolute;left:0px;width:320px; height:400px;">+</span>
-        <div></div>
-      </div>
-      <ul class="homeMenu1 homeMenu">
-        <a class="model1"  ><li class ="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model1"  ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
-        <a class="model1"  ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
-      </ul>
+      <%if (@site.template).to_i!=Constant::Template[:temp1] || @page.page_html.nil? %>
+        <div class="homeBg">
+          <span  name="div"  style=" position: absolute;left:0px;width:320px; height:400px;">+</span>
+          <div></div>
+        </div>
+        <ul class="homeMenu1 homeMenu">
+          <a class="model1"  ><li class ="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model1"  ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
+          <a class="model1"  ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
+        </ul>
+      <%else%>
+        <%=page_html_deal @page.page_html%>
+      <%end%>
     </div>
 
-    <div class="iphoneVirtual iv_temp2 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>">
-      <div class="homeBg">
-        <span  name="div"  style=" position: absolute;left:0px;width:120px;height:400px; ">+</span>
-        <div></div>
-      </div>
-      <ul class="homeMenu2 homeMenu ">
-        <a class="model2" ><li class="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn4">4</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn5">5</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn6">6</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn7">7</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        <a class="model2" ><li class="homeNav hn8">8</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-      </ul>
+    <div class="iphoneVirtual iv_temp2 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>" >
+      <%if @page.page_html.nil? || (@site.template).to_i!=Constant::Template[:temp2] %>
+        <div class="homeBg">
+          <span  name="div"  style=" position: absolute;left:0px;width:120px;height:400px; ">+</span>
+          <div></div>
+        </div>
+        <ul class="homeMenu2 homeMenu ">
+          <a class="model2" ><li class="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn4">4</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn5">5</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn6">6</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn7">7</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+          <a class="model2" ><li class="homeNav hn8">8</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
+        </ul>
+      <%else%>
+        <%=page_html_deal @page.page_html%>
+      <%end%>
     </div>
 
     <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
       <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
-      <div class="homeAd">
-        <div class="ad_box">
-          <ul class="homeMenutmp3 tmp_280-196">
-            <li><a class="scd_btn">1</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
-            <li><a class="scd_btn">2</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
-            <li><a class="scd_btn">3</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+        <div class="homeAd">
+          <div class="ad_box">
+            <ul class="homeMenutmp3 tmp_280-196">
+              <li><a class="scd_btn">1</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+              <li><a class="scd_btn">2</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+              <li><a class="scd_btn">3</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+            </ul>
+          </div>
+          <div class="ad_num">
+            <ul>
+              <li class="curr">1</li>
+              <li>2</li>
+              <li>3</li>
+            </ul>
+          </div>
+          <button class="addAdPic blue_btn">添加图片</button>
+        </div>
+        <div class="category">
+          <ul class="temp75-70 temp3Block">
+            <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
           </ul>
         </div>
-        <div class="ad_num">
-          <ul>
-            <li class="curr">1</li>
-            <li>2</li>
-            <li>3</li>
+        <div class="nav_d">
+          <ul class="temp106-80 temp3Block">
+            <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
           </ul>
         </div>
-        <button class="addAdPic blue_btn">添加图片</button>
-      </div>
-      <div class="category">
-        <ul class="temp75-70 temp3Block">
-          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-        </ul>
-      </div>
-      <div class="nav_d">
-        <ul class="temp106-80 temp3Block">
-          <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-        </ul>
-      </div>
-      <div style="clear:both"></div>
+        <div style="clear:both"></div>
         <div class="pageAct"><button class="blue_btn" type="submit">保存</button></div>
       <% end %>
     </div>
     <div id="tupian">
       <%= render 'shared/form_images',:objects => @imgs %>
     </div>
-    
+
 
     <div class="iv_temp4 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "block" : "none" %>">
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
@@ -98,25 +106,25 @@
     <span class="close" >关闭</span>
     <h1>菜单一链接</h1>
     <div id="linkPage">
-    <div class="tabs">
-      <span class="tab curr">站内链接</span>
-      <span class="tab">站外链接</span>
-      <div class="tabsLine"></div>
-    </div>
-    <input type="hidden" class="hiddenIndex" />
-    <input type="hidden" class="hiddenBlock" />
-    <div class="tabDiv curr">
-      <% @sub_pages.each do |page| %>
-        <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
-      <% end %>
-    </div>
-    <div class="tabDiv">
-      <label>站外链接输入：</label><input type="text" name="outside_link" />
-    </div>
-    <div class="scdBox_act">
-      <button class="blue_btn" onclick="setLink()">确认</button>
-      <button class="blue_btn cancel">取消</button>
-    </div>
+      <div class="tabs">
+        <span class="tab curr">站内链接</span>
+        <span class="tab">站外链接</span>
+        <div class="tabsLine"></div>
+      </div>
+      <input type="hidden" class="hiddenIndex" />
+      <input type="hidden" class="hiddenBlock" />
+      <div class="tabDiv curr">
+        <% @sub_pages.each do |page| %>
+          <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
+        <% end %>
+      </div>
+      <div class="tabDiv">
+        <label>站外链接输入：</label><input type="text" name="outside_link" />
+      </div>
+      <div class="scdBox_act">
+        <button class="blue_btn" onclick="setLink()">确认</button>
+        <button class="blue_btn cancel">取消</button>
+      </div>
     </div>
   </div>
 </div>
