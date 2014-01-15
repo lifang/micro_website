@@ -42,48 +42,50 @@
       <%end%>
     </div>
 
-    <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
-      <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
-        <div class="homeAd">
-          <div class="ad_box">
-            <ul class="homeMenutmp3 tmp_280-196">
-              <li><a class="scd_btn">1</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
-              <li><a class="scd_btn">2</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
-              <li><a class="scd_btn">3</a><input type="hidden" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/><span class="close"></span></li>
+    <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
+      <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
+        <% if @site.template == Constant::Template[:temp3] && @page.page_html.present?  %>
+          <%= @page.page_html.html_safe %>
+        <% else %>
+          <div class="homeAd">
+            <div class="ad_box">
+              <ul class="homeMenutmp3 tmp_280-196">
+                <li><a class="scd_btn">1</a><input type="hidden" class="img_src" name="ad_src[]"/><span class="close"></span></li>
+                <li><a class="scd_btn">2</a><input type="hidden" class="img_src" name="ad_src[]"/><span class="close"></span></li>
+                <li><a class="scd_btn">3</a><input type="hidden" class="img_src" name="ad_src[]"/><span class="close"></span></li>
+              </ul>
+            </div>
+            <div class="ad_num">
+              <ul>
+                <li class="curr">1</li>
+                <li>2</li>
+                <li>3</li>
+              </ul>
+            </div>
+            <button class="addAdPic blue_btn" type="button">添加图片</button>
+          </div>
+          <div class="category">
+            <ul class="temp75-70 temp3Block">
+              <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+              <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+              <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+              <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
             </ul>
           </div>
-          <div class="ad_num">
-            <ul>
-              <li class="curr">1</li>
-              <li>2</li>
-              <li>3</li>
-            </ul>
-          </div>
-          <button class="addAdPic blue_btn">添加图片</button>
-        </div>
-        <div class="category">
-          <ul class="temp75-70 temp3Block">
-            <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-            <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-            <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-            <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          </ul>
-        </div>
-        <div class="nav_d">
-          <ul class="temp106-80 temp3Block">
-            <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-            <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-            <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
-          </ul>
-        </div>
         <div style="clear:both"></div>
-        <div class="pageAct"><button class="blue_btn" type="submit">保存</button></div>
-      <% end %>
-    </div>
-    <div id="tupian">
+          <div class="nav_d">
+            <ul class="temp106-80 temp3Block">
+              <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+              <li><a class="scd_btn" name="addLink">2</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+              <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+   <div id="tupian">
       <%= render 'shared/form_images',:objects => @imgs %>
-    </div>
-
+   </div>
 
     <div class="iv_temp4 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "block" : "none" %>">
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
@@ -97,7 +99,10 @@
         </div>
       <% end %>
     </div>
-    <div class="pageAct"><button class="blue_btn" onclick="submit_model_page('<%= @site_id %>')">保存</button></div>
+    <div class="pageAct">
+      <button class="blue_btn" onclick="submit_model_page('<%= @site.id %>')">保存</button>
+      <%= link_to "预览" , "/sites/static" + "?path_name=" + @page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+    </div>
   </div>
 </div>
 
@@ -147,8 +152,8 @@
   $input_280 = $( ".tmp_280-196 a" );
 
   // drop 元素
-  it_drop_75($input_75);
-  it_drop_106($input_106);
-  it_drop_280($input_280);
+  temp_it_drop($input_75, 75, 70);
+  temp_it_drop($input_106, 106, 80);
+  temp_it_drop($input_280, 280, 196);
 
 </script>

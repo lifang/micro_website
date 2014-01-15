@@ -41,13 +41,17 @@ $(function(){
         }
     });
 
+//初始化滑动块宽度
+var i = $(".ad_box li").length;
+$(".ad_box ul").css("width",Number(i+1)*280+"px");
+
     $(".homeAd .addAdPic").on("click",function(){
         var i = $(".ad_box li").length;
-        $(".ad_box ul").append("<li><a class='scd_btn'>"+ Number(i+1)+"</a><span class='close'></span></li>");
+        $(".ad_box ul").append("<li><a class='scd_btn'>"+ Number(i+1)+"</a><input type='hidden' class='img_src' name='ad_src[]'/><span class='close'></span></li>");
         $(".ad_box ul").css("width",Number(i+1)*280+"px");
         $(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
         $input_280 = $( ".tmp_280-196 a" );
-        it_drop_280($input_280);
+        temp_it_drop($input_280, 280, 196);
         $(".homeAd li span.close").on("click",function(){
             li = $(this).parent("li");
             var index = $(".ad_box li").index(li);
@@ -138,14 +142,12 @@ function setLink(){
         var spec_className = $("#linkPage").find(".hiddenBlock").val();
         var index = $("#linkPage").find(".hiddenIndex").val();
         if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
-            alert(spec_className);
             $($("." + spec_className + " input")[index]).attr("data-href", link);
-            hide_tab($("#linkPage"));
         }else{
-            $($("." + spec_className + " li")[index]).attr("data-href", link);
-            hide_tab($("#linkPage"));
+            $($("." + spec_className + " li")[index]).find("input.img_link").val(link);
         }
-      
+        hide_tab($("#linkPage"));
+
     }else{
         tishi_alert("未选择链接！")
     }

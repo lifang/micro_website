@@ -237,12 +237,14 @@ class PagesController < ApplicationController
     p 1111111111111111111111111111111111111111111111111111111,html_content
     @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
     if template.to_i == Constant::Template[:temp1]
+
       if @site.update_attribute(:template,template ) && @page.update_attribute( :page_html,html_content)
         #截背景图片
         #bigimg_min_image bigimg,get_filename(bigimg),@tmp_dir
         #截小图
-        
+    
         imgarr_each_img imgarr,"186x186","_m1."
+
         html_content = model1_html @site,bigimg,imgarr,alinkarr
         #保存成为index
         save_as_index @site,html_content
@@ -298,9 +300,23 @@ class PagesController < ApplicationController
     render :text => form_authenticity_token
   end
 
+  #保存模板3
   def save_template3
-    p 111111111111111
-    p params
+    img_links = params[:img_link]
+    img_src = params[:img_src]
+    ad_srcs = params[:ad_src]
+    page = @site.pages.main[0]
+    begin
+      Page.transaction do
+        content = initial_template3(img_links, img_src, ad_srcs)
+        save_into_file(content, page, page.file_name) if content
+        page.update_attribute(:page_html, params[:page][:content].strip)
+        @site.update_attribute(:template, Constant::Template[:temp3])
+      end
+      render :text => "success"
+    rescue
+      render :text => "error"
+    end
   end
 
 end

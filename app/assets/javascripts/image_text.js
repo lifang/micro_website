@@ -68,49 +68,27 @@ function it_drop(obj){
             
             //$(this).attr("src", ui.draggable.find("img").attr("src"));
             $(this).next().val(ui.draggable.find("img").attr("src"));
-        },
-        activate: function( event, ui ) {
-            var img = ui.draggable.find("img");
-           
         }
     });
 }
 
-function it_drop_75(obj){
+function temp_it_drop(obj, width, height){
     obj.droppable({
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             var img_src = ui.draggable.find("img").attr("src");
             $(this).text(" ");
-            $(this).parent("li").attr("data-src", img_src)
-            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "75px 70px"})
-        }
-    });
-}
-
-function it_drop_106(obj){
-        obj.droppable({
-        accept: ".picRes > .picBox",
-        activeClass: "ui-state-highlight",
-        drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
-            $(this).text(" ");
-            $(this).parent("li").attr("data-src", img_src)
-            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "106px 80px"})
-        }
-    });
-}
-
-function it_drop_280(obj){
-        obj.droppable({
-        accept: ".picRes > .picBox",
-        activeClass: "ui-state-highlight",
-        drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
-            $(this).text(" ");
-            $(this).parent("li").attr("data-src", img_src)
-            $(this).css({"background" : "url(" + img_src + ") no-repeat", "background-size" : "275px 196px"})
+            $(this).parent("li").find("input.img_src").val(img_src);
+            $(this).html("<img src="+img_src+" />");
+            var img = $(this).find("img");
+            var imgWidth = $(img).width();
+            var imgHeight = $(img).height();
+            if(imgWidth > imgHeight){
+                $(img).css({ "width": width + "px" });
+            }else{
+                $(img).css({ "height": height + "px" });
+            }
         }
     });
 }

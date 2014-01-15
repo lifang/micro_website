@@ -47,6 +47,8 @@ class ApplicationController < ActionController::Base
     if old_file_name.present? && old_file_name != page.file_name
       File.delete site_path + old_file_name if File.exists?(site_path + old_file_name)
     end
+    p "============================"
+    p content
     File.open(site_path + page.file_name, "wb") do |f|
       f.write(content.html_safe)
     end
