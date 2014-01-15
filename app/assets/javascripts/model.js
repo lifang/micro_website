@@ -3,34 +3,9 @@ function submit_model_page(site_id){
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
             if(i==0){
-                var bigimg =$(models[i]).children(".homeBg").find("div").find("img");
-                bigimg = $(bigimg).attr("src");
-                var imgarr = $(models[i]).children(".homeMenu").find("li").find("img");
-                var alinkarr = $(models[i]).children(".homeMenu").find("input");
-                var imgstr ="",alinkstr ="";
-                for(var i=0;i<imgarr.length;i++){
-                    imgstr+=$(imgarr[i]).attr("src")+"|||";
-                    alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
-                }
-                var html_content = $(models[i]).html();
-                alert(alinkstr+"--"+imgstr);
-                
-                $.ajax({
-                    async:true,
-                    type : 'post',
-                    url:'/model_page',
-                    dataType:"json",
-                    data  :"site_id="+$("#site_id").val()+"&template=1&bigimg="+bigimg+"&imgstr="+imgstr
-                       +"&alinkstr="+alinkstr +"&html_content="+html_content,
-                    success:function(data){
-                        if(data==1){
-                            tishi_alert("success!");
-                        }
-                    }
-                });
-
+                submit_template1_2(models[i],1);
             }else if(i==1){
-
+                submit_template1_2(models[i],2);
             }else if(i==2){ //模板3
                 template3_Submit()
             }else if(i==3){
@@ -41,6 +16,44 @@ function submit_model_page(site_id){
         }
     }
 }
+function submit_template1_2(models,template){
+    var bigimg =$(models).children(".homeBg").find("div").find("img");
+    bigimg = $(bigimg).attr("src");
+    if(bigimg==null){
+        tishi_alert('请加入背景图片！');
+        return false;
+    }
+    var imgarr = $(models).children(".homeMenu").find("li").find("img");
+    if(template==1&&imgarr.length!=3){
+        tishi_alert('存在未填充区域！');
+        return false;
+    }
+    if(template==2&&imgarr.length!=8){
+        tishi_alert('存在未填充区域！');
+        return false;
+    }
+    var alinkarr = $(models).children(".homeMenu").find("input");
+    var imgstr ="",alinkstr ="";
+    for(var i=0;i<imgarr.length;i++){
+        imgstr+=$(imgarr[i]).attr("src")+"|||";
+        alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
+    }
+    var html_content = $(models).html();
+    $.ajax({
+        async:true,
+        type : 'post',
+        url:'/model_page',
+        dataType:"json",
+        data  :"site_id="+$("#site_id").val()+"&template="+template+"&bigimg="+bigimg+"&imgstr="+imgstr
+        +"&alinkstr="+alinkstr +"&html_content="+html_content,
+        success:function(data){
+            if(data==1){
+                tishi_alert("success!");
+            }
+        }
+    });
+}
+
 
 function submit_template(site_id, flag){
     if(flag == 3){
@@ -70,21 +83,25 @@ function template3_Submit(site_id){
         }
     });
 
-if(flag){
-    var src = slide_src
+    if(flag){
+        var src = slide_src
         var page_content = $(".iv_temp3").html()
         $.ajax({
-        url: "/sites/" + site_id + "/pages/save_template3",
-        type: "POST",
-        dataType: "text",
-        data: {slide_src : slide_src, middle_src:middle_src, bottom_src: bottom_src},
-        success:function(data){
-            alert(data)
-        },
-        error:function(data){
-            alert("error");
-        }
-    })
-}
+            url: "/sites/" + site_id + "/pages/save_template3",
+            type: "POST",
+            dataType: "text",
+            data: {
+                slide_src : slide_src,
+                middle_src:middle_src,
+                bottom_src: bottom_src
+            },
+            success:function(data){
+                alert(data)
+            },
+            error:function(data){
+                alert("error");
+            }
+        })
+    }
     
 }

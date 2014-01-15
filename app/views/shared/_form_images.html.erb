@@ -1,5 +1,5 @@
 <div class="picChoice picRes" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
-  <% objects.each do |img|%>
+  <% @imgs_path.each do |img|%>
     <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
     <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
     <% if image %>
@@ -11,8 +11,8 @@
     <% end %>
   <%end%>
   <div style="clear: both"></div>
-  <%if objects.present?%>
-    <%= will_paginate objects,:previous_label=>'上一页',:next_label=>'下一页'  %>
+  <%if @imgs_path.present?%>
+    <%= will_paginate @imgs_path,:previous_label=>'上一页',:next_label=>'下一页'  %>
   <%end%>
 </div>
 
@@ -24,10 +24,9 @@
     var url=href.split("page=");
     url=url[url.length-1];
     var extre="";
-<%if controller.controller_name=="image_texts"%>
-      extre ="image_texts/";
-<%end%>
-    
+
+    extre ="pages/";
+
     var href=extre+url+"/change";
      
     $(aarr[i]).attr("data-remote",true);

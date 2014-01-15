@@ -8,8 +8,11 @@ class PagesController < ApplicationController
   #主页 index
   def index
     @page = @site.pages.main.first
-    @imgs = return_site_images(@site)
-    @imgs = @imgs.paginate(:page => 1,:per_page => 12)
+    #@imgs = return_site_images(@site)
+    #@imgs = @imgs.paginate(:page => 1,:per_page => 12)
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+    
     @sub_pages = @site.pages.sub
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
@@ -232,49 +235,63 @@ class PagesController < ApplicationController
     alinkarr = alinkstr.split("|||")
     html_content = params[:html_content]
     @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
-    p 11111111111111111,template,Constant::Template[:temp1]
     if template.to_i == Constant::Template[:temp1]
-      p "this is template 1----->"
-       if @site.update_attribute(:template,template ) && @page.update_attribute( :page_html,html_content)
-          #截背景图片
-          #bigimg_min_image bigimg,get_filename(bigimg),@tmp_dir
-          #截小图
-          imgarr.each do |img|
-            model1_min_image(Rails.root.to_s + "/public#{img}",get_filename(img),@tmp_dir)
-          end
-          html_content = model1_html @site,bigimg,imgarr,alinkarr
-          #保存成为index
-          save_as_index @site,html_content
-          render text:1
-       else
-          render text:0
-       end
+      if @site.update_attribute(:template,template ) && @page.update_attribute( :page_html,html_content)
+        #截背景图片
+        #bigimg_min_image bigimg,get_filename(bigimg),@tmp_dir
+        #截小图
+        
+        imgarr_each_img imgarr,"186x186","_m1."
+        html_content = model1_html @site,bigimg,imgarr,alinkarr
+        #保存成为index
+        save_as_index @site,html_content
+        render text:1
+      else
+        render text:0
+      end
+    elsif template.to_i == Constant::Template[:temp2]
+      if @site.update_attribute(:template,template ) && @page.update_attribute( :page_html,html_content)
+        imgarr_each_img imgarr,"154x154","_m2."
+        html_content = model2_html @site,bigimg,imgarr,alinkarr
+        save_as_index @site,html_content
+        render text:1
+      else
+        render text:0
+      end
     else
       render text:0
     end
- 
   end
+  #截图处理图片数组的每张图片
+  def imgarr_each_img imgarr,size,end_name
+    imgarr.each do |img|
+      img_truepath =Rails.root.to_s + "/public#{img}"
+      model_min_image(img_truepath,get_filename(img),@tmp_dir,size,end_name) if File::exist?(img_truepath)
+    end
+  end
+  #得到文件名
   def get_filename(file_path)
     file_path.split("/")[-1]
   end
   #资源全路径,文件名 ,dir 背景解图
-#  def bigimg_min_image(ful_path,filename,ful_dir)
-#    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_bg."+filename.split(".")[-1]
-#    if !File.exist?(target_path)&&which_res(filename)=='img'
-#    image = MiniMagick::Image.open(ful_path)
-#    image.resize "640x1136"
-#    image.write  target_path
-#    end
-#  end
+  #  def bigimg_min_image(ful_path,filename,ful_dir)
+  #    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_bg."+filename.split(".")[-1]
+  #    if !File.exist?(target_path)&&which_res(filename)=='img'
+  #    image = MiniMagick::Image.open(ful_path)
+  #    image.resize "640x1136"
+  #    image.write  target_path
+  #    end
+  #  end
   #model1截图
-  def model1_min_image(ful_path,filename,ful_dir)
-    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_m1."+filename.split(".")[-1]
+  def model_min_image(ful_path,filename,ful_dir,size,end_name)
+    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+end_name+filename.split(".")[-1]
     if !File.exist?(target_path)
-    image = MiniMagick::Image.open(ful_path)
-    image.resize "186x186"
-    image.write  target_path
+      image = MiniMagick::Image.open(ful_path)
+      image.resize size
+      image.write  target_path
     end
   end
+ 
   #get form authenticity_token  hack of CSRF
   def get_token
     render :text => form_authenticity_token

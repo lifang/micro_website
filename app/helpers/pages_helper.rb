@@ -33,6 +33,43 @@ module PagesHelper
     "
     html
   end
+  def model2_html site,bigimg,imgarr,alinkarr
+    liarr =""
+    imgarr.each_with_index do |img,index|
+      liarr += " <li><a href='#{alinkarr[index]}' class='cover_bg' style='background-image:url(#{img});'></a></li>
+      "
+    end
+
+    html="
+      <!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+<title>#{site.name}首页 </title>
+<script type='text/javascript' src='/allsites/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/allsites/template_main.js'></script>
+
+<link href='/allsites/template_style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class='cover_bg' style='background-image: url(#{bigimg});'>
+	<article>
+         <section class='nav_8'>
+              <nav>
+                  <ul>
+                     #{liarr}
+                      
+                  </ul>
+              </nav>
+         </section>
+    </article>
+</body>
+</html>
+    "
+    html
+  end
+
   def save_as_index site,content
     site_path = Rails.root.to_s+SITE_PATH%site.root_path
     site_index =site_path + "index.html"
