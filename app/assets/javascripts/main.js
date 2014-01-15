@@ -86,7 +86,7 @@ $(function() {
         }
     });
     //显示创建站点
-    $(".scd_btn").click(function() {
+    /*$(".scd_btn").click(function() {
         $(".second_bg").show();
         $(".second_box." + $(this).attr("name")).show();
         $("#site_titile").html('创建站点（根目录创建后不可修改）');
@@ -94,7 +94,7 @@ $(function() {
         $('#site_root_path').removeAttr("readonly");
         $('#must_fix').show();
         text_value("", '', '');
-    })
+    })*/
 
    
 
@@ -127,7 +127,7 @@ $(function() {
     });
 
 })
-
+ //显示创建站点
 function create_site(template){
     $(".second_bg").show();
     $(".second_box.new_point"   ).show();

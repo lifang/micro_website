@@ -20,7 +20,7 @@ function it_drop(obj){
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            alert($(this).parent().attr("class"));
+           
             var parent =$(this).parent().attr("class")
             if(parent == 'homeBg'){
                 $(this).next().html("<img src="+ui.draggable.find("img").attr("src")+" />");

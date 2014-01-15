@@ -32,6 +32,7 @@ MicroWebsite::Application.routes.draw do
   match '/top' ,to: 'posts#top' ,via: 'get'
   match '/untop' ,to: 'posts#untop' ,via: 'get'
   match '/search_sites' ,to: 'sites#search',via: 'get'
+  match '/model_page' ,to: 'pages#model_page',via: 'post'
   # Sample resource route with options:
   resources :sites do
     member do

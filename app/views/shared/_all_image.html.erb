@@ -1,5 +1,4 @@
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
-  <%=@imgs_path.length%>
   <% @imgs_path.each do |img|%>
     <%if which_res(img.path_name)=='img'%>
       <%img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name)%>

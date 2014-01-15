@@ -2,7 +2,7 @@
 		<div class="main_cont1">
 			<% @sites.each do |s|%>
 			<div class="point_box">
-				<span class="close">关闭</span>
+				<span class="close" onclick="delete_site(<%=s.id%>)">关闭</span>
                                 <div class="point_temp<%=  (s.template.nil? ?  '1' :s.template ) %>"></div>
 				<div class="point_info">
 					<p>

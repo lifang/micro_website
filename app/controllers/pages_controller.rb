@@ -127,7 +127,7 @@ class PagesController < ApplicationController
   #表单 index
   def form
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
-   # @imgs_path=@site.resources
+    # @imgs_path=@site.resources
     @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
     @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
 
@@ -219,9 +219,29 @@ class PagesController < ApplicationController
     end
   end
   def model_page
+    template =params[:template]
+    bigimg =params[:bigimg]
+    imgstr = params[:imgstr]
+    imgarr = imgstr.split(",");
+    html_content = params[:html_content]
+    @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/template"
+    if template == Constant::Template[:temp1]
+      
+
+    end
+
+    render text:1
 
   end
-
+  #资源全路径,文件名 ,dir
+  def min_image(ful_path,filename,ful_dir)
+    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+"_bg."+filename.split(".")[-1]
+    if !File.exist?(target_path)&&which_res(filename)=='img'
+    image = MiniMagick::Image.open(ful_path)
+    image.resize "186x186"
+    image.write  target_path
+    end
+  end
   #get form authenticity_token  hack of CSRF
   def get_token
     render :text => form_authenticity_token
