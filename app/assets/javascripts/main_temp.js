@@ -85,8 +85,11 @@ $(".ad_box ul").css("width",Number(i+1)*280+"px");
         $(".main_cont .iv_" + className).show();
         if(className == "temp4"){
             $(".main_cont .picChoice").hide();
+            $(".main_cont .pageAct").hide();
+            $(".iv_temp4 .pageAct").show();
         }else{
             $(".main_cont .picChoice").show();
+            $(".main_cont .pageAct").show();
         }
 
         $(this).addClass("hover");

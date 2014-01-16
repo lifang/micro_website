@@ -8,9 +8,7 @@ class PagesController < ApplicationController
   #主页 index
   def index
     @page = @site.pages.main.first
-    #@imgs = return_site_images(@site)
-    #@imgs = @imgs.paginate(:page => 1,:per_page => 12)
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_pathes = return_site_images(@site)
     @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
     
     @sub_pages = @site.pages.sub

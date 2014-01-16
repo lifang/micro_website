@@ -43,7 +43,7 @@
     <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
       <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
         <% if @site.template == Constant::Template[:temp3] && @page.page_html.present?  %>
-          <%= @page.page_html.html_safe %>
+          <%= page_html_deal @page.page_html%>
         <% else %>
           <div class="homeAd">
             <div class="ad_box">
@@ -70,7 +70,7 @@
               <li><a class="scd_btn" name="addLink">4</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
             </ul>
           </div>
-        <div style="clear:both"></div>
+          <div style="clear:both"></div>
           <div class="nav_d">
             <ul class="temp106-80 temp3Block">
               <li><a class="scd_btn" name="addLink">1</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
@@ -81,23 +81,27 @@
         <% end %>
       </div>
     <% end %>
-   <div id="tupian">
+    <div id="tupian">
       <%= render 'shared/form_images',:objects => @imgs %>
-   </div>
+    </div>
 
     <div class="iv_temp4 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "block" : "none" %>">
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
         <%= f.hidden_field :title, :value => page_title(@page) %>
         <%= f.hidden_field :file_name, :value =>  page_file_name(@page) %>
-        <%= f.text_area :content,:value =>@index, :class => "page_txt" %>
+        <% if @site.template == Constant::Template[:temp4] && @page.page_html.present?  %>
+          <%= f.text_area :content,:value => (page_html_deal @index), :class => "page_txt" %>
+        <% else %>
+          <%= f.text_area :content,:value => "", :class => "page_txt" %>
+        <% end %>
         <input type="hidden" name="site[template]" value="<%= Constant::Template[:temp4] %>"/>
-        <div class="page_act">
+        <div class="pageAct" style="margin-top:25px">
           <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 2, '<%= @page.id %>')">保存</button>
           <button class="blue_btn" onclick="return changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
         </div>
       <% end %>
     </div>
-    <div class="pageAct">
+    <div class="pageAct" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
       <button class="blue_btn" onclick="submit_model_page('<%= @site.id %>')">保存</button>
       <%= link_to "预览" , "/sites/static" + "?path_name=" + @page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
     </div>
