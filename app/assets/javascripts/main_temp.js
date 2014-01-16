@@ -122,6 +122,21 @@ $(".ad_box ul").css("width",Number(i+1)*280+"px");
         $("#linkPage").find(".hiddenIndex").val(index);
         $("#linkPage").find(".hiddenBlock").val(spec_className);
     });
+    $(".smlPic a").on("click",function(){
+        
+        var spec_className = $(this).parent("div").parent("div").attr("class").split(/\s/)[0];
+
+        var index = $("." + spec_className + " div a").index($(this));
+        alert(spec_className);
+        show_tag($("#linkPage"));
+
+        $("#linkPage .cancel").click(function(){
+            hide_tab($("#linkPage"));
+        });
+
+        $("#linkPage").find(".hiddenIndex").val(index);
+        $("#linkPage").find(".hiddenBlock").val(spec_className);
+    });
 
 
 
@@ -146,6 +161,8 @@ function setLink(){
         var index = $("#linkPage").find(".hiddenIndex").val();
         if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
             $($("." + spec_className + " input")[index]).attr("data-href", link);
+        }else if(spec_className=="smlPicList"){
+            $($("." + spec_className + " div input")[index]).attr("data-href", link);
         }else{
             $($("." + spec_className + " li")[index]).find("input.img_link").val(link);
         }

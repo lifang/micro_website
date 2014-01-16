@@ -68,7 +68,7 @@ MicroWebsite::Application.routes.draw do
     resources :pages do
       resources :form_datas
       collection do
-        get :sub, :form, :style, :sub_new,  :form_new
+        get :sub, :form, :style, :sub_new,  :form_new ,:tmlt_sub_new,:tmlt_sub_create
         post :preview, :save_template3
       end
       member do

@@ -64,6 +64,22 @@ function it_drop(obj){
                         "width" : "auto"
                     });
                 }
+            }else if(parent == 'smlPic'){
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
+                var img1=$(this).find("img");
+                var imgWidth1 = $(img1).width();
+                var imgHeight1 = $(img1).height();
+                if(imgWidth1 > imgHeight1){
+                    $(img1).css({
+                        "width": "145px",
+                        "height": "auto"
+                    });
+                }else{
+                    $(img1).css({
+                        "height": "145px",
+                        "width" : "auto"
+                    });
+                }
             }
             
             //$(this).attr("src", ui.draggable.find("img").attr("src"));
@@ -85,9 +101,13 @@ function temp_it_drop(obj, width, height){
             var imgWidth = $(img).width();
             var imgHeight = $(img).height();
             if(imgWidth > imgHeight){
-                $(img).css({ "width": width + "px" });
+                $(img).css({
+                    "width": width + "px"
+                });
             }else{
-                $(img).css({ "height": height + "px" });
+                $(img).css({
+                    "height": height + "px"
+                });
             }
         }
     });

@@ -98,9 +98,13 @@ $(function() {
     });
     
     $('#create_sub').click(function() {
-        var name = $('#site_name').val();
-        var root = $('#site_root_path').val();
-        var cweb = $('#site_cweb').val();
+        var name =$.trim( $('#site_name').val());
+        var root = $.trim( $('#site_root_path').val() );
+        var cweb = $.trim($('#site_cweb').val());
+        if(root=='js'||root=='style'){
+            tishi_alert('站点名不能js或者style');
+            return false;
+        }
         if (name.length == 0) {
             tishi_alert('站点名不能为空');
             return false;

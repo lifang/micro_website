@@ -169,8 +169,15 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .setBtn { position: absolute; top: 20px; right: 45px;}
 
 /* iphone虚拟 */
-.iphoneVirtual { width: 320px; height: 568px; margin-top: 20px; position: relative; border: 1px solid #bcbcbc; border-radius: 5px 5px 0 0; background-color: #f7f7f7; box-shadow: 0 0 3px rgba(0,0,0,0.3);}
-
+.iphoneVirtual { width: 320px;
+min-height: 568px;
+overflow: hidden;
+margin-top: 20px;
+position: relative;
+border: 1px solid #bcbcbc;
+background-color: #f7f7f7;
+box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
 .iphoneVirtual .homeBg {
     color: #EBEBEB;
     line-height: 400px;
@@ -355,6 +362,39 @@ fieldset { padding: 3px;}
 
 
 
+/* 其他页 */
+.topPic { height: 150px; width: 320px; background: #ccc;}
+.smlPicList { padding: 5px;}
+.smlPic { width: 145px; height: 145px; margin: 5px; background: #ccc; float: left; position: relative;}
+.smlPic a { color: #EBEBEB; display: block; text-align: center;}
+.smlPic a span {font-size: 80px; line-height: 145px; display: block;}
+.smlPic .close { position: absolute; right: 5px; top: 5px; display: none;}
+.smlPic:hover { box-shadow: 0 0 3px rgba(0,0,0,0.7);}
+.smlPic:hover .close { display: block;}
+.iphvAct { padding: 5px; text-align: center;}
+
+.otherPage { padding: 10px 0;}
+.otherPageAct { margin-right: 10px; text-align: right;}
+.otherPageList { height: 400px; margin: 10px 0;}
+
+.table1 {
+    width: 100%;
+	background:#FFFFFF;
+	border: 5px solid #FFFFFF;
+	table-layout: auto;
+}
+.table1 th,.table1 td {
+	padding: 7px 20px;
+	word-wrap:break-word;
+	line-height: 24px;
+	text-align: center;
+}
+.table1 th{ background:#d8dde0;}
+
+.main_cont .tit { height: 45px; font-size: 20px;}
+.main_cont .tit span { margin-left: 20px; line-height: 40px;}
+.main_cont .tit span:first-child { margin: 0;}
+.main_cont .tit input[type="text"] { padding: 5px; }
 
 
 

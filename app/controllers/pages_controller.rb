@@ -316,4 +316,13 @@ class PagesController < ApplicationController
     end
   end
 
+  def tmlt_sub_new
+    @imgs_pathes = return_site_images(@site)
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+    @sub_pages = @site.pages.sub
+    render 'pages/sub/tmlt_sub_new'
+  end
+  def tmlt_sub_create
+    
+  end
 end

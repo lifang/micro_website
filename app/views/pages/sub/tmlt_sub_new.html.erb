@@ -1,0 +1,76 @@
+<div class="main_container">
+  <%=render 'shared/left_panel'%>
+  <div class="main_cont">
+    <div class="tit"><span>标题：</span><input type="text" /><span>文件名：</span><input type="text" /><span>.html</span></div>
+    <div class="tempChoice tempChoice2" style="width:130px;">
+      <span>自定义：</span>
+      <ul>
+        <a href=""><li class="temp4"> </li></a>
+      </ul>
+    </div>
+    <hr class="cf" color="#bcbcbc" />
+
+    <div class="iphoneVirtual">
+      <%form_for(:pages,url:tmlt_sub_create)%>
+      <div class="topPic"></div>
+      <div class="smlPicList cf ">
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>1</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>2</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>3</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>4</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>5</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+        <div class="smlPic"><a class="scd_btn" name="addLink"><span>6</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
+      </div>
+      <div class="iphvAct"><button class="blue_btn newSmlPic">增加小图</button></div>
+      <%end%>
+    </div>
+
+    <div id="tupian">
+      <%= render 'shared/form_images'%>
+    </div>
+  </div>
+</div>
+
+<div class="second_box addLink">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>菜单一链接</h1>
+    <div id="linkPage">
+      <div class="tabs">
+        <span class="tab curr">站内链接</span>
+        <span class="tab">站外链接</span>
+        <div class="tabsLine"></div>
+      </div>
+      <input type="hidden" class="hiddenIndex" />
+      <input type="hidden" class="hiddenBlock" />
+      <div class="tabDiv curr">
+        <% @sub_pages.each do |page| %>
+          <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
+        <% end %>
+      </div>
+      <div class="tabDiv">
+        <label>站外链接输入：</label><input type="text" name="outside_link" />
+      </div>
+      <div class="scdBox_act">
+        <button class="blue_btn" onclick="setLink()">确认</button>
+        <button class="blue_btn cancel">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 定义图片库, drop area
+  var $gallery = $( ".picRes" ),
+  $input = $( ".smlPic a" );
+
+  // 使图片库里面的元素可托拽
+  it_drag($( ".picBox", $gallery ));
+
+  // drop 元素
+  it_drop($input);
+  
+
+
+
+</script>
