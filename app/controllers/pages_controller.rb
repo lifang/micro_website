@@ -232,7 +232,6 @@ class PagesController < ApplicationController
     imgarr = imgstr.split("|||")
     alinkarr = alinkstr.split("|||")
     html_content = params[:html_content]
-    p 1111111111111111111111111111111111111111111111111111111,html_content
     @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
     if template.to_i == Constant::Template[:temp1]
 

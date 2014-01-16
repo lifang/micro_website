@@ -8,7 +8,8 @@ $(function() {
 
 
     $("#close_flash").click(function(){
-        $("#flash_field").hide()
+        $("#flash_field").hide();
+        $(".tab_alert").hide();
     });
     $("#flash_field").fadeOut(2000);
     $(".addElemt1").click(function() {
@@ -172,7 +173,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG','jpeg','JPEG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','3gp' ,'3GP','mp4','MP4','swf','SWF', 'gif','GIF','js','JS'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG','jpeg','JPEG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','3gp' ,'3GP','mp4','MP4','swf','SWF', 'gif','GIF','js','JS','css','CSS'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -199,7 +200,7 @@ function have_exist(id){
                 }
             });
         }else{
-            tishi_alert('不合法文件，只能是\n视频(mp4,swf,3gp)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
+            tishi_alert('不合法文件，只能是\n视频(mp4,swf,3gp)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包,js/css文件');
             return false;
         }
     } 

@@ -3,7 +3,8 @@
 		<div class="menu">
 			<ul>
 				<li class="item1"><a href="/sites" style="color:white;">站点首页</a></li>
-				<li class="item2">新建站点
+				<%if controller.controller_name=='sites'%>
+                                <li class="item2">新建站点
 					<ul class="tempBox">
                                           <div class="ul_cor_div"><span class="ul_cor"></span></div>
 						<li class="temp1" onclick="create_site(1)"></li>
@@ -12,14 +13,17 @@
 						<li class="temp4" onclick="create_site(4)" title="自定义"></li>
 					</ul>
 				</li>
+                                <%end%>
 			</ul>
 		</div>
 		<div class="userInfo">
 			<span><%=current_user.name%></span>|
 			<a href="/signout">退出</a>
 		</div>
+                <%if controller.controller_name=='sites'%>
 		<div class="searchBox">
 			<input type="text" id="site_key" name="key"/>
 			<button class="search_btn" onclick="search_site()">搜索</button>
 		</div>
+                <%end%>
 	</div>
