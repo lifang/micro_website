@@ -12,7 +12,9 @@
   <%end%>
   <div style="clear: both"></div>
   <%if @imgs_path.present?%>
+  <div class="digg_pagination" style="margin:0 auto;text-align: center;">
     <%= will_paginate @imgs_path,:previous_label=>'上一页',:next_label=>'下一页'  %>
+  </div>
   <%end%>
 </div>
 

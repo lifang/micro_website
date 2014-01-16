@@ -29,7 +29,7 @@ module TemplateHelper
     ad_content, ad_num = '', ''
     ad_srcs.each_with_index do |ad_src, index|
       ad_content = ad_content + '<li id="page-' + (index+1).to_s + '" data-role="page" class="demo-page">
-                    	<span class="cover_bg" style="background-image: url(' + ad_src + ')"><a href="#" rel="external"></a></span>
+                    	<span class="cover_bg" style="background-image: url( ' + '\'' + ad_src + '\'' + ')"><a href="#" rel="external"></a></span>
                     </li>'
       if index == 0
         ad_num = ad_num + '<li class="on">' + (index+1).to_s + '</li>'
@@ -67,19 +67,19 @@ module TemplateHelper
 
         <section class="category">
         	<ul>
-            	<li><a href="' + img_links[0] +'"rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[0] + '); "></a></li>
-                <li><a href="' + img_links[1] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[1] + '); "></a></li>
-                <li><a href="' + img_links[2] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[2] + '); "></a></li>
-                <li><a href="' + img_links[3] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[3] + '); "></a></li>
+            	<li><a href="' + img_links[0] +'"rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[0] + '\'' + '); "></a></li>
+                <li><a href="' + img_links[1] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[1] + '\'' + '); "></a></li>
+                <li><a href="' + img_links[2] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[2] + '\'' + '); "></a></li>
+                <li><a href="' + img_links[3] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[3] + '\'' + '); "></a></li>
             </ul>
         </section>
 
         <section class="nav_d">
         	<nav>
             	<ul>
-                	<li><a href="' + img_links[4] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[4] + '); "></a></li>
-                    <li><a href="' + img_links[5] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[5] + '); "></a></li>
-                    <li><a href="' + img_links[6] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[6] + '); "></a></li>
+                	<li><a href="' + img_links[4] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[4] + '\'' + '); "></a></li>
+                    <li><a href="' + img_links[5] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[5] + '\'' + '); "></a></li>
+                    <li><a href="' + img_links[6] +'" rel="external" class="cover_bg" style="background-image:url(' + '\'' + new_img_srcs[6] + '\'' + '); "></a></li>
                 </ul>
             </nav>
         </section>

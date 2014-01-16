@@ -266,7 +266,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 
 .picChoice { height: 568px; position: absolute; right: 40px; top: 92px; width: 620px;}
-.picBox { text-align: center; width: 140px; height: 140px; border-radius: 5px; background: #f7f7f7; box-shadow: 0 2px 0 rgba(0,0,0,0.3); position: relative; float: left; margin: 5px;}
+.picBox { line-height:140px; text-align: center; width: 140px; height: 140px; border-radius: 5px; background: #f7f7f7; box-shadow: 0 2px 0 rgba(0,0,0,0.3); position: relative; float: left; margin: 5px;}
 .picBox span { display: block; line-height: 22px; background: #eaeaea; color: #65696A; position: absolute; bottom: 0; width: 100%; text-indent: 10px;}
 
 
