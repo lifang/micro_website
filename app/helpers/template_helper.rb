@@ -67,19 +67,19 @@ module TemplateHelper
 
         <section class="category">
         	<ul>
-            	<li><a href="' + img_links[0] +'"rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[0] + '); background-size: 150px 300px;"></a></li>
-                <li><a href="' + img_links[1] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[1] + '); background-size: 150px 300px;"></a></li>
-                <li><a href="' + img_links[2] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[2] + '); background-size: 150px 300px;"></a></li>
-                <li><a href="' + img_links[3] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[3] + '); background-size: 150px 300px;"></a></li>
+            	<li><a href="' + img_links[0] +'"rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[0] + '); "></a></li>
+                <li><a href="' + img_links[1] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[1] + '); "></a></li>
+                <li><a href="' + img_links[2] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[2] + '); "></a></li>
+                <li><a href="' + img_links[3] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[3] + '); "></a></li>
             </ul>
         </section>
 
         <section class="nav_d">
         	<nav>
             	<ul>
-                	<li><a href="' + img_links[4] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[4] + '); background-size: 212px 160px;"></a></li>
-                    <li><a href="' + img_links[5] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[5] + '); background-size: 212px 160px;"></a></li>
-                    <li><a href="' + img_links[6] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[6] + '); background-size: 212px 160px;"></a></li>
+                	<li><a href="' + img_links[4] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[4] + '); "></a></li>
+                    <li><a href="' + img_links[5] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[5] + '); "></a></li>
+                    <li><a href="' + img_links[6] +'" rel="external" class="cover_bg" style="background-image:url(' + new_img_srcs[6] + '); "></a></li>
                 </ul>
             </nav>
         </section>
