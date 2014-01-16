@@ -1,0 +1,179 @@
+<div class="main_container ">
+  <%=render 'micro_messages/tabs'%>
+
+  <div class="tabDiv used">
+    <div class="page_content">
+      <div class="addrule"><button class="blue_btn" onclick="appendNewKeyword('<%= @site.id %>')">添加关键字回复</button></div>
+
+      <!-- 自动回复 -->
+      <ul>
+        <li class="auto_block">
+          <div class="autoReplyBox autoReplyBox1">
+            <div class="arItem cf">
+              <label>关注后回复</label>
+              <div><span>&nbsp;</span></div>
+            </div>
+            <div class="arItem cf">
+              <label>回复内容：</label>
+              <div><span><% if @auto_micro_message %>(一条<%= @auto_micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
+            </div>
+            <div class="toggleAct">
+              <% if @auto_reply %>
+                <%= link_to "清空", site_weixin_reply_path(@site, @auto_reply), :method => :delete, :confirm => "确定清空？", :class => "blue_btn"  %>
+              <% end %>
+              <button class="blue_btn" onclick="toggleDetail(this)">展开</button>
+            </div>
+          </div>
+          <div class="autoReplyBox autoReplyBox1" style="display:none">
+            <div class="arItem cf">
+              <label>关注后回复</label>
+              <div><span>&nbsp;</span></div>
+            </div>
+
+            <div class="arItem cf">
+              <label>回复内容：</label>
+              <div>
+                <div>
+                  <button class="blue_btn scd_btn" onclick="show_tag($('#micro_text'), 'auto_block', 'text');">添加文字</button>
+                  <button class="blue_btn scd_btn" onclick="show_tag($('#micro_image_text'), 'auto_block', 'imagetext');">添加图文</button>
+                </div>
+
+                <div class="auto_message">
+                  <% if @auto_micro_message && @auto_micro_imagetexts %>
+                    <%= render :partial => "/weixin_replies/micro_message", :locals => {:mi => @auto_micro_imagetexts, :mm => @auto_micro_message} %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="autoReplyBoxAct arItem">
+              <label>&nbsp;</label>
+              <button class="blue_btn" onclick="saveAutoReply(this, '<%= site_weixin_replies_path(@site) %>', 'auto', 'new')">保存</button>
+            </div>
+
+            <div class="toggleAct">
+              <% if @auto_reply %>
+                <%= link_to "清空", site_weixin_reply_path(@site, @auto_reply), :method => :delete, :confirm => "确定清空？", :class => "blue_btn"  %>
+              <% end %>
+              <button class="blue_btn" onclick="toggleDetail(this)">收起</button>
+            </div>
+
+
+          </div>
+        </li>
+      </ul>
+      <!-- 关键词回复 -->
+      <ul class="keyword_list">
+        <% if @key_replies %>
+          <%= render "keyword_list" %>
+        <% end %>
+      </ul>
+      <div class="clear"></div>
+      <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+        <%= will_paginate @key_replies ,:previous_label=>'上一页', :next_label=>'下一页' %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="second_box">
+  <div class="second_content second_content2">
+    <span class="close" >关闭</span>
+    <h1>添加图文消息</h1>
+    <div id="micro_image_text">
+      <% i = 0 %>
+      <div class="chooseArea">
+        <% @micro_imagetexts.each do |micor_message_id, micro_image_texts| %>
+          <% if i%2 == 0 %>
+            <div class="left_half">
+              <div class="boxContainer">
+                <%= render :partial => '/micro_imgtexts/for_select_imagetext', :locals => {:micro_image_texts => micro_image_texts, :micor_message_id => micor_message_id} %>
+              </div>
+            </div>
+          <% else %>
+            <div class="right_half">
+              <div class="boxContainer">
+                <%= render :partial => '/micro_imgtexts/for_select_imagetext', :locals => {:micro_image_texts => micro_image_texts, :micor_message_id => micor_message_id}%>
+              </div>
+            </div>
+          <% end %>
+          <% i += 1 %>
+        <% end %>
+      </div>
+    </div>
+    <div class="replyEditAction">
+      <button class="blue_btn confirm_btn">确定</button>
+      <button class="blue_btn cancel_btn" onclick="hide_tab($('#micro_image_text'))">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="second_box wzAdd">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>添加文字消息</h1>
+    <div id="micro_text">
+      <textarea  class="micro_text"></textarea>
+    </div>
+    <div class="second_box_act">
+      <button class="blue_btn confirm_btn">确定</button>
+      <button class="blue_btn cancel_btn" onclick="hide_tab($('#micro_text'))">取消</button>
+
+    </div>
+  </div>
+</div>
+<div class="second_box second_box2 wzAdd">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>添加文字消息</h1>
+    <textarea></textarea>
+    <div class="second_box_act">
+      <button class="blue_btn">确定</button>
+      <button class="blue_btn">取消</button>
+    </div>
+  </div>
+</div>
+<div class="second_box second_box2 wzxxEdit">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>修改文字消息</h1>
+    <textarea></textarea>
+    <div class="second_box_act">
+      <button class="blue_btn">确定</button>
+      <button class="blue_btn">取消</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

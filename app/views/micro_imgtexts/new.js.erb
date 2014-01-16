@@ -1,0 +1,5 @@
+$(".twEdit").html('<%= j (render 'micro_imgtexts/form') %>');
+$(".file_1").on("change",function() {
+        $(this).parents(".fileBox").find(".fileText_1").val($(this).val());
+});
+ 

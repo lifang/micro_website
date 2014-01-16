@@ -1,7 +1,4 @@
 MicroWebsite::Application.routes.draw do
-  
-
-  get "award/index"
 
   devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations",:sessions=>'sessions'} do
     get "change", :to => "devise/registrations#edit"
@@ -15,14 +12,17 @@ MicroWebsite::Application.routes.draw do
   post "user/disable/:uid", :to=>"users#disable"
   post "user/enable/:uid", :to=>"users#enable"
   get "user/delete/:uid", :to=>"users#delete"
-
+  match 'obtain_award', :to=>'awards#obtain_award' ,via: 'get'
   post "site/verify/:sid",:to=>"sites#verify"
   post "site/change_status/:sid/:status",:to=>"sites#change_status"
   match "/sites/static", :to => "pages#static"
   match '/destroy_site' ,:to=>'sites#destroy_site' ,via: 'get'
   match "/sites/:site_id/pages/preview", :to => "pages#preview", :as => "preview"
   match "/sites/:site_id/pages/form_preview", :to => "pages#form_preview", :as => "form_preview"
-  match "/get_token", :to => "pages#get_token", :as => "get_token"
+  match "/get_token", :to => "pages#get_token", :as => "get_token", via: 'get'
+  match "/get_award_url", :to => "awards#get_award_url", :as => "get_award_url", via: 'get'
+  match "/record_award", :to => "awards#record_award", :as => "record_award", via: 'post'
+  match "/check_if_watch", :to => "awards#check_if_watch", :as => "check_if_watch", via: 'get'
   match '/check_zip' ,to: 'resources#is_not_repeat' ,via: 'get'
   match '/change_status' ,to: 'sites#change_each_status' ,via: 'get'
   match '/allimg' ,to: 'resources#allimage' ,via: 'get'
@@ -35,6 +35,15 @@ MicroWebsite::Application.routes.draw do
   resources :sites do
     member do
       post :verify_site
+      
+    end
+    resources :micro_messages 
+    resources :micro_imgtexts
+    resources :weixin_replies
+
+
+    resources :awards do
+      get :win_award_info
     end
     resources :posts do
       collection do
@@ -62,7 +71,7 @@ MicroWebsite::Application.routes.draw do
         post :preview
       end
       member do
-        get :sub_edit,:form_edit, :if_authenticate, :sub_preview
+        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change
         post :submit_queries
       end
     end
@@ -74,7 +83,7 @@ MicroWebsite::Application.routes.draw do
       end
       #对单个进行操作
       member do
-        get :edit_itpage
+        get :edit_itpage,:change
       end
     end
     resources :image_texts do
@@ -83,6 +92,7 @@ MicroWebsite::Application.routes.draw do
       end
       member do
         put :it_preview
+        get :change
       end
     end
   end

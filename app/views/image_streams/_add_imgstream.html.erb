@@ -52,8 +52,9 @@
 		</div>
 	</div>
 	<input type="hidden" id='site_id' value="<%= @site.id%>" />
-	<div style="float:left;width:49%;height:450px;overflow: auto;">
+	<div id="imgstream_change_page" style="float:left;width:49%;height:450px;overflow: auto;">
 		<%= render 'shared/all_image',:objects=>@imgs_path%>
+          
 	</div>
 	<div style="width:1250px;height:10px;">
 		

@@ -108,7 +108,7 @@ $(function() {
     $('#create_sub').click(function() {
         var name = $('#site_name').val();
         var root = $('#site_root_path').val();
-        var notes = $('#site_notes').val();
+        var cweb = $('#site_cweb').val();
         if (name.length == 0) {
             tishi_alert('站点名不能为空');
             return false;
@@ -126,7 +126,7 @@ $(function() {
 
 })
 //显示编辑页面
-function show_edit_page(name, rootpath, notes) {
+function show_edit_page(name, rootpath, notes,cweb) {
     $(".second_bg").show();
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
@@ -134,18 +134,19 @@ function show_edit_page(name, rootpath, notes) {
     $('#site_root_path').attr("readonly","readonly");
     $('#site_root_path').css('background','#C7C7C7')
     $('#must_fix').hide();
-    text_value(name, rootpath, notes);
+    text_value(name, rootpath, notes,cweb);
 }
 
 
 
 
-function text_value(name, rootpath, notes) {
+function text_value(name, rootpath, notes,cweb) {
 
     $('#site_name').val(name);
     $('#origin_name').val(name);
     $('#site_root_path').val(rootpath);
     $('#site_notes').val(notes);
+    $('#site_cweb').val(cweb);
 }
 
 function doAjax(keyname, key, path) {
@@ -285,4 +286,16 @@ function tishi_alert(message){
 
 }
 
+$(".msgBoxEdit").on("click",function(){
+  $(this).parents(".tabDiv").removeClass("used");
+  $(".tabDiv:last").addClass("used");
+ });
 
+ $(".autoReplyBox").on("click",function(){
+  if($(this).hasClass("showAll")){
+   $(".autoReplyBox").removeClass("showAll");
+  }else{
+   $(".autoReplyBox").removeClass("showAll");
+   $(this).addClass("showAll");
+  }
+ });

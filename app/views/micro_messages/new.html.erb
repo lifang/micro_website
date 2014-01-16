@@ -1,0 +1,15 @@
+ <div class="main_container">
+   <%=render 'micro_messages/tabs'%>
+		<div class="tabDiv used">
+			<div class="page_content"  >
+				<div class="twList">
+					<div class="twBox newtw" title="点击新建图文消息">
+						<%=link_to '+' ,new_site_micro_imgtext_path(@site),remote:true%>
+					</div>
+				</div>
+				<div class="twEdit">
+					<%=render 'micro_imgtexts/form'%>
+				</div>
+			</div>
+		</div>
+	</div>

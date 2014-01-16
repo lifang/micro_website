@@ -1,0 +1,2 @@
+module MicroImgtextsHelper
+end
