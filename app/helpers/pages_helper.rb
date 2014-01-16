@@ -21,9 +21,9 @@ module PagesHelper
          <section class='nav_3'>
               <nav>
                   <ul>
-                     <li><a href='#{alinkarr[0]}' class='cover_bg' style='background-image:url(#{ get_m1_img imgarr[0]});'></a></li>
-                     <li><a href='#{alinkarr[1]}' class='cover_bg' style='background-image:url(#{ get_m1_img imgarr[1]});'></a></li>
-                     <li><a href='#{alinkarr[2]}' class='cover_bg' style='background-image:url(#{ get_m1_img imgarr[2]});'></a></li>
+                     <li><a href='#{alinkarr[0]}' class='cover_bg' style='background-image:url(\"#{ get_m1_img imgarr[0]}\");'></a></li>
+                     <li><a href='#{alinkarr[1]}' class='cover_bg' style='background-image:url(\"#{ get_m1_img imgarr[1]}\");'></a></li>
+                     <li><a href='#{alinkarr[2]}' class='cover_bg' style='background-image:url(\"#{ get_m1_img imgarr[2]}\");'></a></li>
                   </ul>
               </nav>
          </section>
@@ -36,7 +36,7 @@ module PagesHelper
   def model2_html site,bigimg,imgarr,alinkarr
     liarr =""
     imgarr.each_with_index do |img,index|
-      liarr += " <li><a href='#{alinkarr[index]}' class='cover_bg' style='background-image:url(#{img});'></a></li>
+      liarr += " <li><a href='#{alinkarr[index]}' class='cover_bg' style='background-image:url(\"#{img}\");'></a></li>
       "
     end
 

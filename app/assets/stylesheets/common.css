@@ -46,10 +46,10 @@
     font-weight: bold;
     background: #0683b1;
     color: white;
-    border: 1px solid #2e6ab1; }
+    border: 1px solid #0683b1; }
 .digg_pagination a {
     text-decoration: none;
-    color: #105cb6;
+    color: #0683b1;
     border: 1px solid #9aafe5; }
 .digg_pagination a:hover, .digg_pagination a:focus {
     color: #000033;
