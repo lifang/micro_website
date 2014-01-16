@@ -23,7 +23,7 @@ function it_drop(obj){
            
             var parent =$(this).parent().attr("class")
             if(parent == 'homeBg'){
-                $(this).next().html("<img src="+ui.draggable.find("img").attr("src")+" />");
+                $(this).next().html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 $(this).html("");
                 var img=$(this).next().find("img");
                 $(img).css({
@@ -32,7 +32,7 @@ function it_drop(obj){
                 });
             }else if(parent == 'model1'){
 
-                $(this).html("<img src="+ui.draggable.find("img").attr("src")+" />");
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 var img1=$(this).find("img");
                 var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
@@ -49,7 +49,7 @@ function it_drop(obj){
                 }
             }else if(parent == 'model2'){
 
-                $(this).html("<img src="+ui.draggable.find("img").attr("src")+" />");
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 var img1=$(this).find("img");
                 var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
@@ -80,7 +80,7 @@ function temp_it_drop(obj, width, height){
             var img_src = ui.draggable.find("img").attr("src");
             $(this).text(" ");
             $(this).parent("li").find("input.img_src").val(img_src);
-            $(this).html("<img src="+img_src+" />");
+            $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
             var img = $(this).find("img");
             var imgWidth = $(img).width();
             var imgHeight = $(img).height();
