@@ -229,7 +229,7 @@ function hideInput(obj, flag){
 function submitForm(obj, flag,id){
     var content = $.trim($(".insertDiv").html());
     var tf_flag = validatePageForm(content);
-    content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
+    content = content.replace(/;/g, "||"); //把分号替换掉，否则表单提交不完全，会被分号隔开
     var title = $.trim($("#page_title").val()); //拿到去空格的值
     var file_name = $.trim($("#page_file_name").val());
     var img=$("#page_img_path").val();

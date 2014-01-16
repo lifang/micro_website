@@ -70,7 +70,7 @@ function template3_Submit(site_id){
         var form = $(".iv_temp3").parent("form")
         var dataValue = form.serialize();
         var content = $(".iv_temp3").html();
-        content = content.replace(/;/g, "");  //把分号替换掉，否则表单提交不完全，会被分号隔开
+        content = content.replace(/;/g, "||");  //把分号替换掉，否则表单提交不完全，会被分号隔开
         dataValue = dataValue + "&page[content]=" + content;
 
         $.ajax({
@@ -79,10 +79,10 @@ function template3_Submit(site_id){
             dataType: "text",
             data: dataValue,
             success:function(data){
-                alert(data)
+                tishi_alert("保存成功")
             },
             error:function(data){
-                alert("error");
+               // alert("error");
             }
         })
     }
