@@ -7,7 +7,7 @@ a { text-decoration: none; cursor: pointer;}
 button { cursor: pointer;}
 input,button,select,textarea{ outline: none}
 table { border-collapse: collapse; table-layout: fixed;}
-th,td { border: 1px solid #202E3C; padding: 2px;}
+th,td {  padding: 2px;}
 h1 { line-height: 40px; margin-bottom: 10px;}
 
 .cf:after { clear: both; content:"."; display: block; height: 0; overflow: hidden; visibility:hidden;}
@@ -344,6 +344,22 @@ margin: 10px 0;
 .main_tab{ display: none; }
 .pageAct{ padding-top: 20px; text-align:center}
 
+ /* 资源 */
+.resPath { font-size: 16px; line-height: 36px;}
+fieldset { padding: 3px;}
+/*file*/
+.fileBox { position:relative; overflow:hidden; float:left; margin: 0 5px;}
+.fileBox .fileText_1 { border:1px solid #cdcdcd; width:200px; height: 23px; margin:0;}
+.fileBox .fileBtn_1 { margin:0;}
+.fileBox .file_1 { position:absolute; top:0; left:0; opacity: 0; filter: alpha(opacity=0); width:100%; margin:0;height: 30px;}
+
+
+
+
+
+
+
+
 
 
 
@@ -401,7 +417,7 @@ fieldset.page_tit {
     border: 1px solid #C2C2C2;
     height: 52px;
     margin: 10px 0;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 .page_tit label { font-size: 16px; line-height: 36px; padding-left: 22px;}
 .page_tit p { display: inline-block; width: 48%; font-size: 16px;}
@@ -479,8 +495,8 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 
 /*file*/
 .fileBox { position:relative; overflow:hidden; float:left;}
-.fileBox .fileText_1 { border:1px solid #cdcdcd; padding:3px; width:70%; margin:0;}
-.fileBox .fileBtn_1 { width:25%; margin:0;}
+.fileBox .fileText_1 { border:1px solid #cdcdcd; padding:3px; width:62%; margin:0;}
+.fileBox .fileBtn_1 { width:34%; margin:0;}
 .fileBox .file_1 { position:absolute; top:0; left:0; filter:alpha(opacity:0); opacity: 0; width:100%; height:32px; margin:0;}
 
 .page_tit button.up_btn { float: left; margin: 0 10px;}

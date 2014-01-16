@@ -10,10 +10,11 @@
         <label>资源目录路径：/allsites/<%=@site.root_path%>/resources</label>
       </div>
       <fieldset class="page_tit">
-        <%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
-          <legend>
+        <legend>
             在这你可以上传页面资源
           </legend>
+        <%= form_for( :resources, :html =>{:multipart => true, :id => "uploadForm"}) do |f|%>
+          
           <div class="fileBox" style="width:300px;">
             <input type="text" class="fileText_1" id="resource_c" />
             <button class="fileBtn_1 blue_btn"  >浏览...</button>
@@ -27,8 +28,41 @@
         <div class="page_act"></div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+  
   </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
     <div class="second_bg"></div>
 
 
