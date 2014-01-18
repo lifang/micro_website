@@ -21,7 +21,7 @@ function it_drop(obj){
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
            
-            var parent =$(this).parent().attr("class")
+            var parent =$(this).parent().attr("class");
             if(parent == 'homeBg'){
                 $(this).next().html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 $(this).html("");
@@ -65,7 +65,7 @@ function it_drop(obj){
                     });
                 }
             }else if(parent == 'smlPic'){
-                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
+                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/>');
                 var img1=$(this).find("img");
                 var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
@@ -80,6 +80,26 @@ function it_drop(obj){
                         "width" : "auto"
                     });
                 }
+            }else if($(this).attr("class") == 'topPic ui-droppable'){
+                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/> '+'<input type="hidden" name="top_img" value="'+ui.draggable.find("img").attr("src")+'">');
+                var img1=$(this).find("img");
+                var imgWidth1 = $(img1).width();
+                var imgHeight1 = $(img1).height();
+                $(img1).css({
+                        "width": "320px",
+                        "height": "150px"
+                    });
+//                if(imgWidth1 > imgHeight1){
+//                    $(img1).css({
+//                        "width": "320px",
+//                        "height": "auto"
+//                    });
+//                }else{
+//                    $(img1).css({
+//                        "height": "150px",
+//                        "width" : "auto"
+//                    });
+//                }
             }
             
             //$(this).attr("src", ui.draggable.find("img").attr("src"));

@@ -25,10 +25,10 @@
     var href =$(aarr[i]).attr("href");
     var url=href.split("page=");
     url=url[url.length-1];
-    var extre="";
-
-    extre ="pages/";
-
+    var extre="pages/";
+    <%  if controller.controller_name=="pages" %>
+      extre ='<%=site_pages_url(@site)%>'+"/";
+    <%end%>
     var href=extre+url+"/change";
      
     $(aarr[i]).attr("data-remote",true);

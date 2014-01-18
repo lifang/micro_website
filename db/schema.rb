@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114123330) do
+ActiveRecord::Schema.define(:version => 20140117074105) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -89,10 +89,11 @@ ActiveRecord::Schema.define(:version => 20140114123330) do
     t.string   "path_name"
     t.boolean  "authenticate"
     t.text     "element_relation"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.string   "img_path"
     t.text     "page_html"
+    t.integer  "template",                      :default => 0
   end
 
   add_index "pages", ["authenticate"], :name => "index_pages_on_authenticate"

@@ -1,3 +1,4 @@
+
 function submit_model_page(site_id){
     var models=$(".main_cont").find(".main_tab");
     for(var i=0;i<models.length;i++){
@@ -82,9 +83,59 @@ function template3_Submit(site_id){
                 tishi_alert("保存成功")
             },
             error:function(data){
-               // alert("error");
+            // alert("error");
             }
         })
     }
     
+}
+
+function add_sub_template(){
+    var l=$(".smlPicList.cf").find("div").length;
+    $(".smlPicList.cf").append(" <div class='smlPic'><a class='scd_btn' name='addLink'><span>"+(l+1)+"</span></a><input type='hidden' class='img_lin' name='img_src[]'  /><input type='hidden' class='img_link' name='img_link[]' value='#'/><span class='close' onclick='remove_template(this)'></span></div>");
+    $input = $( ".smlPic a" );
+    it_drop($input);
+}
+
+function remove_template(value){
+    $(value).parent().remove();
+}
+function submit_sub_page(){
+    var title =$.trim($("#title").val());
+    var name =$.trim($("#name").val());
+    var models=$(".main_cont").find(".m_tab");
+    if(title==""){
+        tishi_alert('请输入标题');
+        return false;
+    }
+    if(name ==""){
+        tishi_alert('请输入文件名');
+        return false;
+    }
+    for(var i=0;i<models.length;i++){
+        if($(models[i]).css("display")!="none"){
+            $("#sub_title1").val(title);
+            $("#sub_name1").val(name);
+            if(i==0){
+                if($(".smlPic").find("a").length!=$(".smlPic").find("img").length){
+                    tishi_alert('存在未填充区域！');
+                    return false;
+                }
+                $("#html_content").val($(".iphoneVirtual form").html());
+                $(".iphoneVirtual form").submit();
+            }else if(i==1){
+                if($.trim($("#zdy_sub_content").val())==""){
+                    tishi_alert('请输入内容！');
+                    return false;
+                }
+                $(".iv_temp4.main_tab.m_tab form").submit();
+            }
+        }
+    }
+     
+}
+function show_sub(){
+    $(".iphoneVirtual").hide();
+    $("#tupian").hide();
+    $(".iv_temp4").show();
 }

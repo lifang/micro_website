@@ -162,7 +162,7 @@ function setLink(){
         if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
             $($("." + spec_className + " input")[index]).attr("data-href", link);
         }else if(spec_className=="smlPicList"){
-            $($("." + spec_className + " div input")[index]).attr("data-href", link);
+            $($("." + spec_className + " div .img_link")[index]).attr("value", link);
         }else{
             $($("." + spec_className + " li")[index]).find("input.img_link").val(link);
         }

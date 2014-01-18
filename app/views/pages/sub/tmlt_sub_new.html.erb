@@ -1,33 +1,51 @@
 <div class="main_container">
   <%=render 'shared/left_panel'%>
   <div class="main_cont">
-    <div class="tit"><span>标题：</span><input type="text" /><span>文件名：</span><input type="text" /><span>.html</span></div>
+    <div class="tit"><span>标题：</span><input type="text" id="title"/><span>文件名：</span><input id="name" type="text" /><span>.html</span></div>
     <div class="tempChoice tempChoice2" style="width:130px;">
       <span>自定义：</span>
       <ul>
-        <a href=""><li class="temp4"> </li></a>
+        <li class="temp4" onclick="show_sub()"> </li>
       </ul>
     </div>
     <hr class="cf" color="#bcbcbc" />
 
-    <div class="iphoneVirtual">
-      <%form_for(:pages,url:tmlt_sub_create)%>
-      <div class="topPic"></div>
-      <div class="smlPicList cf ">
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>1</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>2</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>3</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>4</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>5</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-        <div class="smlPic"><a class="scd_btn" name="addLink"><span>6</span></a><input type="hidden" class="img_link" name="img_link[]" data-href="#"/><span class="close"></span></div>
-      </div>
-      <div class="iphvAct"><button class="blue_btn newSmlPic">增加小图</button></div>
+    <div class="iphoneVirtual m_tab">
+      <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site)) do |f|%>
+        <input type="hidden" value="<%=@site.id%>" name="site_id" />
+        <div class="topPic"></div>
+        <div class="smlPicList cf ">
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>1</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value ="#"/><span class="close" onclick="remove_template(this)"></span></div>
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>2</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>3</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>4</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>5</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
+          <div class="smlPic"><a class="scd_btn" name="addLink"><span>6</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
+        </div>
+        <input type="hidden" id="html_content" name="html_content" value="" />
+        <input type="hidden" id="sub_title" name="sub_title" value="" />
+        <input type="hidden" id="sub_name" name="sub_name" value="" />
+        <input type="hidden" name="template" value="1" />
+        <div class="iphvAct"><button type="button" class="blue_btn newSmlPic" onclick="add_sub_template()">增加小图</button></div>
+      <%end%>
+    </div>
+
+    <div class="iv_temp4 main_tab m_tab" style="display:none;padding: 30px;text-align: center;">
+      <%=form_for(:pages,url: zdy_sub_create_site_pages_path(@site)) do |f|%>
+        <input type="hidden" id="sub_title1" name="sub_title" value="" />
+        <input type="hidden" id="sub_name1" name="sub_name" value="" />
+        <textarea name="zdy_sub_content" style="width: 914px; height: 377px;"></textarea>
       <%end%>
     </div>
 
     <div id="tupian">
       <%= render 'shared/form_images'%>
     </div>
+
+    <div class="pageAct" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
+      <button class="blue_btn" onclick="submit_sub_page()">保存</button>
+    </div>
+
   </div>
 </div>
 
@@ -69,8 +87,6 @@
 
   // drop 元素
   it_drop($input);
-  
-
-
-
+  $input = $( ".topPic" );
+  it_drop($input);
 </script>

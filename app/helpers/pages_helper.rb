@@ -69,7 +69,55 @@ module PagesHelper
     "
     html
   end
+  def sub_page_html title,top_img,imgarr,alinkarr
+    li=""
+    imgarr.each_with_index do |img,index|
+      li+="<li><a href='#{alinkarr[index]}'><img src='#{get_sub_img imgarr[index]}'></a></li>
+      "
+    end
+    html="<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+<title>#{title}</title>
+<script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
+<script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
 
+<link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<article>
+         <section class='cover_bg title' style='background-image: url(#{top_img});'></section>
+         <section class='show_pic'>
+         	  <ul>
+                  #{li}
+            </ul>
+         </section>
+    </article>
+    <section class='footNav'>
+    	<ul>
+        	<li class='footNav_prev'><a href='#'>前进</a></li>
+            <li class='footNav_next'><a href='#'>后退</a></li>
+            <li class='footNav_refresh'><a href='#'>刷新</a></li>
+            <li class='footNav_home'><a href='#'>首页</a></li>
+        </ul>
+    </section>
+     <script type='text/javascript'>
+    	$(function(){
+			$('.show_pic ul li').wookmark({
+				container:$('.show_pic ul'),
+				offset:10,
+
+			});
+		})
+    </script>
+</body>
+</html>"
+    html
+  end
   def save_as_index site,content
     site_path = Rails.root.to_s+SITE_PATH%site.root_path
     site_index =site_path + "index.html"
@@ -79,8 +127,21 @@ module PagesHelper
       f.write(content.html_safe)
     end
   end
+
+  def save_as_sub_page site,path,content
+    site_path = Rails.root.to_s+SITE_PATH%site.root_path
+    FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+    FileUtils.rm path if File::exist?(path)
+    File.open(path, "wb") do |f|
+      f.write(content.html_safe)
+    end
+  end
+
   def get_m1_img filename
     filename.split(".")[0...-1].join(".")+"_m1."+filename.split(".")[-1]
+  end
+  def get_sub_img filename
+    filename.split(".")[0...-1].join(".")+"_sub."+filename.split(".")[-1]
   end
 
   def page_html_deal page_html

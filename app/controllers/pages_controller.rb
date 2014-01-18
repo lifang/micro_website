@@ -323,6 +323,68 @@ class PagesController < ApplicationController
     render 'pages/sub/tmlt_sub_new'
   end
   def tmlt_sub_create
-    
+    @sub_pages = @site.pages.sub
+    get_img
+    @page = @site.pages.build
+    top_img = params[:top_img]
+    imgarr = params[:img_src]
+    imgarr = imgarr.join('||').split('||')
+    link_arr = params[:img_link]
+    html_content = params[:html_content]
+    title =params[:sub_title]
+    name = params[:sub_name]+".html"
+    @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
+    @page.title= params[:template]
+    @page.title=title
+    @page.file_name=name
+    @page.types = 1
+    @page.path_name ="/#{@site.root_path}/#{name}"
+    path = Rails.root.to_s+"/public/allsites/"+@page.path_name
+    @page.page_html = html_content
+    if @page.save
+      imgarr_each_img imgarr,"290x290","_sub."
+      content = sub_page_html title,top_img,imgarr,link_arr
+      save_as_sub_page @site,path,content
+      flash[:success]='创建成功！'
+      redirect_to sub_site_pages_path(@site)
+    else
+      flash[:error]="创建失败"
+      redirect_to tmlt_sub_new_site_pages_path(@site)
+    end
   end
+  def tmlt_sub_edit
+    @page = Page.find_by_id(params[:id])
+    @sub_pages = @site.pages.sub
+    @imgs_pathes = return_site_images(@site)
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
+    render 'pages/sub/tmlt_sub_edit'
+  end
+  def zdy_sub_create
+    @sub_pages = @site.pages.sub
+    get_img
+    @page = @site.pages.build
+    title =params[:sub_title]
+    name = params[:sub_name]+".html"
+    @page.title=title
+    @page.file_name=name
+    @page.types = 1
+    @page.path_name ="/#{@site.root_path}/#{name}"
+    path = Rails.root.to_s+"/public/allsites/"+@page.path_name
+    zdy_sub_content = params[:zdy_sub_content]
+    if @page.save
+      save_as_sub_page @site,path,zdy_sub_content
+      flash[:success]='创建成功！'
+      redirect_to sub_site_pages_path(@site)
+    else
+      flash[:error]="创建失败"
+      render "pages/sub/tmlt_sub_new"
+     # redirect_to tmlt_sub_new_site_pages_path(@site)
+    end
+  end
+
+  def get_img
+    @imgs_pathes = return_site_images(@site)
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+  end
+
 end
