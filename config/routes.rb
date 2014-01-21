@@ -73,7 +73,7 @@ MicroWebsite::Application.routes.draw do
       end
       member do
         get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change,:tmlt_sub_edit
-        post :submit_queries
+        post :submit_queries,:tmlt_sub_update
       end
     end
 

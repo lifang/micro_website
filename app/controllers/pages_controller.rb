@@ -271,7 +271,8 @@ class PagesController < ApplicationController
   end
   #得到文件名
   def get_filename(file_path)
-    file_path.split("/")[-1]
+    f=file_path.split("/")[-1]
+    f
   end
   #资源全路径,文件名 ,dir 背景解图
   #  def bigimg_min_image(ful_path,filename,ful_dir)
@@ -334,10 +335,10 @@ class PagesController < ApplicationController
     title =params[:sub_title]
     name = params[:sub_name]+".html"
     @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
-    @page.title= params[:template]
     @page.title=title
     @page.file_name=name
     @page.types = 1
+    @page.template = params[:template]
     @page.path_name ="/#{@site.root_path}/#{name}"
     path = Rails.root.to_s+"/public/allsites/"+@page.path_name
     @page.page_html = html_content
@@ -348,7 +349,7 @@ class PagesController < ApplicationController
       flash[:success]='创建成功！'
       redirect_to sub_site_pages_path(@site)
     else
-      flash[:error]="创建失败"
+      flash[:error]="创建失败,文件名存在！"
       redirect_to tmlt_sub_new_site_pages_path(@site)
     end
   end
@@ -359,6 +360,33 @@ class PagesController < ApplicationController
     @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
     render 'pages/sub/tmlt_sub_edit'
   end
+
+  def tmlt_sub_update
+    get_img
+    @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
+    @page = Page.find_by_id(params[:id])
+    if @page
+      top_img = params[:top_img]
+      imgarr = params[:img_src]
+      imgarr = imgarr.join('||').split('||')
+      link_arr = params[:img_link]
+      html_content = params[:html_content]
+      title =params[:sub_title]
+      path = Rails.root.to_s+"/public/allsites/"+@page.path_name
+      #name = params[:sub_name]+".html"
+      #template = params[:template]
+      @page.update_attributes( title:title , page_html:html_content )
+      imgarr_each_img imgarr,"290x290","_sub."
+      content = sub_page_html title,top_img,imgarr,link_arr
+      save_as_sub_page @site,path,content
+      flash[:success]='更新成功！'
+      redirect_to sub_site_pages_path(@site)
+    else
+      flash[:error]="更新失败"
+      redirect_to tmlt_sub_edit_site_pages_path(@site)
+    end
+  end
+  
   def zdy_sub_create
     @sub_pages = @site.pages.sub
     get_img
@@ -378,7 +406,7 @@ class PagesController < ApplicationController
     else
       flash[:error]="创建失败"
       render "pages/sub/tmlt_sub_new"
-     # redirect_to tmlt_sub_new_site_pages_path(@site)
+      # redirect_to tmlt_sub_new_site_pages_path(@site)
     end
   end
 

@@ -75,6 +75,10 @@ module PagesHelper
       li+="<li><a href='#{alinkarr[index]}'><img src='#{get_sub_img imgarr[index]}'></a></li>
       "
     end
+    section=""
+    unless top_img.nil?
+      section="<section class='cover_bg title' style='background-image: url(#{ top_img });'></section>"
+    end
     html="<!doctype html>
 <html>
 <head>
@@ -90,7 +94,7 @@ module PagesHelper
 
 <body>
 	<article>
-         <section class='cover_bg title' style='background-image: url(#{top_img});'></section>
+         #{section}
          <section class='show_pic'>
          	  <ul>
                   #{li}

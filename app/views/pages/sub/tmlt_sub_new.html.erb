@@ -1,7 +1,7 @@
 <div class="main_container">
   <%=render 'shared/left_panel'%>
   <div class="main_cont">
-    <div class="tit"><span>标题：</span><input type="text" id="title"/><span>文件名：</span><input id="name" type="text" /><span>.html</span></div>
+    <div class="tit"><span>标题：</span><input type="text" id="title"  name="title"/><span>文件名：</span><input id="name" name="name" type="text" /><span>.html</span></div>
     <div class="tempChoice tempChoice2" style="width:130px;">
       <span>自定义：</span>
       <ul>
@@ -23,8 +23,8 @@
           <div class="smlPic"><a class="scd_btn" name="addLink"><span>6</span></a><input type="hidden" class="img_lin" name="img_src[]"  /><input type="hidden" class="img_link" name="img_link[]" value="#"/><span class="close" onclick="remove_template(this)"></span></div>
         </div>
         <input type="hidden" id="html_content" name="html_content" value="" />
-        <input type="hidden" id="sub_title" name="sub_title" value="" />
-        <input type="hidden" id="sub_name" name="sub_name" value="" />
+        <input type="hidden" id="sub_m_title" name="sub_title" value="" />
+        <input type="hidden" id="sub_m_name" name="sub_name" value="" />
         <input type="hidden" name="template" value="1" />
         <div class="iphvAct"><button type="button" class="blue_btn newSmlPic" onclick="add_sub_template()">增加小图</button></div>
       <%end%>

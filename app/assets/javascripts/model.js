@@ -112,13 +112,18 @@ function submit_sub_page(){
         tishi_alert('请输入文件名');
         return false;
     }
+
+    
+    
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
             $("#sub_title1").val(title);
             $("#sub_name1").val(name);
+            $("#sub_m_title").val(title);
+            $("#sub_m_name").val(name);
             if(i==0){
-                if($(".smlPic").find("a").length!=$(".smlPic").find("img").length){
-                    tishi_alert('存在未填充区域！');
+                if($(".smlPic").find("a").length!=$(".smlPic").find("img").length ||$(".smlPic").find("a").length==0 ){
+                    tishi_alert('存在未填充区域或者无图片区域！');
                     return false;
                 }
                 $("#html_content").val($(".iphoneVirtual form").html());

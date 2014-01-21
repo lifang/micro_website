@@ -45,7 +45,6 @@ class ImageStreamsController < ApplicationController
       page_image.img_path=imgarr
       page_image.content=textstr
       page_image.save
-      p '***************************************\n***********************************************',imgarr
       bag_img_magick imgarr
       content=get_content(imgarr,textstr)
       bigcontent=get_bigcontent(imgarr,textstr)
@@ -164,8 +163,9 @@ class ImageStreamsController < ApplicationController
     str=""
     (0..imgarr.length-1).each do |x|
       p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
-      image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
-      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' ></a>#{p1}</li>
+      #image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
+      #<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' ></a>#{p1}</li>
+      str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img  src='#{deal_img_to_min imgarr[x]}'></a>#{p1}</li>
       "
     end
 #html 内容
@@ -174,33 +174,39 @@ class ImageStreamsController < ApplicationController
 <html>
 <head>
 <meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/pubuliu.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
-<!--[if lt IE 9]>
-<script src='/allsites/js/html5.js'></script>
-<![endif]-->
-<link href='/allsites/style/pubuliu.css' rel='stylesheet' type='text/css'>
-<link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
+
+<link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-    <article>
-          <section class='show_pic'>
-              <ul>#{str}</ul>
-          </section>
+	<article>
+         <section class='show_pic'>
+         	  <ul>
+                 #{str}
+              </ul>
+         </section>
     </article>
-    <script type='text/javascript'>
-      $(function(){
-      $('.show_pic ul li').wookmark({ 
-        container:$('.show_pic ul'), 
-        offset:10, 
-        itemWidth:140 
-      });
-    })
+    <section class='footNav'>
+    	<ul>
+        	<li class='footNav_prev'><a href='#'>前进</a></li>
+            <li class='footNav_next'><a href='#'>后退</a></li>
+            <li class='footNav_refresh'><a href='#'>刷新</a></li>
+            <li class='footNav_home'><a href='#'>首页</a></li>
+        </ul>
+    </section>
+     <script type='text/javascript'>
+    	$(function(){
+			$('.show_pic ul li').wookmark({
+				container:$('.show_pic ul'),
+				offset:10,
 
+			});
+		})
     </script>
 </body>
 </html>
@@ -209,11 +215,12 @@ class ImageStreamsController < ApplicationController
   end
 
   def get_bigcontent(imgarr,textarr)
+    #<div class='text'>#{textarr[i-1]}</div>
     selection="";
     image=""
     (1..imgarr.length).each do|i|
-      selection+="<section id='page-#{i}' data-role='page' class='demo-page'><div class=\'show_img si_#{i}\'><div class='text'>#{textarr[i-1]}</div></div></section>"
-      image+=".si_#{i} { background: url('#{imgarr[i-1]}') no-repeat; background-size: 320px auto;}
+      selection+="<section id='page-#{i}' data-role='page' class='demo-page'><div class=\'show_img si_#{i}\'></div></section>"
+      image+=".si_#{i} { background: url('#{imgarr[i-1]}') no-repeat; background-size: cover;}
       "
     end
     bigcontent="
@@ -224,18 +231,27 @@ class ImageStreamsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/pubuliu.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.mobile-1.3.2.js'></script>
-
-<!--[if lt IE 9]>
-<script src='/allsites/js/html5.js'></script>
-<![endif]-->
 <link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
-<link href='/allsites/style/pubuliu.css' rel='stylesheet' type='text/css'>
-<style>
-.show_img { width: 320px;}#{image}</style></head>
-<body><article><article>#{selection}</article></article></body></html>"
-p "bigcontent",bigcontent
+<link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
+<style  type='text/css'>
+#{image}
+</style>
+</head>
+<body>
+<article>
+  <article>#{selection}</article>
+</article>
+<section class='footNav'>
+    	<ul>
+        	<li class='footNav_prev'><a href='#'>前进</a></li>
+            <li class='footNav_next'><a href='#'>后退</a></li>
+            <li class='footNav_refresh'><a href='#'>刷新</a></li>
+            <li class='footNav_home'><a href='#'>首页</a></li>
+        </ul>
+    </section>
+</body></html>"
   bigcontent
   end
 end
