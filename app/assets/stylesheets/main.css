@@ -137,7 +137,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .leftItem5 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -187px;}
 .leftItem6 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -235px;}
 .leftItem7 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -273px;}
-
+.leftItem8 { background: url(/assets/v2.0/left_icon2.png) no-repeat 20px -313px;}
 /* point_box */
 .point_box {
     background: #FFFFFF;
@@ -727,4 +727,45 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .msgBoxDel { display: inline-block; width: 30px; height: 30px; background: url(/assets/delete.png); background-size: 30px 30px; margin: 10px;}
 .second_box_act { border-top: 1px solid #c2c2c2; text-align: center; padding: 5px;}
 .second_box_act span { padding: 5px 20px; color: #000;}
+
+
+/* app管理 */
+.set_btn_div { position: absolute; width: 250px; right: 36px; top: 25px;}
+.topLine { height: 0; border: 0; border-top: 1px solid #bcbcbc;}
+.appInfo { width: 380px; min-height: 480px; background: #fff; margin-top: 20px; padding: 10px; float: left;}
+.formAct.appForm { margin-top: 20px; overflow: hidden; width: 150px;}
+
+.itemBox2 {}
+.itemBox2 label { float: left;}
+.labRight { overflow: hidden;}
+.radioBox1 { position: relative; height: 42px;}
+.radioBox1 input[type="radio"] { display: none;}
+.radioBox1 input[type="text"] { margin: 8px 8px 8px 30px; }
+.radioSpan { display: inline-block; width: 20px; height: 20px; background: url(../images/radio_icon.png) no-repeat -5px -3px; position: absolute; left: 0; top: 11px;}
+.radioSpan:hover { background-position: -5px -33px;}
+.check .radioSpan { background-position: -5px -63px;}
+.txtSpan { display: inline-block; margin: 7px 7px 7px 30px;}
+.radioBox2 { float: left;}
+.warnArea { width: 400px; height: 125px; border: 1px solid #ccc;}
+.warnTit { background: #f4f4f4; height: 40px; position: relative;}
+.warnTit .time { display: block; width: 25px; height: 25px; background: url(../images/warnArea.png) no-repeat -3px -1px; position: absolute; left: 10px; top: 9px; cursor: pointer;}
+.warnTit .addr { display: block; width: 25px; height: 25px; background: url(../images/warnArea.png) no-repeat -36px -2px; position: absolute; left: 45px; top: 9px; cursor: pointer;}
+.warnTit .cont { display: block; width: 30px; height: 25px; background: url(../images/warnArea.png) no-repeat -67px -2px; position: absolute; left: 80px; top: 9px; cursor: pointer;}
+.warnTxt textarea { width: 390px; height: 85px; resize: none; border: 0; padding: 5px;}
+.addrpicker { margin: 20px; margin-bottom: 0; border: 1px solid #ccc; background: #f6f6f6;}
+.addrpick { padding: 5px; cursor: pointer;}
+.addrpick.check,.addrpick:hover { background: #c2c2c2; color: #fff;}
+
+.chkbox { position: relative;}
+.chkbox input[type="checkbox"] { display: none;}
+.chkSpan { display: inline-block; width: 20px; height: 20px; background: url(../images/check_icon.png) no-repeat -5px -3px; position: absolute; left: 0; top: 11px;}
+.chkSpan:hover { background-position: -5px -33px;}
+.check .chkSpan { background-position: -5px -63px;}
+
+
+/* third_box */
+.third_bg { width:100%; height:100%; z-index:100; position: fixed; top:0; background: #000; opacity: 0.3; filter: alpha(opacity=30); display: none;}
+.third_box { z-index:101; }
+
+
 

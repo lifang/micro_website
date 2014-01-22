@@ -41,5 +41,10 @@
         微信息
       </li>
     <% end %>
+    <%=link_to site_app_managements_path(@site) do%>
+      <li class="leftItem8 <%= controller.controller_name == "app_managements" ? "leftItem_selected":"" %>">
+        APP
+      </li>
+    <% end %>
   </ul>
 </div>
