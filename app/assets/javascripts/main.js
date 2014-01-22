@@ -119,6 +119,128 @@ $(function() {
         }
         $("#fault").show();
     });
+    
+    
+    $(".third_box .close").click(function(){
+		$(this).parents(".third_box").hide();
+		$(".third_bg").hide();
+	});
+	
+	$("body").on("click",".thd_btn",function(){
+		$(".third_bg").show();
+		$(".third_box."+$(this).attr("name")).show();
+	});
+	
+	$(".second_box .close").click(function(){
+		if(!$(this).parents(".second_box").hasClass("third_box")){
+			$(this).parents(".second_box").hide();
+			$(".second_bg").hide();
+		}
+		
+	});
+	
+	$("body").on("click",".scd_btn",function(){
+		$(".second_bg").show();
+		$(".second_box."+$(this).attr("name")).show();
+	});
+	
+	$(".second_content .tab").on("click",function(){
+		if(!$(this).hasClass("curr")){
+			$(".second_content .tab").removeClass("curr");
+			$(".tabDiv").removeClass("curr");
+			$(this).addClass("curr");
+			var i = $(".tab").index(this);
+			$(".tabDiv").eq(i).addClass("curr");
+		}
+	});
+	
+	$(".ad_num").on("click","li",function(){
+		if(!$(this).hasClass("curr")){
+			$(".ad_num li").removeClass("curr");
+			$(this).addClass("curr");
+			var i = $(".ad_num li").index(this);
+			$(".ad_box ul").css("left",-i*280+"px");
+		}
+	});
+	
+	$(".homeAd .addAdPic").on("click",function(){
+		var i = $(".ad_box li").length;
+		$(".ad_box ul").append("<li><a class='scd_btn' name='addLink'>"+ Number(i+1)+"</a><span class='close'></span></li>");
+		$(".ad_box ul").css("width",Number(i+1)*280+"px");
+		$(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
+	});
+	
+	$.each($(".category a li"),function(i,item){
+		if(i%2 != 0){
+			$(item).css("background","#53656c");
+		}
+	});
+	$.each($(".nav_d li a"),function(i,item){
+		if(i%2 != 0){
+			$(item).css("background","#53656c");
+		}
+	});
+	
+	$(".leftSide").css("height",$(document).height() - 60 +"px");
+	
+	$(".newSmlPic").click(function(){
+		var i = $(".smlPicList .smlPic").length;
+		$(".smlPicList").append("<div class='smlPic'><a class='scd_btn' name='addLink'>"+Number(i+1)+"</a><span class='close'></span></div>");
+	});
+	
+	$("tr").each(function(){
+		var table = $(this).parents("table");
+		var i = table.find("tr").index($(this));
+		if(i % 2 ==0 && i != 0){
+			$(this).css("background","#F2F6F6");
+		}
+	});
+	
+	$(".insetBox").on("click",".optBox .close2",function(){
+		$(this).parents(".optBox").remove();
+	});
+	
+	$(".addItem").on("click",".addOptBox",function(){
+		var item = $(this).parents(".addItem");
+		if($(item).hasClass("addRdoItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}else if($(item).hasClass("addChekItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}else if($(item).hasClass("addSelItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}
+	});
+	
+	$(".addItem").on("click",".addItemSub",function(){
+		var item = $(this).parents(".addItem");
+		if($(item).hasClass("addTxtItem")){
+			
+		}else if($(item).hasClass("addRdoItem")){
+			
+		}else if($(item).hasClass("addChekItem")){
+			
+		}else if($(item).hasClass("addSelItem")){
+		 	
+		}
+	});
+	
+	$(".iphoneVirtual").on("click",".opt.rad",function(){
+		if($(this).hasClass("check")){
+			$(this).removeClass("check");
+		}else{
+			$(this).parent().find(".rad").removeClass("check");
+			$(this).addClass("check");
+		}
+	});
+	
+	$(".iphoneVirtual").on("click",".opt.chk",function(){
+		if($(this).hasClass("check")){
+			$(this).removeClass("check");
+		}else{
+			$(this).addClass("check");
+		}
+	});
+	
 
 })
  //显示创建站点
