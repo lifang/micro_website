@@ -2,8 +2,8 @@
 		<div class="main_cont1">
 			<% @sites.each do |s|%>
 			<div class="point_box">
-				<span class="close">关闭</span>
-				<div class="point_temp1"></div>
+				<span class="close" onclick="delete_site(<%=s.id%>)">关闭</span>
+                                <div class="point_temp<%=  (s.template.nil? ?  '1' :s.template ) %>"></div>
 				<div class="point_info">
 					<p>
 						站点名称：
@@ -38,6 +38,10 @@
 			<%end%>
 			
 		</div>
+  <div class="clear"></div>
+    <div class="digg_pagination" style="width:100%;text-align: center;">
+      <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
+    </div>
 	</div>
 
 	<div class="foot"></div>
@@ -117,7 +121,8 @@
 				<%= f.text_field :notes%>
 
 			</li>
-			<div class="uinfo_act">
+                        <input type="hidden" id="template" name="site[template]" value="" />
+			<div class="scdBox_act">
 				<%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
 				<input id="create" class="blue_btn" type="button" value="取消"/>
 			</div>

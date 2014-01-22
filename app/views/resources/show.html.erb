@@ -25,7 +25,7 @@
       <embed src="/allsites/<%=@resources.path_name%>" />
     </div>
   <% when 'voide'%>
-    <%  if @resources.path_name.split('.')[-1].downcase=='js' %>
+    <%  if @resources.path_name.split('.')[-1].downcase=='js'||@resources.path_name.split('.')[-1].downcase=='css' %>
    <div style="text-align:center;">
         <object data="/allsites/<%=@resources.path_name%>" height="600" width="100%"/>
       </div>

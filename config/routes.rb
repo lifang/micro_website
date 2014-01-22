@@ -31,11 +31,12 @@ MicroWebsite::Application.routes.draw do
   match '/delete_post' ,to: 'posts#delete_post' ,via: 'get'
   match '/top' ,to: 'posts#top' ,via: 'get'
   match '/untop' ,to: 'posts#untop' ,via: 'get'
+  match '/search_sites' ,to: 'sites#search',via: 'get'
+  match '/model_page' ,to: 'pages#model_page',via: 'post'
   # Sample resource route with options:
   resources :sites do
     member do
       post :verify_site
-      
     end
     resources :micro_messages 
     resources :micro_imgtexts
@@ -67,12 +68,12 @@ MicroWebsite::Application.routes.draw do
     resources :pages do
       resources :form_datas
       collection do
-        get :sub, :form, :style, :sub_new,  :form_new
-        post :preview
+        get :sub, :form, :style, :sub_new,  :form_new ,:tmlt_sub_new
+        post :preview, :save_template3,:tmlt_sub_create,:zdy_sub_create
       end
       member do
-        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change
-        post :submit_queries
+        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change,:tmlt_sub_edit
+        post :submit_queries,:tmlt_sub_update
       end
     end
 

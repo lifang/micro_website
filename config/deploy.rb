@@ -9,7 +9,7 @@ set :scm, :git   # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `pe
 # set :deploy_via, :copy
 # 如果SCM设为空， 也可通过直接copy本地repo部署
 set :repository,  "git@github.com:lifang/micro_website.git" #项目在github上的地址
-#set :ssh_options, { :forward_agent => true }  #deploy时获取github上项目使用你本地的ssh key
+set :ssh_options, { :forward_agent => true }  #deploy时获取github上项目使用你本地的ssh key
 #set :git_shallow_clone, 1  #Shallow cloning will do a clone each time, but will only get the top commit, not the entire repository history
 set :branch, "master"  #deploy的时候默认checkout master branch
 
@@ -20,7 +20,7 @@ set :rvm_type, :user
 
 set :default_stage, "staging"     #一般不写成production，因为写成production的时候运行touch #{current_path}/tmp/restart.txt没效果
 set :stages, %w(staging sandbox production)
-set :rvm_ruby_string, '1.9.2-p448@rails3.2.6'  #设置ruby具体版本号 去rvm安装目录/wrappers里面查看具体ruby版本
+set :rvm_ruby_string, '1.9.3-p448@rails3.2.6'  #设置ruby具体版本号 去rvm安装目录/wrappers里面查看具体ruby版本
 
 require 'capistrano/ext/multistage' #多stage部署所需
 require 'capistrano_colors'

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   prepend_before_filter :check_user_status
   include ApplicationHelper
+  include PagesHelper
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
 
@@ -139,5 +140,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #返回资源图片
+  def return_site_images(site)
+    @imgs_pathes = site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+  end
   
 end

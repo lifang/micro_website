@@ -1,0 +1,133 @@
+<div class="main_container">
+		<div class="main_cont1">
+			<% @sites.each do |s|%>
+			<div class="point_box">
+				<span class="close">关闭</span>
+                                <div class="point_temp<%=  (s.template.nil? ?  '1' :s.template ) %>"></div>
+				<div class="point_info">
+					<p>
+						站点名称：
+						<% if s.status==3 %>
+						<a href="/sites/static?path_name=/<%= s.root_path%>/index.html" target="_blank"> <%= s.name%> </a>
+						<%else%>
+						<%= s.name%>
+						<%end%>
+					</p>
+					<p>
+						根目录：
+						<%= s.root_path%>
+					</p>
+					<p>
+						状态：<%= status_desc s.status%>
+					</p>
+					<p>
+						公共账号token：<%= s.cweb%>
+					</p>
+					<p>
+						备注：<%= s.notes%>
+					</p>
+				</div>
+				<div class="point_act">
+					<%= link_to site_pages_path(s),class:"blue_btn" do %>
+					进入站点
+					<% end %>
+				</div>
+
+				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>')"> 编辑 </a>
+			</div>
+			<%end%>
+
+		</div>
+  <div class="clear"></div>
+    <div class="digg_pagination" style="width:100%;text-align: center;">
+      <%= will_paginate :previous_label=>'上一页',:next_label=>'下一页'%>
+    </div>
+	</div>
+
+	<div class="foot"></div>
+
+	<div class="second_box uinfo_chg">
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1>编辑</h1>
+			<li>
+				<label>联系电话：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>E-mail：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box pass_chg">
+		<div class="second_content">
+			<span class="close" ><a href="">关闭</a></span>
+			<h1>修改密码</h1>
+			<li>
+				<label>旧密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>新密码：</label>
+				<input type="text" />
+			</li>
+			<li>
+				<label>确认：</label>
+				<input type="text" />
+			</li>
+			<div class="uinfo_act">
+				<button class="blue_btn">
+					确认
+				</button>
+				<button class="blue_btn">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="second_box new_point"  >
+		<%=form_for(Site.new,remote:true) do |f|%>
+		<div class="second_content">
+			<span class="close" >关闭</span>
+			<h1 id="site_titile">创建站点(创建后不允许修改)</h1>
+			<div id='fault' style="margin:auto;text-align: center;color:red"></div>
+			<input type="hidden" value="create" id="site_edit_or_create" name='site[edit_or_create]'/>
+			<li>
+				<%= f.label '站点名称：'%>
+				<%= f.text_field :name %>
+				<input type="hidden" name="origin_name" id='origin_name'/>
+				<span class="check">*</span>
+			</li>
+			<li>
+				<%= f.label '根目录：'%>
+				<%= f.text_field :root_path %>&nbsp;<span id="must_fix" class="check">*</span>
+			</li>
+			<li>
+				<%= f.label '公众帐号token：'%>
+				<%= f.text_field :cweb%>
+
+			</li>
+			<li>
+				<%= f.label '备注：'%>
+				<%= f.text_field :notes%>
+
+			</li>
+                        <input type="hidden" id="template" name="site[template]" value="" />
+			<div class="uinfo_act">
+				<%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
+				<input id="create" class="blue_btn" type="button" value="取消"/>
+			</div>
+		</div>
+		<%end%>
+	</div>
+	<%= render 'shared/tishi_alert'%>
+

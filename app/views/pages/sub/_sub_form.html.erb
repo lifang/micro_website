@@ -11,7 +11,11 @@
     <%= f.radio_button :authenticate, 0, :checked => @page && @page.authenticate ? false : true %>否
   </p>
   <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:sub] %>
-  <%= f.text_area :content, :value => @index || "", :class => "page_txt" %>
+  <% if @index.present? %>
+    <%= f.text_area :content, :value => (page_html_deal @index), :class => "page_txt" %>
+  <% else %>
+    <%= f.text_area :content, :value => "", :class => "page_txt" %>
+  <% end %>
 
   <div class="uinfo_act">
     <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', <%= @page.new_record? ? 0 : 2 %>, <%= @page.new_record? ? 'null' : @page.id %>)">保存</button>

@@ -8,9 +8,10 @@ $(function() {
 
 
     $("#close_flash").click(function(){
-        $("#flash_field").hide()
+        $("#flash_field").hide();
+        $(".tab_alert").hide();
     });
-     $("#flash_field").fadeOut(2000);
+    $("#flash_field").fadeOut(2000);
     $(".addElemt1").click(function() {
         $(".insertDiv").append(insert1);
     });
@@ -85,16 +86,7 @@ $(function() {
             $(this).parent().find("span").css("color", "#e9ebea");
         }
     });
-//显示创建站点
-    $(".scd_btn").click(function() {
-        $(".second_bg").show();
-        $(".second_box." + $(this).attr("name")).show();
-        $("#site_titile").html('创建站点（根目录创建后不可修改）');
-        $('#site_edit_or_create').val('create');
-        $('#site_root_path').removeAttr("readonly");
-        $('#must_fix').show();
-        text_value("", '', '');
-    })
+    //显示创建站点
 
     $(".file_1").change(function() {
         $(this).parents(".fileBox").find(".fileText_1").val($(this).val());
@@ -106,9 +98,13 @@ $(function() {
     });
     
     $('#create_sub').click(function() {
-        var name = $('#site_name').val();
-        var root = $('#site_root_path').val();
-        var cweb = $('#site_cweb').val();
+        var name =$.trim( $('#site_name').val());
+        var root = $.trim( $('#site_root_path').val() );
+        var cweb = $.trim($('#site_cweb').val());
+        if(root=='js'||root=='style'){
+            tishi_alert('站点名不能js或者style');
+            return false;
+        }
         if (name.length == 0) {
             tishi_alert('站点名不能为空');
             return false;
@@ -125,6 +121,18 @@ $(function() {
     });
 
 })
+ //显示创建站点
+function create_site(template){
+    $(".second_bg").show();
+    $(".second_box.new_point"   ).show();
+    $("#site_titile").html('创建站点（根目录创建后不可修改）');
+    $('#site_edit_or_create').val('create');
+    $('#site_root_path').removeAttr("readonly");
+    $('#must_fix').show();
+    text_value("", '', '');
+    
+    $("#template").val(template);
+}
 //显示编辑页面
 function show_edit_page(name, rootpath, notes,cweb) {
     $(".second_bg").show();
@@ -169,7 +177,7 @@ function have_exist(id){
     }
     else{
         
-        var arr=['zip' ,'ZIP', 'jpg' ,'JPG','jpeg','JPEG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','3gp' ,'3GP','mp4','MP4','swf','SWF', 'gif','GIF','js','JS'];
+        var arr=['zip' ,'ZIP', 'jpg' ,'JPG','jpeg','JPEG', 'png' ,'PNG', 'mp3' ,'MP3','wma','WMA','3gp' ,'3GP','mp4','MP4','swf','SWF', 'gif','GIF','js','JS','css','CSS'];
         if( arr_contant(name,arr) ){
             
             name=name.split('\\');
@@ -196,13 +204,14 @@ function have_exist(id){
                 }
             });
         }else{
-            tishi_alert('不合法文件，只能是\n视频(mp4,swf,3gp)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包');
+            tishi_alert('不合法文件，只能是\n视频(mp4,swf,3gp)<50M\n音频(mp3,wav,wma)<20M\n图片(jpg,png,gif)<2M\n或(zip)压缩包,js/css文件');
             return false;
         }
     } 
 }
 
-function change_status(id,status,msg){
+function change_status(id,statu,msg){
+    var status=2
     $.ajax({
         async:true,
         type : 'get',
@@ -211,14 +220,14 @@ function change_status(id,status,msg){
         data  :"status=" + status + "&id=" + id,
         success:function(data){
             if(msg!="")
-            if(data == 1){
-                tishi_alert(msg+"成功！");
-                setTimeout("window.location.reload()",800);
+                if(data == 1){
+                    tishi_alert(msg+"成功！");
+                    setTimeout("window.location.reload()",800);
                 //window.location.reload();
-            }else{
-                tishi_alert(msg+"失败！");
+                }else{
+                    tishi_alert(msg+"失败！");
                
-            }
+                }
         }
     });
 }
@@ -235,11 +244,11 @@ function arr_contant(name,arr){
 }
 
 function check_form_particular(id){
-   var content=$("#"+id).val();
-   regex=/\~\!\@\#\$\%\^\&\*/;
-   if(!content.match(regex)){
-       tishi_alert('有非法字符！')
-   }
+    var content=$("#"+id).val();
+    regex=/\~\!\@\#\$\%\^\&\*/;
+    if(!content.match(regex)){
+        tishi_alert('有非法字符！')
+    }
 }
 
 function show_center(t){
@@ -255,7 +264,7 @@ function show_center(t){
     content.css('left',(doc_width-layer_width)/2);
 
     $(t).parent(".second_content").show();
-        content.show();
+    content.show();
     $(".second_bg").show();
     content.find(".close").click(function(){
         hide_tab($(t));
@@ -287,15 +296,21 @@ function tishi_alert(message){
 }
 
 $(".msgBoxEdit").on("click",function(){
-  $(this).parents(".tabDiv").removeClass("used");
-  $(".tabDiv:last").addClass("used");
- });
+    $(this).parents(".tabDiv").removeClass("used");
+    $(".tabDiv:last").addClass("used");
+});
 
- $(".autoReplyBox").on("click",function(){
-  if($(this).hasClass("showAll")){
-   $(".autoReplyBox").removeClass("showAll");
-  }else{
-   $(".autoReplyBox").removeClass("showAll");
-   $(this).addClass("showAll");
-  }
- });
+$(".autoReplyBox").on("click",function(){
+    if($(this).hasClass("showAll")){
+        $(".autoReplyBox").removeClass("showAll");
+    }else{
+        $(".autoReplyBox").removeClass("showAll");
+        $(this).addClass("showAll");
+    }
+});
+
+
+function search_site(){
+   location.href='/search_sites?key='+$("#site_key").val();
+   
+}

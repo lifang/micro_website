@@ -1,53 +1,56 @@
 <div class="main_container">
-		<div class="tabDiv used">
-			<div class="page_content">
-				<div class="page_tit">
-					<%=link_to '添加刮刮乐',new_site_award_path,remote:true,class:'blue_btn scd_btn',name:"addGgl"%>
-                                  
-				</div>
-				<div class="page_txt">
-				<table class="table1">
-					<tr>
-						<th>名称</th>
-						<th>有效期</th>
-						<th>奖项设置</th>
-						<th>奖券数</th>
-						<th style="width: 200px;">操作</th>
-					</tr>
-					<%@awards.each do |award|%>
-					<tr>
-						<td><%= link_to award.name, site_award_path(@site,award), "target" => "_blank" %>
-                                                <br/><%=site_award_url(@site,award)%>
-                                                </td>
-						<td><%=award.begin_date%>到<%=award.end_date%></td>
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <%= render '/shared/page_title' %>
+    <div class="tabDiv used">
+      <div class="page_content">
+        <div class="page_tit">
+          <%=link_to '添加刮刮乐',new_site_award_path,remote:true,class:'blue_btn scd_btn',name:"addGgl"%>
 
-						<td>
-							<%award.award_infos.each do |a_info|%>
-				            <li>
-				            <%="#{a_info.name} #{a_info.content} 共#{a_info.number}名"%>
-				            </li>
-				             <%end%>
-						</td>
-						<td><%=award.total_number%></td>
-						<td>
-					         <%=link_to '编辑',edit_site_award_path(@site,award),remote:true,class:"blue_btn scd_btn", name:"addGgl"%>
-                                                 <%=link_to '获奖信息',site_award_win_award_info_path(@site,award),remote:true,class:'blue_btn scd_btn'%>
-			                         <%=link_to '删除',site_award_path(@site,award),confirm:'是否删除？',method: :delete, class:"blue_btn"%>
-							 
-						</td>
-					</tr>
-						<%end%>
-					
-				</table>
-				</div>
-			</div>
-		</div>
-	</div>
-       
-<div class="second_box addGgl">
-	
-</div>
+          </div>
+          <div class="page_txt">
+            <table class="table1">
+              <tr>
+                <th>名称</th>
+                <th>有效期</th>
+                <th>奖项设置</th>
+                <th>奖券数</th>
+                <th style="width: 200px;">操作</th>
+              </tr>
+              <%@awards.each do |award|%>
+                <tr>
+                  <td><%= link_to award.name, site_award_path(@site,award), "target" => "_blank" %>
+                    <br/><%=site_award_url(@site,award)%>
+                  </td>
+                  <td><%=award.begin_date%>到<%=award.end_date%></td>
 
-<div class="second_box resInfo">
-	
-</div>
+                  <td>
+                    <%award.award_infos.each do |a_info|%>
+                  <li>
+                    <%="#{a_info.name} #{a_info.content} 共#{a_info.number}名"%>
+                  </li>
+                <%end%>
+                </td>
+                <td><%=award.total_number%></td>
+                <td>
+                  <%=link_to '编辑',edit_site_award_path(@site,award),remote:true,class:"blue_btn scd_btn", name:"addGgl"%>
+                    <%=link_to '获奖信息',site_award_win_award_info_path(@site,award),remote:true,class:'blue_btn scd_btn'%>
+                      <%=link_to '删除',site_award_path(@site,award),confirm:'是否删除？',method: :delete, class:"blue_btn"%>
+
+                      </td>
+                      </tr>
+                    <%end%>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="second_box addGgl">
+
+        </div>
+
+        <div class="second_box resInfo">
+
+        </div>

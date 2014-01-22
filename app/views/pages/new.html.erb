@@ -1,21 +1,70 @@
-<div class="main_container">
-  <%= render '/sites/site_status' %>
-  <div class="tabDiv">
-    <div class="page_content">
-      <div class="page_tit">
-        <label>index.html</label>
-      </div>
-      <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
-        <%= f.hidden_field :title, :value => 'index' %>
-        <%= f.hidden_field :file_name, :value => 'index' %>
-        <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:main] %>
-        <%= f.text_area :content, :class => "page_txt" %>
 
-        <div class="page_act">
-          <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 0, null)">保存</button>
-          <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
-        </div>
-      <% end %>
+<div class="main_container">
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <%= render '/shared/page_title' %>
+    <div class="iphoneVirtual iv_temp1 main_tab" style="display:block">
+      <div class="homeBg">+</div>
+      <ul class="homeMenu">
+        <a href="#"><li class="homeNav hn1">1</li></a>
+        <a href="#"><li class="homeNav hn2">2</li></a>
+        <a href="#"><li class="homeNav hn3">3</li></a>
+      </ul>
+    </div>
+
+    <div class="iphoneVirtual iv_temp2 main_tab">
+      <div class="homeBg">+</div>
+      <ul class="homeMenu">
+        <a href="#"><li class="homeNav hn1">1</li></a>
+        <a href="#"><li class="homeNav hn2">2</li></a>
+        <a href="#"><li class="homeNav hn3">3</li></a>
+        <a href="#"><li class="homeNav hn4">4</li></a>
+        <a href="#"><li class="homeNav hn5">5</li></a>
+        <a href="#"><li class="homeNav hn6">6</li></a>
+        <a href="#"><li class="homeNav hn7">7</li></a>
+        <a href="#"><li class="homeNav hn8">8</li></a>
+      </ul>
+    </div>
+
+    <div class="iphoneVirtual iv_temp3 main_tab">
+      <div class="homeBg">+</div>
+      <ul class="homeMenu">
+        <a href="#"><li class="homeNav hn1">1</li></a>
+        <a href="#"><li class="homeNav hn2">2</li></a>
+        <a href="#"><li class="homeNav hn3">3</li></a>
+        <a href="#"><li class="homeNav hn4">4</li></a>
+        <a href="#"><li class="homeNav hn5">5</li></a>
+        <a href="#"><li class="homeNav hn6">6</li></a>
+        <a href="#"><li class="homeNav hn7">7</li></a>
+        <a href="#"><li class="homeNav hn8">8</li></a>
+      </ul>
+    </div>
+
+    <div class="iv_temp4 main_tab">
+      <div class="page_content">
+        <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
+          <%= f.hidden_field :title, :value => 'index' %>
+          <%= f.hidden_field :file_name, :value => 'index' %>
+          <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:main] %>
+          <%= f.text_area :content, :class => "page_txt" %>
+
+          <div class="page_act">
+            <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 0, null)">保存</button>
+            <button class="blue_btn" type="submit" onclick="return changeUrl(this, '<%= @site.id %>', 1, null)">预览</button>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
+<script>
+  $(function(){
+    $(".tmp_list li").click(function(){
+      var className = $(this).attr("class").split(/\s/)[0];
+      $(".tmp_list li").removeClass("hover");
+      $(".main_cont .main_tab").hide();
+      $(".main_cont .iv_" + className).show();
+      $(this).addClass("hover");
+    })
+  })
+</script>
