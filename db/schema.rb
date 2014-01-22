@@ -137,11 +137,11 @@ ActiveRecord::Schema.define(:version => 20140122033516) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number"
+    t.integer  "praise_number", :default => 0
   end
 
   create_table "recently_clients", :force => true do |t|
