@@ -37,7 +37,9 @@ MicroWebsite::Application.routes.draw do
   # Sample resource route with options:
   namespace :api do
     resources :clients do
-      
+      collection do
+        post :login
+      end
     end
   end
 
