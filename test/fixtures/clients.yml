@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  mobiephone: 1
+  site_id: 1
+  html_content: MyText
+  types: 1
+  password: MyString
+  username: MyString
+  avatar_url: MyString
+  has_new_message: false
+  has_new_record: false
+
+two:
+  name: MyString
+  mobiephone: 1
+  site_id: 1
+  html_content: MyText
+  types: 1
+  password: MyString
+  username: MyString
+  avatar_url: MyString
+  has_new_message: false
+  has_new_record: false

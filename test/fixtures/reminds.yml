@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  site_id: 1
+  content: MyString
+  reseve_time: 2014-01-22
+  title: MyString
+  range: false
+
+two:
+  site_id: 1
+  content: MyString
+  reseve_time: 2014-01-22
+  title: MyString
+  range: false

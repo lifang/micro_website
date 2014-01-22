@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117074105) do
+ActiveRecord::Schema.define(:version => 20140122033516) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -39,6 +39,28 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
 
   add_index "awards", ["site_id"], :name => "index_awards_on_site_id"
 
+  create_table "client_html_infos", :force => true do |t|
+    t.integer  "client_id"
+    t.text     "hash_content"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "name"
+    t.integer  "mobiephone"
+    t.integer  "site_id"
+    t.text     "html_content"
+    t.integer  "types"
+    t.string   "password"
+    t.string   "username"
+    t.string   "avatar_url"
+    t.boolean  "has_new_message"
+    t.boolean  "has_new_record"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
     t.text     "data_hash"
@@ -58,6 +80,17 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "messages", :force => true do |t|
+    t.integer  "site_id"
+    t.integer  "from_user"
+    t.integer  "to_user"
+    t.integer  "types"
+    t.text     "content"
+    t.boolean  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "micro_imgtexts", :force => true do |t|
     t.string   "title"
     t.string   "img_path"
@@ -70,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.integer  "mtype"
+    t.boolean  "mtype"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -104,11 +137,37 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number", :default => 0
+    t.integer  "praise_number"
+  end
+
+  create_table "recently_clients", :force => true do |t|
+    t.integer  "site_id"
+    t.integer  "client_id"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "records", :force => true do |t|
+    t.integer  "site_id"
+    t.text     "content"
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "reminds", :force => true do |t|
+    t.integer  "site_id"
+    t.string   "content"
+    t.date     "reseve_time"
+    t.string   "title"
+    t.boolean  "range"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "replies", :force => true do |t|
@@ -137,10 +196,10 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
     t.string   "notes"
     t.integer  "status",     :limit => 1
     t.integer  "user_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "cweb"
-    t.integer  "template"
+    t.integer  "template",                :default => 1
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
@@ -150,7 +209,7 @@ ActiveRecord::Schema.define(:version => 20140117074105) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.integer  "open_id"
+    t.string   "open_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "award_id"
