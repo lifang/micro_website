@@ -11,7 +11,7 @@ layout 'sites'
     if @client && @client.update_attribute(:html_content,params[:html_content])
       chi=ClientHtmlInfo.find_by_client_id(@client.id)
       if chi
-        ClientHtmlInfo.update_attribute(:hash_content,form)
+        chi.update_attribute(:hash_content,form)
       else
         ClientHtmlInfo.create(client_id:@client.id , hash_content:form)
       end
