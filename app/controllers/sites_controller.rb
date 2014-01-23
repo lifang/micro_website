@@ -19,7 +19,7 @@ class SitesController < ApplicationController
         @site.template=params[:site][:template]
         respond_to do |format|
           if @site && @site.save
-            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPE[:ADMIN])
+            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN])
             
             #初始化index页面
             page = @site.pages.create({:title => "index", :file_name => "index.html",
@@ -55,7 +55,11 @@ class SitesController < ApplicationController
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb)
         client = Client.find_by_site_id(@site.id)
-        client.update_attributes(username:params[:username] , password:params[:password])
+        if client
+           client.update_attributes(username:params[:username] , password:params[:password])
+        else
+           Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN]) 
+        end
         flash[:success]='更新成功'
       end
       format.js

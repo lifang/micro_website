@@ -16,6 +16,10 @@ function add_info_box(value){
 function add_opt_box(value){
 	var divarr = $($(value).parents(".second_content")[0]).find(".insetBox").find("div");
 	var radtext = $(divarr[0]).find("input").val();
+	if($.trim(radtext)==""){
+		tishi_alert("单选问题不能为空！");
+		return false;
+	}
 	var index = $("#info_inedx").val();index++;
 	$("#info_inedx").val(index);
 	var html= "<div class='itemBox'><span class='close' onclick='cancle_aitem(this)'></span><div><span>"+radtext+"<input type='hidden' name='form["+index+"radio][name]' value='"+radtext+"' /></span></div>";
@@ -34,9 +38,13 @@ function add_opt_box(value){
 function add_Chek_box(value){
 	var divarr = $($(value).parents(".second_content")[0]).find(".insetBox").find("div");
 	var radtext = $(divarr[0]).find("input").val();
+	if($.trim(radtext)==""){
+		tishi_alert("复选问题不能为空！");
+		return false;
+	}
 	var index = $("#info_inedx").val();index++;
 	$("#info_inedx").val(index);
-	var html= "<div class='itemBox'><span class='close' onclick='cancle_aitem(this)'></span><div><span>"+radtext+"<input type='hidden' name='form["+index+"checkbox][name]' value='"+radtext+"' /></span></div>";
+	var html= "<div class='itemBox'><span class='close' onclick=\'cancle_aitem(this)\'></span><div><span>"+radtext+"<input type='hidden' name='form["+index+"checkbox][name]' value='"+radtext+"' /></span></div>";
 	for(var i=1;i<divarr.length;i++){
 		var val = $(divarr[i]).find("input").val();
 		if($.trim(val)!=""){
@@ -52,6 +60,10 @@ function add_Chek_box(value){
 function add_text_box(value){
 	var divarr = $($(value).parents(".second_content")[0]).find(".insetBox").find("div");
 	var radtext = $(divarr[0]).find("input").val();
+	if($.trim(radtext)==""){
+		tishi_alert("下拉问题不能为空！");
+		return false;
+	}
 	var index = $("#info_inedx").val();index++;
 	$("#info_inedx").val(index);
 	
