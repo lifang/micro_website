@@ -216,7 +216,7 @@
         <div class="itemBox2">
           <label>发送范围：</label>
           <div class="labRight">
-            <% if  !@remind.range %>
+            <% if  @remind.nil? || !@remind.range %>
               <div class="radioBox1 radioBox2 check">
                 <input type="radio" name="user_select" value="0" class="" checked="true" /><span class="radioSpan"></span>
                 <span class="txtSpan">所有人</span>
