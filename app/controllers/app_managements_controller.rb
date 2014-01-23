@@ -8,7 +8,6 @@ layout 'sites'
   def create_client_info_model
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     form = params[:form]
-    p 22222222222,form
     if @client && @client.update_attribute(:html_content,params[:html_content])
       chi=ClientHtmlInfo.find_by_client_id(@client.id)
       if chi

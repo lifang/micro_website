@@ -19,7 +19,7 @@ class SitesController < ApplicationController
         @site.template=params[:site][:template]
         respond_to do |format|
           if @site && @site.save
-            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPE[:master])
+            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPE[:ADMIN])
             
             #初始化index页面
             page = @site.pages.create({:title => "index", :file_name => "index.html",

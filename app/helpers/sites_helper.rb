@@ -14,7 +14,6 @@ module SitesHelper
  def site_client(clients)
     clients.each do |client|
       if client.types == 0
-        p 2222222222222222,client.username
         return client
       end
     end

@@ -35,6 +35,14 @@ MicroWebsite::Application.routes.draw do
   match '/search_sites' ,to: 'sites#search',via: 'get'
   match '/model_page' ,to: 'pages#model_page',via: 'post'
   # Sample resource route with options:
+  namespace :api do
+    resources :clients do
+      collection do
+        post :login
+      end
+    end
+  end
+
   resources :sites do
     member do
       post :verify_site
