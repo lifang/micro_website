@@ -12,9 +12,14 @@ class RemindsController < ApplicationController
     if send_time.to_i.eql?(Remind::SEND_TIME[:ENTER])
       free_time = Time.now + dayfor_time.to_i.days
     end
-    
-    Remind.create(:site_id => site_id,:content => remind_content,:reseve_time => free_time,:title => remind_name,:range => user_select.to_i)
-    flash[:notice] = "新建成功!"
+    remind = Remind.find_by_site_id(site_id)
+    if remind
+      remind.update_attributes(:site_id => site_id,:content => remind_content,:reseve_time => free_time,:title => remind_name,:range => user_select.to_i)
+      flash[:notice] = "更新成功!"
+    else
+      Remind.create(:site_id => site_id,:content => remind_content,:reseve_time => free_time,:title => remind_name,:range => user_select.to_i)
+      flash[:notice] = "新建成功!"
+    end
     redirect_to "/sites/#{site_id}/app_managements"
   end
 
@@ -22,8 +27,14 @@ class RemindsController < ApplicationController
     site_id = @site.id
     records_title = params[:records_title]
     records_content = params[:records_content]
-    Record.create(:site_id => site_id, :title => records_title, :content => records_content)
-    flash[:notice] = "新建成功!"
+    record = Record.find_by_site_id(site_id)
+    if record
+      record.update_attributes(:site_id => site_id, :title => records_title, :content => records_content)
+      flash[:notice] = "更新成功!"
+    else
+      Record.create(:site_id => site_id, :title => records_title, :content => records_content)
+      flash[:notice] = "新建成功!"
+    end
     redirect_to "/sites/#{site_id}/app_managements"
   end
 end

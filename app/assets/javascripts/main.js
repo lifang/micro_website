@@ -263,12 +263,12 @@ $(function() {
 
     $(".warnArea .time").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        txtArea.text(txtArea.text() + "[[时间]]");
+        txtArea.val(txtArea.val() + "[[时间]]");
     });
 
     $(".warnArea .space").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        txtArea.text(txtArea.text() + "[[填空]]");
+        txtArea.val(txtArea.val() + "[[填空]]");
     });
         
     $(".radioSpan").click(function(){
@@ -279,9 +279,6 @@ $(function() {
         $(this).parents(".labRight").find("input[type='text']").attr("disabled","disabled");
         $(this).parent().find("input[type='text']").removeAttr("disabled");
     });
-
-    
-    
 })
 //显示创建站点
 function create_site(template) {
@@ -487,7 +484,7 @@ function interception_wrap(button){
         }
     });
     var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
-    txtArea.text(txtArea.text() + "[[选项;=;"+ activity +"]]")
+    txtArea.val(txtArea.val() + "[[选项;=;"+ activity +"]]")
     $(button).parents(".third_box").hide();
     $(".third_bg").hide();
 }
