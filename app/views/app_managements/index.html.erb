@@ -194,7 +194,7 @@
 <div class="second_box newWarn">
   <div class="second_content second_content2">
     <span class="close">关闭</span>
-    <h1>新建提醒</h1>
+    <h1>提醒模板</h1>
     <%= form_for :reminds , :url => {:controller => :reminds,:action => :create} do |f|%>
       <div>
         <div><label>名称：</label><input name="remind_name" type="text" /></div>
@@ -251,7 +251,7 @@
 <div class="second_box newRecord">
   <div class="second_content second_content2">
     <span class="close">关闭</span>
-    <h1>新建记录</h1>
+    <h1>记录模板</h1>
     <%= form_for :reminds , :url => {:controller => :reminds,:action => :create_records} do |f|%>
       <div>
         <div><label>名称：</label><input name="records_title" type="text" /></div>
