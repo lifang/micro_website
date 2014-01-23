@@ -109,6 +109,13 @@ MicroWebsite::Application.routes.draw do
         get :change
       end
     end
+    resources :reminds do
+      collection do
+        post :create_records
+      end
+      member do
+      end
+    end
   end
   match "/weixins/accept_token" => "weixins#accept_token"
 
