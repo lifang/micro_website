@@ -11,6 +11,16 @@ module SitesHelper
     when 4  then  '审核不通过'
    end  
  end
+ def site_client(clients)
+    clients.each do |client|
+      if client.types == 0
+        p 2222222222222222,client.username
+        return client
+      end
+    end
+    nil
+ end  
+ 
  def change_status(site_id,value)
    site=Site.find(site_id);
    site.update_attribute(:status,value)

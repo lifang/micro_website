@@ -24,6 +24,10 @@
 						公共账号token：<%= s.cweb%>
 					</p>
 					<p>
+						<%client = (site_client s.clients) if s.clients.length!=0 %>
+						站点账户：<%= client.username unless client.nil? %>
+					</p>
+					<p>
 						备注：<%= s.notes%>
 					</p>
 				</div>
@@ -33,7 +37,7 @@
 					<% end %>
 				</div>
 
-				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>')"> 编辑 </a>
+				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>')"> 编辑 </a>
 			</div>
 			<%end%>
 			
@@ -115,6 +119,14 @@
 				<%= f.label '公众帐号token：'%>
 				<%= f.text_field :cweb%>
 
+			</li>
+			<li>
+				<%= f.label '站点账户'%>
+				<input type="text" id="username" name="username" value="<%=@client.nil? ? "" : @client.username%>" />&nbsp;<span id="must_fix" class="check">*</span>
+			</li>
+			<li>
+				<%= f.label '站点密码'%>
+				<input type="password" id="password" name="password" value="<%=@client.nil? ? "" : @client.password%>" />&nbsp;<span id="must_fix" class="check">*</span>
 			</li>
 			<li>
 				<%= f.label '备注：'%>

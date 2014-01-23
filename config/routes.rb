@@ -42,7 +42,11 @@ MicroWebsite::Application.routes.draw do
     resources :micro_messages 
     resources :micro_imgtexts
     resources :weixin_replies
-    resources :app_managements
+    resources :app_managements do
+      collection do        
+        post :create_client_info_model
+      end
+    end
 
     resources :awards do
       get :win_award_info
