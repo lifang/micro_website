@@ -21,7 +21,7 @@ class WeixinRepliesController < ApplicationController
   def destroy
     keyword = Keyword.find_by_id params[:id]
     micro_message = keyword.micro_message
-    if micro_message.text?
+    if micro_message && micro_message.text?
       micro_message.destroy
     end
     keyword.destroy
@@ -65,7 +65,7 @@ class WeixinRepliesController < ApplicationController
         micro_message = @keyword.micro_message
         #关键詞回复
         if text.present? #文字回复
-          if micro_message.text? #原来就是文字回复，更新
+          if micro_message && micro_message.text? #原来就是文字回复，更新
             micro_message.micro_imgtexts[0].update_attribute(:content, text) if micro_message.micro_imgtexts[0]
             @keyword.update_attributes({:keyword => keyword_param})
           else  #原来是图文回复，新建文字回复
@@ -74,7 +74,7 @@ class WeixinRepliesController < ApplicationController
             @keyword.update_attributes({:micro_message_id => micro_message.id, :keyword => keyword_param})
           end
         else #图文回复
-          if micro_message.text?  #原来是文字，删除原来消息
+          if micro_message && micro_message.text?  #原来是文字，删除原来消息
             micro_message.destroy
           end
           #根据传过来的图文id更新关键字
