@@ -277,6 +277,7 @@ $(function() {
         $(this).parent().parent().find(".radioBox1").removeClass("check");
         $(this).parent().addClass("check");
         $(this).parents(".labRight").find("input[type='text']").attr("disabled","disabled");
+        $(this).parents(".labRight").find("input[type='text']").val("")
         $(this).parent().find("input[type='text']").removeAttr("disabled");
     });
 })
