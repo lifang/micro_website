@@ -195,7 +195,7 @@
   <div class="second_content second_content2">
     <span class="close">关闭</span>
     <h1>提醒模板</h1>
-    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create} do |f|%>
+    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create},html:{onsubmit: "return check_remind_nonempty()"} do |f|%>
       <div>
         <div><label>名称：</label><input name="remind_name" type="text" value="<%=  @remind.nil? ? '' : @remind.title %>"/></div>
         <div class="itemBox2">
@@ -264,7 +264,7 @@
   <div class="second_content second_content2">
     <span class="close">关闭</span>
     <h1>记录模板</h1>
-    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create_records} do |f|%>
+    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create_records},html:{onsubmit: "return check_record_nonempty()"} do |f|%>
       <div>
         <div><label>名称：</label><input name="records_title" type="text" value="<%= @record.nil? ? '' : @record.title %>"/></div>
         <div class="itemBox2">

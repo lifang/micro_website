@@ -272,7 +272,7 @@ $(function() {
 
     $(".warnArea .space").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-         if(txtArea.val()==""){
+        if(txtArea.val()==""){
             txtArea.val(txtArea.val() + "[[填空]]");
         }else{
             txtArea.val(txtArea.val() + ",[[填空]]");
@@ -391,7 +391,6 @@ function change_status(id, statu, msg) {
                 //window.location.reload();
                 } else {
                     tishi_alert(msg + "失败！");
-
                 }
         }
     });
@@ -501,4 +500,26 @@ function interception_wrap(button){
     
     $(button).parents(".third_box").hide();
     $(".third_bg").hide();
+}
+
+function check_remind_nonempty(){
+    if($.trim($("input[name='remind_name']").val()).length == 0){
+        tishi_alert('提示:\n\n名称不能为空');
+        return false;
+    } else if($.trim($("input[name='free_time']").val()).length == 0 && $.trim($("input[name='dayfor_time']").val()).length == 0){
+        tishi_alert('提示:\n\n请选择发送时间');
+        return false;
+    }else if($.trim($("textarea[name='remind_content']").val()).length == 0){
+        tishi_alert('提示:\n\n内容不能为空');
+        return false;
+    }
+}
+function check_record_nonempty(){
+    if($.trim($("input[name='records_title']").val()).length == 0){
+        tishi_alert('提示:\n\n名称不能为空');
+        return false;
+    }else if($.trim($("textarea[name='records_content']").val()).length == 0){
+        tishi_alert('提示:\n\n内容不能为空');
+        return false;
+    }
 }
