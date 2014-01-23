@@ -1,5 +1,16 @@
 $(function() {
 
+    $(".third_box .close").click(function(){
+        $(this).parents(".third_box").hide();
+        $(".third_bg").hide();
+    });
+
+    $("body").on("click",".thd_btn",function(){
+        $(".third_bg").show();
+        $(".third_box."+$(this).attr("name")).attr("to",$(this).parents(".second_box").attr("class"));
+        $(".third_box."+$(this).attr("name")).show();
+    });
+
     var insert1 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入标题</div><input class='txtArea' type='text' /></div>";
 
     var insert2 = "<div class='insertBox'><span class='delete'></span><div class='inputArea'>双击输入问题</div><input class='txtArea' type='text' /><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div><div><input type='radio' /><div class='inputArea'>双击输入选项</div><input class='txtArea' type='text' /></div></div>";
@@ -49,10 +60,18 @@ $(function() {
     });
 
     $(".second_box .close").click(function() {
+        $(".second_box").removeAttr("ishow");
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
         $("#fault").hide();
     });
+    $(".abandon").click(function(){
+        $(".second_box").removeAttr("ishow");
+        $(this).parents(".second_box").hide();
+        $(".second_bg").hide();
+        $("#fault").hide();
+    })
+
     $(".insertDiv").on("click", ".delete", function() {
         $(this).parent().remove();
     });
@@ -122,128 +141,149 @@ $(function() {
     
     
     $(".third_box .close").click(function(){
-		$(this).parents(".third_box").hide();
-		$(".third_bg").hide();
-	});
+        $(this).parents(".third_box").hide();
+        $(".third_bg").hide();
+    });
 	
-	$("body").on("click",".thd_btn",function(){
-		$(".third_bg").show();
-		$(".third_box."+$(this).attr("name")).show();
-	});
+    $("body").on("click",".thd_btn",function(){
+        $(".third_bg").show();
+        $(".third_box."+$(this).attr("name")).show();
+    });
 	
-	$(".second_box .close").click(function(){
-		if(!$(this).parents(".second_box").hasClass("third_box")){
-			$(this).parents(".second_box").hide();
-			$(".second_bg").hide();
-		}
+    $(".second_box .close").click(function(){
+        if(!$(this).parents(".second_box").hasClass("third_box")){
+            $(this).parents(".second_box").hide();
+            $(".second_bg").hide();
+        }
 		
-	});
+    });
 	
-	$("body").on("click",".scd_btn",function(){
-		$(".second_bg").show();
-		$(".second_box."+$(this).attr("name")).show();
-	});
+    $("body").on("click",".scd_btn",function(){
+        $(".second_bg").show();
+        $(".second_box."+$(this).attr("name")).show();
+        $(".second_box."+$(this).attr("name")).attr("ishow","show");
+    });
 	
-	$(".second_content .tab").on("click",function(){
-		if(!$(this).hasClass("curr")){
-			$(".second_content .tab").removeClass("curr");
-			$(".tabDiv").removeClass("curr");
-			$(this).addClass("curr");
-			var i = $(".tab").index(this);
-			$(".tabDiv").eq(i).addClass("curr");
-		}
-	});
+    $(".second_content .tab").on("click",function(){
+        if(!$(this).hasClass("curr")){
+            $(".second_content .tab").removeClass("curr");
+            $(".tabDiv").removeClass("curr");
+            $(this).addClass("curr");
+            var i = $(".tab").index(this);
+            $(".tabDiv").eq(i).addClass("curr");
+        }
+    });
 	
-	$(".ad_num").on("click","li",function(){
-		if(!$(this).hasClass("curr")){
-			$(".ad_num li").removeClass("curr");
-			$(this).addClass("curr");
-			var i = $(".ad_num li").index(this);
-			$(".ad_box ul").css("left",-i*280+"px");
-		}
-	});
+    $(".ad_num").on("click","li",function(){
+        if(!$(this).hasClass("curr")){
+            $(".ad_num li").removeClass("curr");
+            $(this).addClass("curr");
+            var i = $(".ad_num li").index(this);
+            $(".ad_box ul").css("left",-i*280+"px");
+        }
+    });
 	
-	$(".homeAd .addAdPic").on("click",function(){
-		var i = $(".ad_box li").length;
-		$(".ad_box ul").append("<li><a class='scd_btn' name='addLink'>"+ Number(i+1)+"</a><span class='close'></span></li>");
-		$(".ad_box ul").css("width",Number(i+1)*280+"px");
-		$(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
-	});
+    $(".homeAd .addAdPic").on("click",function(){
+        var i = $(".ad_box li").length;
+        $(".ad_box ul").append("<li><a class='scd_btn' name='addLink'>"+ Number(i+1)+"</a><span class='close'></span></li>");
+        $(".ad_box ul").css("width",Number(i+1)*280+"px");
+        $(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
+    });
 	
-	$.each($(".category a li"),function(i,item){
-		if(i%2 != 0){
-			$(item).css("background","#53656c");
-		}
-	});
-	$.each($(".nav_d li a"),function(i,item){
-		if(i%2 != 0){
-			$(item).css("background","#53656c");
-		}
-	});
+    $.each($(".category a li"),function(i,item){
+        if(i%2 != 0){
+            $(item).css("background","#53656c");
+        }
+    });
+    $.each($(".nav_d li a"),function(i,item){
+        if(i%2 != 0){
+            $(item).css("background","#53656c");
+        }
+    });
 	
-	$(".leftSide").css("height",$(document).height() - 60 +"px");
+    $(".leftSide").css("height",$(document).height() - 60 +"px");
 	
-	$(".newSmlPic").click(function(){
-		var i = $(".smlPicList .smlPic").length;
-		$(".smlPicList").append("<div class='smlPic'><a class='scd_btn' name='addLink'>"+Number(i+1)+"</a><span class='close'></span></div>");
-	});
+    $(".newSmlPic").click(function(){
+        var i = $(".smlPicList .smlPic").length;
+        $(".smlPicList").append("<div class='smlPic'><a class='scd_btn' name='addLink'>"+Number(i+1)+"</a><span class='close'></span></div>");
+    });
 	
-	$("tr").each(function(){
-		var table = $(this).parents("table");
-		var i = table.find("tr").index($(this));
-		if(i % 2 ==0 && i != 0){
-			$(this).css("background","#F2F6F6");
-		}
-	});
+    $("tr").each(function(){
+        var table = $(this).parents("table");
+        var i = table.find("tr").index($(this));
+        if(i % 2 ==0 && i != 0){
+            $(this).css("background","#F2F6F6");
+        }
+    });
 	
-	$(".insetBox").on("click",".optBox .close2",function(){
-		$(this).parents(".optBox").remove();
-	});
+    $(".insetBox").on("click",".optBox .close2",function(){
+        $(this).parents(".optBox").remove();
+    });
 	
-	$(".addItem").on("click",".addOptBox",function(){
-		var item = $(this).parents(".addItem");
-		if($(item).hasClass("addRdoItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}else if($(item).hasClass("addChekItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}else if($(item).hasClass("addSelItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}
-	});
+    $(".addItem").on("click",".addOptBox",function(){
+        var item = $(this).parents(".addItem");
+        if($(item).hasClass("addRdoItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }else if($(item).hasClass("addChekItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }else if($(item).hasClass("addSelItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }
+    });
 	
-	$(".addItem").on("click",".addItemSub",function(){
-		var item = $(this).parents(".addItem");
-		if($(item).hasClass("addTxtItem")){
+    $(".addItem").on("click",".addItemSub",function(){
+        var item = $(this).parents(".addItem");
+        if($(item).hasClass("addTxtItem")){
 			
-		}else if($(item).hasClass("addRdoItem")){
+        }else if($(item).hasClass("addRdoItem")){
 			
-		}else if($(item).hasClass("addChekItem")){
+        }else if($(item).hasClass("addChekItem")){
 			
-		}else if($(item).hasClass("addSelItem")){
+        }else if($(item).hasClass("addSelItem")){
 		 	
-		}
-	});
+    }
+    });
 	
-	$(".iphoneVirtual").on("click",".opt.rad",function(){
-		if($(this).hasClass("check")){
-			$(this).removeClass("check");
-		}else{
-			$(this).parent().find(".rad").removeClass("check");
-			$(this).addClass("check");
-		}
-	});
+    $(".iphoneVirtual").on("click",".opt.rad",function(){
+        if($(this).hasClass("check")){
+            $(this).removeClass("check");
+        }else{
+            $(this).parent().find(".rad").removeClass("check");
+            $(this).addClass("check");
+        }
+    });
 	
-	$(".iphoneVirtual").on("click",".opt.chk",function(){
-		if($(this).hasClass("check")){
-			$(this).removeClass("check");
-		}else{
-			$(this).addClass("check");
-		}
-	});
-	
+    $(".iphoneVirtual").on("click",".opt.chk",function(){
+        if($(this).hasClass("check")){
+            $(this).removeClass("check");
+        }else{
+            $(this).addClass("check");
+        }
+    });
 
+    $(".warnArea .time").click(function(){
+        var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
+        txtArea.text(txtArea.text() + "[[时间]]");
+    });
+
+    $(".warnArea .space").click(function(){
+        var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
+        txtArea.text(txtArea.text() + "[[填空]]");
+    });
+        
+    $(".radioSpan").click(function(){
+        $(this).parent().find("input[name='send_time']").click();
+        $(this).parent().find("input[name='user_select']").click();
+        $(this).parent().parent().find(".radioBox1").removeClass("check");
+        $(this).parent().addClass("check");
+        $(this).parents(".labRight").find("input[type='text']").attr("disabled","disabled");
+        $(this).parent().find("input[type='text']").removeAttr("disabled");
+    });
+
+    
+    
 })
- //显示创建站点
+//显示创建站点
 function create_site(template){
     $(".second_bg").show();
     $(".second_box.new_point"   ).show();
@@ -433,6 +473,24 @@ $(".autoReplyBox").on("click",function(){
 
 
 function search_site(){
-   location.href='/search_sites?key='+$("#site_key").val();
+    location.href='/search_sites?key='+$("#site_key").val();
    
+}
+
+function interception_wrap(button){
+    var s = $(button).parents(".third_content").find("textarea").val();
+    var array_s = s.split("\n");
+    var activity = null;
+    $.each(array_s,function(index,value){
+       value = $.trim(value);
+        if(activity==null){
+            activity = value;
+        }else{
+            activity += ";||;"+ value;
+        }
+    });
+    var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
+    txtArea.text(txtArea.text() + "[[选项;=;"+ activity +"]]")
+    $(button).parents(".third_box").hide();
+    $(".third_bg").hide();
 }
