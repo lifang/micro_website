@@ -38,7 +38,7 @@ MicroWebsite::Application.routes.draw do
   namespace :api do
     resources :clients do
       collection do
-        post :login
+        post :login, :message_detail, :refresh, :del_recent_client
       end
     end
   end
