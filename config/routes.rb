@@ -35,6 +35,14 @@ MicroWebsite::Application.routes.draw do
   match '/search_sites' ,to: 'sites#search',via: 'get'
   match '/model_page' ,to: 'pages#model_page',via: 'post'
   # Sample resource route with options:
+  namespace :api do
+    resources :clients do
+      collection do
+        post :login
+      end
+    end
+  end
+
   resources :sites do
     member do
       post :verify_site
@@ -42,7 +50,11 @@ MicroWebsite::Application.routes.draw do
     resources :micro_messages 
     resources :micro_imgtexts
     resources :weixin_replies
-    resources :app_managements
+    resources :app_managements do
+      collection do        
+        post :create_client_info_model
+      end
+    end
 
     resources :awards do
       get :win_award_info

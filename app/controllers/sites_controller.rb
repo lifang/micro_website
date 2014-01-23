@@ -3,9 +3,11 @@ class SitesController < ApplicationController
   layout 'sites'
   def index
       @sites=current_user.sites.paginate(page: params[:page],:per_page => 9, :order => 'updated_at DESC')
+      
   end
 
   def create
+    
     Site.transaction do
       if params[:site][:edit_or_create]=='create'
         @site=Site.new()
@@ -17,6 +19,8 @@ class SitesController < ApplicationController
         @site.template=params[:site][:template]
         respond_to do |format|
           if @site && @site.save
+            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPE[:ADMIN])
+            
             #初始化index页面
             page = @site.pages.create({:title => "index", :file_name => "index.html",
                 :path_name => "/#{@site.root_path}/index.html", :types => Page::TYPE_NAMES[:main]})
@@ -43,12 +47,15 @@ class SitesController < ApplicationController
 
   def update
     @site=Site.find_by_name(params[:origin_name])
+    
     name=params[:site][:name].split(' ').join
     @root_path=params[:site][:root_path].gsub(/\/+/, "") if @root_path=params[:site][:root_path]
     cweb=params[:site][:cweb]
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb)
+        client = Client.find_by_site_id(@site.id)
+        client.update_attributes(username:params[:username] , password:params[:password])
         flash[:success]='更新成功'
       end
       format.js
