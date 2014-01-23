@@ -20,10 +20,10 @@ class WeixinsController < ApplicationController
         content = params[:xml][:Content]
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         
-        if cweb == "dknbj" && params[:xml][:Content] == "参与"
+        if params[:xml][:Content] == "参与"
           open_id = params[:xml][:FromUserName]
           link = get_valid_award(cweb)
-          @link = link ? link + "&secret_key=" + open_id : "0"
+          @link = link ? link + "&amp;secret_key=" + open_id : "0"
           if @link == "0"
             @message = "暂无活动"
           else
@@ -114,12 +114,12 @@ class WeixinsController < ApplicationController
   def define_render(return_message)
     if return_message
       micro_message, micro_image_text = return_message
-      if micro_message.text?
-        @message = micro_image_text[0].content
+      if micro_message && micro_message.text?
+        @message = micro_image_text[0].content if micro_image_text && micro_image_text[0]
         xml = teplate_xml
         render :xml => xml        #关注 自动回复的文字消息
       else
-        @items = micro_image_text
+        @items = micro_image_text || []
         render "news" , :formats => :xml, :layout => false  #关注 自动回复的图文消息
       end
     else

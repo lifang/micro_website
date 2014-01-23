@@ -4,7 +4,7 @@ class Site < ActiveRecord::Base
   STATUS = {0 => "新建", 1 => "未审核", 2 => "待审核", 3 => "审核通过",4=>"审核不通过"}
   STATUS_NAME = {:new => 0, :unverified => 1, :wait_verified => 2, :pass_verified => 3, :fail_varified => 4}
   STATUS_VALUE =[0,1,2,3,4]
-
+  has_many :clients ,dependent: :destroy
   has_many :keywords ,dependent: :destroy
   has_many :micro_messages ,dependent: :destroy
   has_many :awards ,dependent: :destroy
