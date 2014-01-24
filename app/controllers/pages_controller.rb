@@ -1,8 +1,8 @@
 #encoding: utf-8
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
+  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token , :get_form_date]
   layout 'sites'
-  before_filter :get_site, :except => [:submit_queries]
+  before_filter :get_site, :except => [:submit_queries, :get_form_date]
   caches_action :static
   
   #主页 index

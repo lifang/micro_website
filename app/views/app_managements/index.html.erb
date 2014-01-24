@@ -14,7 +14,7 @@
 
 		<%=form_for(:app_management ,url: create_client_info_model_site_app_managements_path(@site)) do |f|%>
 		<div class="appInfo">
-			<% if @client.html_content.nil? || @client.html_content==""%>
+			<% if @chi.nil? || @chi.hash_content==""%>
 			<input type='hidden' id="info_inedx" value="2">
 			<input type='hidden' id="html_content" name="html_content" value="">
 			<div class="itemBox">
@@ -31,7 +31,7 @@
 			</div>
 			<hr class="topLine cf" />
 			<%else%>
-			  <%=raw @client.html_content%>
+			  <%=raw @chi.hash_content%>
 			<%end%>
 		</div>
 		<%end%>
