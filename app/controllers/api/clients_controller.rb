@@ -31,10 +31,13 @@ class Api::ClientsController < ApplicationController
           a << hash;
           a
         }
+        remind = Remind.find_by_site_id(user.site_id)
+        re_content = remind.content if remind
       end
     end
     render :json => {:status => status, :msg => msg, 
-      :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id, :person_list => person_list, :recent_list => rl}}
+      :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id,
+        :person_list => person_list, :recent_list => rl, :remind => re_content}}
   end
 
   #点击某个用户，查看信息详情

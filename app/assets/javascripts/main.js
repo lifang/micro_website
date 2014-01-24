@@ -499,7 +499,7 @@ function interception_wrap(button){
         }
     });
     var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
-    txtArea.val(txtArea.val() + "[[选项="+ activity +"]]")
+    txtArea.val(txtArea.val() + "[[选项-"+ activity +"]]")
     $(button).parents(".third_box").hide();
     $(".third_bg").hide();
 }

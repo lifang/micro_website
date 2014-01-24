@@ -50,7 +50,6 @@ class AppManagementsController < ApplicationController
       f.write(content.html_safe)
     end
   end
-
   def html_content_app form
     li=""
     form.each_with_index do |element,index|
