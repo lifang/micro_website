@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :check_user_status
   include ApplicationHelper
   include PagesHelper
+  include AppManagementsHelper
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
 
