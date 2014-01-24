@@ -91,8 +91,10 @@ class ApplicationController < ActionController::Base
   #发get请求获得access_token
   def create_get_http(url ,route)
     http = set_http(url)
+    p url
     request= Net::HTTP::Get.new(route)
     back_res = http.request(request)
+    p back_res.body
     return JSON back_res.body
   end
   
