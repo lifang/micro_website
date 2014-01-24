@@ -56,7 +56,7 @@ class AppManagementsController < ApplicationController
     form.each_with_index do |element,index|
       ele = element[0][1..-1]
       if ele.eql?("text")
-        li += "<li><label>#{element[1][:name]} <input name='form[t#{index}][name]' type='hidden' value='#{element[1][:name]}' /> </label><input name='form[t#{index}][value]' type='text'></li>
+        li += "<li><label>#{element[1][:name]}：<input name='form[t#{index}][name]' type='hidden' value='#{element[1][:name]}' /> </label><input name='form[t#{index}][value]' type='text'></li>
         "
         
         #单选
@@ -84,7 +84,7 @@ class AppManagementsController < ApplicationController
           select +="<option  value='#{value}'>#{value}</option>
           "
         end
-        li += "<li><label>#{element[1][:name]}<input name='form[s#{index}][name]' type='hidden' value='#{element[1][:name]}' /></label><select name='form[s#{index}][value]'>#{select}</select>
+        li += "<li><label>#{element[1][:name]}：<input name='form[s#{index}][name]' type='hidden' value='#{element[1][:name]}' /></label><select name='form[s#{index}][value]'>#{select}</select>
         "
       end
     end
