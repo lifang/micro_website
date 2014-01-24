@@ -204,7 +204,7 @@
             <div class="radioBox1 check">
               <input name="send_time" type="radio" value="0" checked/>
               <span class="radioSpan"></span>
-              <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',autoPickDate:true});"/>
+              <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();"/>
             </div>
             <div class="radioBox1 ">
               <input name="send_time" type="radio" value="1" />

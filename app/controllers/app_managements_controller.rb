@@ -26,10 +26,5 @@ class AppManagementsController < ApplicationController
     end
   end
 
-  def send_message
-    mobilephone = 18306219610
-    content = "你好啊！！！！"
-    message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-    create_get_http(Message::MESSAGE_URL, message_route)
-  end
+
 end
