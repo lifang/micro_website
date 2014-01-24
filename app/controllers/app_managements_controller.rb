@@ -5,6 +5,8 @@ class AppManagementsController < ApplicationController
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @chi =ClientHtmlInfo.find_by_client_id(@client.id)
+    @record = Record.find_by_site_id(@site.id)
+    @remind = Remind.find_by_site_id(@site.id)
   end
 
   def create_client_info_model
@@ -162,5 +164,11 @@ a.each(function(){
 
      "
      html
+  end
+  def send_message
+    mobilephone = 18306219610
+    content = "你好啊！！！！"
+    message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
+    create_get_http(Message::MESSAGE_URL, message_route)
   end
 end

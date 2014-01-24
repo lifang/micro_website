@@ -38,7 +38,7 @@ MicroWebsite::Application.routes.draw do
   namespace :api do
     resources :clients do
       collection do
-        post :login
+        post :login, :message_detail, :refresh, :del_recent_client
       end
     end
   end
@@ -52,8 +52,13 @@ MicroWebsite::Application.routes.draw do
     resources :weixin_replies
     resources :app_managements do
       collection do        
+<<<<<<< HEAD
         post :create_client_info_model,:get_form_date
 
+=======
+        post :create_client_info_model
+        get :send_message
+>>>>>>> 7706063933e464bc5826b26f110fc5063c299695
       end
     end
 
@@ -108,6 +113,13 @@ MicroWebsite::Application.routes.draw do
       member do
         put :it_preview
         get :change
+      end
+    end
+    resources :reminds do
+      collection do
+        post :create_records
+      end
+      member do
       end
     end
   end

@@ -784,16 +784,16 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .warnArea { width: 400px; height: 125px; border: 1px solid #ccc;}
 .warnTit { background: #f4f4f4; height: 40px; position: relative;}
 .warnTit .time { display: block; width: 25px; height: 25px; background: url(/assets/warnArea.png) no-repeat -3px -1px; position: absolute; left: 10px; top: 9px; cursor: pointer;}
-.warnTit .addr { display: block; width: 25px; height: 25px; background: url(/assets/warnArea.png) no-repeat -36px -2px; position: absolute; left: 45px; top: 9px; cursor: pointer;}
-.warnTit .cont { display: block; width: 30px; height: 25px; background: url(/assets/warnArea.png) no-repeat -67px -2px; position: absolute; left: 80px; top: 9px; cursor: pointer;}
+.warnTit .cont { display: block; width: 25px; height: 25px; background: url(/assets/warnArea.png) no-repeat -36px -2px; position: absolute; left: 45px; top: 9px; cursor: pointer;}
+.warnTit .space { display: block; width: 30px; height: 25px; background: url(/assets/warnArea.png) no-repeat -67px -2px; position: absolute; left: 80px; top: 9px; cursor: pointer;}
 .warnTxt textarea { width: 390px; height: 85px; resize: none; border: 0; padding: 5px;}
-.addrpicker { margin: 20px; margin-bottom: 0; border: 1px solid #ccc; background: #f6f6f6;}
+.addcontarea { margin: 20px; margin-bottom: 0; border: 1px solid #ccc; background: #f6f6f6; width: 245px; height: 75px; padding: 5px; resize: none;}
 .addrpick { padding: 5px; cursor: pointer;}
 .addrpick.check,.addrpick:hover { background: #c2c2c2; color: #fff;}
 
 .chkbox { position: relative;}
 .chkbox input[type="checkbox"] { display: none;}
-.chkSpan { display: inline-block; width: 20px; height: 20px; background: url(/assets/check_icon.png) no-repeat -5px -3px; position: absolute; left: 0; top: 11px;}
+.chkSpan { display: inline-block; width: 20px; height: 20px; background: url(../images/check_icon.png) no-repeat -5px -3px; position: absolute; left: 0; top: 11px;}
 .chkSpan:hover { background-position: -5px -33px;}
 .check .chkSpan { background-position: -5px -63px;}
 
@@ -801,6 +801,5 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 /* third_box */
 .third_bg { width:100%; height:100%; z-index:100; position: fixed; top:0; background: #000; opacity: 0.3; filter: alpha(opacity=30); display: none;}
 .third_box { z-index:101; }
-
 
 

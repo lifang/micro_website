@@ -25,15 +25,15 @@ class MicroImgtextsController < ApplicationController
     #利用时间整数做名字
     timename = Time.new.to_i
     @full_dir =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
-    @full_path =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}"+@tmp.original_filename
-    @micro_imgtext.img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}"+@tmp.original_filename
+    @full_path =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
+    @micro_imgtext.img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
     if @img_resources.include?(postfix_name)
       if @micro_imgtext.save
         if !File::exist?(@full_path)
           FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
           file=File.new(@full_path,'wb')
           FileUtils.cp @tmp.path,file
-          min_image(@full_path,"#{timename}#{@tmp.original_filename}",@full_dir)
+          min_image(@full_path,"#{timename}.#{postfix_name}",@full_dir)
         end
         flash[:success]='新建消息模块成功'
         redirect_to edit_site_micro_message_path(@site,@micro_message)
@@ -83,9 +83,9 @@ class MicroImgtextsController < ApplicationController
       @img_resources =%w[jpg png gif jpeg]
       postfix_name = @tmp.original_filename.split('.')[-1].downcase
       @full_dir=@full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
-      @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}"+@tmp.original_filename
+      @full_path=Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
       #更新后的路径
-      img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}"+@tmp.original_filename
+      img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
       #原先的图片路径
       @Original_img_true_path = Rails.root.to_s+"/public"+ @micro_imgtext.img_path
       #如果图片符合规则
@@ -98,7 +98,7 @@ class MicroImgtextsController < ApplicationController
         destroy_Original_img @Original_img_true_path
         file=File.new(@full_path,'wb')
         FileUtils.cp @tmp.path,file
-        min_image(@full_path,"#{timename}#{@tmp.original_filename}",@full_dir)
+        min_image(@full_path,"#{timename}.#{postfix_name}",@full_dir)
         flash[:success]='更新成功'
         redirect_to edit_site_micro_message_path(@site,@micro_message)
       else
