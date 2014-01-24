@@ -4,6 +4,8 @@ layout 'sites'
  before_filter :get_site
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
+    @record = Record.find_by_site_id(@site.id)
+    @remind = Remind.find_by_site_id(@site.id)
   end
 
 
