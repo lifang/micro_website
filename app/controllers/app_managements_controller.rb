@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AppManagementsController < ApplicationController
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site,:exist_app?
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @chi =ClientHtmlInfo.find_by_client_id(@client.id)

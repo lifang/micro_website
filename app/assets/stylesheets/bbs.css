@@ -262,9 +262,3 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     height: 280px;
 }
 .second_content.second_content2 { width: 900px; }
-.second_content .close,.delete {
-    overflow: hidden;
-    position: absolute;
-    right: 12px;
-    top: 12px;
-}
