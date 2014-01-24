@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     elsif page.sub?
       sub_site_pages_path(site)
     elsif page.form?
-      form_site_pages_path(site)
+      site_forms_path(site)
     elsif page.image_text?
       site_image_texts_path(site)
     end

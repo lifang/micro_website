@@ -4,7 +4,7 @@
  */
 $(function(){
     /*design*/
-    $(".second_box .close").click(function(){
+    $(".second_box .close, .second_box .cancel").click(function(){
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
     });
@@ -40,6 +40,43 @@ $(function(){
             $(".ad_box ul").css("left",-i*280+"px");
         }
     });
+
+    $(".iphoneVirtual").on("click",".opt.rad",function(){
+        if($(this).hasClass("check")){
+            $(this).removeClass("check");
+        }else{
+            $(this).parent().find(".rad").removeClass("check");
+            $(this).addClass("check");
+        }
+    });
+    $(".iphoneVirtual").on("click",".opt.chk",function(){
+        if($(this).hasClass("check")){
+            $(this).removeClass("check");
+        }else{
+            $(this).addClass("check");
+        }
+    });
+
+
+	$(".insetBox").on("click",".optBox .close2",function(){
+		$(this).parents(".optBox").remove();
+	});
+
+	$(".addItem").on("click",".addOptBox",function(){
+		var item = $(this).parents(".addItem");
+		if($(item).hasClass("addRdoItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}else if($(item).hasClass("addChekItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}else if($(item).hasClass("addSelItem")){
+			$(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
+		}
+	});
+
+  // 定义图片库, drop area
+  var $gallery = $( ".picRes" );
+  // 使图片库里面的元素可托拽
+  it_drag($( ".picBox", $gallery ));
 
 //初始化滑动块宽度
 var i = $(".ad_box li").length;

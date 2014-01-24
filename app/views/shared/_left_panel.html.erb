@@ -15,8 +15,8 @@
         其他页
       </li>
     <% end %>
-    <%= link_to(form_site_pages_path(@site)) do%>
-      <li class="leftItem3 <%= controller.action_name == "form" ? 'leftItem_selected' : '' %>">
+    <%= link_to(site_forms_path(@site)) do%>
+      <li class="leftItem3 <%= controller_name == "forms" ? 'leftItem_selected' : '' %>">
         表单
       </li>
     <% end %>

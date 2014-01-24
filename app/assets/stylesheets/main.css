@@ -162,6 +162,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 
 /* 首页 */
 .tempChoice { width: 300px; position: absolute; top: 10px; right: 180px;}
+.tempChoice2 { width: 130px; }
 .tempChoice span { font-size: 16px; line-height: 52px;}
 .tempChoice ul { float: right; font-size: 0;}
 .tempChoice li { margin: 0 5px; border: 1px solid #e2e2e2;}
@@ -297,12 +298,6 @@ box-shadow: 0 0 3px rgba(0,0,0,0.3);
 	position: relative;
 	font-size: 18px;
 }
-.second_content .close {
-    overflow: hidden;
-    position: absolute;
-    right: 12px;
-    top: 12px;
-}
 .second_content h1 { text-align: center; font-size: 24px; line-height: 48px;}
 .second_content label {display: inline-block; line-height: 42px; text-align: right; width: 150px;}
 .second_content input { width: 200px; border: 1px solid #003333; padding: 5px; }
@@ -398,37 +393,52 @@ fieldset { padding: 3px;}
 
 
 
+/* 表单 */
+.formAct { margin-top: 10px; text-align: center; width: 320px;}
+.formAct button { margin: 5px;}
+.optBox { position: relative;}
+.optBox .close2 {
+	background: url("/assets/v2.0/close.png") no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 17px;
+    position: absolute;
+    right: 12px;
+    top: 14px;
+	display: none;
+}
+.optBox:hover .close2 { display: block;}
+
+.itemBox { padding: 5px 10px; color: #6E6E6E; position: relative;}
+.itemBox:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;}
+.itemBox .close { position: absolute; top: 12px; right: 5px; display: none;}
+.itemBox:hover .close { display: block;}
+.itemBox label { font-size: 14px; line-height: 30px; display: inline-block; width: 120px;}
+.itemBox input[type="text"] { border: 1px solid #C3C3C3; color: #6E6E6E; padding: 4px; width: 150px;}
+.itemBox select { border: 1px solid #C3C3C3; color: #6E6E6E; width: 160px; font-size: 20px;}
+.itemBox span { font-size: 14px; line-height: 30px;}
+.opt { position: relative;}
+.opt input { display: none;}
+.opt span { padding-left: 30px; display: block; background-position: -1px 3px; background-repeat: no-repeat;}
+.opt span:hover { background-position: -1px -27px; background-repeat: no-repeat;}
+.opt.check span { background-position: -1px -57px; background-repeat: no-repeat;}
+.rad span { background-image: url(/assets/v2.0/radio_icon.png);}
+.chk span { background-image: url(/assets/v2.0/check_icon.png);}
 
 
 
+/* 访问控制 */
+.vstContr { line-height: 32px; font-size: 16px; }
+.vcItem { display: inline-block;}
+.vcItem input { display: none;}
+.vcItem span { padding-left: 30px; display: block; background: url(/assets/v2.0/radio_icon.png) no-repeat -1px 3px;}
+.vcItem span:hover { background-position: -1px -27px;}
+.vcItem.check span { background-position: -1px -57px;}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.main_content { background: #FFF;}*/
 
 .theTabs li {
 	width:130px;
