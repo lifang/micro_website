@@ -5,6 +5,8 @@ layout 'sites'
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
   end
+
+
   def create_client_info_model
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     form = params[:form]
