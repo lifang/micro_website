@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AppManagementsController < ApplicationController
-layout 'sites'
- before_filter :get_site
+  layout 'sites'
+  before_filter :get_site
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @record = Record.find_by_site_id(@site.id)
@@ -23,5 +23,11 @@ layout 'sites'
       render 'index'
     end
   end
-    
+
+  def send_message
+    mobilephone = 18306219610
+    content = "你好啊！！！！"
+    message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
+    create_get_http(Message::MESSAGE_URL, message_route)
+  end
 end

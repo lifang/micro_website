@@ -53,6 +53,7 @@ MicroWebsite::Application.routes.draw do
     resources :app_managements do
       collection do        
         post :create_client_info_model
+        get :send_message
       end
     end
 
