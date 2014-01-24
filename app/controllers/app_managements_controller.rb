@@ -165,8 +165,8 @@ a.each(function(){
      html
   end
   def send_message
-    mobilephone = 18306219610
-    content = "1234567"
+    mobilephone = 13913607079
+    content = "早上好"
     p mobilephone
     p content
     begin
