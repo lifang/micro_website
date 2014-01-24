@@ -52,7 +52,8 @@ MicroWebsite::Application.routes.draw do
     resources :weixin_replies
     resources :app_managements do
       collection do        
-        post :create_client_info_model
+        post :create_client_info_model,:get_form_date
+        get :send_message
       end
     end
 

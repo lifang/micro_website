@@ -263,20 +263,12 @@ $(function() {
 
     $(".warnArea .time").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        if(txtArea.val()==""){
             txtArea.val(txtArea.val() + "[[时间]]");
-        }else{
-            txtArea.val(txtArea.val() + ",[[时间]]");
-        }
     });
 
     $(".warnArea .space").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        if(txtArea.val()==""){
             txtArea.val(txtArea.val() + "[[填空]]");
-        }else{
-            txtArea.val(txtArea.val() + ",[[填空]]");
-        }
     });
         
     $(".radioSpan").click(function(){
@@ -492,12 +484,7 @@ function interception_wrap(button){
         }
     });
     var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
-    if(txtArea.val()==""){
-        txtArea.val(txtArea.val() + "[[选项="+ activity +"]]")
-    }else{
-        txtArea.val(txtArea.val() + ",[[选项="+ activity +"]]")
-    }
-    
+    txtArea.val(txtArea.val() + "[[选项="+ activity +"]]")
     $(button).parents(".third_box").hide();
     $(".third_bg").hide();
 }
