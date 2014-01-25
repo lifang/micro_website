@@ -5,7 +5,10 @@ class WeixinsController < ApplicationController
   require "uri"
   require 'openssl'
   skip_before_filter :authenticate_user!
-
+  before_filter :get_site_by_token
+  def get_site_by_token
+    @site = Site.find_by_cweb(params[:cweb])
+  end
   #用于处理相应服务号的请求以及一开始配置服务器时候的验证，post 或者 get
   def accept_token
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
