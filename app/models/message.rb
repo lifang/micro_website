@@ -25,31 +25,6 @@ class Message < ActiveRecord::Base
     back_res =http.request(request)
     return JSON back_res.body
   end
-  #发get请求获得access_token
-  #  def self.create_get_http(url ,route)
-  #    http = set_http(url)
-  #    p url
-  #    request= Net::HTTP::Get.new(route)
-  #    back_res = http.request(request)
-  #    p back_res.body
-  #    return JSON back_res.body
-  #  end
-  #  def self.create_post_http(url,route_action,menu_bar)
-  #    http = set_http(url)
-  #    request = Net::HTTP::Post.new(route_action)
-  #    request.set_body_internal(menu_bar)
-  #    return JSON http.request(request).body
-  #  end
-  #  def self.set_http(url)
-  #    uri = URI.parse(url)
-  #    http = Net::HTTP.new(uri.host, uri.port)
-  #    if uri.port==443
-  #      http.use_ssl = true
-  #      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  #    end
-  #    http
-  #  end
-  #按时发送短信息
   def self.send_message
     Message.transaction do
       message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
@@ -82,7 +57,6 @@ class Message < ActiveRecord::Base
             message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
             create_get_http(Message::MESSAGE_URL, message_route)
           rescue
-            p 111111111111
           end
           message = Message.find_by_id(message_client.id)
           message.update_attributes(:status => 2)
