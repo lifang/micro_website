@@ -36,14 +36,19 @@
       </li>
     <% end %>
     <li class="leftItem7">奖品</li>
-    <%=link_to site_micro_messages_path(@site) do%>
-      <li class="leftItem7 <%= controller.controller_name == "micro_messages"||controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
-        微信息
-      </li>
-    <% end %>
     <%=link_to site_app_managements_path(@site) do%>
       <li class="leftItem8 <%= controller.controller_name == "app_managements" ? "leftItem_selected":"" %>">
         APP
+      </li>
+    <% end %>
+      <%=link_to site_micro_messages_path(@site) do%>
+      <li class="leftItem9 <%= controller.controller_name == "micro_messages" ? "leftItem_selected":"" %>">
+        图文消息
+      </li>
+    <% end %>
+      <%=link_to site_weixin_replies_path(@site) do%>
+      <li class="leftItem10 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
+        自动回复
       </li>
     <% end %>
   </ul>
