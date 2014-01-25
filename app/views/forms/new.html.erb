@@ -24,12 +24,14 @@
         <%= f.hidden_field :img_path, :value => @form && @form.img_path ? @form.img_path : "" %>
         <div class="form_ele">
           <% if !@form.new_record? && @form.page_html %>
-            <%= raw @form.page_html.gsub("||", ";") %>
+            <%= raw @form.page_html %>
           <% else %>
             <div class="iphvAct">
           <button class="blue_btn scd_btn" type="button" >添加跳转页</button>
           <input type="hidden" name="redirect_path" class="hidden_redirect_path"/>
         </div>
+        <textarea style="display:none" class="hidden_html" name="page[page_html]" ></textarea>
+
           <% end %>
         </div>
         
