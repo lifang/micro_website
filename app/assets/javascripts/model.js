@@ -69,11 +69,10 @@ function template3_Submit(site_id){
 
     if(flag){
         var form = $(".iv_temp3").parent("form")
-        var dataValue = form.serialize();
         var content = $(".iv_temp3").html();
-        content = content.replace(/;/g, "||");  //把分号替换掉，否则表单提交不完全，会被分号隔开
-        dataValue = dataValue + "&page[content]=" + content;
-
+        var htmlContainer = form.find(".hidden_html");
+        htmlContainer.html(content)
+        var dataValue = form.serialize();
         $.ajax({
             url: "/sites/" + site_id + "/pages/save_template3",
             type: "POST",
@@ -148,4 +147,8 @@ function show_model_sub(){
     $(".iphoneVirtual").show();
     $("#tupian").show();
     $(".iv_temp4").hide();
+}
+
+function escapeHtml(content){
+    return content.replace(/;/g, "||").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")
 }

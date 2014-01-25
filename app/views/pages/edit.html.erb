@@ -78,6 +78,7 @@
               <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
             </ul>
           </div>
+          <textarea style="display:none" class="hidden_html" name="page[content]" ></textarea>
         <% end %>
       </div>
     <% end %>
@@ -89,7 +90,7 @@
       <%= form_for [@site, @page], :html => {:id => "main_page_form", :remote => true} do |f| %>
         <%= f.hidden_field :title, :value => page_title(@page) %>
         <%= f.hidden_field :file_name, :value =>  page_file_name(@page) %>
-        <% if @site.template == Constant::Template[:temp4] && @page.page_html.present?  %>
+        <% if @site.template == Constant::Template[:temp4] && @index.present?  %>
           <%= f.text_area :content,:value => (page_html_deal @index), :class => "page_txt" %>
         <% else %>
           <%= f.text_area :content,:value => "", :class => "page_txt" %>

@@ -152,12 +152,10 @@ function setImageWH(img, width, height){
     var imgHeight = $(img).height();
     if(imgWidth > imgHeight){
         $(img).css({
-            "width": width + "px",
-            "height" : imgHeight > height ? height : "auto"
+            "width": width + "px"
         });
     }else{
         $(img).css({
-            "width" : imgWidth > width ? width : "auto",
             "height": height + "px"
         });
     }
