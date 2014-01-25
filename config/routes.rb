@@ -41,6 +41,11 @@ MicroWebsite::Application.routes.draw do
         post :login, :message_detail, :refresh, :del_recent_client
       end
     end
+    resources :messages do
+      collection do
+        post :make_record
+      end
+    end
   end
 
   resources :sites do
