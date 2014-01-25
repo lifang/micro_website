@@ -14,41 +14,41 @@ class Message < ActiveRecord::Base
   PASSWORD = "123456"
 
   
-  #  def self.create_get_http(url,route)
-  #    uri = URI.parse(url)
-  #    http = Net::HTTP.new(uri.host, uri.port)
-  #    if uri.port==443
-  #      http.use_ssl = true
-  #      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  #    end
-  #    request= Net::HTTP::Get.new(route)
-  #    back_res =http.request(request)
-  #    return JSON back_res.body
-  #  end
-  #发get请求获得access_token
-  def self.create_get_http(url ,route)
-    http = set_http(url)
-    p url
-    request= Net::HTTP::Get.new(route)
-    back_res = http.request(request)
-    p back_res.body
-    return JSON back_res.body
-  end
-  def self.create_post_http(url,route_action,menu_bar)
-    http = set_http(url)
-    request = Net::HTTP::Post.new(route_action)
-    request.set_body_internal(menu_bar)
-    return JSON http.request(request).body
-  end
-  def self.set_http(url)
+  def self.create_get_http(url,route)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port==443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    http
+    request= Net::HTTP::Get.new(route)
+    back_res =http.request(request)
+    return JSON back_res.body
   end
+  #发get请求获得access_token
+  #  def self.create_get_http(url ,route)
+  #    http = set_http(url)
+  #    p url
+  #    request= Net::HTTP::Get.new(route)
+  #    back_res = http.request(request)
+  #    p back_res.body
+  #    return JSON back_res.body
+  #  end
+  #  def self.create_post_http(url,route_action,menu_bar)
+  #    http = set_http(url)
+  #    request = Net::HTTP::Post.new(route_action)
+  #    request.set_body_internal(menu_bar)
+  #    return JSON http.request(request).body
+  #  end
+  #  def self.set_http(url)
+  #    uri = URI.parse(url)
+  #    http = Net::HTTP.new(uri.host, uri.port)
+  #    if uri.port==443
+  #      http.use_ssl = true
+  #      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #    end
+  #    http
+  #  end
   #按时发送短信息
   def self.send_message
     Message.transaction do
@@ -63,10 +63,17 @@ class Message < ActiveRecord::Base
           content_splitleft.each do |splitleft|
             if splitleft.include? "]]"
               splitright = splitleft.split("]]")[0]
-              content += splitright.split("=")[1]
+              if(splitright.split("=")[0].eql?("选项"))
+                content += splitright.split("=")[1].split("-")[0]
+              else
+                content += splitright.split("=")[1]
+              end
+              if splitleft.split("]]")[1]
+                content += splitleft.split("]]")[1]
+              end
             else
-              if splitright
-                content += splitright
+              if splitleft
+                content += splitleft
               end
             end
           end
@@ -77,8 +84,8 @@ class Message < ActiveRecord::Base
           rescue
             p 111111111111
           end
-           message = Message.find_by_id(message_client.id)
-           message.update_attributes(:status => 2)
+          message = Message.find_by_id(message_client.id)
+          message.update_attributes(:status => 2)
         end
       end
     end
