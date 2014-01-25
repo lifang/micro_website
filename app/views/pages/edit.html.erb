@@ -19,7 +19,7 @@
       <%end%>
     </div>
 
-    <div class="iphoneVirtual iv_temp2 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>" >
+    <div class="iphoneVirtual iv_temp2 main_tab" style="height: 568px;display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>" >
       <%if @page.page_html.nil? || (@site.template).to_i!=Constant::Template[:temp2] %>
         <div class="homeBg">
           <span  name="div"  style=" position: absolute;left:0px;width:120px;height:400px; ">+</span>
