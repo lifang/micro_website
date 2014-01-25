@@ -64,6 +64,11 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .loginBtn { display: block; font-size: 20px; padding: 8px 50px; background: #0683b1; margin: 0 auto; border: 0; color: #e6eff3;}
 .register { color: #0683b1; display: block; text-align: right;}
 .loginColor { background: #ec8f26; height: 10px; border-radius: 0 0 5px 5px;}
+/* 注册 */
+.resForm { background: #fff; padding: 15px 50px; border-radius: 5px 5px 0 0;}
+.resForm label { display: inline-block; text-align: right; width: 115px; font-size: 16px;} 
+.resForm input { display: inline-block; padding: 5px; border: 1px solid #e2e2e2; margin: 8px; width: 200px; color: #8C8C8C;}
+.resForm .check { color: #F00;}
 
 /* header */
 .header { height: 60px; background: #232b2e;}

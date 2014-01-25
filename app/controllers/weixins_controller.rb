@@ -18,8 +18,10 @@ class WeixinsController < ApplicationController
 
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
-        return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
+        #存储消息
+        get_client_message
         
+        return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
           open_id = params[:xml][:FromUserName]
           link = get_valid_award(cweb)
@@ -42,7 +44,18 @@ class WeixinsController < ApplicationController
     end
 
   end
-
+#接手用户的任何信息
+  def get_client_message
+    open_id = params[:xml][:FromUserName]
+    current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
+    client = Client.find_by_open_id(open_id)
+    if client && current_client.update_attribute(:has_new_message,true)
+      Message.create(site_id:@site.id , from_user:client.id ,to_user:current_client.id ,
+      types:Message::TYPES[:record],
+      content:params[:xml][:Content],
+      status:Message::STATUS[:UNREAD])
+    end
+  end
 
   #创建自定义菜单
   def create_menu(cweb)
