@@ -317,8 +317,8 @@ function is_exist_app(exist_app,username,pwd){
     }else{
     	$(radio[0]).removeAttr("checked");
     	$(radio[1]).attr("checked",true);
-    	$('#username').val("");
-        $('#password').val("");
+    	//$('#username').val("");
+       // $('#password').val("");
     }
 }
 

@@ -2,7 +2,7 @@
 module AppManagementsHelper
   def exist_app?
     unless @site.exist_app
-      flash[:error] = '您尚未使用app功能！'
+      flash[:error] = '您尚未配置app功能！'
       redirect_to site_pages_path(@site)
     end
   end
