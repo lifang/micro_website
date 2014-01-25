@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     elsif page.sub?
       sub_site_pages_path(site)
     elsif page.form?
-      form_site_pages_path(site)
+      site_forms_path(site)
     elsif page.image_text?
       site_image_texts_path(site)
     end
@@ -92,8 +92,10 @@ class ApplicationController < ActionController::Base
   #发get请求获得access_token
   def create_get_http(url ,route)
     http = set_http(url)
+    p url
     request= Net::HTTP::Get.new(route)
     back_res = http.request(request)
+    p back_res.body
     return JSON back_res.body
   end
   

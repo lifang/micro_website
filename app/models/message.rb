@@ -14,29 +14,51 @@ class Message < ActiveRecord::Base
   PASSWORD = "123456"
 
   
-  def self.create_get_http(url,route)
+  #  def self.create_get_http(url,route)
+  #    uri = URI.parse(url)
+  #    http = Net::HTTP.new(uri.host, uri.port)
+  #    if uri.port==443
+  #      http.use_ssl = true
+  #      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #    end
+  #    request= Net::HTTP::Get.new(route)
+  #    back_res =http.request(request)
+  #    return JSON back_res.body
+  #  end
+  #发get请求获得access_token
+  def self.create_get_http(url ,route)
+    http = set_http(url)
+    p url
+    request= Net::HTTP::Get.new(route)
+    back_res = http.request(request)
+    p back_res.body
+    return JSON back_res.body
+  end
+  def self.create_post_http(url,route_action,menu_bar)
+    http = set_http(url)
+    request = Net::HTTP::Post.new(route_action)
+    request.set_body_internal(menu_bar)
+    return JSON http.request(request).body
+  end
+  def self.set_http(url)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port==443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    request= Net::HTTP::Get.new(route)
-    back_res =http.request(request)
-    return JSON back_res.body
+    http
   end
   #按时发送短信息
   def self.send_message
     Message.transaction do
-      message_clients = Message.find_by_sql("select  m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
+      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
       message_clients.each do |message_client|
         remind = Remind.find_by_site_id(message_client.site_id)
         today = Time.now.strftime("%Y-%m-%d")
-        p Time.now.strftime("%Y-%m-%d")
-        p remind.reseve_time.strftime("%Y-%m-%d")
         if today.eql?(remind.reseve_time.strftime("%Y-%m-%d"))
-          content = message_client.content
-          contents = "请于[[时间=2014-01-25]]到[[选项=一楼]][[填空=做检查]]"
+          contents = message_client.content
+          content = ""
           content_splitleft = contents.split("[[")
           content_splitleft.each do |splitleft|
             if splitleft.include? "]]"
@@ -49,8 +71,14 @@ class Message < ActiveRecord::Base
             end
           end
           mobilephone = message_client.mobile
-          message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-          create_get_http(Message::MESSAGE_URL, message_route)
+          begin
+            message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
+            create_get_http(Message::MESSAGE_URL, message_route)
+          rescue
+            p 111111111111
+          end
+           message = Message.find_by_id(message_client.id)
+           message.update_attributes(:status => 2)
         end
       end
     end

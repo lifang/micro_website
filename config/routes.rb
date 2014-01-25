@@ -53,6 +53,7 @@ MicroWebsite::Application.routes.draw do
     resources :app_managements do
       collection do        
         post :create_client_info_model,:get_form_date
+        get :send_message
       end
     end
 
@@ -88,6 +89,9 @@ MicroWebsite::Application.routes.draw do
         get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change,:tmlt_sub_edit
         post :submit_queries,:tmlt_sub_update
       end
+    end
+    
+    resources :forms do
     end
 
     resources :image_streams do

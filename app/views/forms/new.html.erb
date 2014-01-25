@@ -1,0 +1,52 @@
+<div class="main_container">
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <%= form_for :page, :url => @form.new_record? ? "/sites/#{@site.id}/forms" : "/sites/#{@site.id}/forms/#{@form.id}", :method => @form.new_record? ? :post : :put do |f| %>
+      <div class="tit"><span>标题：</span>
+        <%= f.text_field :title, :value => @form.new_record? ? "" : @form.title %>
+        <span>文件名：</span>
+        <%= f.text_field :file_name, :value => @form.new_record? ? "" : @form.file_name.gsub(".html", "") %><span>.html</span></div>
+        <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
+      <hr class="cf" color="#bcbcbc" />
+      <div class="vstContr">
+          <span>访问控制：</span>
+          <div class="vcItem <%= @form && @form.authenticate ? "check" : "" %>"><%= radio_button "form", "authenticate", 1, :checked => @form && @form.authenticate ? true : false %><span>是</span></div>
+          <div class="vcItem <%= @form && @form.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @form && @form.authenticate ? false : true %><span>否</span></div>
+        </div>
+      <div class="formAct">
+        <button class="blue_btn scd_btn" type="button" data-ele="input_pop">增加信息栏</button>
+        <button class="blue_btn scd_btn" type="button" data-ele="radio_pop">增加单选框</button>
+        <button class="blue_btn scd_btn" type="button" data-ele="checkbox_pop">增加复选框</button>
+        <button class="blue_btn scd_btn" type="button" data-ele="select_pop">增加下拉框</button>
+      </div>
+      <div class="iphoneVirtual">
+        <div class="topPic"><img src="<%= @form && @form.img_path ? @form.img_path : '' %>"/></div>
+        <%= f.hidden_field :img_path, :value => @form && @form.img_path ? @form.img_path : "" %>
+        <div class="form_ele">
+         <% if !@form.new_record? && @form.page_html %>
+          <%= raw @form.page_html.gsub("||", ";") %>
+          <% end %>
+        </div>
+      </div>
+      <div id="tupian">
+        <%= render 'shared/form_images',:objects => @imgs %>
+      </div>
+      <div class="pageAct">
+        <button class="blue_btn" type="button" onclick="submit_form_page(this, '<%= @site.id %>')">保存</button>
+<%#= link_to "预览" , "/sites/static" + "?path_name=" + @page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+      </div>
+   <% end %>
+  </div>
+</div>
+<div id="viewLarge"></div>
+<%= render "/pages/form/pop_form_ele" %>
+<script type="text/javascript">
+  $input_320 = $( ".topPic" );
+  // drop 元素
+  form_it_drop($input_320, 320, 150);
+
+
+  var img = $(".topPic").find("img");
+  setImageWH(img, 320, 150)
+
+</script>
