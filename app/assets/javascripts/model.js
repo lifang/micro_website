@@ -144,3 +144,8 @@ function show_sub(){
     $("#tupian").hide();
     $(".iv_temp4").show();
 }
+function show_model_sub(){
+    $(".iphoneVirtual").show();
+    $("#tupian").show();
+    $(".iv_temp4").hide();
+}
