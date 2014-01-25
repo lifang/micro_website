@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(:version => 20140124084702) do
     t.boolean  "range"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "days"
   end
 
   create_table "replies", :force => true do |t|
