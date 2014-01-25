@@ -14,42 +14,17 @@ class Message < ActiveRecord::Base
   PASSWORD = "123456"
 
   
-  #  def self.create_get_http(url,route)
-  #    uri = URI.parse(url)
-  #    http = Net::HTTP.new(uri.host, uri.port)
-  #    if uri.port==443
-  #      http.use_ssl = true
-  #      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  #    end
-  #    request= Net::HTTP::Get.new(route)
-  #    back_res =http.request(request)
-  #    return JSON back_res.body
-  #  end
-  #发get请求获得access_token
-  def self.create_get_http(url ,route)
-    http = set_http(url)
-    p url
-    request= Net::HTTP::Get.new(route)
-    back_res = http.request(request)
-    p back_res.body
-    return JSON back_res.body
-  end
-  def self.create_post_http(url,route_action,menu_bar)
-    http = set_http(url)
-    request = Net::HTTP::Post.new(route_action)
-    request.set_body_internal(menu_bar)
-    return JSON http.request(request).body
-  end
-  def self.set_http(url)
+  def self.create_get_http(url,route)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port==443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    http
+    request= Net::HTTP::Get.new(route)
+    back_res =http.request(request)
+    return JSON back_res.body
   end
-  #按时发送短信息
   def self.send_message
     Message.transaction do
       message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
@@ -63,7 +38,14 @@ class Message < ActiveRecord::Base
           content_splitleft.each do |splitleft|
             if splitleft.include? "]]"
               splitright = splitleft.split("]]")[0]
-              content += splitright.split("=")[1]
+              if(splitright.split("=")[0].eql?("选项"))
+                content += splitright.split("=")[1].split("-")[0]
+              else
+                content += splitright.split("=")[1]
+              end
+              if splitleft.split("]]")[1]
+                content += splitleft.split("]]")[1]
+              end
             else
               if splitleft
                 content += splitleft
@@ -75,10 +57,9 @@ class Message < ActiveRecord::Base
             message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
             create_get_http(Message::MESSAGE_URL, message_route)
           rescue
-            p 111111111111
           end
-           message = Message.find_by_id(message_client.id)
-           message.update_attributes(:status => 2)
+          message = Message.find_by_id(message_client.id)
+          message.update_attributes(:status => 2)
         end
       end
     end

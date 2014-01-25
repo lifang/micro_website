@@ -178,17 +178,4 @@ a.each(function(){
      "
      html
   end
-  def send_message
-    mobilephone = 13913607079
-    content = "早上好"
-    p mobilephone
-    p content
-    begin
-    message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-    create_get_http(Message::MESSAGE_URL, message_route)
-    rescue
-      p 1111111
-    end
-    p 222222
-  end
 end
