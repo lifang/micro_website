@@ -118,17 +118,7 @@ function temp_it_drop(obj, width, height){
             $(this).parent("li").find("input.img_src").val(img_src);
             $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
             var img = $(this).find("img");
-            var imgWidth = $(img).width();
-            var imgHeight = $(img).height();
-            if(imgWidth > imgHeight){
-                $(img).css({
-                    "width": width + "px"
-                });
-            }else{
-                $(img).css({
-                    "height": height + "px"
-                });
-            }
+            setImageWH(img, width, height);
         }
     });
 }
@@ -150,13 +140,15 @@ function form_it_drop(obj, width, height){
 function setImageWH(img, width, height){
     var imgWidth = $(img).width();
     var imgHeight = $(img).height();
-    if(imgWidth > imgHeight){
-        $(img).css({
-            "width": width + "px"
+    var i = width/height;
+    var j = imgWidth/imgHeight;
+    if(j >=i){
+         $(img).css({
+            "width": (imgWidth >= width ? width : imgWidth) + "px"
         });
     }else{
-        $(img).css({
-            "height": height + "px"
+         $(img).css({
+            "height": (imgHeight >= height ? height : imgHeight) + "px"
         });
     }
 }
