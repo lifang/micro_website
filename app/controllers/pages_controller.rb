@@ -1,8 +1,8 @@
 #encoding: utf-8
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
+  skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token , :get_form_date]
   layout 'sites'
-  before_filter :get_site, :except => [:submit_queries]
+  before_filter :get_site, :except => [:submit_queries, :get_form_date]
   caches_action :static
   
   #主页 index
@@ -145,7 +145,9 @@ class PagesController < ApplicationController
   #表单 new
   def form_new
     @page = Page.new
-    render "/pages/form/form_new"
+    @imgs_pathes = return_site_images(@site)
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+    render "/pages/form/new"
   end
 
   #表单 edit

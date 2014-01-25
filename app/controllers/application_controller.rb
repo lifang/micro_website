@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :check_user_status
   include ApplicationHelper
   include PagesHelper
+  include AppManagementsHelper
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
 
@@ -34,7 +35,7 @@ class ApplicationController < ActionController::Base
     elsif page.sub?
       sub_site_pages_path(site)
     elsif page.form?
-      form_site_pages_path(site)
+      site_forms_path(site)
     elsif page.image_text?
       site_image_texts_path(site)
     end
@@ -91,8 +92,10 @@ class ApplicationController < ActionController::Base
   #发get请求获得access_token
   def create_get_http(url ,route)
     http = set_http(url)
+    p url
     request= Net::HTTP::Get.new(route)
     back_res = http.request(request)
+    p back_res.body
     return JSON back_res.body
   end
   
@@ -118,8 +121,12 @@ class ApplicationController < ActionController::Base
   #根据微信 cweb，获取自动回复的消息
   def get_return_message(cweb, flag, content=nil)
     site = Site.find_by_cweb(cweb)
+    a_msg =""
+    if @site.exist_app
+    a_msg = "<a href='#{Rails.root.to_s}/public/allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' > 请点击 登记您的信息</a><br/>"
+    end
     if flag == "auto"
-      return_message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
+      return_message =a_msg + Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
     else
       keyword_param = content.gsub(/[%_]/){|x| '\\' + x}
       messages = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword_param}%'", site.id) #查询是否有关键词对应回复

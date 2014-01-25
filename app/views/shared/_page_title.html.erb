@@ -1,7 +1,7 @@
 <h1><%= @site.name %>(<%= status_desc @site.status %>)</h1>
 <div class="tempChoice">
-  <span>模板：</span>
   <% if @page && @page.main? %>
+    <span>模板：</span>
     <ul class="tmp_list">
       <li class="temp1 <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "hover" : "" %>"></li>
       <li class="temp2 <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "hover" : "" %>"></li>

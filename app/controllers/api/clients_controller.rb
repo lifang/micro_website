@@ -17,8 +17,8 @@ class Api::ClientsController < ApplicationController
         msg = "密码错误!"
       else
         msg = "登陆成功"
-        person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record
-            from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
+        person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
+            c.html_content from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
         recent_list = RecentlyClients.find_by_sql(["select rc.client_id person_id, rc.content, date_format(rc.updated_at, '%Y-%m-%d %H:%i') date
             from recently_clients rc where rc.site_id=?", user.site_id])
         rl = recent_list.inject([]){|a, r|
@@ -31,10 +31,13 @@ class Api::ClientsController < ApplicationController
           a << hash;
           a
         }
+        remind = Remind.find_by_site_id(user.site_id)
+        re_content = remind.content if remind
       end
     end
     render :json => {:status => status, :msg => msg, 
-      :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id, :person_list => person_list, :recent_list => rl}}
+      :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id,
+        :person_list => person_list, :recent_list => rl, :remind => re_content}}
   end
 
   #点击某个用户，查看信息详情

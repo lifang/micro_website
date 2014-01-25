@@ -263,20 +263,12 @@ $(function() {
 
     $(".warnArea .time").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        if(txtArea.val()==""){
             txtArea.val(txtArea.val() + "[[时间]]");
-        }else{
-            txtArea.val(txtArea.val() + ",[[时间]]");
-        }
     });
 
     $(".warnArea .space").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-        if(txtArea.val()==""){
             txtArea.val(txtArea.val() + "[[填空]]");
-        }else{
-            txtArea.val(txtArea.val() + ",[[填空]]");
-        }
     });
         
     $(".radioSpan").click(function(){
@@ -296,23 +288,38 @@ function create_site(template) {
     $("#site_titile").html('创建站点（根目录创建后不可修改）');
     $('#site_edit_or_create').val('create');
     $('#site_root_path').removeAttr("readonly");
+    is_exist_app(false);
     $('#must_fix').show();
     text_value("", '', '');
     $("#template").val(template);
 }
 
 //显示编辑页面
-function show_edit_page(name, rootpath, notes, cweb, username, pwd) {
+function show_edit_page(name, rootpath, notes, cweb, username, pwd,exist_app) {
     $(".second_bg").show();
     $(".second_box.new_point").show();
     $("#site_titile").html('编辑站点');
     $('#site_edit_or_create').val('edit');
     $('#site_root_path').attr("readonly", "readonly");
     $('#site_root_path').css('background', '#C7C7C7');
-    $('#username').val(username);
-    $('#password').val(pwd);
+    is_exist_app(exist_app,username,pwd);
     $('#must_fix').hide();
     text_value(name, rootpath, notes, cweb);
+}
+//是否存在app账号
+function is_exist_app(exist_app,username,pwd){
+	var radio = $('input[type=radio]');
+    if(exist_app){
+    	$(radio[1]).removeAttr("checked");
+    	$(radio[0]).attr("checked",true);
+    	$('#username').val(username);
+        $('#password').val(pwd);
+    }else{
+    	$(radio[0]).removeAttr("checked");
+    	$(radio[1]).attr("checked",true);
+    	//$('#username').val("");
+       // $('#password').val("");
+    }
 }
 
 function text_value(name, rootpath, notes, cweb) {
@@ -492,12 +499,7 @@ function interception_wrap(button){
         }
     });
     var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
-    if(txtArea.val()==""){
-        txtArea.val(txtArea.val() + "[[选项="+ activity +"]]")
-    }else{
-        txtArea.val(txtArea.val() + ",[[选项="+ activity +"]]")
-    }
-    
+    txtArea.val(txtArea.val() + "[[选项-"+ activity +"]]")
     $(button).parents(".third_box").hide();
     $(".third_bg").hide();
 }

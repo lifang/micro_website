@@ -29,7 +29,7 @@ module TemplateHelper
     ad_content, ad_num = '', ''
     ad_srcs.each_with_index do |ad_src, index|
       ad_content = ad_content + '<li id="page-' + (index+1).to_s + '" data-role="page" class="demo-page">
-                    	<span class="cover_bg" style="background-image: url( ' + '\'' + ad_src + '\'' + ')"><a href="#" rel="external"></a></span>
+                    	<span class="cover_bg" style="background-image: url(' + '\'' + ad_src + '\'' + ')"><a href="#" rel="external"></a></span>
                     </li>'
       if index == 0
         ad_num = ad_num + '<li class="on">' + (index+1).to_s + '</li>'

@@ -133,6 +133,36 @@ function temp_it_drop(obj, width, height){
     });
 }
 
+function form_it_drop(obj, width, height){
+    obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img_src = ui.draggable.find("img").attr("src");
+            $(this).next().val(img_src);
+            $(this).find("img").attr("src", img_src);
+            var img = $(this).find("img");
+            setImageWH(img, width, height);
+        }
+    });
+}
+
+function setImageWH(img, width, height){
+    var imgWidth = $(img).width();
+    var imgHeight = $(img).height();
+    if(imgWidth > imgHeight){
+        $(img).css({
+            "width": width + "px",
+            "height" : imgHeight > height ? height : "auto"
+        });
+    }else{
+        $(img).css({
+            "width" : imgWidth > width ? width : "auto",
+            "height": height + "px"
+        });
+    }
+}
+
 function it_drag(obj){
     obj.draggable({
         cancel: "a.ui-icon", // clicking an icon won't initiate dragging
