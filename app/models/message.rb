@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   attr_accessible :content, :from_user, :site_id, :status, :to_user, :types
   TYPES = {:phone => 0, :message => 1, :record => 2, :remind => 3} #0打电话，1信息，2记录，3提醒
   S_TYPES = {0 => "打电话", 1 => "短信", 2 => "记录", 3 => "提醒"}
-  STATUS = {:READ => 0, :UNREAD => 1, :ISSUED => 2, :UNISSUED => 3} #该信息0已读，1未读,2已发，3未发
+  STATUS = {:READ => 0, :UNREAD => 1} #该信息0未读/未发，1已读/已发
 
   #发短信url
   MESSAGE_URL = "http://mt.yeion.com"
@@ -27,7 +27,8 @@ class Message < ActiveRecord::Base
   end
   def self.send_message
     Message.transaction do
-      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
+      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  
+        from messages m inner join clients c on m.to_user = c.id where  m.status = #{Message::STATUS[:READ]} and m.types = #{Message::TYPES[:record]}")
       message_clients.each do |message_client|
         remind = Remind.find_by_site_id(message_client.site_id)
         today = Time.now.strftime("%Y-%m-%d")
@@ -59,7 +60,7 @@ class Message < ActiveRecord::Base
           rescue
           end
           message = Message.find_by_id(message_client.id)
-          message.update_attributes(:status => 2)
+          message.update_attributes(:status => 1)
         end
       end
     end

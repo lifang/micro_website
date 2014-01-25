@@ -33,11 +33,13 @@ class Api::ClientsController < ApplicationController
         }
         remind = Remind.find_by_site_id(user.site_id)
         re_content = remind.content if remind
+        record = Record.find_by_site_id(user.site_id)
+        rec_content = record.content if record
       end
     end
     render :json => {:status => status, :msg => msg, 
       :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id,
-        :person_list => person_list, :recent_list => rl, :remind => re_content}}
+        :person_list => person_list, :recent_list => rl, :remind => re_content, :record => rec_content}}
   end
 
   #点击某个用户，查看信息详情
@@ -55,7 +57,6 @@ class Api::ClientsController < ApplicationController
       where m.site_id=? and m.from_user in (?) and m.to_user in (?) order by m.created_at desc",
           site_id, arr, arr], :per_page => 10, :page => page)
       if messages.blank?
-        status = 0
         msg = "没有记录"
       else
         person = Client.find_by_id(person_id)
