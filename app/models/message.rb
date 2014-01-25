@@ -25,32 +25,41 @@ class Message < ActiveRecord::Base
     back_res =http.request(request)
     return JSON back_res.body
   end
-  #按时发送短信息
   def self.send_message
     Message.transaction do
-      message_clients = Message.find_by_sql("select  m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
+      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  from messages m inner join clients c on m.to_user = c.id where  m.status = 3 and m.types = 2")
       message_clients.each do |message_client|
         remind = Remind.find_by_site_id(message_client.site_id)
         today = Time.now.strftime("%Y-%m-%d")
-        p Time.now.strftime("%Y-%m-%d")
-        p remind.reseve_time.strftime("%Y-%m-%d")
         if today.eql?(remind.reseve_time.strftime("%Y-%m-%d"))
-          content = message_client.content
-          contents = "请于[[时间=2014-01-25]]到[[选项=一楼]][[填空=做检查]]"
+          contents = message_client.content
+          content = ""
           content_splitleft = contents.split("[[")
           content_splitleft.each do |splitleft|
             if splitleft.include? "]]"
               splitright = splitleft.split("]]")[0]
-              content += splitright.split("=")[1]
+              if(splitright.split("=")[0].eql?("选项"))
+                content += splitright.split("=")[1].split("-")[0]
+              else
+                content += splitright.split("=")[1]
+              end
+              if splitleft.split("]]")[1]
+                content += splitleft.split("]]")[1]
+              end
             else
-              if splitright
-                content += splitright
+              if splitleft
+                content += splitleft
               end
             end
           end
           mobilephone = message_client.mobile
-          message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-          create_get_http(Message::MESSAGE_URL, message_route)
+          begin
+            message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
+            create_get_http(Message::MESSAGE_URL, message_route)
+          rescue
+          end
+          message = Message.find_by_id(message_client.id)
+          message.update_attributes(:status => 2)
         end
       end
     end

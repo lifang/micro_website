@@ -145,7 +145,9 @@ class PagesController < ApplicationController
   #表单 new
   def form_new
     @page = Page.new
-    render "/pages/form/form_new"
+    @imgs_pathes = return_site_images(@site)
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+    render "/pages/form/new"
   end
 
   #表单 edit

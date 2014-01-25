@@ -94,6 +94,9 @@ MicroWebsite::Application.routes.draw do
         post :submit_queries,:tmlt_sub_update
       end
     end
+    
+    resources :forms do
+    end
 
     resources :image_streams do
       #对集合进行操作

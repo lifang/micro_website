@@ -17,10 +17,12 @@ class SitesController < ApplicationController
         @site.cweb=params[:site][:cweb]
         @site.user_id=current_user.id
         @site.template=params[:site][:template]
+        @site.exist_app = params[:exist_app]
         respond_to do |format|
           if @site && @site.save
-            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN])
-            
+            if params[:exist_app].eql?(Site::APP[:YES])
+              Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN])
+            end
             #初始化index页面
             page = @site.pages.create({:title => "index", :file_name => "index.html",
                 :path_name => "/#{@site.root_path}/index.html", :types => Page::TYPE_NAMES[:main]})
@@ -53,12 +55,15 @@ class SitesController < ApplicationController
     cweb=params[:site][:cweb]
     notes=params[:site][:notes]
     respond_to do |format|
-      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb)
-        client = Client.find_by_site_id(@site.id)
-        if client
+      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb,exist_app:params[:exist_app])
+          p 3333333333333333333333333333,params[:exist_app].eql?(Site::APP[:YES])
+        if params[:exist_app].eql?(Site::APP[:YES])
+          client = Client.find_by_site_id(@site.id)
+          if client
            client.update_attributes(username:params[:username] , password:params[:password])
-        else
+          else
            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN]) 
+          end
         end
         flash[:success]='更新成功'
       end

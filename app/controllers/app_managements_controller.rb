@@ -1,7 +1,7 @@
 #encoding:utf-8
 class AppManagementsController < ApplicationController
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site,:exist_app?
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @chi =ClientHtmlInfo.find_by_client_id(@client.id)
@@ -38,8 +38,14 @@ class AppManagementsController < ApplicationController
       form_hash +="'#{f[1][:name]}'=>'#{value}',"
     end
     form_hash = form_hash[0...-1]+"}"
-    Client.create(username:params[:username] , mobiephone:params[:phone] , html_content:form_hash ,types:Client::TYPES[:CONCERNED])
-    render text:1
+    @client = Client.find_by_open_id(params[:open_id])
+    if @client
+      @client.update_attributes(username:params[:username] , mobiephone:params[:phone] , html_content:form_hash )
+      render text:2      
+    else
+      Client.create(username:params[:username] , mobiephone:params[:phone] , html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id])
+      render text:1
+    end
   end
   def save_as_app_form content
     site_path = Rails.root.to_s + "/public/allsites/#{@site.root_path}"
@@ -144,15 +150,23 @@ a.each(function(){
           alert('请输入电话');
           return false;
         }
+        var href = window.location.href;
+        var arr = href.split('?open_id=');
+        var open_id = arr[1];
         var str = $(value).parent().parent().serialize();
         $.ajax({
     async : true,
     type : 'post',
     url : '/sites/#{@site.id}/app_managements/get_form_date',
     dataType : 'text',
-    data :'form = ' + str+'&username='+name+'&phone='+phone,
+    data :'form = ' + str+'&username='+name+'&phone='+phone+'&open_id='+open_id,
     success : function(data) {
-      alert('success!');
+      if(data==1)
+      alert('保存成功!');
+      else if(data==2)
+        alert('更新咸功');
+      else
+        alert('error');
     }
   });
     
@@ -163,11 +177,5 @@ a.each(function(){
 
      "
      html
-  end
-  def send_message
-    mobilephone = 18306219610
-    content = "你好啊！！！！"
-    message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-    create_get_http(Message::MESSAGE_URL, message_route)
   end
 end
