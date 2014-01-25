@@ -263,12 +263,12 @@ $(function() {
 
     $(".warnArea .time").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-            txtArea.val(txtArea.val() + "[[时间]]");
+        txtArea.val(txtArea.val() + "[[时间]]");
     });
 
     $(".warnArea .space").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
-            txtArea.val(txtArea.val() + "[[填空]]");
+        txtArea.val(txtArea.val() + "[[填空]]");
     });
         
     $(".radioSpan").click(function(){
@@ -308,17 +308,17 @@ function show_edit_page(name, rootpath, notes, cweb, username, pwd,exist_app) {
 }
 //是否存在app账号
 function is_exist_app(exist_app,username,pwd){
-	var radio = $('input[type=radio]');
+    var radio = $('input[type=radio]');
     if(exist_app){
-    	$(radio[1]).removeAttr("checked");
-    	$(radio[0]).attr("checked",true);
-    	$('#username').val(username);
+        $(radio[1]).removeAttr("checked");
+        $(radio[0]).attr("checked",true);
+        $('#username').val(username);
         $('#password').val(pwd);
     }else{
-    	$(radio[0]).removeAttr("checked");
-    	$(radio[1]).attr("checked",true);
-    	//$('#username').val("");
-       // $('#password').val("");
+        $(radio[0]).removeAttr("checked");
+        $(radio[1]).attr("checked",true);
+    //$('#username').val("");
+    // $('#password').val("");
     }
 }
 
@@ -505,6 +505,8 @@ function interception_wrap(button){
 }
 
 function check_remind_nonempty(){
+    var today = new Date()
+    var todays = today.getFullYear()+'-'+today.getMonth()+"-"+today.getDate();
     if($.trim($("input[name='remind_name']").val()).length == 0){
         tishi_alert('提示:\n\n名称不能为空');
         return false;
@@ -513,6 +515,9 @@ function check_remind_nonempty(){
         return false;
     }else if($.trim($("textarea[name='remind_content']").val()).length == 0){
         tishi_alert('提示:\n\n内容不能为空');
+        return false;
+    }else if($.trim($("input[name='free_time']").val())<= todays && $.trim($("input[name='dayfor_time']").val()) <= 0){
+        tishi_alert('提示:\n\n请选择正确时间');
         return false;
     }
 }

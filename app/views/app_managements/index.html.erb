@@ -11,31 +11,31 @@
       </button>
     </div>
     <hr class="topLine cf" />
-		<%=form_for(:app_management ,url: create_client_info_model_site_app_managements_path(@site)) do |f|%>
-		<div class="appInfo">
-			<% if @chi.nil? || @chi.hash_content=="" || @chi.hash_content.nil? %>
-			<input type='hidden' id="info_inedx" value="2">
-			<input type='hidden' id="html_content" name="html_content" value="">
-			<div class="itemBox">
-				<label>姓名：
-					<input type="hidden" name="form[1text][name]" value="姓名"/>
-				</label>
-				<input type="text" name="name"  />
-			</div>
-			<div class="itemBox">
-				<label>手机号码：
-					<input type="hidden" name="form[2text][name]" value="手机号码" />
-				</label>
-				<input type="text"  name="mobiephone"  />
-			</div>
-			<hr class="topLine cf" />
-			<%else%>
-			  <%=raw @chi.hash_content%>
-			<%end%>
-		</div>
-		<%end%>
-		<div class="formAct appForm">
-			<button class="blue_btn scd_btn" name="addTxtItem">
+    <%=form_for(:app_management ,url: create_client_info_model_site_app_managements_path(@site)) do |f|%>
+      <div class="appInfo">
+        <% if @chi.nil? || @chi.hash_content=="" || @chi.hash_content.nil? %>
+          <input type='hidden' id="info_inedx" value="2">
+          <input type='hidden' id="html_content" name="html_content" value="">
+          <div class="itemBox">
+            <label>姓名：
+              <input type="hidden" name="form[1text][name]" value="姓名"/>
+            </label>
+            <input type="text" name="name"  />
+          </div>
+          <div class="itemBox">
+            <label>手机号码：
+              <input type="hidden" name="form[2text][name]" value="手机号码" />
+            </label>
+            <input type="text"  name="mobiephone"  />
+          </div>
+          <hr class="topLine cf" />
+        <%else%>
+          <%=raw @chi.hash_content%>
+        <%end%>
+      </div>
+    <%end%>
+    <div class="formAct appForm">
+      <button class="blue_btn scd_btn" name="addTxtItem">
 				增加信息栏
       </button>
       <button class="blue_btn scd_btn" name="addRdoItem">
@@ -200,16 +200,30 @@
         <div class="itemBox2">
           <label>发送时间：</label>
           <div class="labRight">
-            <div class="radioBox1 check">
-              <input name="send_time" type="radio" value="0" checked/>
-              <span class="radioSpan"></span>
-              <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();"/>
-            </div>
-            <div class="radioBox1 ">
-              <input name="send_time" type="radio" value="1" />
-              <span class="radioSpan"></span>
-              <input type="text" name="dayfor_time" style="width: 171px;" disabled="disabled"/><span class="txtSpan">天后</span>
-            </div>
+
+            <% if @remind.nil? || @remind.days.nil? %>
+              <div class="radioBox1 check">
+                <input name="send_time" type="radio" value="0" checked/>
+                <span class="radioSpan"></span>
+                <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();"/>
+              </div>
+              <div class="radioBox1 ">
+                <input name="send_time" type="radio" value="1" />
+                <span class="radioSpan"></span>
+                <input type="text" name="dayfor_time" style="width: 171px;" disabled="disabled"/><span class="txtSpan">天后</span>
+              </div>
+            <% else %>
+              <div class="radioBox1">
+                <input name="send_time" type="radio" value="0" />
+                <span class="radioSpan"></span>
+                <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();" disabled="disabled"/>
+              </div>
+              <div class="radioBox1 check">
+                <input name="send_time" type="radio" value="1" checked/>
+                <span class="radioSpan"></span>
+                <input type="text" name="dayfor_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.days %>"/><span class="txtSpan">天后</span>
+              </div>
+            <% end %>
           </div>
         </div>
         <div class="itemBox2">
