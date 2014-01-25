@@ -107,34 +107,8 @@
     </div>
   </div>
 </div>
-
-<div class="second_box addLink">
-  <div class="second_content">
-    <span class="close" >关闭</span>
-    <h1>菜单一链接</h1>
-    <div id="linkPage">
-      <div class="tabs">
-        <span class="tab curr">站内链接</span>
-        <span class="tab">站外链接</span>
-        <div class="tabsLine"></div>
-      </div>
-      <input type="hidden" class="hiddenIndex" />
-      <input type="hidden" class="hiddenBlock" />
-      <div class="tabDiv curr">
-        <% @sub_pages.each do |page| %>
-          <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
-        <% end %>
-      </div>
-      <div class="tabDiv">
-        <label>站外链接输入：</label><input type="text" name="outside_link" />
-      </div>
-      <div class="scdBox_act">
-        <button class="blue_btn" onclick="setLink()">确认</button>
-        <button class="blue_btn cancel">取消</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- 添加链接 -->
+<%= render "shared/links", :from => "mian_page" %>
 
 <script type="text/javascript">
   $input = $( ".homeMenu li" );
