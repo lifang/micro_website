@@ -219,18 +219,7 @@ $(function() {
     $(".insetBox").on("click",".optBox .close2",function(){
         $(this).parents(".optBox").remove();
     });
-	
-    $(".addItem").on("click",".addOptBox",function(){
-        var item = $(this).parents(".addItem");
-        if($(item).hasClass("addRdoItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
-        }else if($(item).hasClass("addChekItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
-        }else if($(item).hasClass("addSelItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
-        }
-    });
-	
+    
     $(".addItem").on("click",".addItemSub",function(){
         var item = $(this).parents(".addItem");
         if($(item).hasClass("addTxtItem")){

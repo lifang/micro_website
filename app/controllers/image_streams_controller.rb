@@ -191,14 +191,7 @@ class ImageStreamsController < ApplicationController
               </ul>
          </section>
     </article>
-    <section class='footNav'>
-    	<ul>
-        	<li class='footNav_prev'><a href='#'>前进</a></li>
-            <li class='footNav_next'><a href='#'>后退</a></li>
-            <li class='footNav_refresh'><a href='#'>刷新</a></li>
-            <li class='footNav_home'><a href='#'>首页</a></li>
-        </ul>
-    </section>
+    " + page_footer(@site)+"
      <script type='text/javascript'>
     	$(function(){
 			$('.show_pic ul li').wookmark({
@@ -243,14 +236,7 @@ class ImageStreamsController < ApplicationController
 <article>
   <article>#{selection}</article>
 </article>
-<section class='footNav'>
-    	<ul>
-        	<li class='footNav_prev'><a href='#'>前进</a></li>
-            <li class='footNav_next'><a href='#'>后退</a></li>
-            <li class='footNav_refresh'><a href='#'>刷新</a></li>
-            <li class='footNav_home'><a href='#'>首页</a></li>
-        </ul>
-    </section>
+" + page_footer(@site)+"
 </body></html>"
   bigcontent
   end

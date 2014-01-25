@@ -31,6 +31,17 @@ module ApplicationHelper
     ele_hash
   end
 
+  def page_footer(site)
+    "<section class=\"footNav\">
+                        <ul>
+                            <li class=\"footNav_prev\"><a href=\"javascript:void(history.go(+1));\">前进</a></li>
+                            <li class=\"footNav_next\"><a href=\"javascript:void(history.go(-1));\">后退</a></li>
+                            <li class=\"footNav_refresh\"><a href=\"javascript:void(history.go(-0));\">刷新</a></li>
+                            <li class=\"footNav_home\"><a href=\"/allsites#{site.pages.main[0].try(:path_name)}\">首页</a></li>
+                        </ul>
+                      </section>"
+  end
+
   def modifyContent(page,content,site_id,img="")
     content = content.strip
     if page.form? 

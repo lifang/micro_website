@@ -50,7 +50,7 @@ function submit_template1_2(models,template){
         +"&alinkstr="+alinkstr +"&html_content="+html_content,
         success:function(data){
             if(data==1){
-                tishi_alert("success!");
+                tishi_alert("保存成功!");
             }
         }
     });
@@ -143,4 +143,9 @@ function show_sub(){
     $(".iphoneVirtual").hide();
     $("#tupian").hide();
     $(".iv_temp4").show();
+}
+function show_model_sub(){
+    $(".iphoneVirtual").show();
+    $("#tupian").show();
+    $(".iv_temp4").hide();
 }
