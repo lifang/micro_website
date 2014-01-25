@@ -25,42 +25,53 @@ class Message < ActiveRecord::Base
     back_res =http.request(request)
     return JSON back_res.body
   end
+
   def self.send_message
     Message.transaction do
-      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id  
-        from messages m inner join clients c on m.to_user = c.id where  m.status = #{Message::STATUS[:READ]} and m.types = #{Message::TYPES[:record]}")
-      message_clients.each do |message_client|
-        remind = Remind.find_by_site_id(message_client.site_id)
-        today = Time.now.strftime("%Y-%m-%d")
-        if today.eql?(remind.reseve_time.strftime("%Y-%m-%d"))
-          contents = message_client.content
-          content = ""
-          content_splitleft = contents.split("[[")
-          content_splitleft.each do |splitleft|
-            if splitleft.include? "]]"
-              splitright = splitleft.split("]]")[0]
-              if(splitright.split("=")[0].eql?("选项"))
-                content += splitright.split("=")[1].split("-")[0]
+      message_clients = Message.find_by_sql("select  m.id id,m.content content,c.mobiephone mobile,m.site_id site_id,m.created_at created_at
+        from messages m inner join clients c on m.to_user = c.id where  m.status = #{Message::STATUS[:READ]} and m.types = #{Message::TYPES[:remind]}")
+      message_clients = message_clients.group_by { |message_client| message_client.site_id }
+      reminds = Remind.find_all_by_site_id(message_clients.keys).group_by{|remind| remind.site_id}
+      message_clients.each do |site_id, message_clients_arr|
+        remind = reminds[site_id][0]
+        message_clients_arr.each do |message_client|
+          if remind.reseve_time.nil?
+            sent_time = message_client.created_at + remind.days.to_i.days
+            sent_time_str = sent_time.strftime("%Y-%m-%d")
+          else
+            sent_time_str = remind.reseve_time.strftime("%Y-%m-%d")
+          end
+          today = Time.now.strftime("%Y-%m-%d")
+          if today.eql?(sent_time_str)
+            contents = message_client.content
+            content = ""
+            content_splitleft = contents.split("[[")
+            content_splitleft.each do |splitleft|
+              if splitleft.include? "]]"
+                splitright = splitleft.split("]]")[0]
+                if(splitright.split("=")[0].eql?("选项"))
+                  content += splitright.split("=")[1].split("-")[0]
+                else
+                  content += splitright.split("=")[1]
+                end
+                if splitleft.split("]]")[1]
+                  content += splitleft.split("]]")[1]
+                end
               else
-                content += splitright.split("=")[1]
-              end
-              if splitleft.split("]]")[1]
-                content += splitleft.split("]]")[1]
-              end
-            else
-              if splitleft
-                content += splitleft
+                if splitleft
+                  content += splitleft
+                end
               end
             end
+            mobilephone = message_client.mobile
+            begin
+              message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
+              create_get_http(Message::MESSAGE_URL, message_route)
+            rescue
+            end
+            message = Message.find_by_id(message_client.id)
+            message.update_attributes(:status => 1)
           end
-          mobilephone = message_client.mobile
-          begin
-            message_route = "/send.do?Account=#{Message::USERNAME}&Password=#{Message::PASSWORD}&Mobile=#{mobilephone}&Content=#{content}&Exno=0"
-            create_get_http(Message::MESSAGE_URL, message_route)
-          rescue
-          end
-          message = Message.find_by_id(message_client.id)
-          message.update_attributes(:status => 1)
         end
       end
     end

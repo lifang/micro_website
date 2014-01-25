@@ -1,3 +1,4 @@
+
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -11,7 +12,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140124084702) do
+ActiveRecord::Schema.define(:version => 20140125030210) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -104,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20140124084702) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.integer  "mtype"
+    t.boolean  "mtype"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -169,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20140124084702) do
     t.boolean  "range"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "days"
   end
 
   create_table "replies", :force => true do |t|
@@ -200,7 +202,7 @@ ActiveRecord::Schema.define(:version => 20140124084702) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.string   "cweb"
-    t.integer  "template"
+    t.integer  "template",                :default => 1
     t.boolean  "exist_app",               :default => false
   end
 
@@ -211,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20140124084702) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.integer  "open_id"
+    t.string   "open_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "award_id"
