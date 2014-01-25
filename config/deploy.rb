@@ -20,7 +20,7 @@ set :rvm_type, :user
 
 set :default_stage, "staging"     #一般不写成production，因为写成production的时候运行touch #{current_path}/tmp/restart.txt没效果
 set :stages, %w(staging sandbox production)
-set :rvm_ruby_string, '1.9.3-p448@rails3.2.6'  #设置ruby具体版本号 去rvm安装目录/wrappers里面查看具体ruby版本
+set :rvm_ruby_string, '1.9.3-p448@rails3.2.1'  #设置ruby具体版本号 去rvm安装目录/wrappers里面查看具体ruby版本
 
 require 'capistrano/ext/multistage' #多stage部署所需
 require 'capistrano_colors'
