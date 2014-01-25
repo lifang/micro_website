@@ -65,8 +65,8 @@ class Message < ActiveRecord::Base
               splitright = splitleft.split("]]")[0]
               content += splitright.split("=")[1]
             else
-              if splitright
-                content += splitright
+              if splitleft
+                content += splitleft
               end
             end
           end
