@@ -48,9 +48,9 @@ class WeixinsController < ApplicationController
   def get_client_message
     open_id = params[:xml][:FromUserName]
     current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
-    client = Client.find_by_open_id(open_id)
-    if client && current_client.update_attribute(:has_new_message,true)
-      Message.create(site_id:@site.id , from_user:client.id ,to_user:current_client.id ,
+    @client = Client.find_by_open_id(open_id)
+    if  @site.exist_app.eql?(true)&&@client && current_client.update_attribute(:has_new_message,true)
+      Message.create(site_id:@site.id , from_user:@client.id ,to_user:current_client.id ,
       types:Message::TYPES[:record],
       content:params[:xml][:Content],
       status:Message::STATUS[:UNREAD])
