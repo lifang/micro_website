@@ -101,7 +101,7 @@ class FormsController < ApplicationController
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
                     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-                    <link href='/allsites/style/form_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
+                    <link href='/allsites/style/template_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
                     <script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
                     <script src='/allsites/js/form.js' type='text/javascript'></script>
                     <title>preview</title>
