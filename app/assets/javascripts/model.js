@@ -50,7 +50,7 @@ function submit_template1_2(models,template){
         +"&alinkstr="+alinkstr +"&html_content="+html_content,
         success:function(data){
             if(data==1){
-                tishi_alert("success!");
+                tishi_alert("保存成功!");
             }
         }
     });
