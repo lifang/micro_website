@@ -58,29 +58,29 @@ $(function(){
     });
 
 
-	$(".insetBox").on("click",".optBox .close2",function(){
-		$(this).parents(".optBox").remove();
-	});
+    $(".insetBox").on("click",".optBox .close2",function(){
+        $(this).parents(".optBox").remove();
+    });
 
-	$(".addItem").on("click",".addOptBox",function(){
-		var item = $(this).parents(".addItem");
-		if($(item).hasClass("addRdoItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}else if($(item).hasClass("addChekItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}else if($(item).hasClass("addSelItem")){
-			$(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
-		}
-	});
+    $(".addItem").on("click",".addOptBox",function(){
+        var item = $(this).parents(".addItem");
+        if($(item).hasClass("addRdoItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }else if($(item).hasClass("addChekItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }else if($(item).hasClass("addSelItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
+        }
+    });
 
-  // 定义图片库, drop area
-  var $gallery = $( ".picRes" );
-  // 使图片库里面的元素可托拽
-  it_drag($( ".picBox", $gallery ));
+    // 定义图片库, drop area
+    var $gallery = $( ".picRes" );
+    // 使图片库里面的元素可托拽
+    it_drag($( ".picBox", $gallery ));
 
-//初始化滑动块宽度
-var i = $(".ad_box li").length;
-$(".ad_box ul").css("width",Number(i+1)*280+"px");
+    //初始化滑动块宽度
+    var i = $(".ad_box li").length;
+    $(".ad_box ul").css("width",Number(i+1)*280+"px");
 
     $(".homeAd .addAdPic").on("click",function(){
         var i = $(".ad_box li").length;
@@ -150,63 +150,75 @@ $(".ad_box ul").css("width",Number(i+1)*280+"px");
       
         var index = $("." + spec_className + " a").index($(this));
         
-        show_tag($("#linkPage"));
-
-        $("#linkPage .cancel").click(function(){
-            hide_tab($("#linkPage"));
-        });
+        showLinkTab()
 
         $("#linkPage").find(".hiddenIndex").val(index);
         $("#linkPage").find(".hiddenBlock").val(spec_className);
     });
+    
     $(".smlPic a").on("click",function(){
         
         var spec_className = $(this).parent("div").parent("div").attr("class").split(/\s/)[0];
 
         var index = $("." + spec_className + " div a").index($(this));
-        alert(spec_className);
-        show_tag($("#linkPage"));
-
-        $("#linkPage .cancel").click(function(){
-            hide_tab($("#linkPage"));
-        });
+        showLinkTab()
 
         $("#linkPage").find(".hiddenIndex").val(index);
         $("#linkPage").find(".hiddenBlock").val(spec_className);
     });
 
-
+    $(".iphvAct").on("click", "button", function(){
+        showLinkTab();
+        })
 
 
 });
 
+function showLinkTab(){
+    show_tag($("#linkPage"));
 
-function setLink(){
+    $("#linkPage .cancel").click(function(){
+        hide_tab($("#linkPage"));
+    });
+}
+
+
+function setLink(from){
     var link = "";
+    link = findLink(link);
+    if(link != ""){
+        if(from=="main_page"){
+            var spec_className = $("#linkPage").find(".hiddenBlock").val();
+            var index = $("#linkPage").find(".hiddenIndex").val();
+            if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
+                $($("." + spec_className + " input")[index]).attr("data-href", link);
+            }else if(spec_className=="smlPicList"){
+                $($("." + spec_className + " div .img_link")[index]).attr("value", link);
+            }else{
+                $($("." + spec_className + " li")[index]).find("input.img_link").val(link);
+            }
+            hide_tab($("#linkPage"));
+        }else if(from == "form"){
+            $(".hidden_redirect_path").val(link);
+            hide_tab($("#linkPage"));
+        }
+
+    }else{
+        tishi_alert("未选择链接！")
+    }
+}
+
+
+function findLink(link){
     $(".addLink .tabs").find("span").each(function(){
         if($(this).hasClass("curr")){
             if($(this).text() == "站内链接"){
-                checked = $(".addLink input[name=insite_link]:checked");
+                var checked = $(".addLink input[name=insite_link]:checked");
                 link = checked.length > 0 ? checked.val() : "";
             }else{
                 link = $(".addLink input[name=outside_link]").val()
             }
         }
     });
-    if(link != ""){
-        var spec_className = $("#linkPage").find(".hiddenBlock").val();
-        var index = $("#linkPage").find(".hiddenIndex").val();
-        if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
-            $($("." + spec_className + " input")[index]).attr("data-href", link);
-        }else if(spec_className=="smlPicList"){
-            $($("." + spec_className + " div .img_link")[index]).attr("value", link);
-        }else{
-            $($("." + spec_className + " li")[index]).find("input.img_link").val(link);
-        }
-        hide_tab($("#linkPage"));
-
-    }else{
-        tishi_alert("未选择链接！")
-    }
-   
+    return link;
 }

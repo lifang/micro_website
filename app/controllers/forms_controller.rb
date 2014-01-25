@@ -17,10 +17,11 @@ class FormsController < ApplicationController
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
     params[:page][:element_relation] = labels if labels
+    redirect_path = params[:redirect_path]
     Page.transaction do
       @form = @site.pages.create(params[:page])
       if @form.save
-        content = combine_form_html(@form, labels, options , @site.id)
+        content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content
         flash[:notice] = "新建成功!"
         @path = redirect_path(@form, @site)
@@ -42,10 +43,11 @@ class FormsController < ApplicationController
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
     params[:page][:element_relation] = labels if labels
+    redirect_path = params[:redirect_path]
     @form = Page.find_by_id params[:id]
     Page.transaction do
       if @form.update_attributes(params[:page])
-        content = combine_form_html(@form, labels, options , @site.id)
+        content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content
         flash[:notice] = "更新成功!"
         @path = redirect_path(@form, @site)
@@ -63,9 +65,10 @@ class FormsController < ApplicationController
   def resources_for_select
     @imgs_pathes = return_site_images(@site)
     @imgs_path = @imgs_pathes.paginate(:page =>params[:page] || 1,:per_page=>12)
+    @sub_pages = @site.pages.sub
   end
 
-  def combine_form_html(page, labels, options , site_id)
+  def combine_form_html(page, labels, options , site, redirect_path)
     form_ele = ''
     labels.each do |name, value|
       name_str = name.to_s
@@ -93,8 +96,6 @@ class FormsController < ApplicationController
       else
       end
     end
-    p "=========================="
-    p page.img_path
     model_html = "<!DOCTYPE html>
                  <html>
                   <head>
@@ -108,13 +109,13 @@ class FormsController < ApplicationController
                   <body>
                       <article>
                          <section class=\"cover_bg title\" style='background-image:url(\"#{ page.img_path}\");'></section>
-                         <form accept-charset='UTF-8' action='/sites/#{site_id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post'>
+                         <form accept-charset='UTF-8' action='/sites/#{site.id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post' data-redirect_path='#{redirect_path}'>
                              <div style=\"margin:0;padding:0;display:inline\">
                             <input name=\"utf8\" type=\"hidden\" value=\"✓\">
                             <input class='authenticity_token' name=\"authenticity_token\" type=\"hidden\" value=''></div>
                            <section class=\"form_list\">
                                 <ul>" + form_ele +"</ul>
-                                <div class=\"form_btn\"><button type='button' onclick=\"return submit_form(this,'/sites/#{site_id}/pages/#{page.id}/submit_queries' )\">确认提交</button></div>
+                                <div class=\"form_btn\"><button type='button' onclick=\"return submit_form(this)\">确认提交</button></div>
                            </section>
                          <form>
 
@@ -127,14 +128,7 @@ class FormsController < ApplicationController
                             </div>
                            </div>
                       </article>
-                      <section class=\"footNav\">
-                        <ul>
-                            <li class=\"footNav_prev\"><a href=\"#\">前进</a></li>
-                            <li class=\"footNav_next\"><a href=\"#\">后退</a></li>
-                            <li class=\"footNav_refresh\"><a href=\"#\">刷新</a></li>
-                            <li class=\"footNav_home\"><a href=\"#\">首页</a></li>
-                        </ul>
-                      </section>
+                      "+ page_footer(site) +"
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',
