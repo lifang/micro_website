@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
     site = Site.find_by_cweb(cweb)
     a_msg =""
     if @site.exist_app
-    a_msg = "<a href='#{Rails.root.to_s}/public/allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' > 请点击 登记您的信息</a><br/>"
+       a_msg = "<a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' > 请点击 登记您的信息</a><br/>"
     end
     if flag == "auto"
       return_message =a_msg + Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复

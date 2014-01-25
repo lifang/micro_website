@@ -56,6 +56,7 @@ class SitesController < ApplicationController
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb,exist_app:params[:exist_app])
+          p 3333333333333333333333333333,params[:exist_app].eql?(Site::APP[:YES])
         if params[:exist_app].eql?(Site::APP[:YES])
           client = Client.find_by_site_id(@site.id)
           if client
