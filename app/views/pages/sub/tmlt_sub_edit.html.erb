@@ -1,4 +1,4 @@
-<div class="main_container">
+<%#*<div class="main_container">%>
   <%=render 'shared/left_panel'%>
   <div class="main_cont">
     <div class="tit"><span>标题：</span><input type="text" id="title" value="<%=@page.title%>"/><span>文件名：</span><input readonly id="name" type="text" value="<%=@page.file_name.split(".")[0...-1].join(".") %>" /><span>.html</span></div>
@@ -33,7 +33,7 @@
     </div>
 
   </div>
-</div>
+
 
 <div class="second_box addLink">
   <div class="second_content">

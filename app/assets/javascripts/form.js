@@ -54,14 +54,16 @@ $(function(){
                 input_length = last_input_box.find("input.hidden_label").attr("name").split("_")[1][0];
                 input_length = parseInt(input_length) + 1;
             }
-            $(".iphoneVirtual .form_ele").append(input_ele);
+            $(".iphoneVirtual .form_ele .iphvAct").before(input_ele);
             var new_input_ele = $(".iphoneVirtual .form_ele").find(".inputBox").last();
             new_input_ele.find("label").text(input);    //label设置值
             new_input_ele.find("input.hidden_label").attr("name", "labels[input_" + input_length + "]");
             new_input_ele.find("input.hidden_label").val(input);
             hide_tab($("#input_pop"));
             $(".itemBox").on("click",".close",function(){
-                $(this).parents(".itemBox").remove()
+                if(confirm("确定移除吗？")){
+                    $(this).parents(".itemBox").remove()
+                }
             });
         }
     });
@@ -87,7 +89,7 @@ $(function(){
                 rc_length = last_input_box.find(".label .hidden_label").attr("name").split("_")[1][0];
                 rc_length = parseInt(rc_length) + 1;
             }
-            $(".iphoneVirtual .form_ele").append(box_ele == "radioBox" ? radio_ele : checkbox_ele);
+            $(".iphoneVirtual .form_ele .iphvAct").before(box_ele == "radioBox" ? radio_ele : checkbox_ele);
             var new_radio_ele = $(".iphoneVirtual .form_ele").find("." + box_ele).last();
             new_radio_ele.find(".label span").text(rc_label); //label设置值
             new_radio_ele.find(".label .hidden_label").attr("name", "labels[" + (box_ele == "radioBox" ? "radio" : "checkbox") + "_" + rc_length +"]"); //设置label隐藏域的值
@@ -101,7 +103,9 @@ $(function(){
             })
             hide_tab($("#" + (box_ele == "radioBox" ? "radio_pop" : "checkbox_pop")));
             $(".itemBox").on("click",".close",function(){
-                $(this).parents(".itemBox").remove()
+                if(confirm("确定移除吗？")){
+                    $(this).parents(".itemBox").remove()
+                }
             });
         }
     });
@@ -126,7 +130,7 @@ $(function(){
                 select_length = last_input_box.find("input.hidden_label").attr("name").split("_")[1][0];
                 select_length = parseInt(select_length) + 1;
             }
-            $(".iphoneVirtual .form_ele").append(select_ele);
+            $(".iphoneVirtual .form_ele .iphvAct").before(select_ele);
             var new_select_ele = $(".iphoneVirtual .form_ele").find(".selectBox").last();
             new_select_ele.find("label").text(select_label); //label设置值
             new_select_ele.find("input.hidden_label").attr("name", "labels[select_" + select_length +"]"); //设置label隐藏域的值
@@ -141,18 +145,26 @@ $(function(){
             });
             hide_tab($("#select_pop"));
             $(".itemBox").on("click",".close",function(){
-                $(this).parents(".itemBox").remove()
+                if(confirm("确定移除吗？")){
+                    $(this).parents(".itemBox").remove()
+                }
             });
         }
 
     });
 
-       $(".vstContr").on("click",".vcItem", function(){
-            $(this).parents(".vstContr").find(".vcItem").removeClass("check");
-            $(this).parents(".vstContr").find("input").removeAttr("checked")
-            $(this).addClass("check");
-            $(this).find("input").attr("checked",true);
-       });
+    $(".itemBox").on("click",".close",function(){
+        if(confirm("确定移除吗？")){
+            $(this).parents(".itemBox").remove()
+        }
+    });
+
+    $(".vstContr").on("click",".vcItem", function(){
+        $(this).parents(".vstContr").find(".vcItem").removeClass("check");
+        $(this).parents(".vstContr").find("input").removeAttr("checked")
+        $(this).addClass("check");
+        $(this).find("input").attr("checked",true);
+    });
 
 });
 
@@ -160,7 +172,8 @@ $(function(){
 function submit_form_page(obj, site_id){
     var content = $.trim($(".form_ele").html());
     var tf_flag = validatePageForm(content);
-    content = content.replace(/;/g, "||"); //把分号替换掉，否则表单提交不完全，会被分号隔开
+    var htmlContainer = $(obj).parents("form").find(".hidden_html");
+    htmlContainer.html(content);
     var title = $.trim($("#page_title").val()); //拿到去空格的值
     var file_name = $.trim($("#page_file_name").val());
     var img=$("#page_img_path").val();
@@ -177,7 +190,7 @@ function submit_form_page(obj, site_id){
         //if(flag=="submit"){ //新建 或者编辑
         var dataValue;
         dataValue = $(obj).parents("form").serialize();
-        dataValue = dataValue + "&page[page_html]=" + content + "&page[authenticate]=" + authenticate;
+        dataValue = dataValue + "&page[authenticate]=" + authenticate;
         $.ajax({
             url: $(obj).parents("form").attr("action"),
             type: "POST",

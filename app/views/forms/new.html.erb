@@ -6,13 +6,13 @@
         <%= f.text_field :title, :value => @form.new_record? ? "" : @form.title %>
         <span>文件名：</span>
         <%= f.text_field :file_name, :value => @form.new_record? ? "" : @form.file_name.gsub(".html", "") %><span>.html</span></div>
-        <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
+      <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>
       <hr class="cf" color="#bcbcbc" />
       <div class="vstContr">
-          <span>访问控制：</span>
-          <div class="vcItem <%= @form && @form.authenticate ? "check" : "" %>"><%= radio_button "form", "authenticate", 1, :checked => @form && @form.authenticate ? true : false %><span>是</span></div>
-          <div class="vcItem <%= @form && @form.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @form && @form.authenticate ? false : true %><span>否</span></div>
-        </div>
+        <span>访问控制：</span>
+        <div class="vcItem <%= @form && @form.authenticate ? "check" : "" %>"><%= radio_button "form", "authenticate", 1, :checked => @form && @form.authenticate ? true : false %><span>是</span></div>
+        <div class="vcItem <%= @form && @form.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @form && @form.authenticate ? false : true %><span>否</span></div>
+      </div>
       <div class="formAct">
         <button class="blue_btn scd_btn" type="button" data-ele="input_pop">增加信息栏</button>
         <button class="blue_btn scd_btn" type="button" data-ele="radio_pop">增加单选框</button>
@@ -23,21 +23,31 @@
         <div class="topPic"><img src="<%= @form && @form.img_path ? @form.img_path : '' %>"/></div>
         <%= f.hidden_field :img_path, :value => @form && @form.img_path ? @form.img_path : "" %>
         <div class="form_ele">
-         <% if !@form.new_record? && @form.page_html %>
-          <%= raw @form.page_html.gsub("||", ";") %>
+          <% if !@form.new_record? && @form.page_html %>
+            <%= raw @form.page_html %>
+          <% else %>
+            <div class="iphvAct">
+          <button class="blue_btn scd_btn" type="button" >添加跳转页</button>
+          <input type="hidden" name="redirect_path" class="hidden_redirect_path"/>
+        </div>
+        <textarea style="display:none" class="hidden_html" name="page[page_html]" ></textarea>
+
           <% end %>
         </div>
+        
       </div>
       <div id="tupian">
-        <%= render 'shared/form_images',:objects => @imgs %>
+        <%= render 'shared/form_images',:objects => @imgs_path %>
       </div>
       <div class="pageAct">
         <button class="blue_btn" type="button" onclick="submit_form_page(this, '<%= @site.id %>')">保存</button>
-<%#= link_to "预览" , "/sites/static" + "?path_name=" + @page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+  <%#= link_to "预览" , "/sites/static" + "?path_name=" + @page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
       </div>
-   <% end %>
+    <% end %>
   </div>
 </div>
+<!-- 添加链接 -->
+<%= render "shared/links", :from => "form" %>
 <div id="viewLarge"></div>
 <%= render "/pages/form/pop_form_ele" %>
 <script type="text/javascript">

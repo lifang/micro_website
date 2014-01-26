@@ -47,7 +47,7 @@ module PagesHelper
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{site.name}首页 </title>
-<script type='text/javascript' src='/allsites/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
 <script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
@@ -101,14 +101,7 @@ module PagesHelper
             </ul>
          </section>
     </article>
-    <section class='footNav'>
-    	<ul>
-        	<li class='footNav_prev'><a href='#'>前进</a></li>
-            <li class='footNav_next'><a href='#'>后退</a></li>
-            <li class='footNav_refresh'><a href='#'>刷新</a></li>
-            <li class='footNav_home'><a href='#'>首页</a></li>
-        </ul>
-    </section>
+" + page_footer(@site)+"
      <script type='text/javascript'>
     	$(function(){
 			$('.show_pic ul li').wookmark({

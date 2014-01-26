@@ -23,7 +23,7 @@ class AppManagementsController < ApplicationController
         render 'index'
       end
     else
-       ClientHtmlInfo.create(client_id:@client.id , hash_content:form)
+       ClientHtmlInfo.create(client_id:@client.id , hash_content:params[:html_content])
        redirect_to site_app_managements_path(@site)
     end
   end
