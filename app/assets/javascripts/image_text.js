@@ -25,14 +25,15 @@ function it_drop(obj){
             if(parent == 'homeBg'){
                 $(this).next().html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 $(this).html("");
+                $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
                 var img=$(this).next().find("img");
                 $(img).css({
                     "width": "320px",
                     "height": "568px"
                 });
             }else if(parent == 'model1'){
-
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
+                $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
                 var img1=$(this).find("img");
                 var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();

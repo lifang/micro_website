@@ -191,7 +191,7 @@ function setLink(from){
             var spec_className = $("#linkPage").find(".hiddenBlock").val();
             var index = $("#linkPage").find(".hiddenIndex").val();
             if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
-                $($("." + spec_className + " input")[index]).attr("data-href", link);
+                $($("." + spec_className).find(".img_link")[index]).attr("value", link);
             }else if(spec_className=="smlPicList"){
                 $($("." + spec_className + " div .img_link")[index]).attr("value", link);
             }else{

@@ -40,17 +40,21 @@ function submit_template1_2(models,template){
         alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
     }
     var html_content = $(models).html();
-    html_content = html_content.replace(/;/g, "||");
+    $(models).find(".html_content").val(html_content);
+    var form = $(models).parent();
+   // form.submit();
+    var str = form.serialize();
     $.ajax({
         async:true,
         type : 'post',
         url:'/model_page',
         dataType:"json",
-        data  :"site_id="+$("#site_id").val()+"&template="+template+"&bigimg="+bigimg+"&imgstr="+imgstr
-        +"&alinkstr="+alinkstr +"&html_content="+html_content,
+        data  :str,
         success:function(data){
             if(data==1){
                 tishi_alert("保存成功!");
+            }else{
+                tishi_alert("保存失败!");
             }
         }
     });

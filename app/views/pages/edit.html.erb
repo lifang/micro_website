@@ -3,42 +3,56 @@
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
     <%= render '/shared/page_title' %>
-    <div class="iphoneVirtual iv_temp1 main_tab" style="height: 568px;;display: <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "block" : "none" %>">
-      <%if (@site.template).to_i!=Constant::Template[:temp1] || @page.page_html.nil? %>
-        <div class="homeBg">
-          <span  name="div"  style=" position: absolute;left:0px;width:320px; height:400px;">+</span>
-          <div></div>
-        </div>
-        <ul class="homeMenu1 homeMenu">
-          <a class="model1"  ><li class ="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model1"  ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
-          <a class="model1"  ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#" /></a>
-        </ul>
-      <%else%>
-        <%=page_html_deal @page.page_html%>
-      <%end%>
-    </div>
+    <form action="/model_page" method="post">
+      <div class="iphoneVirtual iv_temp1 main_tab" style="height: 568px;;display: <%= !@site.template.present? || @site.template == Constant::Template[:temp1] ? "block" : "none" %>">
+        <%if (@site.template).to_i!=Constant::Template[:temp1] || @page.page_html.nil? %>
+          <input type="hidden" name="html_content" class="html_content" value="" />
+          <input type="hidden" name="template" class="template" value="1" />
+          <input type="hidden" value="<%=@site.id%>" name="site_id" />
+          <div class="homeBg">
+            <span  name="div"  style=" position: absolute;left:0px;width:320px; height:400px;">+</span>
+            <div></div>
+            <input type="hidden" class="img" name="big_img" value ="#"/>
+          </div>
+          <ul class="homeMenu1 homeMenu">
+            <a class="model1"  ><li class ="homeNav hn1">1</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model1"  ><li class="homeNav hn2">2</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model1"  ><li class="homeNav hn3">3</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+          </ul>
+        <%else%>
+          <%=page_html_deal @page.page_html%>
+        <%end%>
+      </div>
+    </form>
 
-    <div class="iphoneVirtual iv_temp2 main_tab" style="height: 568px;display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>" >
-      <%if @page.page_html.nil? || (@site.template).to_i!=Constant::Template[:temp2] %>
-        <div class="homeBg">
-          <span  name="div"  style=" position: absolute;left:0px;width:120px;height:400px; ">+</span>
-          <div></div>
-        </div>
-        <ul class="homeMenu2 homeMenu ">
-          <a class="model2" ><li class="homeNav hn1">1</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn2">2</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn3">3</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn4">4</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn5">5</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn6">6</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn7">7</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-          <a class="model2" ><li class="homeNav hn8">8</li><input type="hidden" class="img_link" name="img_link[]" data-href="#"/></a>
-        </ul>
-      <%else%>
-        <%=page_html_deal @page.page_html%>
-      <%end%>
-    </div>
+    <form action="/model_page" method="post">
+      <div class="iphoneVirtual iv_temp2 main_tab" style="height: 568px;display: <%= @site.template.present? && @site.template == Constant::Template[:temp2] ? "block" : "none" %>" >
+        <%if @page.page_html.nil? || (@site.template).to_i!=Constant::Template[:temp2] %>
+          <input type="hidden" name="html_content" class="html_content" value="" />
+          <input type="hidden" name="template" class="template" value="2" />
+          <input type="hidden" value="<%=@site.id%>" name="site_id" />
+          <div class="homeBg">
+            <span name="div"  style=" position: absolute;left:0px;width:120px;height:400px; ">+</span>
+            <div></div>
+            <input type="hidden" class="img" name="big_img" value ="#"/>
+          </div>
+          <ul class="homeMenu2 homeMenu ">
+            <a class="model2" ><li class="homeNav hn1">1</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn2">2</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn3">3</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn4">4</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn5">5</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn6">6</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn7">7</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+            <a class="model2" ><li class="homeNav hn8">8</li><input type="hidden" class="img_arr" name="img_arr[]" value ="#"/><input type="hidden" class="img_link" name="img_link[]" value ="#"/></a>
+          </ul>
+        <%else%>
+          <%=page_html_deal @page.page_html%>
+        <%end%>
+      </div>
+    </form>
+
+
 
     <%= form_for :page, :url => "/sites/#{@site.id}/pages/save_template3" do |f| %>
       <div class="iphoneVirtual iv_temp3 main_tab"  style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp3] ? "block" : "none" %>">
