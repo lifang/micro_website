@@ -101,7 +101,8 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .temp2 { background: url(/assets/v2.0/temp2.png) no-repeat 7px center; background-size: 36px 36px; border: 1px solid #404e53; }
 .temp3 { background: url(/assets/v2.0/temp3.png) no-repeat 7px center; background-size: 36px 36px; border: 1px solid #404e53; }
 .temp4 { background: url(/assets/v2.0/temp4.png) no-repeat 7px center; background-size: 36px 36px; border: 1px solid #404e53; }
-.temp1:hover,.temp2:hover,.temp3:hover,.temp4:hover { background-color: #373f42; border: 1px solid #353d3f; }
+.temp5 { background: url(/assets/v2.0/temp5.png) no-repeat 7px center; background-size: 36px 36px; border: 1px solid #404e53; }
+.temp1:hover,.temp2:hover,.temp3:hover,.temp4:hover,.temp5:hover { background-color: #373f42; border: 1px solid #353d3f; }
 
 .searchBox { margin: 12px 0; float: right; position: relative;}
 .searchBox input { width: 180px; height: 36px; border: 0; border-radius: 18px; line-height: 36px; text-indent: 20px; background: #e4e8e9; color: #888;}
