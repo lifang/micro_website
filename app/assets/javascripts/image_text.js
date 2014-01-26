@@ -103,7 +103,22 @@ function temp_it_drop(obj, width, height){
             $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height + ' />');
         }
     });
-}
+};
+
+function temp_it_drop_slide(obj, width, height){
+    obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img = ui.draggable.find("img");
+            var width_or_height = "width=" + width + " height=" + height;
+            var img_src = img.attr("src");
+            $(this).text(" ");
+            $(this).parent("li").find("input.img_src").val(img_src);
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height + ' />');
+        }
+    });
+};
 
 function form_it_drop(obj, width, height){
     obj.droppable({
