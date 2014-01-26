@@ -129,6 +129,7 @@ function form_it_drop(obj, width, height){
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             var img_src = ui.draggable.find("img").attr("src");
+            $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
             $(this).next().val(img_src);
             $(this).find("img").attr("src", img_src);
             var img = $(this).find("img");
