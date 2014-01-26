@@ -103,7 +103,6 @@ class FormsController < ApplicationController
                     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
                     <link href='/allsites/style/template_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
                     <script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
-                    <script src='/allsites/js/form.js' type='text/javascript'></script>
                     <title>preview</title>
                   </head>
                   <body>
@@ -129,6 +128,7 @@ class FormsController < ApplicationController
                            </div>
                       </article>
                       "+ page_footer(site) +"
+                  <script src='/allsites/js/form.js' type='text/javascript'></script>
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',
