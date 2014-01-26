@@ -35,7 +35,7 @@ function it_drop(obj){
             }else if(parent == 'model1'){
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
-                var img1=$(this).find("img");
+                var img1=ui.draggable.find("img");
                 setImageWH(img1, 93, 93);
                /* var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
@@ -53,13 +53,13 @@ function it_drop(obj){
             }else if(parent == 'model2'){
 
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
-                var img1=$(this).find("img");
+                var img1=ui.draggable.find("img");
                 
                 setImageWH(img1, 77, 77);
                 
             }else if(parent == 'smlPic'){
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/>');
-                var img1=$(this).find("img");
+                var img1=ui.draggable.find("img");
                 setImageWH(img1, 145, 145);
                 
             }else if($(this).attr("class") == 'topPic ui-droppable'){
@@ -125,6 +125,7 @@ function setImageWH(img, width, height){
     var imgHeight = $(img).height();
     var i = width/height;
     var j = imgWidth/imgHeight;
+    alert(width);
     if(j>=i){
          $(img).css({
             "width": (imgWidth >= width ? width : imgWidth) + "px" 
