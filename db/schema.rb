@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140124084702) do
+ActiveRecord::Schema.define(:version => 20140125030210) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
