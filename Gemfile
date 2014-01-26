@@ -7,6 +7,7 @@ gem 'rails', '3.2.6'
 gem 'mini_magick', '3.7.0'
 gem 'mysql2', '0.3.10'
 gem 'devise', '2.1.2'
+gem 'apns'
 #加压
 gem 'rubyzip', '1.1.0'
 #解压

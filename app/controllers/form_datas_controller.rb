@@ -26,12 +26,14 @@ class FormDatasController < ApplicationController
     count_row = 1
     objs.each do |obj|
       data_hash = obj.data_hash
-      label_names = data_hash.keys.select{|key| !key.include?("value")}
-      label_names.length.times {|i|
-        data_value = data_hash[label_names[i]]
-        sheet1[count_row, i] = data_value.is_a?(Array) ? data_value.join(",") : data_value
-      }
-      count_row += 1
+      if data_hash.present?
+        label_names = data_hash.keys.select{|key| !key.include?("value")}
+        label_names.length.times {|i|
+          data_value = data_hash[label_names[i]]
+          sheet1[count_row, i] = (data_value.is_a?(Array) ? data_value.join(",") : data_value) if data_value
+        }
+        count_row += 1
+      end
     end
     book.write xls_report
     xls_report.string

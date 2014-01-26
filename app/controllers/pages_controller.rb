@@ -228,11 +228,9 @@ class PagesController < ApplicationController
       @page = Page.create(title: "index",file_name: "index.html",types:0,site_id: @site.id,path_name:"/public/allsites/#{@site.path_name}/index.html");
     end
     template =params[:template]
-    bigimg =params[:bigimg]
-    imgstr = params[:imgstr]
-    alinkstr = params[:alinkstr]
-    imgarr = imgstr.split("|||")
-    alinkarr = alinkstr.split("|||")
+    bigimg =params[:big_img]
+    imgarr = params[:img_arr]
+    alinkarr = params[:img_link]
     html_content = params[:html_content]
     @tmp_dir = Rails.root.to_s + "/public/allsites/#{@site.root_path}/resources"
     if template.to_i == Constant::Template[:temp1]

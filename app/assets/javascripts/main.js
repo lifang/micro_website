@@ -174,22 +174,6 @@ $(function() {
         }
     });
 	
-    $(".ad_num").on("click","li",function(){
-        if(!$(this).hasClass("curr")){
-            $(".ad_num li").removeClass("curr");
-            $(this).addClass("curr");
-            var i = $(".ad_num li").index(this);
-            $(".ad_box ul").css("left",-i*280+"px");
-        }
-    });
-	
-    $(".homeAd .addAdPic").on("click",function(){
-        var i = $(".ad_box li").length;
-        $(".ad_box ul").append("<li><a class='scd_btn' name='addLink'>"+ Number(i+1)+"</a><span class='close'></span></li>");
-        $(".ad_box ul").css("width",Number(i+1)*280+"px");
-        $(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
-    });
-	
     $.each($(".category a li"),function(i,item){
         if(i%2 != 0){
             $(item).css("background","#53656c");
@@ -201,8 +185,7 @@ $(function() {
         }
     });
 	
-    $(".leftSide").css("height",$(document).height() - 60 +"px");
-	
+    
     $(".newSmlPic").click(function(){
         var i = $(".smlPicList .smlPic").length;
         $(".smlPicList").append("<div class='smlPic'><a class='scd_btn' name='addLink'>"+Number(i+1)+"</a><span class='close'></span></div>");
@@ -219,37 +202,7 @@ $(function() {
     $(".insetBox").on("click",".optBox .close2",function(){
         $(this).parents(".optBox").remove();
     });
-    
-    $(".addItem").on("click",".addItemSub",function(){
-        var item = $(this).parents(".addItem");
-        if($(item).hasClass("addTxtItem")){
-			
-        }else if($(item).hasClass("addRdoItem")){
-			
-        }else if($(item).hasClass("addChekItem")){
-			
-        }else if($(item).hasClass("addSelItem")){
-		 	
-    }
-    });
 	
-    $(".iphoneVirtual").on("click",".opt.rad",function(){
-        if($(this).hasClass("check")){
-            $(this).removeClass("check");
-        }else{
-            $(this).parent().find(".rad").removeClass("check");
-            $(this).addClass("check");
-        }
-    });
-	
-    $(".iphoneVirtual").on("click",".opt.chk",function(){
-        if($(this).hasClass("check")){
-            $(this).removeClass("check");
-        }else{
-            $(this).addClass("check");
-        }
-    });
-
     $(".warnArea .time").click(function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
         txtArea.val(txtArea.val() + "[[时间]]");
@@ -337,8 +290,14 @@ function have_exist(id) {
         tishi_alert('请选择文件');
         return false;
     } else {
-
+        var pattern = new RegExp("[`~@#$^&*()=:;'\",\\[\\]<>~！%￥…&*（）|{}。，、]");
         var arr = ['zip', 'ZIP', 'jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'mp3', 'MP3', 'wma', 'WMA', '3gp', '3GP', 'mp4', 'MP4', 'swf', 'SWF', 'gif', 'GIF', 'js', 'JS', 'css', 'CSS'];
+       /* var name1 = name.split("\\");
+        name1 = name1[name1.length-1];
+        if(pattern.test(name1)){
+            tishi_alert("文件名不能包含特殊字符");
+            return false;
+        }*/
         if (arr_contant(name, arr)) {
 
             name = name.split('\\');

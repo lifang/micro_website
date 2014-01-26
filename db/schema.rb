@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140125030210) do
+ActiveRecord::Schema.define(:version => 20140125033836) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20140125030210) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "open_id"
+    t.string   "token"
   end
 
   create_table "form_datas", :force => true do |t|
@@ -138,11 +139,11 @@ ActiveRecord::Schema.define(:version => 20140125030210) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number", :default => 0
+    t.integer  "praise_number"
   end
 
   create_table "recently_clients", :force => true do |t|

@@ -40,17 +40,21 @@ function submit_template1_2(models,template){
         alinkstr += $(alinkarr[i]).attr("data-href")+"|||"
     }
     var html_content = $(models).html();
-    html_content = html_content.replace(/;/g, "||");
+    $(models).find(".html_content").val(html_content);
+    var form = $(models).parent();
+   // form.submit();
+    var str = form.serialize();
     $.ajax({
         async:true,
         type : 'post',
         url:'/model_page',
         dataType:"json",
-        data  :"site_id="+$("#site_id").val()+"&template="+template+"&bigimg="+bigimg+"&imgstr="+imgstr
-        +"&alinkstr="+alinkstr +"&html_content="+html_content,
+        data  :str,
         success:function(data){
             if(data==1){
                 tishi_alert("保存成功!");
+            }else{
+                tishi_alert("保存失败!");
             }
         }
     });
@@ -69,11 +73,10 @@ function template3_Submit(site_id){
 
     if(flag){
         var form = $(".iv_temp3").parent("form")
-        var dataValue = form.serialize();
         var content = $(".iv_temp3").html();
-        content = content.replace(/;/g, "||");  //把分号替换掉，否则表单提交不完全，会被分号隔开
-        dataValue = dataValue + "&page[content]=" + content;
-
+        var htmlContainer = form.find(".hidden_html");
+        htmlContainer.html(content)
+        var dataValue = form.serialize();
         $.ajax({
             url: "/sites/" + site_id + "/pages/save_template3",
             type: "POST",
@@ -148,4 +151,8 @@ function show_model_sub(){
     $(".iphoneVirtual").show();
     $("#tupian").show();
     $(".iv_temp4").hide();
+}
+
+function escapeHtml(content){
+    return content.replace(/;/g, "||").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")
 }
