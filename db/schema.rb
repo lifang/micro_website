@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140122073232) do
+ActiveRecord::Schema.define(:version => 20140125033836) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20140122073232) do
     t.boolean  "has_new_record"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "open_id"
+    t.string   "token"
   end
 
   create_table "form_datas", :force => true do |t|
@@ -196,10 +198,11 @@ ActiveRecord::Schema.define(:version => 20140122073232) do
     t.string   "notes"
     t.integer  "status",     :limit => 1
     t.integer  "user_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "cweb"
     t.integer  "template",                :default => 1
+    t.boolean  "exist_app",               :default => false
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
