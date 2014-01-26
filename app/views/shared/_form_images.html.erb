@@ -6,7 +6,7 @@
     <% if image %>
       <div class="picBox">
         <img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"
-             <%= image&&image["height"]/image["width"]>=1 ? "height='140' width=#{ image['width']*140/image['height']}" : "width='140' height = #{image['height']*140/image['width']}" %>/>
+             <%= image&&image["height"]/image["width"]>=1 ? "height='140' width=#{ image['width']*140/image['height']}" : "width='140' height=#{image['height']*140/image['width']}" %> />
         <span><%= img.path_name.split("/")[-1].length>6 ? "#{img.path_name.split('/')[-1][0..5]}..." :img.path_name.split("/")[-1]%></span>
       </div>
     <% end %>
