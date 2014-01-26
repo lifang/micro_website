@@ -119,9 +119,9 @@ class ResourcesController < ApplicationController
         ful_pa=Rails.root.to_s+SITE_PATH % @root1_path+"temp/"+entry
         tmp_file=File.new(ful_pa)
         ful_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+entry
-        if entry =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）|{}。，、]/
-            @arr_chart +=1
-        else
+        #if entry =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）|{}。，、]/
+        #    @arr_chart +=1
+        #else
           if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
             save_from_zip(resour,arr,ful_pa,ful_path)
             #@full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
@@ -133,7 +133,7 @@ class ResourcesController < ApplicationController
           else
             arr_error+=1
           end
-        end
+        #end
       end
     end
     flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}#{message(@arr_chart,'存在特殊字符资源被覆盖')}"

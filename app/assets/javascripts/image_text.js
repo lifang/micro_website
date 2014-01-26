@@ -52,35 +52,14 @@ function it_drop(obj){
 
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 var img1=$(this).find("img");
-                var imgWidth1 = $(img1).width();
-                var imgHeight1 = $(img1).height();
-                if(imgWidth1 > imgHeight1){
-                    $(img1).css({
-                        "width": "77px",
-                        "height": "auto"
-                    });
-                }else{
-                    $(img1).css({
-                        "height": "77px",
-                        "width" : "auto"
-                    });
-                }
+                
+                setImageWH(img1, 77, 77);
+                
             }else if(parent == 'smlPic'){
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/>');
                 var img1=$(this).find("img");
-                var imgWidth1 = $(img1).width();
-                var imgHeight1 = $(img1).height();
-                if(imgWidth1 > imgHeight1){
-                    $(img1).css({
-                        "width": "145px",
-                        "height": "auto"
-                    });
-                }else{
-                    $(img1).css({
-                        "height": "145px",
-                        "width" : "auto"
-                    });
-                }
+                setImageWH(img1, 145, 145);
+                
             }else if($(this).attr("class") == 'topPic ui-droppable'){
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/> '+'<input type="hidden" name="top_img" value="'+ui.draggable.find("img").attr("src")+'">');
                 var img1=$(this).find("img");
