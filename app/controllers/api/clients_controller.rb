@@ -73,10 +73,6 @@ class Api::ClientsController < ApplicationController
       end
       messages2 = messages.reverse
       if messages.any?
-      
-       p messages.map(&:id)
-       p "***********"
-       p messages2.map(&:id)
         person = Client.find_by_id(person_id)
         person.update_attribute("has_new_message", Client::HAS_NEW_MESSAGE[:NO]) if person
         new_messages = Message.where(["site_id=? and from_user=? and status=?", site_id, person_id, Message::STATUS[:UNREAD]])
