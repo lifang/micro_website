@@ -95,12 +95,12 @@ function temp_it_drop(obj, width, height){
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
+            var img = ui.draggable.find("img");
+            var width_or_height = setImageWH(img, width, height);
+            var img_src = img.attr("src");
             $(this).text(" ");
             $(this).parent("li").find("input.img_src").val(img_src);
-            $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
-            var img = $(this).find("img");
-            setImageWH(img, width, height);
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height + ' />');
         }
     });
 }
@@ -110,12 +110,11 @@ function form_it_drop(obj, width, height){
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
-            $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
+            var img = ui.draggable.find("img");
+            var width_or_height = setImageWH(img, width, height);
+            var img_src = img.attr("src");
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height +' />');
             $(this).next().val(img_src);
-            $(this).find("img").attr("src", img_src);
-            var img = $(this).find("img");
-            setImageWH(img, width, height);
         }
     });
 }
@@ -126,13 +125,9 @@ function setImageWH(img, width, height){
     var i = width/height;
     var j = imgWidth/imgHeight;
     if(j>=i){
-         $(img).css({
-            "width": (imgWidth >= width ? width : imgWidth) + "px" 
-        });
+        return "width=" + (imgWidth >= width ? width : imgWidth);
     }else{
-         $(img).css({
-            "height": (imgHeight >= height ? height : imgHeight) + "px"
-        });
+        return "height=" + (imgHeight >= height ? height : imgHeight)
     }
 }
 
