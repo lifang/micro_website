@@ -97,7 +97,7 @@
       </div>
     <% end %>
     <div id="tupian">
-      <%= render 'shared/form_images',:objects => @imgs %>
+      <%= render 'shared/form_images',:objects => @imgs, :from => "main_page" %>
     </div>
 
     <div class="iv_temp4 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "block" : "none" %>">

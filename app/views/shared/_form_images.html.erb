@@ -1,4 +1,5 @@
-<div class="picChoice picRes" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
+<% from ||= "" %>
+<div class="picChoice picRes" style="display: <%= from == "main_page"&&@site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
   <% @imgs_path.each do |img|%>
     <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
     <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
