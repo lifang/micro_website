@@ -119,7 +119,7 @@ class ResourcesController < ApplicationController
         ful_pa=Rails.root.to_s+SITE_PATH % @root1_path+"temp/"+entry
         tmp_file=File.new(ful_pa)
         ful_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+entry
-        if postfix_name =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）——|{}。，、-]/
+        if entry =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）|{}。，、]/
             @arr_chart +=1
         else
           if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
