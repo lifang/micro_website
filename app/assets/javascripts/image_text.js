@@ -33,10 +33,10 @@ function it_drop(obj){
                     "height": "568px"
                 });
             }else if(parent == 'model1'){
-                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
+            	var img1=ui.draggable.find("img");
+                var width_or_height = setImageWH(img1, 93, 93);
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' +width_or_height+ ' />');
                 $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
-                var img1=ui.draggable.find("img");
-                setImageWH(img1, 93, 93);
                /* var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
                 if(imgWidth1 > imgHeight1){
@@ -52,15 +52,15 @@ function it_drop(obj){
                 }*/
             }else if(parent == 'model2'){
 
-                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 var img1=ui.draggable.find("img");
-                
-                setImageWH(img1, 77, 77);
+                var width_or_height = setImageWH(img1, 77, 77);
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + width_or_height+'  />');
                 
             }else if(parent == 'smlPic'){
-                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/>');
-                var img1=ui.draggable.find("img");
-                setImageWH(img1, 145, 145);
+            	var img1=ui.draggable.find("img");
+                var width_or_height = setImageWH(img1, 145, 145);
+                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'" '+width_or_height+'/>');
+                
                 
             }else if($(this).attr("class") == 'topPic ui-droppable'){
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/> '+'<input type="hidden" name="top_img" value="'+ui.draggable.find("img").attr("src")+'">');
@@ -127,7 +127,7 @@ function setImageWH(img, width, height){
     if(j>=i){
         return "width=" + (imgWidth >= width ? width : imgWidth);
     }else{
-        return "height=" + (imgHeight >= height ? height : imgHeight)
+        return "height=" + (imgHeight >= height ? height : imgHeight);
     }
 }
 
