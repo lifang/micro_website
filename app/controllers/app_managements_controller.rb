@@ -164,7 +164,7 @@ a.each(function(){
       if(data==1)
       alert('保存成功!');
       else if(data==2)
-        alert('更新咸功');
+        alert('更新成功');
       else
         alert('error');
     }

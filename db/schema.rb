@@ -1,4 +1,3 @@
-
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -140,11 +139,11 @@ ActiveRecord::Schema.define(:version => 20140125033836) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number", :default => 0
+    t.integer  "praise_number"
   end
 
   create_table "recently_clients", :force => true do |t|
@@ -171,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20140125033836) do
     t.boolean  "range"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "days"
   end
 
   create_table "replies", :force => true do |t|
@@ -241,4 +241,3 @@ ActiveRecord::Schema.define(:version => 20140125033836) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
-

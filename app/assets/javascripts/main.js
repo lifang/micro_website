@@ -339,12 +339,12 @@ function have_exist(id) {
     } else {
         var pattern = new RegExp("[`~@#$^&*()=:;'\",\\[\\]<>~！%￥…&*（）|{}。，、]");
         var arr = ['zip', 'ZIP', 'jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'mp3', 'MP3', 'wma', 'WMA', '3gp', '3GP', 'mp4', 'MP4', 'swf', 'SWF', 'gif', 'GIF', 'js', 'JS', 'css', 'CSS'];
-        var name1 = name.split("\\");
+       /* var name1 = name.split("\\");
         name1 = name1[name1.length-1];
         if(pattern.test(name1)){
             tishi_alert("文件名不能包含特殊字符");
             return false;
-        }
+        }*/
         if (arr_contant(name, arr)) {
 
             name = name.split('\\');
