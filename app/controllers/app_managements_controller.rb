@@ -105,22 +105,6 @@ class AppManagementsController < ApplicationController
 <script src='http://malsup.github.com/jquery.form.js'></script> 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 
-<script language='javascript' type='text/javascript'>
-        $.ajax({
-            url: '/get_token',
-            type: 'get',
-            dataType: 'text',
-            success:function(data){
-var a = $('.authenticity_token');
-a.each(function(){
-  $(this).val(data);
-});
-            },
-            error:function(data){
-//alert('error')
-            }
-        })
-</script>
 
 </head>
 
@@ -172,6 +156,23 @@ a.each(function(){
     
       }
     </script>
+    <script language='javascript' type='text/javascript'>
+        $.ajax({
+            url: '/get_token',
+            type: 'get',
+            dataType: 'text',
+            success:function(data){
+var a = $('.authenticity_token');
+a.each(function(){
+  $(this).val(data);
+});
+            },
+            error:function(data){
+//alert('error')
+            }
+        })
+</script>
+
 </body>
 </html>
 
