@@ -125,7 +125,6 @@ function setImageWH(img, width, height){
     var imgHeight = $(img).height();
     var i = width/height;
     var j = imgWidth/imgHeight;
-    alert(width);
     if(j>=i){
          $(img).css({
             "width": (imgWidth >= width ? width : imgWidth) + "px" 
