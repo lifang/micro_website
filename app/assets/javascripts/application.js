@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require_directory ./common
+//= require_directory ./jquery-ui
+//= require_directory ./kindEditor
