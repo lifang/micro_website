@@ -2,7 +2,7 @@
 module ApplicationHelper
   include Constant
   include TemplateHelper
-  MW_URL = "http://web.sunworldmedia.com/"
+  MW_URL = "http://demo.sunworldmedia.com/"
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
   end
