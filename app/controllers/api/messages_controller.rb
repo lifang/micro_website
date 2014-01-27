@@ -19,6 +19,10 @@ class Api::MessagesController < ApplicationController
         mess = {:id => message.id, :from_user => message.from_user, :to_user => message.to_user, :types => message.types,
           :content => message.content, :status => message.status,
           :date => message.created_at.nil? ? nil : message.created_at.strftime("%Y-%m-%d %H:%M")}
+        if types == Message::TYPES[:record] #如果是记录，则要将has_new_record设为1
+          person = Client.find_by_id(to_user)
+          person.update_attribute("has_new_record", true) if person
+        end
       end
       render :json => {:status => status, :msg => msg, :return_object => {:message => mess}}
     end
