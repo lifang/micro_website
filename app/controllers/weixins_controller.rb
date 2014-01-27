@@ -49,7 +49,7 @@ class WeixinsController < ApplicationController
   def get_client_message
     Message.transaction do
       open_id = params[:xml][:FromUserName]
-      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]
+      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id(open_id)
       if  @site.exist_app && client && client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
@@ -59,11 +59,12 @@ class WeixinsController < ApplicationController
         APNS.host = 'gateway.sandbox.push.apple.com'
         APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
         APNS.port = 2195
-        token = client.token
+        token = current_client.token
         if token
-        APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
-        end
-        
+          badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+              Client::HAS_NEW_MESSAGE[:YES]]).length
+          APNS.send_notification(token,:alert => mess.content, :badge => badge, :sound => 'default')
+        end       
       end
     end
   end
