@@ -10,40 +10,41 @@ class MicroImgtextsController < ApplicationController
     @micro_message = MicroMessage.find(params[:format]) unless params[:format].nil?
   end
   def create
-    
-    if params[:micro_message_id]==''
-      @micro_message = MicroMessage.create(site_id:@site.id,mtype:1)
-    else
-      @micro_message = MicroMessage.find(params[:micro_message_id])
-    end
-    @micro_imgtext = MicroImgtext.new(params[:micro_imgtexts])
-    @micro_imgtext.micro_message_id=@micro_message.id
-    @tmp = params[:micro_imgtexts][:img_path]
-    #图片类别
-    @img_resources =%w[jpg png gif jpeg]
-    postfix_name = @tmp.original_filename.split('.')[-1].downcase
-    #利用时间整数做名字
-    timename = Time.new.to_i
-    @full_dir =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
-    @full_path =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
-    @micro_imgtext.img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
-    if @img_resources.include?(postfix_name)
-      if @micro_imgtext.save
-        if !File::exist?(@full_path)
-          FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
-          file=File.new(@full_path,'wb')
-          FileUtils.cp @tmp.path,file
-          min_image(@full_path,"#{timename}.#{postfix_name}",@full_dir)
-        end
-        flash[:success]='新建消息模块成功'
-        redirect_to edit_site_micro_message_path(@site,@micro_message)
+     MicroMessage.transaction do
+      if params[:micro_message_id]==''
+        @micro_message = MicroMessage.create(site_id:@site.id,mtype:1)
       else
-        flash[:error]='新建消息模块失败'
+        @micro_message = MicroMessage.find(params[:micro_message_id])
+      end
+      @micro_imgtext = MicroImgtext.new(params[:micro_imgtexts])
+      @micro_imgtext.micro_message_id=@micro_message.id
+      @tmp = params[:micro_imgtexts][:img_path]
+      #图片类别
+      @img_resources =%w[jpg png gif jpeg]
+      postfix_name = @tmp.original_filename.split('.')[-1].downcase
+      #利用时间整数做名字
+      timename = Time.new.to_i
+      @full_dir =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message"
+      @full_path =Rails.root.to_s+"/public/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
+      @micro_imgtext.img_path ="/allsites/"+ @site.root_path+"/micro_message/#{timename}.#{postfix_name}"
+      if @img_resources.include?(postfix_name)
+        if @micro_imgtext.save
+          if !File::exist?(@full_path)
+            FileUtils.mkdir_p @full_dir unless File::directory?( @full_dir )
+            file=File.new(@full_path,'wb')
+            FileUtils.cp @tmp.path,file
+            min_image(@full_path,"#{timename}.#{postfix_name}",@full_dir)
+          end
+          flash[:success]='新建消息模块成功'
+          redirect_to edit_site_micro_message_path(@site,@micro_message)
+        else
+          flash[:error]='新建消息模块失败'
+          render 'micro_messages/new'
+        end
+      else
+        flash[:error]='只允许（gif，png，jpg）图片'
         render 'micro_messages/new'
       end
-    else
-      flash[:error]='只允许（gif，png，jpg）图片'
-      render 'micro_messages/new'
     end
   end
 
