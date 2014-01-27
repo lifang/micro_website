@@ -57,7 +57,7 @@ class WeixinsController < ApplicationController
         mess.save
         #推送到IOS端
         APNS.host = 'gateway.sandbox.push.apple.com'
-        APNS.pem  = File.join(Rails.root, 'pem', 'CMR_Development.pem')
+        APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
         APNS.port = 2195
         token = client.token
         if token
