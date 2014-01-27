@@ -25,7 +25,7 @@ class WeixinsController < ApplicationController
         result = get_client_message
         client, mess = result[0], result[1]
         APNS.host = 'gateway.sandbox.push.apple.com'
-        APNS.pem  = File.join(Rails.root, 'pem', 'CMR_Development.pem')
+        APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
         APNS.port = 2195
         token = client.token
         if client && client.token && mess
@@ -58,7 +58,7 @@ class WeixinsController < ApplicationController
   def get_client_message
     Message.transaction do
       open_id = params[:xml][:FromUserName]
-      current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
+      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]
       client = Client.find_by_open_id(open_id)
       if  @site.exist_app && client && current_client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
