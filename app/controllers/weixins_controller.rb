@@ -32,7 +32,7 @@ class WeixinsController < ApplicationController
         APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
         end
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
-        if params[:xml][:Content] == "参与"
+        if params[:xml][:Content] == "红包"
           open_id = params[:xml][:FromUserName]
           link = get_valid_award(cweb)
           @link = link ? link + "&amp;secret_key=" + open_id : "0"
