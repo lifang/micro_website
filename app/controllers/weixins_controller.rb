@@ -60,7 +60,7 @@ class WeixinsController < ApplicationController
         APNS.pem  = File.join(Rails.root, 'pem', 'CMR_Development.pem')
         APNS.port = 2195
         token = client.token
-        if client.token
+        if token
         APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
         end
         
