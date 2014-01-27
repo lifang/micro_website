@@ -19,7 +19,6 @@ class WeixinsController < ApplicationController
         return_message = get_return_message(cweb, "auto")  #获得关注后回复消息的内容
         define_render(return_message) #返回渲染方式 :  text/news
         create_menu(cweb)  #创建自定义菜单
-
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
         #存储消息
@@ -32,6 +31,7 @@ class WeixinsController < ApplicationController
         if client && client.token && mess
           APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
         end
+
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
           open_id = params[:xml][:FromUserName]
@@ -59,13 +59,22 @@ class WeixinsController < ApplicationController
   def get_client_message
     Message.transaction do
       open_id = params[:xml][:FromUserName]
-      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]
-      client = Client.find_by_open_id(open_id) 
-      if  @site.exist_app && client && current_client.update_attribute(:has_new_message,true)
+      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
+      client = Client.find_by_open_id(open_id)
+      if  @site.exist_app && client && client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
           :types => Message::TYPES[:record], :content => params[:xml][:Content], :status => Message::STATUS[:UNREAD])
         mess.save
-        return [current_client, mess]
+        #推送到IOS端
+        APNS.host = 'gateway.sandbox.push.apple.com'
+        APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
+        APNS.port = 2195
+        token = current_client.token
+        if token
+          badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+              Client::HAS_NEW_MESSAGE[:YES]]).length
+          APNS.send_notification(token,:alert => mess.content, :badge => badge, :sound => 'default')
+        end       
       end
     end
   end
