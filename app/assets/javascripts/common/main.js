@@ -438,18 +438,26 @@ function interception_wrap(button){
     var s = $(button).parents(".third_content").find("textarea").val();
     var array_s = s.split("\n");
     var activity = null;
+    var long_size = true;
     $.each(array_s,function(index,value){
         value = $.trim(value);
+        if (value.length >= 17){
+            tishi_alert('单行字符过长！')
+            long_size = false;
+            return false;
+        }
         if(activity==null){
             activity = value;
         }else{
             activity += "||"+ value;
         }
     });
-    var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
-    txtArea.val(txtArea.val() + "[[选项-"+ activity +"]]")
-    $(button).parents(".third_box").hide();
-    $(".third_bg").hide();
+    if (long_size){
+        var txtArea = $("div[ishow='show']").find(".warnTxt textarea");
+        txtArea.val(txtArea.val() + "[[选项-"+ activity +"]]")
+        $(button).parents(".third_box").hide();
+        $(".third_bg").hide();
+    }
 }
 
 function check_remind_nonempty(){

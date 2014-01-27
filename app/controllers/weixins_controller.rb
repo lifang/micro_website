@@ -20,7 +20,7 @@ class WeixinsController < ApplicationController
         create_menu(cweb)  #创建自定义菜单
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
-        #存储消息
+        #存储消息并且推送到IOS端
         get_client_message        
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
@@ -49,7 +49,7 @@ class WeixinsController < ApplicationController
   def get_client_message
     Message.transaction do
       open_id = params[:xml][:FromUserName]
-      current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
+      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]
       client = Client.find_by_open_id(open_id)
       if  @site.exist_app && client && client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,

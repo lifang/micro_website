@@ -2,7 +2,7 @@
 module ApplicationHelper
   include Constant
   include TemplateHelper
-  MW_URL = "http://web.sunworldmedia.com/"
+  MW_URL = "http://demo.sunworldmedia.com/"
   def if_authenticate(page)
     page && page.authenticate ? "是" : "否"
   end
@@ -148,7 +148,7 @@ a.each(function(){
         return group_member
       end
     end
-    nil
+    []
   end
   #得到mini_magic变得两种小图
   def get_min1_by_imgpath(imgname1)

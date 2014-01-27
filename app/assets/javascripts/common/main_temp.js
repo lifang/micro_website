@@ -88,7 +88,7 @@ $(function(){
         $(".ad_box ul").css("width",Number(i+1)*280+"px");
         $(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
         $input_280 = $( ".tmp_280-196 a" );
-        temp_it_drop($input_280, 280, 196);
+        temp_it_drop_slide($input_280, 280, 196);
         $(".homeAd li span.close").on("click",function(){
             li = $(this).parent("li");
             var index = $(".ad_box li").index(li);
