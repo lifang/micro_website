@@ -16,7 +16,7 @@ class WeixinsController < ApplicationController
     if request.request_method == "POST" && tmp_encrypted_str == signature
       if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复      
         return_message = get_return_message(cweb, "auto")  #获得关注后回复消息的内容
-        define_render(return_message) #返回渲染方式 :  text/news
+        define_render(return_message, "auto") #返回渲染方式 :  text/news
         create_menu(cweb)  #创建自定义菜单
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
@@ -35,7 +35,7 @@ class WeixinsController < ApplicationController
           xml = teplate_xml
           render :xml => xml
         else
-          define_render(return_message) #返回渲染方式 :  text/news
+          define_render(return_message, "key") #返回渲染方式 :  text/news
         end
       else
         render :text => "ok"
@@ -142,11 +142,16 @@ class WeixinsController < ApplicationController
     return award ? MW_URL + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
   end
 
-  def define_render(return_message)
+  def define_render(return_message, flag)
     if return_message
       micro_message, micro_image_text = return_message
       if micro_message && micro_message.text?
         @message = micro_image_text[0].content if micro_image_text && micro_image_text[0]
+        if @site.exist_app && flag== "auto"
+          a_msg = "&lt;a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击 登记您的信息&lt;/a&gt;
+                  "
+          @message = a_msg + @message
+        end
         xml = teplate_xml
         render :xml => xml        #关注 自动回复的文字消息
       else
@@ -159,19 +164,13 @@ class WeixinsController < ApplicationController
   end
 
   def teplate_xml
-    a_msg =""
-    if @site.exist_app
-      a_msg = "&lt;a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击 登记您的信息&lt;/a&gt;
-      "
-    end
-
     template_xml = <<Text
 <xml>
   <ToUserName><![CDATA[#{params[:xml][:FromUserName]}]]></ToUserName>
   <FromUserName><![CDATA[#{params[:xml][:ToUserName]}]]></FromUserName>
   <CreateTime>#{Time.now.to_i}</CreateTime>
   <MsgType><![CDATA[text]]></MsgType>
-  <Content>#{a_msg}#{@message}</Content>
+  <Content>#{@message}</Content>
   <FuncFlag>0</FuncFlag>
 </xml>
 Text
