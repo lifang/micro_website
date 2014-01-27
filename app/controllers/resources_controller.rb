@@ -17,23 +17,23 @@ class ResourcesController < ApplicationController
   end
   #得到sql选择语句
   def get_str(name)
-   case name
-   when 'img'
-     "path_name like '%.jpg' or path_name like '%.png' or path_name like '%.gif' or "+
-     "path_name like '%.JPG' or path_name like '%.PNG' or path_name like '%.GIF'"
-   when 'voice'
-     "path_name like '%.mp3' or path_name like '%.wma' or path_name like '%.wav' or "+
-     "path_name like '%.MP3' or path_name like '%.WMA' or path_name like '%.WAV'"
-   when 'js'
-     "path_name like '%.js' or path_name like '%.JS'"
-   when 'video'
+    case name
+    when 'img'
+      "path_name like '%.jpg' or path_name like '%.png' or path_name like '%.gif' or "+
+        "path_name like '%.JPG' or path_name like '%.PNG' or path_name like '%.GIF'"
+    when 'voice'
+      "path_name like '%.mp3' or path_name like '%.wma' or path_name like '%.wav' or "+
+        "path_name like '%.MP3' or path_name like '%.WMA' or path_name like '%.WAV'"
+    when 'js'
+      "path_name like '%.js' or path_name like '%.JS'"
+    when 'video'
       "path_name like '%.mp4' or path_name like '%.avi' or path_name like '%.rm' or path_name like '%.rmvb' or path_name like '%.swf' or "+
-      "path_name like '%.MP4' or path_name like '%.AVI' or path_name like '%.RM' or path_name like '%.RMVB' or path_name like '%.SWF'"
-   end
+        "path_name like '%.MP4' or path_name like '%.AVI' or path_name like '%.RM' or path_name like '%.RMVB' or path_name like '%.SWF'"
+    end
   end
 
   def create
-   do_create
+    do_create
   end
   #上传功能
   def do_create
@@ -108,6 +108,9 @@ class ResourcesController < ApplicationController
     arr=[]
     @arr_repeat=0
     arr_error=0
+    @arr_chart =0
+
+    
     Dir.foreach(@full_dir) do |entry|
       if !File::directory?(entry)
         postfix_name = entry.split('.')[-1]
@@ -116,21 +119,24 @@ class ResourcesController < ApplicationController
         ful_pa=Rails.root.to_s+SITE_PATH % @root1_path+"temp/"+entry
         tmp_file=File.new(ful_pa)
         ful_path=Rails.root.to_s+SITE_PATH % @root1_path+"resources/"+entry
-        
-        if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
-          save_from_zip(resour,arr,ful_pa,ful_path)
-          #@full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
-          #min_image(ful_pa,entry,@full_dir)
-        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
-          save_from_zip(resour,arr,ful_pa,ful_path)
-        elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
-          save_from_zip(resour,arr,ful_pa,ful_path)
-        else
-          arr_error+=1
-        end      
+        #if entry =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）|{}。，、]/
+        #    @arr_chart +=1
+        #else
+          if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
+            save_from_zip(resour,arr,ful_pa,ful_path)
+            #@full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
+            #min_image(ful_pa,entry,@full_dir)
+          elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
+            save_from_zip(resour,arr,ful_pa,ful_path)
+          elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
+            save_from_zip(resour,arr,ful_pa,ful_path)
+          else
+            arr_error+=1
+          end
+        #end
       end
     end
-    flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}"
+    flash[:success]="成功加入#{arr.length}个新资源#{message(arr_error,'不符合规范的')}#{message(@arr_repeat,'已存在资源被覆盖')}#{message(@arr_chart,'存在特殊字符资源被覆盖')}"
     # @full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"temp"
     FileUtils.rm_r @full_dir
   end
@@ -153,7 +159,7 @@ class ResourcesController < ApplicationController
     #min_image(@full_path,@tmp.original_filename,@full_dir)
   end
   
-def which_res(name)
+  def which_res(name)
     @img_resources=%w[jpg png gif jpeg]
     @voice_resources=%w[mp3]
     @video_resoures=%w[mp4 avi rm rmvb]
@@ -218,12 +224,12 @@ def which_res(name)
     render :json=>arr
   end
   private
-    def message(num,msg)
-       if num==0
-         ''
-       else
-         "，有#{num}个#{msg}"
-       end
+  def message(num,msg)
+    if num==0
+      ''
+    else
+      "，有#{num}个#{msg}"
     end
+  end
     
 end

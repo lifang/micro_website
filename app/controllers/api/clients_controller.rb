@@ -5,6 +5,7 @@ class Api::ClientsController < ApplicationController
   def login
     mphone = params[:mphone]
     pwd = params[:password]
+    token = params[:token]
     status = 1
     msg = ""
     user = Client.find_by_mobiephone_and_types(mphone, Client::TYPES[:ADMIN])
@@ -16,6 +17,7 @@ class Api::ClientsController < ApplicationController
         status = 0
         msg = "密码错误!"
       else
+        user.update_attribute("token", token) if token && token.strip != ""
         msg = "登陆成功"
         person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
             c.html_content from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
@@ -39,6 +41,7 @@ class Api::ClientsController < ApplicationController
     end
     render :json => {:status => status, :msg => msg, 
       :return_object => {:user_id => status == 0 ? nil : user.id, :site_id => status == 0 ? nil : user.site_id,
+        :user_avatar => status == 0 ? nil : user.avatar_url,
         :person_list => person_list, :recent_list => rl, :remind => re_content, :record => rec_content}}
   end
 
@@ -47,7 +50,8 @@ class Api::ClientsController < ApplicationController
     Message.transaction do
       status = 1
       msg = ""
-      page = params[:page]
+      page = params[:page].to_i
+      page_status = 1
       user_id = params[:user_id].to_i
       site_id = params[:site_id].to_i
       person_id = params[:person_id].to_i
@@ -56,17 +60,27 @@ class Api::ClientsController < ApplicationController
       date_format(m.created_at,'%Y-%m-%d %H:%i') date from messages m
       where m.site_id=? and m.from_user in (?) and m.to_user in (?) order by m.created_at desc",
           site_id, arr, arr], :per_page => 10, :page => page)
-      if messages.blank?
-        msg = "没有记录"
+      if messages.blank? || messages.length < 10
+        page_status = 0
       else
+        next_messages = Message.paginate_by_sql(["select m.id, m.from_user, m.to_user, m.types, m.content, m.status,
+      date_format(m.created_at,'%Y-%m-%d %H:%i') date from messages m
+      where m.site_id=? and m.from_user in (?) and m.to_user in (?) order by m.created_at desc",
+            site_id, arr, arr], :per_page => 10, :page => page + 1)
+        if next_messages.blank?
+          page_status = 0
+        end
+      end
+      messages2 = messages.reverse
+      if messages.any?
         person = Client.find_by_id(person_id)
-        person.update_attribute("has_new_message", Client::HAS_NEW_MESSAGE[:NO]) if person
+        person.update_attribute("has_new_message", false) if person
         new_messages = Message.where(["site_id=? and from_user=? and status=?", site_id, person_id, Message::STATUS[:UNREAD]])
         new_messages.each do |nm|
           nm.update_attribute("status", Message::STATUS[:READ])
         end if new_messages.any?
       end
-      render :json => {:status => status, :msg => msg, :return_object => {:message_list => messages}}
+      render :json => {:status => status, :msg => msg, :return_object => {:message_list => messages2, :page_status => page_status}}
     end
   end
 

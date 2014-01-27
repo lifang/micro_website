@@ -22,19 +22,22 @@ function it_drop(obj){
         drop: function( event, ui ) {
            
             var parent =$(this).parent().attr("class");
+            
             if(parent == 'homeBg'){
                 $(this).next().html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
                 $(this).html("");
+                $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
                 var img=$(this).next().find("img");
                 $(img).css({
                     "width": "320px",
                     "height": "568px"
                 });
             }else if(parent == 'model1'){
-
-                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
-                var img1=$(this).find("img");
-                var imgWidth1 = $(img1).width();
+            	var img1=ui.draggable.find("img");
+                var width_or_height = setImageWH(img1, 93, 93);
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' +width_or_height+ ' />');
+                $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
+               /* var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
                 if(imgWidth1 > imgHeight1){
                     $(img1).css({
@@ -46,40 +49,19 @@ function it_drop(obj){
                         "height": "93px",
                         "width" : "auto"
                     });
-                }
+                }*/
             }else if(parent == 'model2'){
 
-                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + ' />');
-                var img1=$(this).find("img");
-                var imgWidth1 = $(img1).width();
-                var imgHeight1 = $(img1).height();
-                if(imgWidth1 > imgHeight1){
-                    $(img1).css({
-                        "width": "77px",
-                        "height": "auto"
-                    });
-                }else{
-                    $(img1).css({
-                        "height": "77px",
-                        "width" : "auto"
-                    });
-                }
+                var img1=ui.draggable.find("img");
+                var width_or_height = setImageWH(img1, 77, 77);
+                $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + width_or_height+'  />');
+                
             }else if(parent == 'smlPic'){
-                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/>');
-                var img1=$(this).find("img");
-                var imgWidth1 = $(img1).width();
-                var imgHeight1 = $(img1).height();
-                if(imgWidth1 > imgHeight1){
-                    $(img1).css({
-                        "width": "145px",
-                        "height": "auto"
-                    });
-                }else{
-                    $(img1).css({
-                        "height": "145px",
-                        "width" : "auto"
-                    });
-                }
+            	var img1=ui.draggable.find("img");
+                var width_or_height = setImageWH(img1, 145, 145);
+                $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'" '+width_or_height+'/>');
+                
+                
             }else if($(this).attr("class") == 'topPic ui-droppable'){
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'"/> '+'<input type="hidden" name="top_img" value="'+ui.draggable.find("img").attr("src")+'">');
                 var img1=$(this).find("img");
@@ -113,36 +95,41 @@ function temp_it_drop(obj, width, height){
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
+            var img = ui.draggable.find("img");
+            var width_or_height = setImageWH(img, width, height);
+            var img_src = img.attr("src");
             $(this).text(" ");
             $(this).parent("li").find("input.img_src").val(img_src);
-            $(this).html('<img src=' + '\'' +img_src +'\'' + ' />');
-            var img = $(this).find("img");
-            var imgWidth = $(img).width();
-            var imgHeight = $(img).height();
-            if(imgWidth > imgHeight){
-                $(img).css({
-                    "width": width + "px"
-                });
-            }else{
-                $(img).css({
-                    "height": height + "px"
-                });
-            }
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height + ' />');
         }
     });
-}
+};
+
+function temp_it_drop_slide(obj, width, height){
+    obj.droppable({
+        accept: ".picRes > .picBox",
+        activeClass: "ui-state-highlight",
+        drop: function( event, ui ) {
+            var img = ui.draggable.find("img");
+            var width_or_height = "width=" + width + " height=" + height;
+            var img_src = img.attr("src");
+            $(this).text(" ");
+            $(this).parent("li").find("input.img_src").val(img_src);
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height + ' />');
+        }
+    });
+};
 
 function form_it_drop(obj, width, height){
     obj.droppable({
         accept: ".picRes > .picBox",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            var img_src = ui.draggable.find("img").attr("src");
+            var img = ui.draggable.find("img");
+            var width_or_height = setImageWH(img, width, height);
+            var img_src = img.attr("src");
+            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height +' />');
             $(this).next().val(img_src);
-            $(this).find("img").attr("src", img_src);
-            var img = $(this).find("img");
-            setImageWH(img, width, height);
         }
     });
 }
@@ -150,16 +137,12 @@ function form_it_drop(obj, width, height){
 function setImageWH(img, width, height){
     var imgWidth = $(img).width();
     var imgHeight = $(img).height();
-    if(imgWidth > imgHeight){
-        $(img).css({
-            "width": width + "px",
-            "height" : imgHeight > height ? height : "auto"
-        });
+    var i = width/height;
+    var j = imgWidth/imgHeight;
+    if(j>=i){
+        return "width=" + (imgWidth >= width ? width : imgWidth);
     }else{
-        $(img).css({
-            "width" : imgWidth > width ? width : "auto",
-            "height": height + "px"
-        });
+        return "height=" + (imgHeight >= height ? height : imgHeight);
     }
 }
 

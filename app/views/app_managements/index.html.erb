@@ -14,8 +14,8 @@
     <%=form_for(:app_management ,url: create_client_info_model_site_app_managements_path(@site)) do |f|%>
       <div class="appInfo">
         <% if @chi.nil? || @chi.hash_content=="" || @chi.hash_content.nil? %>
-          <input type='hidden' id="info_inedx" value="2">
-          <input type='hidden' id="html_content" name="html_content" value="">
+          <input type='hidden' id="info_inedx" value="2"/>
+          <input type='hidden' id="html_content" name="html_content" value=""/>
           <div class="itemBox">
             <label>姓名：
               <input type="hidden" name="form[1text][name]" value="姓名"/>
@@ -30,10 +30,11 @@
           </div>
           <hr class="topLine cf" />
         <%else%>
-          <%=raw @chi.hash_content%>
+          <%=raw @chi.hash_content.html_safe%>
         <%end%>
       </div>
     <%end%>
+    
     <div class="formAct appForm">
       <button class="blue_btn scd_btn" name="addTxtItem">
 				增加信息栏

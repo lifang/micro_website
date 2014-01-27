@@ -172,7 +172,8 @@ $(function(){
 function submit_form_page(obj, site_id){
     var content = $.trim($(".form_ele").html());
     var tf_flag = validatePageForm(content);
-    content = content.replace(/;/g, "||"); //把分号替换掉，否则表单提交不完全，会被分号隔开
+    var htmlContainer = $(obj).parents("form").find(".hidden_html");
+    htmlContainer.html(content);
     var title = $.trim($("#page_title").val()); //拿到去空格的值
     var file_name = $.trim($("#page_file_name").val());
     var img=$("#page_img_path").val();
@@ -189,7 +190,7 @@ function submit_form_page(obj, site_id){
         //if(flag=="submit"){ //新建 或者编辑
         var dataValue;
         dataValue = $(obj).parents("form").serialize();
-        dataValue = dataValue + "&page[page_html]=" + content + "&page[authenticate]=" + authenticate;
+        dataValue = dataValue + "&page[authenticate]=" + authenticate;
         $.ajax({
             url: $(obj).parents("form").attr("action"),
             type: "POST",

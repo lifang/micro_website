@@ -22,8 +22,15 @@ class WeixinsController < ApplicationController
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
         #存储消息
-        get_client_message
-        
+        result = get_client_message
+        client, mess = result[0], result[1]
+        APNS.host = 'gateway.sandbox.push.apple.com'
+        APNS.pem  = File.join(Rails.root, 'pem', 'CMR_Development.pem')
+        APNS.port = 2195
+        token = client.token
+        if client && client.token && mess
+        APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
+        end
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
           open_id = params[:xml][:FromUserName]
@@ -47,16 +54,18 @@ class WeixinsController < ApplicationController
     end
 
   end
-#接手用户的任何信息
+  #接手用户的任何信息
   def get_client_message
-    open_id = params[:xml][:FromUserName]
-    current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
-    @client = Client.find_by_open_id(open_id)
-    if  @site.exist_app.eql?(true)&&@client && current_client.update_attribute(:has_new_message,true)
-      Message.create(site_id:@site.id , from_user:@client.id ,to_user:current_client.id ,
-      types:Message::TYPES[:record],
-      content:params[:xml][:Content],
-      status:Message::STATUS[:UNREAD])
+    Message.transaction do
+      open_id = params[:xml][:FromUserName]
+      current_client =  Client.where("site_id=#{@site_id} and types = 0")[0]
+      client = Client.find_by_open_id(open_id)
+      if  @site.exist_app && client && current_client.update_attribute(:has_new_message,true)
+        mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+          :types => Message::TYPES[:record], :content => params[:xml][:Content], :status => Message::STATUS[:UNREAD])
+        mess.save
+        return [current_client, mess]
+      end
     end
   end
 

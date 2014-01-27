@@ -1,11 +1,12 @@
-<div class="picChoice picRes" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
+<% from ||= "" %>
+<div class="picChoice picRes" style="display: <%= from == "main_page"&&@site.template.present? && @site.template == Constant::Template[:temp4] ? "none" : "block" %>">
   <% @imgs_path.each do |img|%>
     <% img_path=Rails.root.to_s + '/public/allsites/'+(img.path_name) %>
     <% image = MiniMagick::Image.open(img_path) if File.exists?(img_path) %>
     <% if image %>
       <div class="picBox">
         <img src="/allsites/<%= img.path_name %>" alt="<%= File.basename(img.path_name) %>" onclick="viewLargerImage(this)"
-             <%= image&&image["height"]/image["width"]>=1 ? "height='140' width=#{ image['width']*140/image['height']}" : "width='140' height = #{image['height']*140/image['width']}" %>/>
+             <%= image&&image["height"]/image["width"]>=1 ? "height='140' width=#{ image['width']*140/image['height']}" : "width='140' height=#{image['height']*140/image['width']}" %> />
         <span><%= img.path_name.split("/")[-1].length>6 ? "#{img.path_name.split('/')[-1][0..5]}..." :img.path_name.split("/")[-1]%></span>
       </div>
     <% end %>
