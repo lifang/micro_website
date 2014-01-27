@@ -121,20 +121,23 @@ class ApplicationController < ActionController::Base
   #根据微信 cweb，获取自动回复的消息
   def get_return_message(cweb, flag, content=nil)
     site = Site.find_by_cweb(cweb)
-   
-    if flag == "auto"
-      return_message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
-    else
-      keyword_param = content.gsub(/[%_]/){|x| '\\' + x}
-      messages = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword_param}%'", site.id) #查询是否有关键词对应回复
-      for message in messages
-        keywords_arr = message.keyword.split(%r{[,|，|\s]})
-        if keywords_arr.include?(keyword_param)
-          return_message = message
-          break
+    if site
+      if flag == "auto"
+        return_message = Keyword.find_by_site_id_and_types(site.id, Keyword::TYPE[:auto]) #查询是否有自动回复
+      else
+        keyword_param = content.gsub(/[%_]/){|x| '\\' + x}
+        messages = Keyword.keyword.where("site_id = ? and keyword like '%#{keyword_param}%'", site.id) #查询是否有关键词对应回复
+        for message in messages
+          keywords_arr = message.keyword.split(%r{[,|，|\s]})
+          if keywords_arr.include?(keyword_param)
+            return_message = message
+            break
+          end
         end
       end
     end
+    p 1111111111111
+    p return_message
     if return_message
       micro_message =  return_message.micro_message  #获取对应的消息记录
       micro_it = micro_message.micro_imgtexts if micro_message
