@@ -15,7 +15,8 @@ class WeixinsController < ApplicationController
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
     if request.request_method == "POST" && tmp_encrypted_str == signature
       if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复
-        return_message = get_return_message(cweb, "auto")  #获得自动回复消息
+        
+        return_message = get_return_message(cweb, "auto")  #获得关注后回复消息的内容
         define_render(return_message) #返回渲染方式 :  text/news
         create_menu(cweb)  #创建自定义菜单
 
@@ -29,7 +30,7 @@ class WeixinsController < ApplicationController
         APNS.port = 2195
         token = client.token
         if client && client.token && mess
-        APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
+          APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
         end
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
@@ -59,7 +60,7 @@ class WeixinsController < ApplicationController
     Message.transaction do
       open_id = params[:xml][:FromUserName]
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]
-      client = Client.find_by_open_id(open_id)
+      client = Client.find_by_open_id(open_id) 
       if  @site.exist_app && client && current_client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
           :types => Message::TYPES[:record], :content => params[:xml][:Content], :status => Message::STATUS[:UNREAD])
@@ -153,13 +154,18 @@ class WeixinsController < ApplicationController
   end
 
   def teplate_xml
+    a_msg =""
+    if @site.exist_app
+      a_msg = "<a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' > 请点击 登记您的信息</a><br/>"
+    end
+
     template_xml = <<Text
 <xml>
   <ToUserName><![CDATA[#{params[:xml][:FromUserName]}]]></ToUserName>
   <FromUserName><![CDATA[#{params[:xml][:ToUserName]}]]></FromUserName>
   <CreateTime>#{Time.now.to_i}</CreateTime>
   <MsgType><![CDATA[text]]></MsgType>
-  <Content>#{@message}</Content>
+  <Content>#{a_msg}#{@message}</Content>
   <FuncFlag>0</FuncFlag>
 </xml>
 Text
