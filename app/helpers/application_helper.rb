@@ -148,7 +148,7 @@ a.each(function(){
         return group_member
       end
     end
-    nil
+    []
   end
   #得到mini_magic变得两种小图
   def get_min1_by_imgpath(imgname1)
