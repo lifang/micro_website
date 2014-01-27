@@ -14,24 +14,14 @@ class WeixinsController < ApplicationController
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
     if request.request_method == "POST" && tmp_encrypted_str == signature
-      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复
-        
+      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复      
         return_message = get_return_message(cweb, "auto")  #获得关注后回复消息的内容
         define_render(return_message) #返回渲染方式 :  text/news
         create_menu(cweb)  #创建自定义菜单
       elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
         content = params[:xml][:Content]
-        #存储消息
-        result = get_client_message
-        client, mess = result[0], result[1]
-        APNS.host = 'gateway.sandbox.push.apple.com'
-        APNS.pem  = File.join(Rails.root, 'pem', 'CMR_Development.pem')
-        APNS.port = 2195
-        token = client.token
-        if client && client.token && mess
-          APNS.send_notification(token,:alert => mess.content, :badge => 1, :sound => 'default')
-        end
-
+        #存储消息并推送到ios端
+        get_client_message
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         if params[:xml][:Content] == "参与"
           open_id = params[:xml][:FromUserName]
@@ -61,7 +51,7 @@ class WeixinsController < ApplicationController
       open_id = params[:xml][:FromUserName]
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id(open_id)
-      if  @site.exist_app && client && client.update_attribute(:has_new_message,true)
+      if  @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
         mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
           :types => Message::TYPES[:record], :content => params[:xml][:Content], :status => Message::STATUS[:UNREAD])
         mess.save
