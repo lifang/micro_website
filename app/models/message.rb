@@ -3,7 +3,7 @@ class Message < ActiveRecord::Base
   require 'net/http'
   require "uri"
   require 'openssl'
-  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types
+  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types, :msg_id
   TYPES = {:phone => 0, :message => 1, :record => 2, :remind => 3} #0打电话，1信息，2记录，3提醒
   S_TYPES = {0 => "打电话", 1 => "短信", 2 => "记录", 3 => "提醒"}
   STATUS = {:READ => 0, :UNREAD => 1} #该信息0未读/未发，1已读/已发
