@@ -46,7 +46,8 @@ class AppManagementsController < ApplicationController
       @client.update_attributes(name:params[:username] , mobiephone:params[:phone],site_id:params[:site_id] , html_content:form_hash )
       render text:2      
     else
-      Client.create(name:params[:username] , mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id])
+      Client.create(name:params[:username] , mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id],
+        has_new_record:Client::HAS_NEW_RECORD[:NO], has_new_message:Client::HAS_NEW_MESSAGE[:NO])
       render text:1
     end
   end
