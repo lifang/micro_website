@@ -67,7 +67,14 @@ class WeixinsController < ApplicationController
             if token
               badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
                   Client::HAS_NEW_MESSAGE[:YES]]).length
-              APNS.send_notification(token,:alert => mess.content, :badge => badge, :sound => 'default')
+              content = "#{client.name}:#{mess.content}"
+              APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
+              recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
+              if recent_client
+                recent_client.update_attribute("content", mess.content)
+              else
+                RecentlyClients.create(:site_id => @site.id, :client_id => client.id, :content => mess.content)
+              end
             end
           end
         end
