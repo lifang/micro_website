@@ -95,17 +95,9 @@ class Api::ClientsController < ApplicationController
       person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record
             from clients c where c.site_id=? and c.types=?", site_id, Client::TYPES[:CONCERNED]])
       h[:person_list] = person_list
-      if person_list.blank?
-        status = 0
-        msg = "没有记录"
-      end
     else
       recent_list = RecentlyClients.find_by_sql(["select rc.client_id person_id, rc.content, date_format(rc.updated_at, '%Y-%m-%d %H:%i') date
             from recently_clients rc where rc.site_id=?", site_id])
-      if recent_list.blank?
-        status = 0
-        msg = "没有记录"
-      end
       rl = recent_list.inject([]){|a, r|
         hash = {}
         hash[:person_id] = r.person_id
