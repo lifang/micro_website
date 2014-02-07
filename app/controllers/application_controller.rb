@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def get_site
     @site = Site.find_by_id params[:site_id]
-    if @site && @site.user != current_user
+    if @site && @site.user != current_user && !request.xhr?
       render(:file  => "#{Rails.root}/public/404.html",
         :layout => nil,
         :status   => "404 Not Found")
