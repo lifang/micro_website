@@ -24,20 +24,22 @@ class AppManagementsController < ApplicationController
         render 'index'
       end
     else
-       ClientHtmlInfo.create(client_id:@client.id , hash_content:params[:html_content])
-       redirect_to site_app_managements_path(@site)
+      ClientHtmlInfo.create(client_id:@client.id , hash_content:params[:html_content])
+      redirect_to site_app_managements_path(@site)
     end
   end
   
   def get_form_date
     form = params[:form]
     form_hash ="{"
-    form.each do |f|
-      value =f[1][:value]
-      if f[1][:value].class.eql?(Array)
-        value = f[1][:value].join(",")
+    form.each_with_index do |f,index|
+      if index>1
+        value =f[1][:value]
+        if f[1][:value].class.eql?(Array)
+          value = f[1][:value].join(",")
+        end
+        form_hash +="'#{f[1][:name]}'=>'#{value}',"
       end
-      form_hash +="'#{f[1][:name]}'=>'#{value}',"
     end
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
@@ -183,7 +185,7 @@ a.each(function(){
 </body>
 </html>
 
-     "
-     html
+    "
+    html
   end
 end
