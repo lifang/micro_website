@@ -53,11 +53,12 @@ class WeixinsController < ApplicationController
         current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
         client = Client.find_by_open_id(open_id)
         if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-          m = Message.where({:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id, :content => params[:xml][:Content]}).order("created_at asc").last
+          m = Message.first(:msg_id => params[:xml][:MsgId])
           time_now = Time.now
-          if m.nil? || (m && ((time_now - m.created_at).to_i > 30))
+          if m.nil?
             mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
-              :types => Message::TYPES[:record], :content => params[:xml][:Content], :status => Message::STATUS[:UNREAD])
+              :types => Message::TYPES[:record], :content => params[:xml][:Content], 
+              :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId])
             mess.save
             #推送到IOS端
             APNS.host = 'gateway.sandbox.push.apple.com'
