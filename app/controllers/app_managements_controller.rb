@@ -2,6 +2,7 @@
 class AppManagementsController < ApplicationController
   layout 'sites'
   before_filter :get_site,:exist_app?
+  skip_before_filter :authenticate_user!,:get_site,:exist_app? ,only:[:get_form_date]
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @chi =ClientHtmlInfo.find_by_client_id(@client.id)
@@ -27,6 +28,7 @@ class AppManagementsController < ApplicationController
        redirect_to site_app_managements_path(@site)
     end
   end
+  
   def get_form_date
     form = params[:form]
     form_hash ="{"
@@ -39,14 +41,16 @@ class AppManagementsController < ApplicationController
     end
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
+    
     if @client
-      @client.update_attributes(username:params[:username] , mobiephone:params[:phone] , html_content:form_hash )
+      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],site_id:params[:site_id] , html_content:form_hash )
       render text:2      
     else
-      Client.create(username:params[:username] , mobiephone:params[:phone] , html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id])
+      Client.create(name:params[:username] , mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id])
       render text:1
     end
   end
+  
   def save_as_app_form content
     site_path = Rails.root.to_s + "/public/allsites/#{@site.root_path}"
     path = Rails.root.to_s + "/public/allsites/#{@site.root_path}/this_site_app.html"
@@ -112,8 +116,9 @@ class AppManagementsController < ApplicationController
   <article>
         <section class='form_list'>
         <form action='/sites/#{@site.id}/app_managements/get_form_date' data-remote='true' data-type='script' method='post'>
-          <div style='margin:0;padding:0;display:inline''><input name='utf8' type='hidden' value='&#x2713;' />
-          <input class='authenticity_token' name='authenticity_token' type='hidden' value='qHsdfsfNtk3Y+tSHjNu6JYqiEKOw4UhGuz0nzZuU=' /></div>
+          <div style='margin:0;padding:0;display:inline''>
+          <input name='utf8' type='hidden' value='&#x2713;' />
+          <input class='authenticity_token' name='authenticity_token' type='hidden' value='' /></div>
           <ul>
                #{li}
             </ul>
@@ -158,6 +163,7 @@ class AppManagementsController < ApplicationController
     </script>
     <script language='javascript' type='text/javascript'>
         $.ajax({
+
             url: '/get_token',
             type: 'get',
             dataType: 'text',

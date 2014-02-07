@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  
   prepend_before_filter :check_user_status
   include ApplicationHelper
   include PagesHelper
@@ -136,8 +137,6 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    p 1111111111111
-    p return_message
     if return_message
       micro_message =  return_message.micro_message  #获取对应的消息记录
       micro_it = micro_message.micro_imgtexts if micro_message

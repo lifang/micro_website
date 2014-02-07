@@ -148,8 +148,8 @@ class WeixinsController < ApplicationController
       if micro_message && micro_message.text?
         @message = micro_image_text[0].content if micro_image_text && micro_image_text[0]
         if @site.exist_app && flag== "auto"
-          a_msg = "&lt;a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击 登记您的信息&lt;/a&gt;
-                  "
+          a_msg = "&lt;a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击登记您的信息&lt;/a&gt;
+"
           @message = a_msg + @message
         end
         xml = teplate_xml
@@ -164,7 +164,10 @@ class WeixinsController < ApplicationController
   end
 
   def teplate_xml
-    template_xml = <<Text
+ 
+
+    template_xml =
+<<Text
 <xml>
   <ToUserName><![CDATA[#{params[:xml][:FromUserName]}]]></ToUserName>
   <FromUserName><![CDATA[#{params[:xml][:ToUserName]}]]></FromUserName>
