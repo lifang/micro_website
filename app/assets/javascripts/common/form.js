@@ -54,7 +54,7 @@ $(function(){
                 input_length = last_input_box.find("input.hidden_label").attr("name").split("_")[1][0];
                 input_length = parseInt(input_length) + 1;
             }
-            $(".iphoneVirtual .form_ele .iphvAct").before(input_ele);
+            $(".iphoneVirtual .form_ele").append(input_ele);
             var new_input_ele = $(".iphoneVirtual .form_ele").find(".inputBox").last();
             new_input_ele.find("label").text(input);    //label设置值
             new_input_ele.find("input.hidden_label").attr("name", "labels[input_" + input_length + "]");
@@ -89,7 +89,7 @@ $(function(){
                 rc_length = last_input_box.find(".label .hidden_label").attr("name").split("_")[1][0];
                 rc_length = parseInt(rc_length) + 1;
             }
-            $(".iphoneVirtual .form_ele .iphvAct").before(box_ele == "radioBox" ? radio_ele : checkbox_ele);
+            $(".iphoneVirtual .form_ele").append(box_ele == "radioBox" ? radio_ele : checkbox_ele);
             var new_radio_ele = $(".iphoneVirtual .form_ele").find("." + box_ele).last();
             new_radio_ele.find(".label span").text(rc_label); //label设置值
             new_radio_ele.find(".label .hidden_label").attr("name", "labels[" + (box_ele == "radioBox" ? "radio" : "checkbox") + "_" + rc_length +"]"); //设置label隐藏域的值
@@ -130,7 +130,7 @@ $(function(){
                 select_length = last_input_box.find("input.hidden_label").attr("name").split("_")[1][0];
                 select_length = parseInt(select_length) + 1;
             }
-            $(".iphoneVirtual .form_ele .iphvAct").before(select_ele);
+            $(".iphoneVirtual .form_ele").append(select_ele);
             var new_select_ele = $(".iphoneVirtual .form_ele").find(".selectBox").last();
             new_select_ele.find("label").text(select_label); //label设置值
             new_select_ele.find("input.hidden_label").attr("name", "labels[select_" + select_length +"]"); //设置label隐藏域的值
@@ -165,6 +165,20 @@ $(function(){
         $(this).addClass("check");
         $(this).find("input").attr("checked",true);
     });
+
+    $("#after_submit_form").on("click",".confirm_after_aubmit",function(){
+        var message = $(this).parents("#after_submit_form").find(".tishi_message").val();
+        if($.trim(message)==""){
+            tishi("提示信息不能为空");
+        }else{
+            var phone = $(this).parents("#after_submit_form").find(".telephone").val();
+            var address = $(this).parents("#after_submit_form").find(".address").val();
+            $(".hidden_after_submit_info .message").val(message);
+            $(".hidden_after_submit_info .phone").val(phone);
+            $(".hidden_after_submit_info .address").val(address);
+            hide_tab($("#after_submit_form"));
+        }
+    })
 
 });
 

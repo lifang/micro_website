@@ -1,6 +1,7 @@
 #encoding: utf-8
 class ImageTextsController < ApplicationController
   before_filter :get_site
+  before_filter :resources_for_select, :only => [:new, :edit]
   layout 'sites'
 
   def index
@@ -21,6 +22,7 @@ class ImageTextsController < ApplicationController
 
   def new
     @page = Page.new
+    @form_pages = @site.pages.form
   end
 
   def create
@@ -91,5 +93,49 @@ class ImageTextsController < ApplicationController
       end
     end
   end
+
+  private
+
+  def image_text_content(page, it_content, img_path, site)
+    image_text = ''
+    img_path.each_with_index do |img, index|
+      if img.present?
+        image_text << '<img src="' + img + ' />'
+      end
+      image_text << '<p>' + CGI.unescapeHTML(it_content[index]) + '</p>'
+    end
+
+    content = "
+    <!doctype html>
+        <html>
+        <head>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+        <title>title</title>
+        <script src=\"/allsites/js/jQuery-v1.9.0.js\" type=\"text/javascript\"></script>
+        
+        <!--iphone4竖版-->
+        <link href=\"/allsites/style/template_style.css\" rel=\"stylesheet\" type=\"text/css\">
+
+        </head>
+
+        <body>
+            <article>
+                  <section class=\"activity_con\">
+                      <h1>#{page.title}</h1>
+                      <div class=\"title_info\"><span>#{site.name}</span></div>
+                      <div class=\"activity_con_text\">" + image_text + "</div>
+                  </section>
+            </article>
+
+        </body>
+
+<script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
+
+        </html>"
+    content = content.gsub(/<title>.*<\/title>/, "<title>#{page.title}</title>")
+    content
+  end
+
  
 end

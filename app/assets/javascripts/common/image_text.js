@@ -1,4 +1,15 @@
 // image preview function, demonstrating the ui.dialog used as a modal window
+var tuwenBlock = "<div class=\"tuwenBox\">\n\
+                    <span class=\"close\"  onclick=\"deleOption(this)\"></span>\n\
+                    <div class=\"tuwenImg\"></div>\n\
+                    <input type=\"hidden\" name=\"image_text[img_path][]\" class=\"image_text_input\"/>\n\
+                    <textarea class=\"it_content\" name=\"image_text[content][]\"></textarea>\n\
+                  </div>"
+
+$(function(){
+
+})
+
 
 function viewLargerImage( obj ) {
     var src = $(obj).attr( "src" );
@@ -33,11 +44,11 @@ function it_drop(obj){
                     "height": "568px"
                 });
             }else if(parent == 'model1'){
-            	var img1=ui.draggable.find("img");
+                var img1=ui.draggable.find("img");
                 var width_or_height = setImageWH(img1, 93, 93);
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' +width_or_height+ ' />');
                 $(this).parent().find("input")[0].value= ui.draggable.find("img").attr("src");
-               /* var imgWidth1 = $(img1).width();
+            /* var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
                 if(imgWidth1 > imgHeight1){
                     $(img1).css({
@@ -57,7 +68,7 @@ function it_drop(obj){
                 $(this).html('<img src=' + '\'' +ui.draggable.find("img").attr("src") +'\'' + width_or_height+'  />');
                 
             }else if(parent == 'smlPic'){
-            	var img1=ui.draggable.find("img");
+                var img1=ui.draggable.find("img");
                 var width_or_height = setImageWH(img1, 145, 145);
                 $(this).html('<img src="' +ui.draggable.find("img").attr("src") +'" '+width_or_height+'/>');
                 
@@ -68,20 +79,20 @@ function it_drop(obj){
                 var imgWidth1 = $(img1).width();
                 var imgHeight1 = $(img1).height();
                 $(img1).css({
-                        "width": "320px",
-                        "height": "150px"
-                    });
-//                if(imgWidth1 > imgHeight1){
-//                    $(img1).css({
-//                        "width": "320px",
-//                        "height": "auto"
-//                    });
-//                }else{
-//                    $(img1).css({
-//                        "height": "150px",
-//                        "width" : "auto"
-//                    });
-//                }
+                    "width": "320px",
+                    "height": "150px"
+                });
+            //                if(imgWidth1 > imgHeight1){
+            //                    $(img1).css({
+            //                        "width": "320px",
+            //                        "height": "auto"
+            //                    });
+            //                }else{
+            //                    $(img1).css({
+            //                        "height": "150px",
+            //                        "width" : "auto"
+            //                    });
+            //                }
             }
             
             //$(this).attr("src", ui.draggable.find("img").attr("src"));
@@ -126,9 +137,9 @@ function form_it_drop(obj, width, height){
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             var img = ui.draggable.find("img");
-            var width_or_height = setImageWH(img, width, height);
+           // var width_or_height = setImageWH(img, width, height);
             var img_src = img.attr("src");
-            $(this).html('<img src=' + '\'' +img_src +'\'' + width_or_height +' />');
+            $(this).html('<img src=' + '\'' +img_src +'\'' +' width='+ width + ' height=' + height +' />');
             $(this).next().val(img_src);
         }
     });
@@ -157,10 +168,10 @@ function it_drag(obj){
 }
 
 function appendEditor(){
-    $(".it_editor").last().append(ediotrContent);
+    $(".image_text_area").append(tuwenBlock);
     KindEditor.create($(".it_content").last(), {
         resizeMode : 1,
-        width : "400px",
+        width : "300px",
         items : ['source',
         'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
@@ -168,5 +179,5 @@ function appendEditor(){
     });
 
     //drop 元素
-    it_drop($( ".image_area img" ).last());
+    form_it_drop($(".tuwenImg").last(), 320, 150);
 }

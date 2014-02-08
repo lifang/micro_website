@@ -18,23 +18,23 @@
         <button class="blue_btn scd_btn" type="button" data-ele="radio_pop">增加单选框</button>
         <button class="blue_btn scd_btn" type="button" data-ele="checkbox_pop">增加复选框</button>
         <button class="blue_btn scd_btn" type="button" data-ele="select_pop">增加下拉框</button>
+        <button class="blue_btn scd_btn" type="button" data-ele="after_submit_form">添加提交成功页</button>
       </div>
       <div class="iphoneVirtual">
-        <div class="topPic"><img src="<%= @form && @form.img_path ? @form.img_path : '' %>"/></div>
+        <div class="topPic"><img src="<%= @form && @form.img_path ? @form.img_path : '' %>" width="320" height="150"/></div>
         <%= f.hidden_field :img_path, :value => @form && @form.img_path ? @form.img_path : "" %>
         <div class="form_ele">
           <% if !@form.new_record? && @form.page_html %>
             <%= raw @form.page_html %>
-          <% else %>
-            <div class="iphvAct">
-          <button class="blue_btn scd_btn" type="button" >添加跳转页</button>
-          <input type="hidden" name="redirect_path" class="hidden_redirect_path"/>
-        </div>
-        <textarea style="display:none" class="hidden_html" name="page[page_html]" ></textarea>
-
           <% end %>
         </div>
-        
+        <textarea style="display:none" class="hidden_html" name="page[page_html]" ></textarea>
+      </div>
+      <!-- 表单提交跳转页-->
+      <div class="hidden_after_submit_info">
+        <input type="hidden" name="tishi[message]" class = "message" value="<%= @form.new_record? ? "" : @form.submit_redirect[0].try(:message) %>"/>
+        <input type="hidden" name="tishi[phone]" class = "phone" value="<%= @form.new_record? ? "" : @form.submit_redirect[0].try(:phone) %>"/>
+        <input type="hidden" name="tishi[address]" class = "address" value="<%= @form.new_record? ? "" : @form.submit_redirect[0].try(:address) %>"/>
       </div>
       <div id="tupian">
         <%= render 'shared/form_images',:objects => @imgs_path %>
@@ -46,15 +46,14 @@
     <% end %>
   </div>
 </div>
-<!-- 添加链接 -->
-<%= render "shared/links", :from => "form" %>
 <div id="viewLarge"></div>
-<%= render "/pages/form/pop_form_ele" %>
+<!--弹出框 页面代码-->
+<%= render "pop_form_ele" %>
+
 <script type="text/javascript">
   $input_320 = $( ".topPic" );
   // drop 元素
   form_it_drop($input_320, 320, 150);
-
 
   var img = $(".topPic").find("img");
   setImageWH(img, 320, 150)

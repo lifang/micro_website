@@ -99,6 +99,9 @@ MicroWebsite::Application.routes.draw do
     end
     
     resources :forms do
+      member do
+        get :submit_redirect
+      end
     end
 
     resources :image_streams do
