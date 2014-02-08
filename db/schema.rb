@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140125033836) do
+ActiveRecord::Schema.define(:version => 20140207083430) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -91,7 +91,10 @@ ActiveRecord::Schema.define(:version => 20140125033836) do
     t.boolean  "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "msg_id"
   end
+
+  add_index "messages", ["msg_id"], :name => "index_messages_on_msg_id"
 
   create_table "micro_imgtexts", :force => true do |t|
     t.string   "title"
@@ -139,11 +142,11 @@ ActiveRecord::Schema.define(:version => 20140125033836) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number"
+    t.integer  "praise_number", :default => 0
   end
 
   create_table "recently_clients", :force => true do |t|
