@@ -821,3 +821,14 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .third_box { z-index:101; }
 
 
+
+
+/* 图片流 */
+.picStream { padding: 5px;}
+.picStrBox { width: 145px; float: left; margin: 5px; position: relative;}
+.picStrBox:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3);}
+.picStrBox .close { position: absolute; top: 5px; right: 5px; display: none;}
+.picStrBox:hover .close { display: block;}
+.imgDiv { width: 145px; height: 145px; background: #ccc;}
+.imgDiv span { color: #EBEBEB; display: block; font-size: 100px; line-height: 145px; text-align: center;}
+.picStrBox textarea { width: 137px; height: 40px; resize: none; border: 1px solid #c2c2c2; padding: 3px;}

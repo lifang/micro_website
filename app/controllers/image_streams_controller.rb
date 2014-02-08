@@ -10,16 +10,17 @@ class ImageStreamsController < ApplicationController
     #@imgs_path=@site.resources
     #@imgs_path =@site.resources.paginate(:page=>params[:page],:per_page=>12,:conditions =>"path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
     @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>9)
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
     
 
   end
-  #给图片流进行分页（shared/all_img）
+   #给图片流进行分页（shared/all_img）
   def change
     @site=Site.find(params[:site_id])
     @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>9)
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
   end
+
 
   def img_stream
     @site=Site.find(params[:site_id])
@@ -92,12 +93,12 @@ class ImageStreamsController < ApplicationController
 
   end
   
-  def edit_itpage
+  def edit
     @page = Page.find(params[:id])
-    @image_text=PageImageText.find_by_page_id(params[:id])
+    @image_text =PageImageText.find_by_page_id(params[:id])
     @site=Site.find(params[:site_id])
     @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>9)
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
   end
  
   def edit_update

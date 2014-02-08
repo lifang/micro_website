@@ -26,7 +26,7 @@
     var href =$(aarr[i]).attr("href");
     var url=href.split("page=");
     url=url[url.length-1];
-    var extre="pages/";
+    var extre="";
     <%  if controller.controller_name=="pages" %>
       extre ='<%=site_pages_url(@site)%>'+"/";
     <%end%>

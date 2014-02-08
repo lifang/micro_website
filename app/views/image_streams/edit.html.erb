@@ -1,0 +1,57 @@
+<div class="main_container ">
+  <input type="hidden" id="page_type" value="edit" />
+  <input type="hidden" id="site_id" value="<%=@site.id%>" />
+  <input type="hidden" id="page_id" value="<%= @page.id if @page%>" />
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <div class="tit"><span>标题：</span><input id="title" type="text" value="<%= @page.title%>" />
+      <span>文件名：</span>
+      <input type="hidden"  id="name" value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
+      <input type="text" disabled  value="<%= @page.file_name.split('.')[0...-1].join('.')%>"/>
+      <span>.html</span></div>
+    <div class="tempChoice tempChoice2">
+     
+    </div>
+    <hr class="cf" color="#bcbcbc" />
+    <div class="iphoneVirtual">
+      <div class="picStream cf">
+
+        <% (0..@image_text.img_path.length-1).each do |i|%>
+
+          <div class="picStrBox">
+            <span class="close" onclick="delete_ele(this)"></span>
+            <div class="imgDiv">
+              <span>
+                <%img_path=Rails.root.to_s + '/public'+@image_text.img_path[i]%>
+                <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
+                <% if image %>
+                  <img  src="<%= @image_text.img_path[i]%>" <%= image&&image["height"]*186/image["width"]>144 ? "height='144' width=#{ image['width']*144/image['height']}" : "width='186' height = #{image['height']*186/image['width']}" %>/>
+                <% end %>
+              </span>
+              <input  type="hidden"  class="temp_picture" value="<%= @image_text.img_path[i]%>" />
+            </div>
+            <textarea><%= @image_text.content[i]%></textarea>
+          </div>
+
+        <%end%>
+
+
+      </div>
+      <div class="iphvAct">
+        <input type="button" class="blue_btn" onclick="add_imgstream_item()" value="添加图片块"></input>
+      </div>
+    </div>
+    <div id="tupian">
+      <%= render 'shared/form_images',:objects => @imgs, :from => "main_page" %>
+    </div>
+
+  </div>
+  <div class="pageAct" >
+    <button class="blue_btn" onclick="submit_imgstream()">保存</button>
+  </div>
+</div>
+<script type="text/javascript">
+  $input = $( ".picStrBox .imgDiv span" );
+  // drop 元素
+  can_it_drop($input);
+</script>

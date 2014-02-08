@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20140207083430) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.boolean  "mtype"
+    t.integer  "mtype"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(:version => 20140207083430) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.string   "cweb"
-    t.integer  "template",                :default => 1
+    t.integer  "template"
     t.boolean  "exist_app",               :default => false
   end
 
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(:version => 20140207083430) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.string   "open_id"
+    t.integer  "open_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "award_id"
