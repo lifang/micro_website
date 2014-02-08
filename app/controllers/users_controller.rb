@@ -4,8 +4,6 @@ class UsersController  < ApplicationController
    prepend_before_filter :check_admin
   layout 'sites'
   def index
-    # puts 'index..................................................................'
-    # puts params
      case params[:type]
      when '1' then @type=1; @users=User.paginate(:page=>params[:page],:per_page=>10,:conditions =>"status!=-1 and types!=1")#不是删除用户，不是管理员
      when '2' then @type=2; @sites=Site.paginate(:page=>params[:page],:per_page=>10,:conditions => "status=2") #待审核

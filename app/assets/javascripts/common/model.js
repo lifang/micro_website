@@ -132,7 +132,7 @@ function submit_sub_page(){
                 $("#html_content").val($(".iphoneVirtual form").html());
                 $(".iphoneVirtual form").submit();
             }else if(i==1){
-                if($.trim($("#zdy_sub_content").val())==""){
+                if($.trim($(models[i]).find("textarea").val()) ==""){
                     tishi_alert('请输入内容！');
                     return false;
                 }
