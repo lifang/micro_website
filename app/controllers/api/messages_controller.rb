@@ -12,7 +12,7 @@ class Api::MessagesController < ApplicationController
       types = params[:types].to_i
       site_id = params[:site_id].to_i
       message = Message.new(:site_id => site_id, :from_user => from_user, :to_user => to_user, :types => types,
-        :content => content, :status => Message::STATUS[:READ])
+        :content => content, :status => Message::STATUS[:READ], :msg_id => nil)
       if message.save
         status = 1
         msg = "保存成功!"
@@ -29,6 +29,8 @@ class Api::MessagesController < ApplicationController
         else
           recent_client.update_attribute("content", content)
         end
+      else
+        msg = "保存失败!"
       end
       render :json => {:status => status, :msg => msg, :return_object => {:message => mess}}
     end
