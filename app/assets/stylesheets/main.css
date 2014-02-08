@@ -469,7 +469,7 @@ fieldset { padding: 3px;}
 }
 .tab_line { background: #328BD5; height: 3px; border: none;}
 
-.page_content { border: 1px solid #C2C2C2; padding: 0 20px;position: relative;min-height: 550px;}
+.page_content {  padding: 0 20px;position: relative;min-height: 550px;}
 .page_tit { height: 36px;}
 fieldset.page_tit {
     border: 1px solid #C2C2C2;

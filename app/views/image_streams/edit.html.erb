@@ -25,7 +25,7 @@
                 <%img_path=Rails.root.to_s + '/public'+@image_text.img_path[i]%>
                 <%image = MiniMagick::Image.open(img_path) if File.exists?(img_path)%>
                 <% if image %>
-                  <img  src="<%= @image_text.img_path[i]%>" <%= image&&image["height"]*186/image["width"]>144 ? "height='144' width=#{ image['width']*144/image['height']}" : "width='186' height = #{image['height']*186/image['width']}" %>/>
+                  <img  src="<%= @image_text.img_path[i]%>" <%= image&&image["height"]*145/image["width"]>145 ? "height='145' width=#{ image['width']*145/image['height']}" : "width='145' height = #{image['height']*145/image['width']}" %>/>
                 <% end %>
               </span>
               <input  type="hidden"  class="temp_picture" value="<%= @image_text.img_path[i]%>" />

@@ -104,13 +104,13 @@ class ImageStreamsController < ApplicationController
   def edit_update
     name=params[:name]+".html";
     title=params[:title];
-    check=params[:check];
+    #check=params[:check];
     imgarr=params[:src].split(",");
     textstr=params[:text].split("||");
     @site=Site.find(params[:site_id]);
     @page=Page.find(params[:id]);
     @image_text=PageImageText.find_by_page_id(params[:id])
-    if @page.update_attributes(file_name:name,title:title,authenticate:check)
+    if @page.update_attributes(file_name:name,title:title)
       @image_text.update_attributes(img_path:imgarr,content:textstr)
       # 删除已经存在的html文件
       bigimg_path=PUBLIC_PATH+"/"+@site.root_path+"/bigimg_"+@page.file_name
