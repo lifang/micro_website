@@ -172,7 +172,18 @@ class WeixinsController < ApplicationController
         render "news" , :formats => :xml, :layout => false  #关注 自动回复的图文消息
       end
     else
-      render :xml => ""
+          txml =
+      <<Text
+<xml>
+  <ToUserName><![CDATA[#{params[:xml][:FromUserName]}]]></ToUserName>
+  <FromUserName><![CDATA[#{params[:xml][:ToUserName]}]]></FromUserName>
+  <CreateTime>#{Time.now.to_i}</CreateTime>
+  <MsgType><![CDATA[text]]></MsgType>
+  <Content></Content>
+  <FuncFlag>0</FuncFlag>
+</xml>
+Text
+      render :xml => txml
     end
   end
 
