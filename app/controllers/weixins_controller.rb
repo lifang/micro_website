@@ -172,7 +172,7 @@ class WeixinsController < ApplicationController
         render "news" , :formats => :xml, :layout => false  #关注 自动回复的图文消息
       end
     else
-      render :xml => "<xml></xml>"
+      render :xml => ""
     end
   end
 
