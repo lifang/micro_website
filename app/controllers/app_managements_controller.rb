@@ -43,7 +43,6 @@ class AppManagementsController < ApplicationController
     end
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
-    
     if @client
       @client.update_attributes(name:params[:username] , mobiephone:params[:phone],site_id:params[:site_id] , html_content:form_hash )
       render text:2      
