@@ -92,8 +92,8 @@ class Api::ClientsController < ApplicationController
     status = 1
     msg = ""
     if type == 0  #刷新通讯录
-      person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record
-            from clients c where c.site_id=? and c.types=?", site_id, Client::TYPES[:CONCERNED]])
+      person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
+            c.html_content from clients c where c.site_id=? and c.types=?", site_id, Client::TYPES[:CONCERNED]])
       h[:person_list] = person_list
     else
       recent_list = RecentlyClients.find_by_sql(["select rc.client_id person_id, rc.content, date_format(rc.updated_at, '%Y-%m-%d %H:%i') date
