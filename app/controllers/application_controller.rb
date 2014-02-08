@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def get_site
     @site = Site.find_by_id params[:site_id]
-    if @site && @site.user != current_user
+    if @site && @site.user != current_user && !request.xhr?
       render(:file  => "#{Rails.root}/public/404.html",
         :layout => nil,
         :status   => "404 Not Found")
@@ -93,10 +93,8 @@ class ApplicationController < ActionController::Base
   #发get请求获得access_token
   def create_get_http(url ,route)
     http = set_http(url)
-    p url
     request= Net::HTTP::Get.new(route)
     back_res = http.request(request)
-    p back_res.body
     return JSON back_res.body
   end
   
