@@ -832,3 +832,57 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .imgDiv { width: 145px; height: 145px; background: #ccc;}
 .imgDiv span { color: #EBEBEB; display: block; font-size: 100px; line-height: 145px; text-align: center;}
 .picStrBox textarea { width: 137px; height: 40px; resize: none; border: 1px solid #c2c2c2; padding: 3px;}
+
+
+
+/* 刮刮乐 */
+.iphoneVirtual.ggl {}
+.gglTop { height: 250px; background: #ccc; margin: 10px auto; overflow: hidden; }
+.gglArea { height: 41px; margin: 158px 0 0 105px; width: 190px; background: #f7f7f7; font-size: 18px; line-height: 40px; text-align: center; color: #65696A; cursor: pointer; }
+.gglInfo { width: 280px; height: 150px; margin: 10px; resize: none; background: #ccc; cursor: pointer; padding: 0 10px;}
+.gglInfo:hover { box-shadow: 0 0 5px rgba(0,0,0,0.5);}
+.gglInfo h1 { margin: 0; color: #FFFFFF; font-size: 16px; line-height: 36px;}
+.gglInfo p { margin: 3px 0;}
+
+.dataLi span { margin: 0 17px;}
+.listLi label { display: block; float: left;}
+.listLi ul { overflow: hidden;}
+.listLi ul li { font-size: 14px; line-height: 32px; position: relative;}
+.listLi .close {right: 5px; top: 6px; display: none;}
+.listLi li:hover .close { display: block;}
+.listLi input { width: 151px; margin: 0 10px;}
+.addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
+.addjx span { cursor: pointer;}
+
+.baomOnline {
+	background: url(../images/baomOnline.png) no-repeat;
+	display: inline-block;
+	width: 296px;
+	height: 38px;
+	background-size: 296px 38px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+}
+.map_btn {
+	background: url(../images/map_btn.png) no-repeat;
+	display: inline-block;
+	width: 140px;
+	height: 34px;
+	background-size: 140px 34px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+	margin: 0 5px;
+}
+.tel_btn {
+	background: url(../images/tel_btn.png) no-repeat;
+	display: inline-block;
+	width: 140px;
+	height: 34px;
+	background-size: 140px 34px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+	margin: 0 5px;
+}

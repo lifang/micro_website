@@ -3,6 +3,7 @@ class AwardsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:show, :record_award, :get_award_url, :check_if_watch]
   before_filter :get_site, :except => [:show, :record_award, :get_award_url, :check_if_watch]
   layout 'sites'
+  SITE_PATH = "/public/allsites/%s/"
   def index
     @awards=@site.awards
   end
@@ -202,8 +203,125 @@ class AwardsController < ApplicationController
     ua = UserAward.find_by_open_id(open_id)
     render :text => ua ? "1" : "0"
   end
+  def template
+    get_imgs
+    @awards =@site.awards
+    @template = Page.where("site_id = #{@site.id} and types=1 and template = 2")[0]
+  end
+
+  def get_imgs
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
+  end
+
+  def save_template
+    get_imgs
+    html_content = params[:html_content]
+    @award_id = params[:award_id]
+    title = params[:name]
+    name = params[:title]+".html"
+    vcitem = params[:vcitem]
+    top_img = params[:top]
+    bot_img = params[:bot]
+    template = Page.where("site_id = #{@site.id} and types=1 and template = 2")[0]
+    if template
+      if template.update_attributes(title:title,file_name:name,authenticate:vcitem,page_html:html_content)
+        save_as_award top_img,bot_img,name,@award_id
+        flash[:success] = '更新成功'
+        redirect_to template_site_awards_path(@site)
+      else
+        flash[:error] = '更新失败'
+        render 'template'
+      end
+    else
+      path = "/#{@site.root_path}/#{name}"
+      if Page.create(title:title,file_name:name,authenticate:vcitem,types:1,template:2,site_id:@site.id,path_name:path,page_html:html_content)
+        save_as_award top_img,bot_img,name,@award_id
+        flash[:success] = '创建成功'
+        redirect_to template_site_awards_path(@site)
+      else
+        flash[:error] = '创建失败'
+        render 'template'
+      end
+    end
+    
+  end
+  #给图片流进行分页（shared/all_img）
+  def change
+    @site=Site.find(params[:site_id])
+    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+  end
 
   private
+  #保存为模版页
+  def save_as_award top_img,bot_img,name,award
+    ifream = "<iframe   width='190' height='41' frameborder='0' scrolling='no'>sorry</iframe>
+"
+    p 111111111111111111,ifream
+    if !award.nil?
+      ifream = "<iframe src='/sites/#{@site.id}/awards/#{@award_id}' width='190' height='41' frameborder='0' scrolling='no'></iframe>
+      "
+    end
+    p 111111111111111111,ifream
+    html="
+      <!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+<title>刮刮乐</title>
+<script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/allsites/js/award_main.js'></script>
+
+<link href='/allsites/style/award_style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class='gua_bg' style='background-image: url(\"#{top_img}\");'>
+	<article>
+         <section class='guaArea'>
+         	<div class='guaArea_iframe'>
+              #{ifream}
+         </div>
+         </section>
+         <section class='textBox' style='background-image:url(\"#{bot_img[0]}\");'></section>
+         <section class='textBox' style='background-image:url(\"#{bot_img[1]}\");'></section>
+    </article>
+    <section class='footNav'>
+    	<ul>
+        	<li class='footNav_prev'><a href='#'>前进</a></li>
+            <li class='footNav_next'><a href='#'>后退</a></li>
+            <li class='footNav_refresh'><a href='#'>刷新</a></li>
+            <li class='footNav_home'><a href='#'>首页</a></li>
+        </ul>
+    </section>
+
+    <div class='mask'></div>
+    <div class='gua_tab'>
+         <div class='gua_tab_con'>
+             <p>请输入你的手机号码：</p>
+             <input name='' type='text'>
+         </div>
+         <div class='gua_tab_btn'><button class='red_btn' onclick=''>确定</button><button onclick='cancle()' class='gray_btn'>取消</button></div>
+    </div>
+    <script>
+      function cancle(obj){
+         $('.mask').hide();
+         $('.gua_tab').hide();
+      }
+    </script>
+</body>
+</html>
+    "
+    site_path = Rails.root.to_s+SITE_PATH%@site.root_path
+    path = Rails.root.to_s+SITE_PATH%@site.root_path+"#{name}.html"
+    FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+    FileUtils.rm path if File::exist?(path)
+    File.open(path, "wb") do |f|
+      f.write(html.html_safe)
+    end
+  end
+
 
   def save_award_item
     name=params[:name]
@@ -268,6 +386,8 @@ class AwardsController < ApplicationController
       end
     end
   end
+
+  
 
   def get_scratched_award(award)
     tmp_arr = []

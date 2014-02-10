@@ -66,6 +66,13 @@ MicroWebsite::Application.routes.draw do
 
     resources :awards do
       get :win_award_info
+      collection do
+        get :template
+        post :save_template
+      end
+      member do
+        get :change
+      end
     end
     resources :posts do
       collection do
