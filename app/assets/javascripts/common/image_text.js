@@ -8,7 +8,7 @@ var tuwenBlock = "<div class=\"tuwenBox\">\n\
 
 $(function(){
 
-})
+    })
 
 
 function viewLargerImage( obj ) {
@@ -137,7 +137,7 @@ function form_it_drop(obj, width, height){
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             var img = ui.draggable.find("img");
-           // var width_or_height = setImageWH(img, width, height);
+            // var width_or_height = setImageWH(img, width, height);
             var img_src = img.attr("src");
             $(this).html('<img src=' + '\'' +img_src +'\'' +' width='+ width + ' height=' + height +' />');
             $(this).next().val(img_src);
@@ -180,4 +180,26 @@ function appendEditor(){
 
     //drop 元素
     form_it_drop($(".tuwenImg").last(), 320, 150);
+}
+
+function imageTextSetKey(obj){
+    var address = $("#one_key_button .address").val();
+    if($.trim(address) != ""){
+        $(".onekey_address").val(address);
+    }
+    var phone = $("#one_key_button .phone").val();
+    if($.trim(phone) != ""){
+        $(".onekey_phone").val(phone);
+    }
+    var checked = $("#one_key_button input[name=form_id]:checked");
+    var form_id = checked.length > 0 ? checked.val() : "";
+    $(".onekey_form_id").val(form_id);
+    if(form_id != ""){
+        var form_name = checked.next().text();
+        $(".onekey_form_name").val(form_name);
+    }else{
+        $(".onekey_form_name").val("");
+    }
+    hide_tab($("#one_key_button"))
+    
 }

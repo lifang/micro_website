@@ -1,9 +1,9 @@
 <div class="main_container">
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
-    <%= form_for :page, :url => @form.new_record? ? "/sites/#{@site.id}/forms" : "/sites/#{@site.id}/forms/#{@form.id}", :method => @form.new_record? ? :post : :put do |f| %>
+    <%= form_for @form, :url => @form.new_record? ? "/sites/#{@site.id}/forms" : "/sites/#{@site.id}/forms/#{@form.id}", :method => @form.new_record? ? :post : :put do |f| %>
       <div class="tit"><span>标题：</span>
-        <%= f.text_field :title, :value => @form.new_record? ? "" : @form.title %>
+        <%= f.text_field :title %>
         <span>文件名：</span>
         <%= f.text_field :file_name, :value => @form.new_record? ? "" : @form.file_name.gsub(".html", "") %><span>.html</span></div>
       <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:form] %>

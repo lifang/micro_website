@@ -169,7 +169,7 @@ $(function(){
     $("#after_submit_form").on("click",".confirm_after_aubmit",function(){
         var message = $(this).parents("#after_submit_form").find(".tishi_message").val();
         if($.trim(message)==""){
-            tishi("提示信息不能为空");
+            tishi_alert("提示信息不能为空");
         }else{
             var phone = $(this).parents("#after_submit_form").find(".telephone").val();
             var address = $(this).parents("#after_submit_form").find(".address").val();
@@ -195,6 +195,11 @@ function submit_form_page(obj, site_id){
     img=$.trim(img);
     if(img==""){
         tishi_alert('请拖入图片');
+        return false;
+    }
+    var form_submit_message = $(".hidden_after_submit_info .message").val();
+    if(form_submit_message == ""){
+        tishi_alert('请添加提交成功页');
         return false;
     }
     $("#page_title")[0].value = title;    //将去空格的值赋回去

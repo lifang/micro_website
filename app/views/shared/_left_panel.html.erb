@@ -26,7 +26,7 @@
       </li>
     <% end %>
     <%= link_to(site_image_texts_path(@site)) do %>
-      <li class="leftItem5 <%= controller_name == "image_texts" && controller.action_name == "index" ? 'leftItem_selected' : '' %>">
+      <li class="leftItem5 <%= controller_name == "image_texts" ? 'leftItem_selected' : '' %>">
         图文
       </li>
     <% end %>

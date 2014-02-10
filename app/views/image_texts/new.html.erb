@@ -1,7 +1,7 @@
 <div class="main_container">
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
-    <%= form_for :image_text, :url => site_image_texts_path(@site), :method => "post" , :html => {:remote => true, 'data-type' => 'script'} do |f| %>
+    <%= form_for :image_text, :url => @page.new_record? ? site_image_texts_path(@site) : site_image_text_path(@site, @page), :method => @page.new_record? ? :post : :put , :html => {:remote => true, 'data-type' => 'script'} do |f| %>
       <div class="tit">
         <span>标题：</span>
         <%= f.text_field :title, :value => @page.new_record? ? "" : @page.title %>
@@ -16,17 +16,31 @@
         <div class="vcItem <%= @page && @page.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @page && @page.authenticate ? false : true %><span>否</span></div>
       </div>
       <div class="iphoneVirtual">
-
         <div class="image_text_area">
-          <div class="tuwenBox">
-            <span class="close"  onclick="deleOption(this)"></span>
-            <div class="tuwenImg"></div>
-            <input type="hidden" name="image_text[img_path][]" class="image_text_input"/>
-            <textarea class="it_content" name="image_text[content][]"></textarea>
-          </div>
+          <% if @page.new_record? %>
+            <div class="tuwenBox">
+              <span class="close"  onclick="deleOption(this)"></span>
+              <div class="tuwenImg"></div>
+              <input type="hidden" name="image_text[img_path][]" class="image_text_input"/>
+              <textarea class="it_content" name="image_text[content][]"></textarea>
+            </div>
+          <% else %>
+            <% @image_text.img_path.each_with_index do |path, index| %>
+              <div class="tuwenBox">
+                <span class="close"  onclick="deleOption(this)"></span>
+                <div class="tuwenImg"><img src="<%= path %>" width="320" height="150"/></div>
+                <input type="hidden" name="image_text[img_path][]" class="image_text_input" value="<%= path %>"/>
+                <textarea class="it_content" name="image_text[content][]"><%= @image_text.content[index] %></textarea>
+              </div>
+            <% end %>
+          <% end %>
         </div>
         <div class="iphvAct">
           <button class="map_btn one-key-button">一键导航</button>
+          <input type="hidden" name="onekey[address]" class="onekey_address" value="<%= @submit_redirect ? @submit_redirect.address : "" %>"/>
+          <input type="hidden" name="onekey[phone]" class="onekey_phone" value="<%= @submit_redirect ? @submit_redirect.phone : "" %>"/>
+          <input type="hidden" name="onekey[form_id]" class="onekey_form_id" value="<%= @form ? @form.id : "" %>"/>
+          <input type="hidden" name="onekey_form[form_name]" class="onekey_form_name" value="<%= @form ? @form.title : "" %>"/>
         </div>
         <div class="iphvAct">
           <button class="tel_btn one-key-button">一键拨号</button>
@@ -64,20 +78,22 @@
       </div>
 
       <div class="tabDiv curr">
-        <label>地址：</label><input type="text" class="address" />
+        <label>地址：</label><input type="text" class="address" value="<%= @submit_redirect ? @submit_redirect.address : "" %>" />
       </div>
       <div class="tabDiv">
-        <label>电话号码：</label><input type="text" class="phone" />
+        <label>电话号码：</label><input type="text" class="phone" value="<%= @submit_redirect ? @submit_redirect.phone : "" %>" />
       </div>
       <div class="tabDiv">
         <% @form_pages.each do |page| %>
-          <input type="radio" name="form_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/>
+          <input type="radio" name="form_id" value="<%= page.id %>" <%= @form && @form.id == page.id ? "checked=checked"  : ""%>/>
           <span class="radioVal" style="text-align:left; padding: 0"><%= page.title %></span>
         <% end %>
+          <input type="radio" name="form_id" value="" />
+          <span class="radioVal" style="text-align:left; padding: 0">无</span>
       </div>
       <div class="scdBox_act">
-        <button class="blue_btn">确认</button>
-        <button class="blue_btn">取消</button>
+        <button class="blue_btn" onclick="imageTextSetKey(this)">确认</button>
+        <button class="blue_btn cancel">取消</button>
       </div>
     </div>
   </div>
