@@ -51,7 +51,7 @@ class FormsController < ApplicationController
     @form = Page.find_by_id params[:id]
     Page.transaction do
       if @form.update_attributes(params[:page])
-        submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
+        submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi]) if @form.submit_redirect[0]
         redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content

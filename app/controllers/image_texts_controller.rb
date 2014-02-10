@@ -40,7 +40,7 @@ class ImageTextsController < ApplicationController
           if(params[:onekey][:address].present? || params[:onekey][:phone].present? || params[:onekey][:form_url].present?)
             @page.submit_redirect.create(params[:onekey])
           end
-          content = image_text_content(@page, it_content, img_path, params[:onekey], params[:onekey_form][:form_name]) if it_content.present?
+          content = image_text_content(@page, it_content, img_path, @site, params[:onekey], params[:onekey_form][:form_name]) if it_content.present?
           save_into_file(content, @page, "") if content
           flash[:notice] = "新建成功!"
           @path = redirect_path(@page, @site)
@@ -83,9 +83,9 @@ class ImageTextsController < ApplicationController
         if @page && @page.update_attributes(params[:image_text])
           @page.page_image_texts[0].update_attributes({:img_path => img_path, :content => it_content })
           if(params[:onekey][:address].present? || params[:onekey][:phone].present? || params[:onekey][:form_url].present?)
-            @page.submit_redirect[0].update_attributes(params[:onekey])
+            @page.submit_redirect[0].update_attributes(params[:onekey]) if @page.submit_redirect[0]
           end
-          content = image_text_content(@page, it_content, img_path, params[:onekey], params[:onekey_form][:form_name]) if it_content.present?
+          content = image_text_content(@page, it_content, img_path, @site, params[:onekey], params[:onekey_form][:form_name]) if it_content.present?
           save_into_file(content, @page, old_page_file_name) if content
           flash[:notice] = "更新成功!"
           @path = redirect_path(@page, @site)
@@ -105,7 +105,7 @@ class ImageTextsController < ApplicationController
 
   private
 
-  def image_text_content(page, it_content, img_path, one_key, form_name)
+  def image_text_content(page, it_content, img_path, site, one_key, form_name)
     image_text = ''
     img_path.each_with_index do |img, index|
       if img.present?
@@ -144,10 +144,10 @@ class ImageTextsController < ApplicationController
         </head>
 
         <body>
-            <article>"+ image_text + section_key +
+            <article style=\"margin-bottom: 50px;\">"+ image_text + section_key +
       "</article>
+"+ page_footer(site) +"
         </body>
-
          <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
 
         </html>"
