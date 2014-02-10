@@ -54,15 +54,15 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id(open_id)
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        @@m.synchronize do
+        #@@m.synchronize do
           Message.transaction do
             begin
               m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
               if m.nil?
-                mess = Message.new(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+                mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
                   :types => Message::TYPES[:record], :content => params[:xml][:Content],
                   :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId])
-                if mess.save!
+                if mess
                   #推送到IOS端
                   APNS.host = 'gateway.sandbox.push.apple.com'
                   APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
@@ -85,10 +85,12 @@ class WeixinsController < ApplicationController
             rescue
             end
           end
-        end
+        #end
       end
     end
   end
+  synchronize :get_client_message, :with => :@@m
+  
 
   #创建自定义菜单
   def create_menu(cweb)
