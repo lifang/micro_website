@@ -1,0 +1,52 @@
+<div class="main_container ">
+  <input type="hidden" id="page_type" value="new" />
+  <input type="hidden" id="site_id" value="<%=@site.id%>" />
+  <input type="hidden" id="page_id" value="<%= @page.id if @page%>" />
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <div class="tit"><span>标题：</span><input id="title" type="text" /><span>文件名：</span><input id="name" type="text" /><span>.html</span></div>
+    <div class="tempChoice tempChoice2">
+    
+    </div>
+    <hr class="cf" color="#bcbcbc" />
+    <div class="iphoneVirtual">
+
+      <div class="picStream cf">
+        <div class="picStrBox">
+          <span class="close" onclick="delete_ele(this)"></span>
+          <div class="imgDiv">
+            <span>1</span>
+            <input type="hidden" class="temp_picture" />
+          </div>
+          <textarea></textarea>
+          
+        </div>
+        <div class="picStrBox">
+          <span class="close" onclick="delete_ele(this)"></span>
+          <div class="imgDiv">
+            <span>2</span>
+            <input type="hidden" class="temp_picture" />
+          </div>
+          <textarea></textarea>
+           
+        </div>
+
+      </div>
+      <div class="iphvAct">
+        <input type="button" class="blue_btn" onclick="add_imgstream_item()" value="添加图片块"></input>
+      </div>
+    </div>
+    <div id="tupian">
+      <%= render 'shared/form_images',:objects => @imgs, :from => "main_page" %>
+    </div>
+
+  </div>
+  <div class="pageAct" >
+    <button class="blue_btn" onclick="submit_imgstream()">保存</button>
+  </div>
+</div>
+<script type="text/javascript">
+  $input = $( ".picStrBox .imgDiv span" );
+  // drop 元素
+  can_it_drop($input);
+</script>

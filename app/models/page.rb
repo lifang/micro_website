@@ -5,6 +5,8 @@ class Page < ActiveRecord::Base
   belongs_to :site
   has_many :form_datas, :dependent => :destroy
   has_many :page_image_texts, :dependent => :destroy
+  has_many :submit_redirect,:foreign_key => "form_id", :dependent => :destroy
+  accepts_nested_attributes_for :submit_redirect
   attr_accessible :title, :file_name, :types, :site_id, :path_name, :authenticate,:element_relation,:content,:img_path,:page_html
   attr_accessor :content
   serialize :element_relation

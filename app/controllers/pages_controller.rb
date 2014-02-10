@@ -8,9 +8,7 @@ class PagesController < ApplicationController
   #主页 index
   def index
     @page = @site.pages.main.first
-    @imgs_pathes = return_site_images(@site)
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-    
+    resources_for_select #获得图片
     @sub_pages = @site.pages.sub
     if @page
       index_html = File.new((PUBLIC_PATH + @page.path_name), 'r') if File.exists?(PUBLIC_PATH + @page.path_name)
@@ -126,15 +124,15 @@ class PagesController < ApplicationController
     end
   end
 
-  #表单 index
-  def form
-    @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
-    # @imgs_path=@site.resources
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-
-    render "/pages/form/form"
-  end
+#  #表单 index
+#  def form
+#    @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
+#    # @imgs_path=@site.resources
+#    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
+#    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+#
+#    render "/pages/form/form"
+#  end
   #给图片流进行分页（shared/all_img）
   def change
     @site=Site.find(params[:site_id])
@@ -142,24 +140,24 @@ class PagesController < ApplicationController
     @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
   end
 
-  #表单 new
-  def form_new
-    @page = Page.new
-    @imgs_pathes = return_site_images(@site)
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-    render "/pages/form/new"
-  end
-
-  #表单 edit
-  def form_edit
-    @page = Page.find_by_id params[:id]
-    #开始
-    index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
-    @index = index_html.read
-    index_html.close
-    #结束
-    render "/pages/form/form_new"
-  end
+#  #表单 new
+#  def form_new
+#    @page = Page.new
+#    @imgs_pathes = return_site_images(@site)
+#    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
+#    render "/pages/form/new"
+#  end
+#
+#  #表单 edit
+#  def form_edit
+#    @page = Page.find_by_id params[:id]
+#    #开始
+#    index_html = File.new((PUBLIC_PATH + @page.path_name), 'r')
+#    @index = index_html.read
+#    index_html.close
+#    #结束
+#    render "/pages/form/form_new"
+#  end
 
   #子页、表单的访问控制
   def if_authenticate
