@@ -290,8 +290,8 @@ class AwardsController < ApplicationController
     </article>
     " + page_footer(@site)+"
 
-    <div class='mask'></div>
-    <div class='gua_tab'>
+    <div class='mask' style='display:none;'></div>
+    <div class='gua_tab' style='display:none;'>
          <div class='gua_tab_con'>
              <p>请输入你的手机号码：</p>
              <input name='' type='text'>
