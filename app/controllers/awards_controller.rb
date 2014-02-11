@@ -256,12 +256,15 @@ class AwardsController < ApplicationController
   private
   #保存为模版页
   def save_as_award top_img,bot_img,name,award
-    ifream = "<iframe   width='190' height='41' frameborder='0' scrolling='no'>sorry</iframe>
+    ifream = "
+     
 "
-    if !award.nil?
+    
+    if award!=""
       ifream = "<iframe src='/sites/#{@site.id}/awards/#{@award_id}' width='190' height='41' frameborder='0' scrolling='no'></iframe>
       "
     end
+    p 111111111111,award,ifream
     html="
       <!doctype html>
 <html>
