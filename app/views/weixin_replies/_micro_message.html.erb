@@ -1,5 +1,5 @@
 <% if mm.image_text? %>
   <%= render :partial => "/micro_imgtexts/image_text", :locals => {:mi => mi} %>
 <% else %>
-  <%= render :partial => "/micro_imgtexts/text_block", :locals => {:it => mi[0]} %>
+  <%= render :partial => "/micro_imgtexts/text_block", :locals => {:it => mi[0], :mm => mm} %>
 <% end %>

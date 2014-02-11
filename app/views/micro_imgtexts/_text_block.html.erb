@@ -4,4 +4,5 @@
     <!--<div class="wzxxBoxEdit scd_btn" name="wzxxEdit" title="编辑"></div> -->
     <div class="wzxxBoxDet" title="删除" onclick="delText(this)"></div>
   </div>
+  <input type="hidden" value="<%= mm.solid_link_flag.present? ? (mm.solid_link_flag == 0 ? 'ggl' : 'app') : "" %>" class="solid_link_flag"/>
 </div>
