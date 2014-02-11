@@ -6,6 +6,8 @@ class Page < ActiveRecord::Base
   has_many :form_datas, :dependent => :destroy
   has_many :page_image_texts, :dependent => :destroy
   attr_accessible :title, :file_name, :types, :site_id, :path_name, :authenticate,:element_relation,:content,:img_path,:page_html,:template
+  has_many :submit_redirect, :dependent => :destroy
+  accepts_nested_attributes_for :submit_redirect
   attr_accessor :content
   serialize :element_relation
   TYPES_ARR = ['main', 'sub', 'style', 'form', "image_text", "image_stream", "big_image"]

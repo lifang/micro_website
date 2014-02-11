@@ -328,8 +328,8 @@ function validatePageForm(content)
 }
 
 function checkITValid(obj){
-    var title = $.trim($("#image_text_container #image_text_title").val());
-    var file_name = $.trim($("#image_text_container #image_text_file_name").val());
+    var title = $.trim($("#image_text_title").val());
+    var file_name = $.trim($("#image_text_file_name").val());
     var tf_flag = true;
     if(title == ""){
         tishi_alert("请输入标题");

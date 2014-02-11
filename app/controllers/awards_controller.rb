@@ -273,7 +273,7 @@ class AwardsController < ApplicationController
 <title>刮刮乐</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
 <script type='text/javascript' src='/allsites/js/award_main.js'></script>
-
+<script src='/allsites/sybj/resources/award.js' type='text/javascript'></script>
 <link href='/allsites/style/award_style.css' rel='stylesheet' type='text/css'>
 </head>
 
@@ -302,7 +302,7 @@ class AwardsController < ApplicationController
              <p>请输入你的手机号码：</p>
              <input name='' type='text'>
          </div>
-         <div class='gua_tab_btn'><button class='red_btn' onclick=''>确定</button><button onclick='cancle()' class='gray_btn'>取消</button></div>
+         <div class='gua_tab_btn'><button class='red_btn' onclick='return checkPhone(this)'>确定</button><button onclick='cancle()' class='gray_btn'>取消</button></div>
     </div>
     <script>
       function cancle(obj){
