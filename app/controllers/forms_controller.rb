@@ -139,6 +139,7 @@ class FormsController < ApplicationController
                       </article>
                       "+ page_footer(site) +"
                   <script src='/allsites/js/form.js' type='text/javascript'></script>
+                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',
