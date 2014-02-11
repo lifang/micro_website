@@ -23,20 +23,7 @@ class WeixinsController < ApplicationController
         #存储消息并推送到ios端
         get_client_message
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
-        if params[:xml][:Content] == "红包"
-          open_id = params[:xml][:FromUserName]
-          link = get_valid_award(cweb)
-          @link = link ? link + "&amp;secret_key=" + open_id : "0"
-          if @link == "0"
-            @message = "暂无活动"
-          else
-            @message = "&lt;a href='#{@link}'&gt;点击参与&lt;/a&gt;"
-          end
-          xml = teplate_xml
-          render :xml => xml
-        else
-          define_render(return_message, "key") #返回渲染方式 :  text/news
-        end
+        define_render(return_message, "key") #返回渲染方式 :  text/news
       else
         render :text => "ok"
       end
@@ -159,10 +146,12 @@ class WeixinsController < ApplicationController
       micro_message, micro_image_text = return_message
       if micro_message && micro_message.text?
         @message = micro_image_text[0].content if micro_image_text && micro_image_text[0]
-        if @site.exist_app && flag== "auto"
-          a_msg = "&lt;a href='#{MW_URL}allsites/#{@site.root_path}/this_site_app.html?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击登记您的信息&lt;/a&gt;
+        if @site.exist_app && micro_message.solid_link_flag == MicroMessage::SOLID_LINK[:app]
+          @message = "&lt;a href='#{MW_URL + @message}?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击登记您的信息&lt;/a&gt;
           "
-          @message = a_msg + @message
+        end
+        if micro_message.solid_link_flag == MicroMessage::SOLID_LINK[:ggl]
+          @message = "&lt;a href='#{MW_URL + @message}&amp;secret_key=#{params[:xml][:FromUserName]}' &gt;点击参与&lt;/a&gt;"
         end
         xml = teplate_xml
         render :xml => xml        #关注 自动回复的文字消息

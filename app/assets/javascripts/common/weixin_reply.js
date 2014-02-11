@@ -55,18 +55,37 @@ function setAutoChoose(obj, flag, location){
 //关键字回复/自动回复  弹出框选定文字 or 图文
 function setChoose(obj, flag, location){
     var li = $("." + location).find(".auto_message");
-    if(flag == 0){  //图文
+    if(flag == "imagetext"){  //图文
         var selectBlock = obj.find(".selected");
         var html = selectBlock.parent().html();
         li.html(html);
         li.find(".appmsg_mask").remove();
         li.find(".icon_appmsg_selected").remove();
         li.find(".msgBox").append(image_text_del_cover);
-    }else{ //文字
+    }else if(flag == "text"){ //文字
         var text = obj.find(".micro_text").val();
         text = HTMLEnCode(text);
         li.html(text_del_cover);
         li.find(".wzxxBox span").text(text);
+    }else if(flag == "ggl"){
+        var ggl = obj.find("input.ggl_link:checked");
+        if(ggl.length > 0){
+            var ggl_link = ggl.val();
+            text = HTMLEnCode(ggl_link);
+            li.html(text_del_cover);
+            li.append("<input type='hidden' value='ggl' class='solid_link_flag'/>");
+            li.find(".wzxxBox span").text(text);
+        }
+        
+    }else if(flag == "app"){
+        var app = obj.find("input.app_link:checked");
+        if(app.length > 0){
+            var app_link = app.val();
+            text = HTMLEnCode(app_link);
+            li.html(text_del_cover);
+            li.append("<input type='hidden' value='app' class='solid_link_flag'/>");
+            li.find(".wzxxBox span").text(text);
+        }
     }
     hide_tab(obj);
 }
@@ -124,6 +143,8 @@ var keywordBlock = '<li>\n\
         <div>\n\
           <button class="blue_btn add_text">添加文字</button>\n\
           <button class="blue_btn add_imagetext">添加图文</button>\n\
+          <button class="blue_btn add_ggl">添加刮刮乐链接</button>\n\
+          <button class="blue_btn add_app">添加app链接</button>\n\
         </div>\n\
         <div class="auto_message">\n\
         </div>\n\
@@ -154,6 +175,14 @@ function appendNewKeyword(site_id){
     current_li.find(".add_imagetext").bind("click", function(){
         show_tag($('#micro_image_text'), "key_" + li_length, 'imagetext');
     });
+    //添加刮刮乐按钮点击事件
+    current_li.find(".add_ggl").bind("click", function(){
+        show_tag($('#ggl_pop'), "key_" + li_length, 'ggl');
+    });
+    //添加app按钮点击事件
+    current_li.find(".add_app").bind("click", function(){
+        show_tag($('#app_pop'), "key_" + li_length, 'app');
+    });
     //设置保存按钮 路由
     current_li.find(".save_btn").bind("click", function(){
         saveAutoReply(this, '/sites/' + site_id + '/weixin_replies', 'keyword', 'new')
@@ -169,15 +198,15 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit, li_index){
         var micro_message = autoMessage.find(".micor_message_id");
         var micro_message_id = "";
         var text = "";
+        var solid_link_flag = "";
         var flag = auto_or_keyword;
-        //alert(keywordEle.val())
         var keyword = keywordEle ? keywordEle.val() : "";
         var li_index = li_index ? li_index : -1;
-        //alert(keyword)
         if(micro_message.length != 0){
             micro_message_id = micro_message.val();
         }else{
             text = $.trim(autoMessage.text());
+            solid_link_flag = autoMessage.find(".solid_link_flag").val();
         }
         $.ajax({
             url: url,
@@ -188,7 +217,8 @@ function saveAutoReply(obj, url, auto_or_keyword, new_or_edit, li_index){
                 text: text,
                 flag: flag,
                 keyword: keyword,
-                index: li_index
+                index: li_index,
+                solid_link_flag: solid_link_flag
             },
             success:function(data){
             //tishi_alert("保存成功")
@@ -208,15 +238,15 @@ function delLi(obj){
 }
 //转义字符串
 function HTMLEnCode(str)
-   {
-         var    s    =    "";
-         if    (str.length    ==    0)    return    "";
-         s    =    str.replace(/&/g,    "&gt;");
-         s    =    s.replace(/</g,        "&lt;");
-         s    =    s.replace(/>/g,        "&gt;");
-         s    =    s.replace(/    /g,        "&nbsp;");
-         s    =    s.replace(/\'/g,      "&#39;");
-         s    =    s.replace(/\"/g,      "&quot;");
-         s    =    s.replace(/\n/g,      "<br>");
-         return    s;
-   }
+{
+    var    s    =    "";
+    if    (str.length    ==    0)    return    "";
+    s    =    str.replace(/&/g,    "&gt;");
+    s    =    s.replace(/</g,        "&lt;");
+    s    =    s.replace(/>/g,        "&gt;");
+    s    =    s.replace(/    /g,        "&nbsp;");
+    s    =    s.replace(/\'/g,      "&#39;");
+    s    =    s.replace(/\"/g,      "&quot;");
+    s    =    s.replace(/\n/g,      "<br>");
+    return    s;
+}
