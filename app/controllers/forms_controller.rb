@@ -1,8 +1,8 @@
 #encoding: utf-8
 class FormsController < ApplicationController
-  #skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
+  skip_before_filter :authenticate_user!, :only => [:submit_redirect]
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site, :except => [:submit_redirect]
   before_filter :resources_for_select, :only => [:new, :edit]
   def index
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
@@ -70,6 +70,7 @@ class FormsController < ApplicationController
   end
 
   def submit_redirect
+    @site = Site.find_by_id params[:site_id]
     @form = Page.find_by_id(params[:id])
     @submit_redirect = @form.submit_redirect[0]
     render :layout => false

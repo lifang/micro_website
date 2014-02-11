@@ -11,7 +11,7 @@
   </head>
 
   <body>
-  <article>
+  <article style="margin-bottom: 50px">
     <section class="cover_bg title" style="background-image: url(<%= @form.img_path %>);"></section>
     <section class="transit_text">
       <p><%= @submit_redirect.message %></p>
@@ -27,6 +27,7 @@
       </ul>
     </section>
   </article>
+  <%= raw page_footer(@site) %>
 </body>
 <script type="text/javascript" src="/allsites/js/template_main.js"></script>
 </html>
