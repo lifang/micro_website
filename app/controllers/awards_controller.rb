@@ -258,12 +258,10 @@ class AwardsController < ApplicationController
   def save_as_award top_img,bot_img,name,award
     ifream = "<iframe   width='190' height='41' frameborder='0' scrolling='no'>sorry</iframe>
 "
-    p 111111111111111111,ifream
     if !award.nil?
       ifream = "<iframe src='/sites/#{@site.id}/awards/#{@award_id}' width='190' height='41' frameborder='0' scrolling='no'></iframe>
       "
     end
-    p 111111111111111111,ifream
     html="
       <!doctype html>
 <html>
@@ -287,14 +285,7 @@ class AwardsController < ApplicationController
          <section class='textBox' style='background-image:url(\"#{bot_img[0]}\");'></section>
          <section class='textBox' style='background-image:url(\"#{bot_img[1]}\");'></section>
     </article>
-    <section class='footNav'>
-    	<ul>
-        	<li class='footNav_prev'><a href='#'>前进</a></li>
-            <li class='footNav_next'><a href='#'>后退</a></li>
-            <li class='footNav_refresh'><a href='#'>刷新</a></li>
-            <li class='footNav_home'><a href='#'>首页</a></li>
-        </ul>
-    </section>
+    " + page_footer(@site)+"
 
     <div class='mask'></div>
     <div class='gua_tab'>
