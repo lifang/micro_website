@@ -34,6 +34,9 @@ MicroWebsite::Application.routes.draw do
   match '/untop' ,to: 'posts#untop' ,via: 'get'
   match '/search_sites' ,to: 'sites#search',via: 'get'
   match '/model_page' ,to: 'pages#model_page',via: 'post'
+  match '/sites/:site_id/app_managements/get_form_date' => 'app_managements#get_form_date', :as => :preview_visits, :via => :post
+  match '/get_form_date' => 'client_forms#get_form_date', :as => :preview_visits, :via => :post
+
   # Sample resource route with options:
   namespace :api do
     resources :clients do
@@ -57,12 +60,19 @@ MicroWebsite::Application.routes.draw do
     resources :weixin_replies
     resources :app_managements do
       collection do        
-        post :create_client_info_model,:get_form_date
+        post :create_client_info_model
       end
     end
 
     resources :awards do
       get :win_award_info
+      collection do
+        get :template
+        post :save_template
+      end
+      member do
+        get :change
+      end
     end
     resources :posts do
       collection do
@@ -96,6 +106,9 @@ MicroWebsite::Application.routes.draw do
     end
     
     resources :forms do
+      member do
+        get :submit_redirect
+      end
     end
 
     resources :image_streams do

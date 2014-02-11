@@ -1,0 +1,116 @@
+<div class="main_container">
+  <%= render '/shared/left_panel' %>
+  <div class="main_cont">
+    <%= form_for :image_text, :url => @page.new_record? ? site_image_texts_path(@site) : site_image_text_path(@site, @page), :method => @page.new_record? ? :post : :put , :html => {:remote => true, 'data-type' => 'script'} do |f| %>
+      <div class="tit">
+        <span>标题：</span>
+        <%= f.text_field :title, :value => @page.new_record? ? "" : @page.title %>
+        <span>文件名：</span>
+        <%= f.text_field :file_name, :value => @page.new_record? ? "" : @page.file_name.gsub(".html", "") %><span>.html</span>
+      </div>
+      <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:image_text] %>
+      <hr class="cf" color="#bcbcbc" />
+      <div class="vstContr">
+        <span>访问控制：</span>
+        <div class="vcItem <%= @page && @page.authenticate ? "check" : "" %>"><%= radio_button "form", "authenticate", 1, :checked => @page && @page.authenticate ? true : false %><span>是</span></div>
+        <div class="vcItem <%= @page && @page.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @page && @page.authenticate ? false : true %><span>否</span></div>
+      </div>
+      <div class="iphoneVirtual">
+        <div class="image_text_area">
+          <% if @page.new_record? %>
+            <div class="tuwenBox">
+              <span class="close"  onclick="deleOption(this)"></span>
+              <div class="tuwenImg"></div>
+              <input type="hidden" name="image_text[img_path][]" class="image_text_input"/>
+              <textarea class="it_content" name="image_text[content][]"></textarea>
+            </div>
+          <% else %>
+            <% @image_text.img_path.each_with_index do |path, index| %>
+              <div class="tuwenBox">
+                <span class="close"  onclick="deleOption(this)"></span>
+                <div class="tuwenImg"><img src="<%= path %>" width="320" height="150"/></div>
+                <input type="hidden" name="image_text[img_path][]" class="image_text_input" value="<%= path %>"/>
+                <textarea class="it_content" name="image_text[content][]"><%= @image_text.content[index] %></textarea>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="iphvAct">
+          <button class="map_btn one-key-button">一键导航</button>
+          <input type="hidden" name="onekey[address]" class="onekey_address" value="<%= @submit_redirect ? @submit_redirect.address : "" %>"/>
+          <input type="hidden" name="onekey[phone]" class="onekey_phone" value="<%= @submit_redirect ? @submit_redirect.phone : "" %>"/>
+          <input type="hidden" name="onekey[form_id]" class="onekey_form_id" value="<%= @form ? @form.id : "" %>"/>
+          <input type="hidden" name="onekey_form[form_name]" class="onekey_form_name" value="<%= @form ? @form.title : "" %>"/>
+        </div>
+        <div class="iphvAct">
+          <button class="tel_btn one-key-button">一键拨号</button>
+        </div>
+        <div class="iphvAct">
+          <button class="baomOnline one-key-button">网上报名</button>
+        </div>
+        <div class="iphvAct image_text_button">
+          <button class="blue_btn" type="button" onclick="appendEditor()">添加图文块</button>
+          <button class="blue_btn scd_btn" type="button" onclick="show_tag($('#one_key_button'))">添加一键导航</button>
+        </div>
+
+      </div>
+      <div id="tupian">
+        <%= render 'shared/form_images',:objects => @imgs_path %>
+      </div>
+      <div class="pageAct">
+        <button class="blue_btn" type="submit" onclick="return checkITValid(this)" alt="/sites/#{@site.id}/image_texts" >保存</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- 一键导航  一键拨号  网上报名 -->
+<div class="second_box quickNav">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <div id="one_key_button">
+      <h1>一键导航</h1>
+      <div class="tabs">
+        <span class="tab curr">一键导航</span>
+        <span class="tab">一键拨号</span>
+        <span class="tab">网上报名</span>
+        <div class="tabsLine"></div>
+      </div>
+
+      <div class="tabDiv curr">
+        <label>地址：</label><input type="text" class="address" value="<%= @submit_redirect ? @submit_redirect.address : "" %>" />
+      </div>
+      <div class="tabDiv">
+        <label>电话号码：</label><input type="text" class="phone" value="<%= @submit_redirect ? @submit_redirect.phone : "" %>" />
+      </div>
+      <div class="tabDiv">
+        <% @form_pages.each do |page| %>
+          <input type="radio" name="form_id" value="<%= page.id %>" <%= @form && @form.id == page.id ? "checked=checked"  : ""%>/>
+          <span class="radioVal" style="text-align:left; padding: 0"><%= page.title %></span>
+        <% end %>
+          <input type="radio" name="form_id" value="" />
+          <span class="radioVal" style="text-align:left; padding: 0">无</span>
+      </div>
+      <div class="scdBox_act">
+        <button class="blue_btn" onclick="imageTextSetKey(this)">确认</button>
+        <button class="blue_btn cancel">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 一键导航  一键拨号  网上报名 -->
+<script type="text/javascript">
+  $(function() {
+    var editor = KindEditor.create('textarea[class="it_content"]', {
+      resizeMode : 1,
+      width : "300px",
+      items : ['source',
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist']
+    });
+    $input = $( ".tuwenImg" );
+    form_it_drop($input, 320, 150);
+  })
+
+</script>

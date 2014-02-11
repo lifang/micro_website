@@ -10,6 +10,7 @@ class FormsController < ApplicationController
 
   def new
     @form = Page.new
+    @sub_pages = @site.pages.sub
   end
 
   def create
@@ -17,10 +18,13 @@ class FormsController < ApplicationController
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
     params[:page][:element_relation] = labels if labels
-    redirect_path = params[:redirect_path]
+    
     Page.transaction do
       @form = @site.pages.create(params[:page])
       if @form.save
+        #TODO
+        submit_redirect = @form.submit_redirect.create(params[:tishi])
+        redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content
         flash[:notice] = "新建成功!"
@@ -35,6 +39,7 @@ class FormsController < ApplicationController
 
   def edit
     @form = Page.find_by_id params[:id]
+    @sub_pages = @site.pages.sub
     render :new
   end
 
@@ -43,10 +48,11 @@ class FormsController < ApplicationController
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
     params[:page][:element_relation] = labels if labels
-    redirect_path = params[:redirect_path]
     @form = Page.find_by_id params[:id]
     Page.transaction do
       if @form.update_attributes(params[:page])
+        submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi]) if @form.submit_redirect[0]
+        redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content
         flash[:notice] = "更新成功!"
@@ -59,14 +65,14 @@ class FormsController < ApplicationController
     end
   end
 
+  def submit_redirect
+    @form = Page.find_by_id(params[:id])
+    @submit_redirect = @form.submit_redirect[0]
+    render :layout => false
+  end
+
 
   private
-
-  def resources_for_select
-    @imgs_pathes = return_site_images(@site)
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:page] || 1,:per_page=>12)
-    @sub_pages = @site.pages.sub
-  end
 
   def combine_form_html(page, labels, options , site, redirect_path)
     form_ele = ''
@@ -101,7 +107,7 @@ class FormsController < ApplicationController
                   <head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
                     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-                    <link href='/allsites/style/template_style.css?body=1' media='all' rel='stylesheet' type='text/css'></link>
+                    <link href='/allsites/style/template_style.css' media='all' rel='stylesheet' type='text/css'></link>
                     <script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
                     <title>preview</title>
                   </head>

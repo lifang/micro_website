@@ -6,7 +6,7 @@
     <div class="tabDiv">
       <div class="page_content">
         <div class="page_tit">
-          <%= link_to "新建图文", new_site_image_text_path(@site),:remote => true, :class => "blue_btn scd_btn" %>
+          <%= link_to "新建图文", new_site_image_text_path(@site), :class => "blue_btn scd_btn" %>
         </div>
         <div class="page_txt">
           <table class="table1">
@@ -25,7 +25,7 @@
                   <td class="authenticate"><%= if_authenticate(page)%></td>
                   <td>
                     <%= link_to "访问权限" , if_authenticate_site_page_path(@site,page),:remote => true, :class => "blue_btn"%>
-                    <%= link_to "编辑" , edit_site_image_text_path(@site,page),:remote => true, :class => "blue_btn"%>
+                    <%= link_to "编辑" , edit_site_image_text_path(@site,page), :class => "blue_btn"%>
                     <%= link_to "删除" , site_page_path(@site, page),:method => :delete, :confirm => "确定删除吗？", :class => "blue_btn"%>
                     <%= link_to "预览" , "/sites/static" + "?path_name=" + page.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
                   </td>

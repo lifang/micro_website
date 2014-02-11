@@ -26,27 +26,32 @@
       </li>
     <% end %>
     <%= link_to(site_image_texts_path(@site)) do %>
-      <li class="leftItem5 <%= controller_name == "image_texts" && controller.action_name == "index" ? 'leftItem_selected' : '' %>">
+      <li class="leftItem5 <%= controller_name == "image_texts" ? 'leftItem_selected' : '' %>">
         图文
       </li>
     <% end %>
-    <%=link_to(site_awards_path(@site)) do%>
-      <li class="leftItem6 <%= controller.controller_name == "awards" ? "leftItem_selected":"" %>">
+    <%=link_to( template_site_awards_path(@site)) do%>
+      <li class="leftItem6 <%= controller.controller_name == "awards"&&controller.action_name=="template" ? "leftItem_selected":"" %>">
         刮刮乐
       </li>
+    <%end%>
+    <%=link_to(site_awards_path(@site)) do%>
+      <li class="leftItem7 <%= controller.controller_name == "awards"&&controller.action_name!="template" ? "leftItem_selected":"" %>">
+        奖品
+      </li>
     <% end %>
-    <li class="leftItem7">奖品</li>
+
     <%=link_to site_app_managements_path(@site) do%>
       <li class="leftItem8 <%= controller.controller_name == "app_managements" ? "leftItem_selected":"" %>">
         APP
       </li>
     <% end %>
-      <%=link_to site_micro_messages_path(@site) do%>
+    <%=link_to site_micro_messages_path(@site) do%>
       <li class="leftItem9 <%= controller.controller_name == "micro_messages" ? "leftItem_selected":"" %>">
         图文消息
       </li>
     <% end %>
-      <%=link_to site_weixin_replies_path(@site) do%>
+    <%=link_to site_weixin_replies_path(@site) do%>
       <li class="leftItem10 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
         自动回复
       </li>

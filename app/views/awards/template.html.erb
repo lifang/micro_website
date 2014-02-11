@@ -1,0 +1,97 @@
+<div class="main_container">
+  <%=render 'shared/left_panel'%>
+  <div class="main_cont">
+    <div class="tit">
+      <span>标题：</span><input type="text" class="name" value="<%=@template.title if @template%>"/>
+      <span>文件名：</span>	<input type="text" class="title" value="<%=@template.file_name[0...-5] if @template%>" <%= "readonly style='background:gray;'" if @template  %>/><span>.html</span>
+    </div>
+    <!--div class="tempChoice tempChoice2">
+      <span>自定义：</span>
+      <ul>
+        <li class="temp4"></li>
+      </ul>
+    </div-->
+    <hr class="cf" color="#bcbcbc" />
+    <div class="vstContr">
+      <span>访问控制：</span>
+      <%if @template %>
+        <div class="vcItem <%=@template.authenticate ? "check":"" %>"><input type="radio"  value="1" <%=@template.authenticate ? "checked":""%>/><span>是</span></div>
+        <div class="vcItem  <%=!@template.authenticate ? "check":"" %>"><input type="radio" value="0" <%=!@template.authenticate ? "checked":""%> /><span>否</span></div>
+      <%else%>
+        <div class="vcItem"><input type="radio"  value="1"/><span>是</span></div>
+        <div class="vcItem check"><input type="radio" value="0" checked/><span>否</span></div>
+      <%end%>
+    </div>
+    <%=form_for(:awards,url:save_template_site_awards_path(@site) ) do |f|%>
+      <div class="iphoneVirtual ggl">
+        <%if @template.nil? %>
+          <input type="hidden" name ="html_content" class="html_content" />
+          <input type="hidden" name ="award_id" class="award_id" />
+          <input type="hidden" name ="name" class="name" />
+          <input type="hidden" name ="title" class="title" />
+          <input type="hidden" name ="vcitem" class="vcItem" />
+          <div class="gglTop">
+            <input type="hidden" class="top" name="top" />
+            <div class="gglArea scd_btn" name="loadIframe">刮奖区</div>
+          </div>
+          <div class="gglInfo scd_btn" name="addgglInfo">
+            <input type="hidden" class="bot" name="bot[]" />
+          </div>
+          <div class="gglInfo scd_btn" name="addgglInfo">
+            <input type="hidden" class="bot" name="bot[]" />
+          </div>
+        <%else%>
+          <%=raw (@template.page_html)%>
+        <%end%>
+      </div>
+    <%end%>
+
+
+    <div id="tupian">
+      <%= render 'shared/form_images'%>
+    </div>
+
+    <div class="pageAct" >
+      <button class="blue_btn" onclick="submit_award()">保存</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="second_bg"></div>
+<div class="second_box loadIframe">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>刮奖区选择</h1>
+
+    <div class="tabDiv curr">
+      <%@awards.each do |a|%>
+        <input type="radio" name="choice" value="<%=a.id%>" /><span class="radioVal"><%=a.name%></span>
+      <%end%>
+    </div>
+    <div class="scdBox_act">
+      <button class="blue_btn" onclick="guajiang()">确认</button>
+      <button class="blue_btn" onclick="cancle_award()">取消</button>
+    </div>
+  </div>
+</div>
+<!--div class="second_box addgglInfo">
+  <div class="second_content">
+    <span class="close" >关闭</span>
+    <h1>刮刮乐信息</h1>
+    <div><label>标题：</label><input type="text" /></div>
+    <div><label>信息一：</label><input type="text" /></div>
+    <div><label>信息二：</label><input type="text" /></div>
+    <div><label>信息三：</label><input type="text" /></div>
+    <div class="scdBox_act">
+      <button class="blue_btn">确认</button>
+      <button class="blue_btn">取消</button>
+    </div>
+  </div>
+</div-->
+<script type="text/javascript">
+  $input=$( ".gglTop" );
+  award_template_drop($input);
+  $input=$( ".gglInfo" );
+  award_template_drop($input);
+</script>

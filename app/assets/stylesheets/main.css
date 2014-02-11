@@ -293,7 +293,6 @@ box-shadow: 0 0 3px rgba(0,0,0,0.3);
 
 /* second_box */
 .second_bg { width:100%; height:100%; z-index:98; position: fixed; top:0; background: #000; opacity: 0.3; filter: alpha(opacity=30); display: none;}
-.second_box { width:100%; height:100%; z-index:99; position: fixed; top:0; display: none; }
 .second_content {
     background-color: #fff;
     border: 1px solid #CBD5D9;
@@ -399,10 +398,39 @@ fieldset { padding: 3px;}
 .main_cont .tit span:first-child { margin: 0;}
 .main_cont .tit input[type="text"] { padding: 5px; }
 
+/* 图文 */
+.tuwenImg { width: 320px; height: 150px; background: #ccc;}
+.tuwenBox textarea { width: 300px; height: 60px; resize: none; border: 1px solid #c2c2c2; padding: 5px; display: block; margin: 5px auto 0;}
+.tuwenBox { position: relative; padding-bottom: 5px; margin-bottom: 5px;}
+.tuwenBox:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;}
+.tuwenBox .close { position: absolute; top: 5px; right: 5px; display: none;}
+.tuwenBox:hover .close { display: block;}
+.one-key-button{
+    display: inline-block;
+	width: 296px;
+	height: 38px;
+	
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+}
+.baomOnline {
+	background: url(/assets/baomOnline.png) no-repeat;
+        background-size: 296px 38px;
+}
+.map_btn {
+	background: url(/assets/map_btn.png) no-repeat;
+        background-size: 296px 38px;
+}
+.tel_btn {
+	background: url(/assets/tel_btn.png) no-repeat;
+        background-size: 296px 38px;
+}
 
 
 /* 表单 */
-.formAct { margin-top: 10px; text-align: center; width: 320px;}
+.formAct { margin-top: 10px; width:294px; padding:0 14px;}
+
 .formAct button { margin: 5px;}
 .optBox { position: relative;}
 .optBox .close2 {
@@ -469,7 +497,7 @@ fieldset { padding: 3px;}
 }
 .tab_line { background: #328BD5; height: 3px; border: none;}
 
-.page_content { border: 1px solid #C2C2C2; padding: 0 20px;position: relative;min-height: 550px;}
+.page_content {  padding: 0 20px;position: relative;min-height: 550px;}
 .page_tit { height: 36px;}
 fieldset.page_tit {
     border: 1px solid #C2C2C2;
@@ -674,41 +702,6 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
     line-height: 80px;
     text-align: center;
 }
-/* 表单 */
-.formAct { margin-top: 10px; text-align: center; width: 320px;}
-.formAct button { margin: 5px;}
-.optBox { position: relative;}
-.optBox .close2 {
-	background: url("/assets/close.png") no-repeat;
-    cursor: pointer;
-    display: block;
-    height: 17px;
-    overflow: hidden;
-    text-indent: -999px;
-    width: 17px;
-    position: absolute;
-    right: 12px;
-    top: 14px;
-	display: none;
-}
-.optBox:hover .close2 { display: block;}
-
-.itemBox { padding: 5px 10px; color: #6E6E6E; position: relative;}
-.itemBox:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;}
-.itemBox .close { position: absolute; top: 12px; right: 5px; display: none;}
-.itemBox:hover .close { display: block;}
-.itemBox label { font-size: 14px; line-height: 30px; display: inline-block; width: 120px;}
-.itemBox input[type="text"] { border: 1px solid #C3C3C3; color: #6E6E6E; padding: 4px; width: 150px;}
-.itemBox select { border: 1px solid #C3C3C3; color: #6E6E6E; width: 160px; font-size: 20px;}
-.itemBox span { font-size: 14px; line-height: 30px;}
-.opt { position: relative;}
-.opt input { display: none;}
-.opt span { padding-left: 30px; display: block; background-position: -1px 3px; background-repeat: no-repeat;}
-.opt span:hover { background-position: -1px -27px; background-repeat: no-repeat;}
-.opt.check span { background-position: -1px -57px; background-repeat: no-repeat;}
-.rad span { background-image: url(/assets/radio_icon.png);}
-.chk span { background-image: url(/assets/check_icon.png);}
- 
 
 /* 图文消息块 */
 .twList { width: 400px; float: left; padding: 10px 0;}
@@ -821,3 +814,68 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .third_box { z-index:101; }
 
 
+
+
+/* 图片流 */
+.picStream { padding: 5px;}
+.picStrBox { width: 145px; float: left; margin: 5px; position: relative;}
+.picStrBox:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3);}
+.picStrBox .close { position: absolute; top: 5px; right: 5px; display: none;}
+.picStrBox:hover .close { display: block;}
+.imgDiv { width: 145px; height: 145px; background: #ccc;}
+.imgDiv span { color: #EBEBEB; display: block; font-size: 100px; line-height: 145px; text-align: center;}
+.picStrBox textarea { width: 137px; height: 40px; resize: none; border: 1px solid #c2c2c2; padding: 3px;}
+
+
+
+/* 刮刮乐 */
+.iphoneVirtual.ggl {}
+.gglTop { height: 250px; background: #ccc; margin: 10px auto; overflow: hidden; }
+.gglArea { height: 41px; margin: 158px 0 0 105px; width: 190px; background: #f7f7f7; font-size: 18px; line-height: 40px; text-align: center; color: #65696A; cursor: pointer; }
+.gglInfo { width: 280px; height: 150px; margin: 10px; resize: none; background: #ccc; cursor: pointer; padding: 0 10px;}
+.gglInfo:hover { box-shadow: 0 0 5px rgba(0,0,0,0.5);}
+.gglInfo h1 { margin: 0; color: #FFFFFF; font-size: 16px; line-height: 36px;}
+.gglInfo p { margin: 3px 0;}
+
+.dataLi span { margin: 0 17px;}
+.listLi label { display: block; float: left;}
+.listLi ul { overflow: hidden;}
+.listLi ul li { font-size: 14px; line-height: 32px; position: relative;}
+.listLi .close {right: 5px; top: 6px; display: none;}
+.listLi li:hover .close { display: block;}
+.listLi input { width: 151px; margin: 0 10px;}
+.addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
+.addjx span { cursor: pointer;}
+
+.baomOnline {
+	background: url(../images/baomOnline.png) no-repeat;
+	display: inline-block;
+	width: 296px;
+	height: 38px;
+	background-size: 296px 38px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+}
+.map_btn {
+	background: url(../images/map_btn.png) no-repeat;
+	display: inline-block;
+	width: 140px;
+	height: 34px;
+	background-size: 140px 34px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+	margin: 0 5px;
+}
+.tel_btn {
+	background: url(../images/tel_btn.png) no-repeat;
+	display: inline-block;
+	width: 140px;
+	height: 34px;
+	background-size: 140px 34px;
+	border: 0;
+	overflow: hidden;
+	text-indent: -999px;
+	margin: 0 5px;
+}
