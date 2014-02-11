@@ -72,7 +72,6 @@ class ResourcesController < ApplicationController
     end
   end
 
-
   #判断是否有目录
   def resources_dir_exist
     if !File::directory?( @full_dir )
@@ -122,17 +121,17 @@ class ResourcesController < ApplicationController
         #if entry =~ /['"`~@#\$^&*()=:;,\\[\\]<>~！%#￥……*（）|{}。，、]/
         #    @arr_chart +=1
         #else
-          if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
-            save_from_zip(resour,arr,ful_pa,ful_path)
-            #@full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
-            #min_image(ful_pa,entry,@full_dir)
-          elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
-            save_from_zip(resour,arr,ful_pa,ful_path)
-          elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
-            save_from_zip(resour,arr,ful_pa,ful_path)
-          else
-            arr_error+=1
-          end
+        if @img_resources.include?(postfix_name)&&tmp_file.size<1024*1024
+          save_from_zip(resour,arr,ful_pa,ful_path)
+          #@full_dir=Rails.root.to_s+SITE_PATH % @root1_path+"resources"
+          #min_image(ful_pa,entry,@full_dir)
+        elsif @voice_resources.include?(postfix_name)&&tmp_file.size<20*1024*1024
+          save_from_zip(resour,arr,ful_pa,ful_path)
+        elsif @video_resoures.include?(postfix_name)&&tmp_file.size<50*1024*1024
+          save_from_zip(resour,arr,ful_pa,ful_path)
+        else
+          arr_error+=1
+        end
         #end
       end
     end
@@ -156,9 +155,11 @@ class ResourcesController < ApplicationController
     #dirname=Rails.root.to_s+SITE_PATH % @root_path+"//resources"
     file1=File.new(@full_path,'wb')
     FileUtils.cp @tmp.path,file1
+
     #min_image(@full_path,@tmp.original_filename,@full_dir)
   end
-  
+
+
   def which_res(name)
     @img_resources=%w[jpg png gif jpeg]
     @voice_resources=%w[mp3]

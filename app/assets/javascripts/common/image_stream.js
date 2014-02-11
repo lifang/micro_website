@@ -105,7 +105,7 @@ function submit_imgstream(){
             success : function(data) {
                 if (data == 1) {
                     tishi_alert("更新成功");
-                    location.reload();
+                    location.href='/sites/'+$("#site_id").val()+'/image_streams/img_stream';
                 //返回主页
                 //location.href = "/sites/" + $("#site_id").val() + "/image_streams/img_stream";
                 } else {
