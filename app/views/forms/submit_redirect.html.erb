@@ -11,7 +11,7 @@
   </head>
 
   <body>
-  <article>
+  <article style="margin-bottom: 50px">
     <section class="cover_bg title" style="background-image: url(<%= @form.img_path %>);"></section>
     <section class="transit_text">
       <p><%= @submit_redirect.message %></p>
@@ -19,7 +19,7 @@
     <section class="key">
       <ul>
         <% if @submit_redirect.address.present? %>
-          <li><a href="#" class="adress"><span class="adress_icon"><%= @submit_redirect.address %></span></a></li>
+          <li><a href="http://api.map.baidu.com/geocoder?address=' + <%= @submit_redirect.address %> + '&output=html" class="adress"><span class="adress_icon"><%= @submit_redirect.address %></span></a></li>
         <% end %>
         <% if @submit_redirect.phone.present? %>
           <li><a href="tel:<%= @submit_redirect.phone %>" class="phone"><span class="phone_icon"><%= @submit_redirect.phone %></span></a></li>
@@ -27,6 +27,7 @@
       </ul>
     </section>
   </article>
+  <%= raw page_footer(@site) %>
 </body>
 <script type="text/javascript" src="/allsites/js/template_main.js"></script>
 </html>

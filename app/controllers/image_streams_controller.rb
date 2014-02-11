@@ -14,13 +14,6 @@ class ImageStreamsController < ApplicationController
     
 
   end
-   #给图片流进行分页（shared/all_img）
-  def change
-    @site=Site.find(params[:site_id])
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-  end
-
 
   def img_stream
     @site=Site.find(params[:site_id])
@@ -151,9 +144,11 @@ class ImageStreamsController < ApplicationController
   def save_in_file(content,bigcontent,site,fname)
     site_path = Rails.root.to_s + SITE_PATH % site.root_path
     FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
+    FileUtils.rm site_path + fname if File::exist?(site_path + fname)
     File.open(site_path + fname, "wb") do |f|
       f.write(content.html_safe)
     end
+    FileUtils.rm site_path + "bigimg_"+fname if File::exist?(site_path + "bigimg_"+fname)
     File.open(site_path + "bigimg_"+fname, "wb") do |fb|
       fb.write(bigcontent.html_safe)
     end
@@ -169,6 +164,7 @@ class ImageStreamsController < ApplicationController
       str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img  src='#{deal_img_to_min imgarr[x]}'></a>#{p1}</li>
       "
     end
+    
 #html 内容
     content="
     <!doctype html>

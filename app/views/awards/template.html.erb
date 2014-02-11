@@ -53,6 +53,9 @@
 
     <div class="pageAct" >
       <button class="blue_btn" onclick="submit_award()">保存</button>
+      <%if @template%>
+      <%= link_to "预览" , "/sites/static" + "?path_name=" + @template.path_name,:target =>"_blank", :class => "blue_btn page_preview" %>
+      <%end%>
     </div>
 
   </div>

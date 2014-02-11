@@ -846,36 +846,3 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .listLi input { width: 151px; margin: 0 10px;}
 .addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
 .addjx span { cursor: pointer;}
-
-.baomOnline {
-	background: url(../images/baomOnline.png) no-repeat;
-	display: inline-block;
-	width: 296px;
-	height: 38px;
-	background-size: 296px 38px;
-	border: 0;
-	overflow: hidden;
-	text-indent: -999px;
-}
-.map_btn {
-	background: url(../images/map_btn.png) no-repeat;
-	display: inline-block;
-	width: 140px;
-	height: 34px;
-	background-size: 140px 34px;
-	border: 0;
-	overflow: hidden;
-	text-indent: -999px;
-	margin: 0 5px;
-}
-.tel_btn {
-	background: url(../images/tel_btn.png) no-repeat;
-	display: inline-block;
-	width: 140px;
-	height: 34px;
-	background-size: 140px 34px;
-	border: 0;
-	overflow: hidden;
-	text-indent: -999px;
-	margin: 0 5px;
-}

@@ -13,13 +13,6 @@ class ImageTextsController < ApplicationController
     @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
   end
 
-  #给图片流进行分页（shared/all_img）
-  def change
-    @site=Site.find(params[:site_id])
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-  end
-
   def new
     @page = Page.new
     @form_pages = @site.pages.form
@@ -83,7 +76,11 @@ class ImageTextsController < ApplicationController
         if @page && @page.update_attributes(params[:image_text])
           @page.page_image_texts[0].update_attributes({:img_path => img_path, :content => it_content })
           if(params[:onekey][:address].present? || params[:onekey][:phone].present? || params[:onekey][:form_url].present?)
-            @page.submit_redirect[0].update_attributes(params[:onekey]) if @page.submit_redirect[0]
+            if @page.submit_redirect[0]
+              @page.submit_redirect[0].update_attributes(params[:onekey])
+            else
+              @page.submit_redirect.create(params[:onekey])
+            end
           end
           content = image_text_content(@page, it_content, img_path, @site, params[:onekey], params[:onekey_form][:form_name]) if it_content.present?
           save_into_file(content, @page, old_page_file_name) if content

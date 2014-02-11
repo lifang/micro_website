@@ -8,6 +8,9 @@ class WeixinRepliesController < ApplicationController
     @auto_micro_message = @auto_reply.micro_message if @auto_reply
     @auto_micro_imagetexts = @auto_micro_message.micro_imgtexts if @auto_micro_message
 
+    ggl = @site.pages.where({:types => Page::TYPE_NAMES[:sub], :template => Page::TEMPLATE[:ggl]})[0]
+    @ggl_link = "sites/static?path_name=#{ggl.path_name}" if ggl
+    @app_link = "allsites/#{@site.root_path}/this_site_app.html" if @site.exist_app
     #关键詞回复
     @key_replies = @site.keywords.includes(:micro_message).keyword.paginate(:per_page => 9, :page => params[:page])
     key_micro_messages = MicroMessage.where(:id => @key_replies.map(&:micro_message_id))
@@ -30,11 +33,11 @@ class WeixinRepliesController < ApplicationController
   end
 
   def create
-    micro_message_id, text, flag, keyword = params[:micro_message_id], params[:text], params[:flag], params[:keyword] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword)
+    micro_message_id, text, flag, keyword, solid_link_flag = params[:micro_message_id], params[:text], params[:flag], params[:keyword], params[:solid_link_flag] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword) 关键字  刮刮乐/app
     begin
       Keyword.transaction do
         if text.present? #文字回复
-          micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
+          micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text], :solid_link_flag => solid_link_flag.present? ? (solid_link_flag == "ggl" ? 0 : 1) : nil)
           micro_message_id = micro_message.id if micro_message
           micro_message.micro_imgtexts.create(:content => text ) if micro_message
         end
@@ -58,7 +61,7 @@ class WeixinRepliesController < ApplicationController
   end
 
   def update  #关键字更新
-    micro_message_id, text, flag, keyword_param,@index = params[:micro_message_id], params[:text], params[:flag], params[:keyword], params[:index].to_i #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword)
+    micro_message_id, text, flag, keyword_param,@index, solid_link_flag = params[:micro_message_id], params[:text], params[:flag], params[:keyword], params[:index].to_i, params[:solid_link_flag] #图文消息，文字消息， 自动回复(auto)/关键字回复(keyword) 关键字 li索引 刮刮乐/app
     begin
       Keyword.transaction do
         @keyword = Keyword.find_by_id params[:id]
@@ -66,10 +69,13 @@ class WeixinRepliesController < ApplicationController
         #关键詞回复
         if text.present? #文字回复
           if micro_message && micro_message.text? #原来就是文字回复，更新
+            p 111111111111111111
+            micro_message.update_attribute(:solid_link_flag, solid_link_flag.present? ? (solid_link_flag == "ggl" ? 0 : 1) : nil) #如果是刮刮乐或者app 更新micro_message
             micro_message.micro_imgtexts[0].update_attribute(:content, text) if micro_message.micro_imgtexts[0]
             @keyword.update_attributes({:keyword => keyword_param})
           else  #原来是图文回复，新建文字回复
-            micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text])
+            p 2222222222222222222222
+            micro_message = @site.micro_messages.create(:mtype => MicroMessage::TYPE[:text], :solid_link_flag => solid_link_flag.present? ? (solid_link_flag == "ggl" ? 0 : 1) : nil)
             micro_message.micro_imgtexts.create(:content => text ) if micro_message
             @keyword.update_attributes({:micro_message_id => micro_message.id, :keyword => keyword_param})
           end

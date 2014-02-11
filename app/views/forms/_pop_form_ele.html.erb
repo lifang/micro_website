@@ -76,9 +76,9 @@
     <span class="close" >关闭</span>
     <h1>提交成功页面</h1>
     <div id="after_submit_form">
-      <div><label>提示信息：</label><input class="tishi_message"type="text" /><span class="check">*</span></div>
-      <div><label>电话：</label><input class="telephone"type="text" /></div>
-      <div><label>地址：</label><input class="address" type="text" /></div>
+      <div><label>提示信息：</label><input class="tishi_message"type="text" value="<%= @submit_redirect.present? ? @submit_redirect.message : ""  %>" /><span class="check">*</span></div>
+      <div><label>电话：</label><input class="telephone"type="text" value="<%= @submit_redirect.present? ? @submit_redirect.phone : ""  %>"/></div>
+      <div><label>地址：</label><input class="address" type="text" value="<%= @submit_redirect.present? ? @submit_redirect.address : ""  %>"/></div>
       <div class="scdBox_act">
         <button class="blue_btn confirm_after_aubmit">确认</button>
         <button class="blue_btn cancel">取消</button>

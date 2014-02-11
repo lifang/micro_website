@@ -1,8 +1,8 @@
 #encoding: utf-8
 class FormsController < ApplicationController
-  #skip_before_filter :authenticate_user!, :only => [:submit_queries, :static, :get_token]
+  skip_before_filter :authenticate_user!, :only => [:submit_redirect]
   layout 'sites'
-  before_filter :get_site
+  before_filter :get_site, :except => [:submit_redirect]
   before_filter :resources_for_select, :only => [:new, :edit]
   def index
     @forms = @site.pages.form.includes(:form_datas).order("created_at desc").paginate(:page=>params[:page],:per_page=>10)
@@ -22,7 +22,6 @@ class FormsController < ApplicationController
     Page.transaction do
       @form = @site.pages.create(params[:page])
       if @form.save
-        #TODO
         submit_redirect = @form.submit_redirect.create(params[:tishi])
         redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
@@ -40,6 +39,7 @@ class FormsController < ApplicationController
   def edit
     @form = Page.find_by_id params[:id]
     @sub_pages = @site.pages.sub
+    @submit_redirect = @form.submit_redirect[0]
     render :new
   end
 
@@ -51,7 +51,11 @@ class FormsController < ApplicationController
     @form = Page.find_by_id params[:id]
     Page.transaction do
       if @form.update_attributes(params[:page])
-        submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi]) if @form.submit_redirect[0]
+        if @form.submit_redirect[0]
+          submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
+        else
+          submit_redirect = @form.submit_redirect.create(params[:tishi])
+        end
         redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content
@@ -66,6 +70,7 @@ class FormsController < ApplicationController
   end
 
   def submit_redirect
+    @site = Site.find_by_id params[:site_id]
     @form = Page.find_by_id(params[:id])
     @submit_redirect = @form.submit_redirect[0]
     render :layout => false
@@ -135,6 +140,7 @@ class FormsController < ApplicationController
                       </article>
                       "+ page_footer(site) +"
                   <script src='/allsites/js/form.js' type='text/javascript'></script>
+                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',

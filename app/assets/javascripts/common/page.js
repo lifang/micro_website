@@ -133,7 +133,7 @@ function show_tag(obj, location, text_or_it){
     tab.show();
     if(text_or_it){
         obj.parent(".second_content").find(".confirm_btn").bind('click',function(){
-            setChoose(obj, text_or_it == 'text' ? 1 : 0, location)
+            setChoose(obj, text_or_it, location)
         })
     }
     $(".second_bg").show();

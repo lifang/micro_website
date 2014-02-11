@@ -37,6 +37,8 @@ index ||= 0
         <div>
           <button class="blue_btn add_text" onclick="show_tag($('#micro_text'), $(this).parents('li').attr('class'), 'text');">添加文字</button>
           <button class="blue_btn add_imagetext" onclick="show_tag($('#micro_image_text'), $(this).parents('li').attr('class'), 'imagetext');">添加图文</button>
+          <button class="blue_btn add_ggl" onclick="show_tag($('#ggl_pop'), $(this).parents('li').attr('class'), 'ggl');">添加刮刮乐链接</button>
+          <button class="blue_btn add_app" onclick="show_tag($('#app_pop'), $(this).parents('li').attr('class'), 'app');">添加app链接</button>
         </div>
         <div class="auto_message">
           <% if micro_message && @key_micro_imagetexts && @key_micro_imagetexts[micro_message.id] %>
