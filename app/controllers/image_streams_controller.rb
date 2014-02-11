@@ -14,13 +14,6 @@ class ImageStreamsController < ApplicationController
     
 
   end
-   #给图片流进行分页（shared/all_img）
-  def change
-    @site=Site.find(params[:site_id])
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:id],:per_page=>12)
-  end
-
 
   def img_stream
     @site=Site.find(params[:site_id])

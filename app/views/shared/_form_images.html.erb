@@ -13,26 +13,20 @@
   <%end%>
   <div style="clear: both"></div>
   <%if @imgs_path.present?%>
-  <div class="digg_pagination" style="margin:0 auto;text-align: center;">
-    <%= will_paginate @imgs_path,:previous_label=>'上一页',:next_label=>'下一页'  %>
-  </div>
+    <div class="digg_pagination" style="margin:0 auto;text-align: center;">
+      <%= will_paginate @imgs_path,:previous_label=>'上一页',:next_label=>'下一页'  %>
+    </div>
   <%end%>
 </div>
 
 <script>
   var aarr = $(".pagination").find("a");
-
-  for(var i=0;i<aarr.length;i++){
-    var href =$(aarr[i]).attr("href");
-    var url=href.split("page=");
-    url=url[url.length-1];
-    var extre="";
-    <%  if controller.controller_name=="pages" %>
-      extre ='<%=site_pages_url(@site)%>'+"/";
-    <%end%>
-    var href=extre+url+"/change";
-     
-    $(aarr[i]).attr("data-remote",true);
-    $(aarr[i]).attr("href",href);
-  }
+  aarr.each(function(){
+    $(this).attr("data-remote",true);
+    $(this).attr("data-type",'script');
+    //alert($(this).attr("href"))
+    var page_param = $(this).attr("href").split("?")[1]
+    $(this).attr("href","<%= change_site_pages_path(@site) %>?" + page_param);
+  });
+ 
 </script>
