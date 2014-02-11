@@ -22,7 +22,6 @@ class FormsController < ApplicationController
     Page.transaction do
       @form = @site.pages.create(params[:page])
       if @form.save
-        #TODO
         submit_redirect = @form.submit_redirect.create(params[:tishi])
         redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
@@ -40,6 +39,7 @@ class FormsController < ApplicationController
   def edit
     @form = Page.find_by_id params[:id]
     @sub_pages = @site.pages.sub
+    @submit_redirect = @form.submit_redirect[0]
     render :new
   end
 
@@ -51,7 +51,11 @@ class FormsController < ApplicationController
     @form = Page.find_by_id params[:id]
     Page.transaction do
       if @form.update_attributes(params[:page])
-        submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi]) if @form.submit_redirect[0]
+        if @form.submit_redirect[0]
+          submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
+        else
+          submit_redirect = @form.submit_redirect.create(params[:tishi])
+        end
         redirect_path = submit_redirect_site_form_url(@site, @form)
         content = combine_form_html(@form, labels, options , @site, redirect_path)
         save_into_file(content, @form, "") if content

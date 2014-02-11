@@ -1,32 +1,8 @@
 $("#tupian").html('<%=j (render 'shared/form_images')%>');
 $(function() {
-     var editor = KindEditor.create('textarea[class="it_content"]', {
-                          resizeMode : 1,
-                          width : "400px",
-                          items : ['source',
-                                  'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                                  'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                                  'insertunorderedlist']
-                  });
-
     // 定义图片库, drop area
-   // var $gallery = $( ".picRes" ),
-   // $input = $( ".image_area img" );
+    var $gallery = $( ".picRes" );
 
     // 使图片库里面的元素可托拽
-   // it_drag($( "li", $gallery ));
-
-    // drop 元素
-   // it_drop($input);
- var $gallery = $( ".picRes" ),
-  $input = $( ".homeMenu li" );
-
-  // 使图片库里面的元素可托拽
-  it_drag($( ".picBox", $gallery ));
-
-  // drop 元素
-  it_drop($input);
-  $input=$( ".homeBg span" );
-  it_drop($input);
-
+    it_drag($( ".picBox", $gallery ));
 });

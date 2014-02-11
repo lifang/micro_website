@@ -184,13 +184,9 @@ function appendEditor(){
 
 function imageTextSetKey(obj){
     var address = $("#one_key_button .address").val();
-    if($.trim(address) != ""){
-        $(".onekey_address").val(address);
-    }
+    $(".onekey_address").val(address);
     var phone = $("#one_key_button .phone").val();
-    if($.trim(phone) != ""){
-        $(".onekey_phone").val(phone);
-    }
+    $(".onekey_phone").val(phone);
     var checked = $("#one_key_button input[name=form_id]:checked");
     var form_id = checked.length > 0 ? checked.val() : "";
     $(".onekey_form_id").val(form_id);

@@ -96,11 +96,11 @@ MicroWebsite::Application.routes.draw do
     resources :pages do
       resources :form_datas
       collection do
-        get :sub, :form, :style, :sub_new,  :form_new ,:tmlt_sub_new
+        get :sub, :form, :style, :sub_new,  :form_new ,:tmlt_sub_new,:change
         post :preview, :save_template3,:tmlt_sub_create,:zdy_sub_create
       end
       member do
-        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:change,:tmlt_sub_edit
+        get :sub_edit,:form_edit, :if_authenticate, :sub_preview ,:tmlt_sub_edit
         post :submit_queries,:tmlt_sub_update
       end
     end
