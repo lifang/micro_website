@@ -128,17 +128,19 @@
   </div>
 
   <!-- 刮刮乐弹出块-->
-  <div class="second_box second_box2 wzAdd">
+  <div class="second_box wzAdd">
     <div class="second_content">
       <span class="close" >关闭</span>
       <h1>添加刮刮乐</h1>
       <div id="ggl_pop">
+        <div style="margin: 40px 0">
         <% if @ggl_link %>
           <input type="radio" value="<%= @ggl_link %>" class="ggl_link"/>
           <span>刮刮乐</span>
         <% else %>
           刮刮乐页面不存在
         <% end %>
+        </div>
         <div class="second_box_act">
           <button class="blue_btn confirm_btn">确定</button>
           <button class="blue_btn cancel">取消</button>
@@ -147,18 +149,20 @@
     </div>
   </div>
 
-  <!-- 刮刮乐弹出块-->
-  <div class="second_box second_box2 wzxxEdit">
+  <!-- app弹出块-->
+  <div class="second_box wzAdd">
     <div class="second_content">
       <span class="close" >关闭</span>
       <h1>添加app链接</h1>
       <div id="app_pop">
+        <div style="margin: 40px 0">
         <% if @app_link %>
           <input type="radio" value="<%= @app_link %>" class="app_link"/>
           <span>app登记</span>
         <% else %>
           app登记页面不存在
         <% end %>
+        </div>
         <div class="second_box_act">
           <button class="blue_btn confirm_btn">确定</button>
           <button class="blue_btn cancel">取消</button>

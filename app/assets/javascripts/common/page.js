@@ -122,10 +122,10 @@ function changeUrl(obj, site_id, flag, page_id){
 //show_tag($('#micro_text'), 'auto_block', 'text')  新建关键字或者自动回复消息
 function show_tag(obj, location, text_or_it){
     var tab = obj.parents(".second_box");
-    var scolltop = document.body.scrollTop|document.documentElement.scrollTop;
-    var win_height = document.documentElement.clientHeight;//jQuery(document).height();
+    var scolltop = document.body.scrollTop|document.documentElement.scrollTop; //滚动条高度
+    var win_height = $(document).height();
     var z_layer_height = tab.height();
-    tab.css('top',(win_height-z_layer_height)/2 + scolltop);
+    tab.css('top',100 + scolltop);
     var doc_width = $(document).width();
     var layer_width = tab.width();
     tab.css('left',(doc_width-layer_width)/2);

@@ -2,12 +2,16 @@
 class AppManagementsController < ApplicationController
   layout 'sites'
   before_filter :get_site,:exist_app?
-  skip_before_filter :authenticate_user!,:get_site,:exist_app? ,only:[:get_form_date]
+  skip_before_filter :authenticate_user!,:get_site,:exist_app? ,only:[:get_form_date, :submit_redirect]
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
     @chi =ClientHtmlInfo.find_by_client_id(@client.id)
     @record = Record.find_by_site_id(@site.id)
     @remind = Remind.find_by_site_id(@site.id)
+  end
+
+  def submit_redirect
+    render :layout => false
   end
 
   def create_client_info_model
@@ -153,9 +157,9 @@ class AppManagementsController < ApplicationController
     data :'form = ' + str+'&username='+name+'&phone='+phone+'&open_id='+open_id,
     success : function(data) {
       if(data==1)
-      alert('保存成功!');
+        window.location.replace('/submit_redirect');
       else if(data==2)
-        alert('更新成功');
+        window.location.replace('/submit_redirect');
       else
         alert('error');
     }

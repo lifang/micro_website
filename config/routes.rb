@@ -35,6 +35,7 @@ MicroWebsite::Application.routes.draw do
   match '/search_sites' ,to: 'sites#search',via: 'get'
   match '/model_page' ,to: 'pages#model_page',via: 'post'
   match '/sites/:site_id/app_managements/get_form_date' => 'app_managements#get_form_date', :as => :preview_visits, :via => :post
+  match '/submit_redirect' => 'app_managements#submit_redirect', :as => :submit_redirect, :via => :get
   match '/get_form_date' => 'client_forms#get_form_date', :as => :preview_visits, :via => :post
 
   # Sample resource route with options:
