@@ -224,7 +224,7 @@ class AwardsController < ApplicationController
     html_content = params[:html_content]
     @award_id = params[:award_id]
     title = params[:name]
-    name = params[:title]
+    name = params[:title]+".html"
     vcitem = params[:vcitem]
     top_img = params[:top]
     bot_img = params[:bot]
@@ -278,6 +278,7 @@ class AwardsController < ApplicationController
 <title>刮刮乐</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
 <script type='text/javascript' src='/allsites/js/award_main.js'></script>
+<script src='/assets/jquery_ujs.js' type='text/javascript'></script>
 <script src='/allsites/js/award.js' type='text/javascript'></script>
 <link href='/allsites/style/award_style.css' rel='stylesheet' type='text/css'>
 </head>
