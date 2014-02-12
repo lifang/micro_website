@@ -224,7 +224,7 @@ class AwardsController < ApplicationController
     html_content = params[:html_content]
     @award_id = params[:award_id]
     title = params[:name]
-    name = params[:title]+".html"
+    name = params[:title]
     vcitem = params[:vcitem]
     top_img = params[:top]
     bot_img = params[:bot]
