@@ -17,7 +17,7 @@ index ||= 0
     <% micro_message = kr.micro_message if kr.present? %>
     <div class="arItem cf">
       <label>回复内容：</label>
-      <div><span><% if micro_message %>(一条<%= micro_message.text? ? "文字" : "图文" %>)<% end %></span></div>
+      <div><span><%= reply_content(micro_message) %></span></div>
     </div>
     <div class="toggleAct">
       <% if kr %>
