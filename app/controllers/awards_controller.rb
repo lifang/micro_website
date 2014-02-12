@@ -70,7 +70,6 @@ class AwardsController < ApplicationController
       if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
         award_infos = @award.award_infos
         user_award = UserAward.where(:open_id => @open_id, :award_id => @award.id)[0] #当前open_id是否刮过
-        p 111651516316166,user_award
         if !user_award
           total_num = @award.total_number #总的奖券数
           has_award_num = award_infos.sum(:number) #有奖的奖券总数
@@ -166,8 +165,6 @@ class AwardsController < ApplicationController
               
               # 接收手机号码作为secret_code存入数据库
               # 记录 刮刮记录
-              p "646446464646564--open_id:",open_id
-              
               user_award = UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
                 :secret_code => phone, :if_checked => false)
               
