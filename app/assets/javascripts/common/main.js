@@ -159,7 +159,7 @@ $(function() {
     });
 	
     $("body").on("click",".scd_btn",function(){
-        $(".second_bg").show();
+     //   $(".second_bg").show();
         $(".second_box."+$(this).attr("name")).show();
         $(".second_box."+$(this).attr("name")).attr("ishow","show");
     });
