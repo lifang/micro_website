@@ -147,8 +147,7 @@ class WeixinsController < ApplicationController
       if micro_message && micro_message.text?
         @message = micro_image_text[0].content if micro_image_text && micro_image_text[0]
         if @site.exist_app && micro_message.solid_link_flag == MicroMessage::SOLID_LINK[:app]
-          @message = "&lt;a href='#{MW_URL + @message}?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击登记您的信息&lt;/a&gt;
-          "
+          @message = "&lt;a href='#{MW_URL + @message}?open_id=#{params[:xml][:FromUserName]}' &gt; 请点击登记您的信息&lt;/a&gt;"
         end
         if micro_message.solid_link_flag == MicroMessage::SOLID_LINK[:ggl]
           @message = "&lt;a href='#{MW_URL + @message}&amp;secret_key=#{params[:xml][:FromUserName]}' &gt;点击参与&lt;/a&gt;"
