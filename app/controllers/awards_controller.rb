@@ -326,7 +326,7 @@ class AwardsController < ApplicationController
 </html>
     "
     site_path = Rails.root.to_s+SITE_PATH%@site.root_path
-    path = Rails.root.to_s+SITE_PATH%@site.root_path+"#{name}.html"
+    path = Rails.root.to_s+SITE_PATH%@site.root_path+"#{name}"
     FileUtils.mkdir_p(site_path) unless Dir.exists?(site_path)
     FileUtils.rm path if File::exist?(path)
     File.open(path, "wb") do |f|
