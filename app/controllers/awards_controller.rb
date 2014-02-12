@@ -70,6 +70,7 @@ class AwardsController < ApplicationController
       if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
         award_infos = @award.award_infos
         user_award = UserAward.where(:open_id => @open_id, :award_id => @award.id)[0] #当前open_id是否刮过
+        p 111651516316166,user_award
         if !user_award
           total_num = @award.total_number #总的奖券数
           has_award_num = award_infos.sum(:number) #有奖的奖券总数
@@ -152,21 +153,28 @@ class AwardsController < ApplicationController
   end
   
   def record_award
+    
     begin
       open_id, award_id, award_info_id, phone = params[:open_id], params[:award_id], params[:award_info_id], params[:phone]
       award = Award.find_by_id(award_id)
       user_award = UserAward.where(:open_id => open_id, :award_id => award_id)[0] #当前open_id是否刮过
+      
       unless user_award.present?
         UserAward.transaction do
           if open_id.present? && open_id != "null"
             if award_info_id.present? #抽到奖
+              
               # 接收手机号码作为secret_code存入数据库
               # 记录 刮刮记录
+              p "646446464646564--open_id:",open_id
+              
               user_award = UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
                 :secret_code => phone, :if_checked => false)
+              
               #减少奖券数量
               award.update_attribute(:no_operation_number, award.no_operation_number - 1) if award
             else #没抽到奖
+            
               #记录 刮刮记录
               user_award = UserAward.create(:open_id => open_id, :award_info_id => award_info_id, :award_id => award_id,
                 :secret_code => nil, :if_checked => false)
@@ -261,10 +269,9 @@ class AwardsController < ApplicationController
 "
     
     if award!=""
-      ifream = "<iframe src='/sites/#{@site.id}/awards/#{@award_id}' width='190' height='41' frameborder='0' scrolling='no'></iframe>
+      ifream = "<input type='hidden' id='secret_key' value='/sites/#{@site.id}/awards/#{@award_id}' /><iframe id='guaguale' src='' width='190' height='41' frameborder='0' scrolling='no'></iframe>
       "
     end
-    p 111111111111,award,ifream
     html="
       <!doctype html>
 <html>
@@ -274,7 +281,7 @@ class AwardsController < ApplicationController
 <title>刮刮乐</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
 <script type='text/javascript' src='/allsites/js/award_main.js'></script>
-<script src='/allsites/sybj/resources/award.js' type='text/javascript'></script>
+<script src='/allsites/js/award.js' type='text/javascript'></script>
 <link href='/allsites/style/award_style.css' rel='stylesheet' type='text/css'>
 </head>
 
@@ -292,18 +299,31 @@ class AwardsController < ApplicationController
 
     <div class='mask' style='display:none;'></div>
     <div class='gua_tab' style='display:none;'>
+     <form action='/record_award' method='post' data-remote='true'>
          <div class='gua_tab_con'>
              <p>请输入你的手机号码：</p>
-             <input name='' type='text'>
+             <input id='mphone' name='phone' type='text'>
+             <input id='open_id' name='open_id' type='hidden'>
+             <input id='award_id' name='award_id' type='hidden'>
+             <input id='award_info_id' name='award_info_id' type='hidden'>
          </div>
          <div class='gua_tab_btn'><button class='red_btn' onclick='return checkPhone(this)'>确定</button><button onclick='cancle()' class='gray_btn'>取消</button></div>
+      </form>
     </div>
+
     <script>
       function cancle(obj){
          $('.mask').hide();
          $('.gua_tab').hide();
       }
     </script>
+
+    <div class='tab tishi' style='display:none'>
+         <div class='tab_con' style='text-align:center'>
+             <p class='message'></p>
+         </div>
+         <div class='tab_btn'><button class='gray_btn' type='button'>关闭</button></div>
+    </div>
 </body>
 </html>
     "
