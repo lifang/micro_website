@@ -5,7 +5,7 @@ class AppManagementsController < ApplicationController
   skip_before_filter :authenticate_user!,:get_site,:exist_app? ,only:[:get_form_date, :submit_redirect]
   def index
     @client = Client.where("site_id=? and types = 0" , @site.id)[0]
-    @chi =ClientHtmlInfo.find_by_client_id(@client.id)
+    @chi =ClientHtmlInfo.find_by_client_id(@client.id) if @client
     @record = Record.find_by_site_id(@site.id)
     @remind = Remind.find_by_site_id(@site.id)
   end

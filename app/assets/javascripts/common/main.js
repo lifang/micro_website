@@ -136,7 +136,23 @@ $(function() {
             tishi_alert('根目录只能为字母');
             return false;
         }
+        var radio = $('input[type=radio]:checked');
+        if($(radio[0]).val() == 1){
+        	var username = $.trim($("#username").val());
+        	var password = $.trim($("#password").val());
+        	if(username == ""){
+        		tishi_alert("app 用户名不能为空！");
+        		return false;
+        	}
+        	if( password == "")
+        	{
+        		tishi_alert("app密码不能为空！");
+        		return false;
+        	}
+        }
+        
         $("#fault").show();
+        $(".new_point").children("form").submit();
     });
     
     
