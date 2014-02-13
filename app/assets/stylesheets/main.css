@@ -206,7 +206,7 @@ box-shadow: 0 0 3px rgba(0,0,0,0.3);
 .iv_temp2 .homeMenu { width: 185px; height: 350px; top: 100px; right: 0;}
 .iv_temp2 .homeNav { width: 77px; height: 77px; line-height: 77px;}
 
-.iv_temp3 .homeAd { width: 280px; height: 260px; margin: 10px; padding: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #FFF;}
+.iv_temp3 .homeAd { text-align: center; width: 280px; height: 260px; margin: 10px; padding: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #FFF;}
 .ad_box { font-size: 0; height: 196px; overflow: hidden; position: relative; width: 280px;}
 .ad_box ul { width: 840px; position: relative;}
 .ad_box li { /*amanda*/	float: left; width: 280px; height: 196px; position: relative}
@@ -230,7 +230,7 @@ box-shadow: 0 0 3px rgba(0,0,0,0.3);
 	overflow: hidden;
 }
 .ad_num li.curr { background: #F39801;}
-.addAdPic { margin: 10px 65px;}
+.addAdPic { margin: 10px 65px; display: inline-block}
 
 .category { margin: 15px 10px; background: #FFF; font-size: 0px;}
 .category li {
