@@ -70,6 +70,10 @@ function template3_Submit(site_id){
             return false;
         }
     });
+    if($(".tmp_280-196 input[name='ad_src[]']").length == 0){
+        tishi_alert("滑动图片区域不能为空");
+        return false;
+    }
 
     if(flag){
         var form = $(".iv_temp3").parent("form")
@@ -83,7 +87,7 @@ function template3_Submit(site_id){
             dataType: "text",
             data: dataValue,
             success:function(data){
-                tishi_alert("保存成功")
+                tishi_alert(data == "0" ? "保存成功" : "保存失败");
             },
             error:function(data){
             // alert("error");

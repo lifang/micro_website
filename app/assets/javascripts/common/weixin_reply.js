@@ -166,6 +166,8 @@ function appendNewKeyword(site_id){
     $(".keyword_list").append(keywordBlock);
     var li_length = $(".keyword_list").find("li").length;
     current_li = $(".keyword_list").find("li").last();
+    var win_height = $(document).height();
+    document.body.scrollTop = win_height; // 滚动条滑到底
     current_li.attr("class", "key_" + li_length);
     //添加文字按钮点击事件
     current_li.find(".add_text").bind("click", function(){
