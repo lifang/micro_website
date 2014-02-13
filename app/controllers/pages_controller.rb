@@ -193,6 +193,7 @@ class PagesController < ApplicationController
           @notice = 1 
         end
       end
+      render :text => @notice
     end
   end
 
@@ -302,16 +303,17 @@ class PagesController < ApplicationController
     img_src = params[:img_src]
     ad_srcs = params[:ad_src]
     page = @site.pages.main[0]
-    begin
-      Page.transaction do
+    Page.transaction do
+      begin
         content = initial_template3(img_links, img_src, ad_srcs)
         save_into_file(content, page, page.file_name) if content
         page.update_attribute(:page_html, params[:page][:content].strip)
         @site.update_attribute(:template, Constant::Template[:temp3])
+
+        render :text => "0"
+      rescue
+        render :text => "-1"
       end
-      render :text => "success"
-    rescue
-      render :text => "error"
     end
   end
 

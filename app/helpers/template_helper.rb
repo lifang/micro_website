@@ -36,7 +36,7 @@ module TemplateHelper
       else
         ad_num = ad_num + '<li>' + (index+1).to_s + '</li>'
       end
-    end
+    end if ad_srcs
 
     content = '<!doctype html>
 <html>
