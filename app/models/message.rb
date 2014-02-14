@@ -3,7 +3,7 @@ class Message < ActiveRecord::Base
   require 'net/http'
   require "uri"
   require 'openssl'
-  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types, :msg_id
+  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types, :msg_id, :message_type, :message_path
   #validates :msg_id, :uniqueness => true
   validates_uniqueness_of :msg_id, :allow_nil => true
   TYPES = {:phone => 0, :message => 1, :record => 2, :remind => 3} #0打电话，1信息，2记录，3提醒
