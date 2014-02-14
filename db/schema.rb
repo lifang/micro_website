@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140214061226) do
+ActiveRecord::Schema.define(:version => 20140211080424) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -61,10 +61,7 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.datetime "updated_at",      :null => false
     t.string   "open_id"
     t.string   "token"
-    t.boolean  "status"
   end
-
-  add_index "clients", ["status"], :name => "index_clients_on_status"
 
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
@@ -85,18 +82,6 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "labels", :force => true do |t|
-    t.integer  "site_id"
-    t.integer  "tag_id"
-    t.integer  "client_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "labels", ["client_id"], :name => "index_labels_on_client_id"
-  add_index "labels", ["site_id"], :name => "index_labels_on_site_id"
-  add_index "labels", ["tag_id"], :name => "index_labels_on_tag_id"
-
   create_table "messages", :force => true do |t|
     t.integer  "site_id"
     t.integer  "from_user"
@@ -104,11 +89,9 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.integer  "types"
     t.text     "content"
     t.boolean  "status"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "msg_id"
-    t.integer  "message_type", :default => 0
-    t.string   "message_path"
   end
 
   add_index "messages", ["msg_id"], :name => "by_msg_id", :unique => true
@@ -218,15 +201,13 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.string   "name"
     t.string   "root_path"
     t.string   "notes"
-    t.integer  "status",               :limit => 1
+    t.integer  "status",     :limit => 1
     t.integer  "user_id"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "cweb"
-    t.integer  "template",                          :default => 1
-    t.boolean  "exist_app",                         :default => false
-    t.datetime "not_receive_start_at"
-    t.datetime "not_receive_end_at"
+    t.integer  "template",                :default => 1
+    t.boolean  "exist_app",               :default => false
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
@@ -240,12 +221,6 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.string   "phone"
     t.string   "address"
     t.integer  "form_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "tags", :force => true do |t|
-    t.string   "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
