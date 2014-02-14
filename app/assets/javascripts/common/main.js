@@ -59,18 +59,30 @@ $(function() {
         }
     });
 
+    $(".reload_record").on("click",".close",function(){
+        $(".second_box").removeAttr("ishow");
+        $(this).parents(".second_box").hide();
+        $(".second_bg").hide();
+        $("#fault").hide();
+        $("#message_record").click();
+    })
     $(".second_box .close").click(function() {
         $(".second_box").removeAttr("ishow");
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
         $("#fault").hide();
     });
-    $(".abandon").click(function(){
+    $("body").on("click",".abandon",function(){
         $(".second_box").removeAttr("ishow");
         $(this).parents(".second_box").hide();
         $(".second_bg").hide();
         $("#fault").hide();
+        //        window.location.replace(location.href);
+        $("#message_record").click();
     })
+    //    $(".abandon").click(function(){
+    //
+    //        })
 
     $(".insertDiv").on("click", ".delete", function() {
         $(this).parent().remove();
@@ -175,7 +187,7 @@ $(function() {
     });
 	
     $("body").on("click",".scd_btn",function(){
-     //   $(".second_bg").show();
+        //   $(".second_bg").show();
         $(".second_box."+$(this).attr("name")).show();
         $(".second_box."+$(this).attr("name")).attr("ishow","show");
     });
@@ -218,18 +230,15 @@ $(function() {
     $(".insetBox").on("click",".optBox .close2",function(){
         $(this).parents(".optBox").remove();
     });
-	
-    $(".warnArea .time").click(function(){
+    $("body").on("click",".warnArea .time",function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
         txtArea.val(txtArea.val() + "[[时间]]");
-    });
-
-    $(".warnArea .space").click(function(){
+    })
+    $("body").on("click",".warnArea .space",function(){
         var txtArea = $(this).parents(".warnArea").find(".warnTxt textarea");
         txtArea.val(txtArea.val() + "[[填空]]");
-    });
-        
-    $(".radioSpan").click(function(){
+    })
+    $("body").on("click",".radioSpan",function(){
         $(this).parent().find("input[name='send_time']").click();
         $(this).parent().find("input[name='user_select']").click();
         $(this).parent().parent().find(".radioBox1").removeClass("check");
@@ -237,7 +246,7 @@ $(function() {
         $(this).parents(".labRight").find("input[type='text']").attr("disabled","disabled");
         $(this).parents(".labRight").find("input[type='text']").val("")
         $(this).parent().find("input[type='text']").removeAttr("disabled");
-    });
+    })
 })
 //显示创建站点
 function create_site(template) {
