@@ -55,6 +55,27 @@ function add_Chek_box(value){
 	html+="</div>";
 	$(".appInfo").append(html);
 	cancle_info_box(value);
+}//增加label框
+function add_Label_box(value){
+	var divarr = $($(value).parents(".second_content")[0]).find(".insetBox").find("div");
+	var radtext = $(divarr[0]).find("input").val();
+	if($.trim(radtext)==""){
+		tishi_alert("标签问题不能为空！");
+		return false;
+	}
+	var index = $("#info_inedx").val();index++;
+	$("#info_inedx").val(index);
+	var html= "<div class='itemBox '><span class='close' onclick=\'cancle_aitem(this)\'></span><div><span>"+radtext+"<input type='hidden' name='form["+index+"label][name]' value='"+radtext+"' /></span></div>";
+	for(var i=1;i<divarr.length;i++){
+		var val = $(divarr[i]).find("input").val();
+		if($.trim(val)!=""){
+			
+		html += "<div class='opt chk'><input type='checkbox' /><span>"+val+"<input type='hidden' name='form["+index+"label][value][]' value='"+val+"' /></span></div>";
+		}
+	}
+	html+="</div>";
+	$(".appInfo").append(html);
+	cancle_info_box(value);
 }
 //增加下拉框
 function add_text_box(value){
