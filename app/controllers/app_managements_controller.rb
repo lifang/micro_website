@@ -92,6 +92,7 @@ class AppManagementsController < ApplicationController
       end
     end
   end
+  
   def save_as_app_form content
     site_path = Rails.root.to_s + "/public/allsites/#{@site.root_path}"
     path = Rails.root.to_s + "/public/allsites/#{@site.root_path}/this_site_app.html"

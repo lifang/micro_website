@@ -1,3 +1,4 @@
+
 <div class="main_container">
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
@@ -34,7 +35,9 @@
         <%end%>
       </div>
     <%end%>
-
+<script>
+	$(".close").attr("onclick","cancle_aitem(this)");
+</script>
     <div class="formAct appForm">
       <button class="blue_btn scd_btn" name="addTxtItem">
 				增加信息栏
