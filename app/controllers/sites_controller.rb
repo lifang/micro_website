@@ -34,10 +34,9 @@ class SitesController < ApplicationController
               end
             end
             @site.update_attribute(:status, Site::STATUS_NAME[:new])
-
-            flash[:success]='创建成功'
+           @message='创建成功'
           else
-            flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
+           # flash[:error]="创建失败! #{@site.errors.messages.values.flatten.join("\\n")}"
           end
           format.js
         end
@@ -65,7 +64,7 @@ class SitesController < ApplicationController
            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN]) 
           end
         end
-        flash[:success]='更新成功'
+        @message='更新成功'
       end
       format.js
     end

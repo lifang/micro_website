@@ -1,7 +1,8 @@
-<%if !flash[:success]%>
+<%if !@message%>
 
-  tishi_alert("更新失败,站点名称存在！");
-  $('#fault').html('<%=flash[:error]%>');
+  tishi_alert('<%=@site.errors.messages.values.flatten.join("\\n")%>');
+  //$('#fault').html('<%=flash[:error]%>');
 <%else %>
+  tishi_alert('<%=@message%>');
   location.reload();
 <%end%>

@@ -2,7 +2,7 @@
 		<div class="main_cont1">
 			<% @sites.each do |s|%>
 			<div class="point_box">
-				<span class="close">关闭</span>
+				<span class="close" onclick="delete_site(<%=s.id%>)">关闭</span>
                                 <div class="point_temp<%=  (s.template.nil? ?  '1' :s.template ) %>"></div>
 				<div class="point_info">
 					<p>
@@ -24,6 +24,10 @@
 						公共账号token：<%= s.cweb%>
 					</p>
 					<p>
+						<%client = (site_client s.clients) if s.clients.length!=0 %>
+						app账户：<%= client.username unless client.nil? %>
+					</p>
+					<p>
 						备注：<%= s.notes%>
 					</p>
 				</div>
@@ -33,10 +37,10 @@
 					<% end %>
 				</div>
 
-				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>')"> 编辑 </a>
+				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>',<%=s.exist_app%>)"> 编辑 </a>
 			</div>
 			<%end%>
-
+			
 		</div>
   <div class="clear"></div>
     <div class="digg_pagination" style="width:100%;text-align: center;">
@@ -117,13 +121,24 @@
 
 			</li>
 			<li>
+				<%= f.label '是否配置app？'%><input type="radio" value='1' name='exist_app'/> 是  <input type="radio" name='exist_app' value='0' checked/> 否 
+			</li>
+			<li>
+				<%= f.label 'app账户'%>
+				<input type="text" id="username" name="username" value="<%=@client.nil? ? "" : @client.username%>" />&nbsp;<span id="must_fix" class="check">*</span>
+			</li>
+			<li>
+				<%= f.label 'app密码'%>
+				<input type="password" id="password" name="password" value="<%=@client.nil? ? "" : @client.password%>" />&nbsp;<span id="must_fix" class="check">*</span>
+			</li>
+			<li>
 				<%= f.label '备注：'%>
 				<%= f.text_field :notes%>
 
 			</li>
                         <input type="hidden" id="template" name="site[template]" value="" />
-			<div class="uinfo_act">
-				<%=f.submit '提交' ,class:"blue_btn" , id:'create_sub'%>
+			<div class="scdBox_act">
+				<%=f.button '提交' ,class:"blue_btn" ,type:"button", id:'create_sub'%>
 				<input id="create" class="blue_btn" type="button" value="取消"/>
 			</div>
 		</div>

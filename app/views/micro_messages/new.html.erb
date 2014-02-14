@@ -1,6 +1,8 @@
  <div class="main_container">
       <%= render '/shared/left_panel' %>
   <div class="main_cont">
+  	<h1><%= @site.name %>(<%= status_desc @site.status %>)</h1>
+    <hr class="cf"  color="#bcbcbc"/>
 		<div class="tabDiv used">
 			<div class="page_content"  >
 				<div class="twList">
