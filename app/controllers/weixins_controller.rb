@@ -37,10 +37,10 @@ class WeixinsController < ApplicationController
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         define_render(return_message, "key") #返回渲染方式 :  text/news
       elsif params[:xml][:MsgType] == "image" #用户发送图片
-        save_image_or_voice_from_wx("image")
+        save_image_or_voice_from_wx(cweb)
         render :text => "ok"
       elsif params[:xml][:MsgType] == "voice" #用户发送语音
-        save_image_or_voice_from_wx("voice")
+        save_image_or_voice_from_wx(cweb)
         render :text => "ok"
       else
         render :text => "ok"
@@ -57,14 +57,14 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        Message.transaction do
-          begin
+       # Message.transaction do
+          #begin
             m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
             if m.nil?
               mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
                 :types => Message::TYPES[:record], :content => params[:xml][:Content],
                 :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
-                :message_type => 1, :message_path => wx_resource_url)
+                :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
               if mess
                 #推送到IOS端
                 APNS.host = 'gateway.sandbox.push.apple.com'
@@ -85,9 +85,9 @@ class WeixinsController < ApplicationController
                 end
               end
             end
-          rescue
-          end
-        end
+         # rescue
+         # end
+        #end
       end
     end
   end
@@ -208,7 +208,7 @@ Text
     template_xml
   end
 
-  def save_image_or_voice_from_wx(flag)
+  def save_image_or_voice_from_wx(cweb)
     #file_extension = flag == "image"? ".jpg" : ".amr"
     access_token = get_access_token(cweb)
     p 222222222222222222222
