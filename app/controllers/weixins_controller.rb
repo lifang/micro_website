@@ -37,10 +37,10 @@ class WeixinsController < ApplicationController
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         define_render(return_message, "key") #返回渲染方式 :  text/news
       elsif params[:xml][:MsgType] == "image" #用户发送图片
-        save_image_or_voice_from_wx(cweb)
+        save_image_or_voice_from_wx(cweb, "image")
         render :text => "ok"
       elsif params[:xml][:MsgType] == "voice" #用户发送语音
-        save_image_or_voice_from_wx(cweb)
+        save_image_or_voice_from_wx(cweb, "voice")
         render :text => "ok"
       else
         render :text => "ok"
@@ -57,36 +57,36 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-       # Message.transaction do
-          #begin
-            m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
-            if m.nil?
-              mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
-                :types => Message::TYPES[:record], :content => params[:xml][:Content],
-                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
-                :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
-              if mess
-                #推送到IOS端
-                APNS.host = 'gateway.sandbox.push.apple.com'
-                APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
-                APNS.port = 2195
-                token = current_client.token
-                if token
-                  badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
-                      Client::HAS_NEW_MESSAGE[:YES]]).length
-                  content = "#{client.name}:#{mess.content}"
-                  APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
-                  recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
-                  if recent_client
-                    recent_client.update_attributes!(:content => mess.content)
-                  else
-                    RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
-                  end
-                end
+        # Message.transaction do
+        #begin
+        m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
+        if m.nil?
+          mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+            :types => Message::TYPES[:record], :content => params[:xml][:Content],
+            :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
+            :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
+          if mess
+            #推送到IOS端
+            APNS.host = 'gateway.sandbox.push.apple.com'
+            APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
+            APNS.port = 2195
+            token = current_client.token
+            if token
+              badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+                  Client::HAS_NEW_MESSAGE[:YES]]).length
+              content = "#{client.name}:#{mess.content}"
+              APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
+              recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
+              if recent_client
+                recent_client.update_attributes!(:content => mess.content)
+              else
+                RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
               end
             end
-         # rescue
-         # end
+          end
+        end
+        # rescue
+        # end
         #end
       end
     end
@@ -208,35 +208,44 @@ Text
     template_xml
   end
 
-  def save_image_or_voice_from_wx(cweb)
-    #file_extension = flag == "image"? ".jpg" : ".amr"
-    access_token = get_access_token(cweb)
-    p 222222222222222222222
-    p access_token
-    if access_token and access_token["access_token"]
-      media_id = params[:xml][:MediaId]
-      msg_id = params[:xml][:MsgId]
-      download_action = DOWNLOAD_RESOURCE_ACTION % [access_token["access_token"], media_id]
-      http = set_http(WEIXIN_DOWNLOAD_URL)
-      request= Net::HTTP::Get.new(download_action)
-      back_res = http.request(request)
+  def save_image_or_voice_from_wx(cweb, flag)
+    msg_id = params[:xml][:MsgId]
+    if @site
+      if flag == "image"
+        file_extension = ".jpg"
+        remote_resource_url = params[:xml][:PicUrl]
+        save_file(remote_resource_url, file_extension, msg_id)
+      else
+        access_token = get_access_token(cweb)
+        if access_token and access_token["access_token"]
+          media_id = params[:xml][:MediaId]
+          download_action = DOWNLOAD_RESOURCE_ACTION % [access_token["access_token"], media_id]
+          remote_resource_url = (WEIXIN_DOWNLOAD_URL + download_action)
+          file_extension = ".amr"
+          
+          http = set_http(WEIXIN_DOWNLOAD_URL)
+          request= Net::HTTP::Get.new(download_action)
+          back_res = http.request(request)
 
-      if back_res && !back_res[:errmsg].present?
-        if @site
-          tmp_file = open(WEIXIN_DOWNLOAD_URL + download_action)
-          filename = msg_id + File.extname(tmp_file.original_filename)
-          weixin_resource = Rails.root.to_s + SITE_PATH % site.root_path + "/weixin_resource/"
-          new_file_name = weixin_resource + filename
-          FileUtils.mkdir_p(weixin_resource) unless Dir.exists?(weixin_resource)
-          File.open(new_file_name, "wb")  {|f| f.write tmp_file.read }
-          p 444444444444
-          p File.exist?(new_file_name)
-          if File.exist?(new_file_name)
-            p 333333333333333
-            get_client_message(new_file_name)
+          if back_res && !back_res[:errmsg].present?
+            save_file(remote_resource_url, file_extension, msg_id)
           end
         end
       end
+    end
+  end
+
+  def save_file(remote_resource_url, file_extension, msg_id)
+    tmp_file = open(remote_resource_url) #打开直接下载链接
+    filename = msg_id + file_extension  #临时文件不能取到扩展名
+    weixin_resource = SITE_PATH % @site.root_path + "weixin_resource/"
+    wx_full_resource = Rails.root.to_s + weixin_resource
+    new_file_name = wx_full_resource + filename
+    FileUtils.mkdir_p(wx_full_resource) unless Dir.exists?(wx_full_resource)
+    File.open(new_file_name, "wb")  {|f| f.write tmp_file.read }
+    if File.exist?(new_file_name)
+      message_path = "/allsites/%s/" % @site.root_path + "weixin_resource/" + filename #保存进数据库的路径
+      get_client_message(message_path)
     end
   end
 
