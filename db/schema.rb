@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.boolean  "status"
   end
 
+  add_index "clients", ["status"], :name => "index_clients_on_status"
+
   create_table "form_datas", :force => true do |t|
     t.integer  "page_id"
     t.text     "data_hash"
@@ -90,6 +92,10 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "labels", ["client_id"], :name => "index_labels_on_client_id"
+  add_index "labels", ["site_id"], :name => "index_labels_on_site_id"
+  add_index "labels", ["tag_id"], :name => "index_labels_on_tag_id"
 
   create_table "messages", :force => true do |t|
     t.integer  "site_id"

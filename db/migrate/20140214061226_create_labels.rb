@@ -7,5 +7,8 @@ class CreateLabels < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :labels,:site_id
+    add_index :labels,:tag_id
+    add_index :labels,:client_id
   end
 end
