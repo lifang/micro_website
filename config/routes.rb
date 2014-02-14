@@ -133,7 +133,7 @@ MicroWebsite::Application.routes.draw do
     end
     resources :reminds do
       collection do
-        post :create_records
+        post :create_records,:message_record
       end
       member do
       end

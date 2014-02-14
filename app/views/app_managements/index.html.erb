@@ -34,7 +34,7 @@
         <%end%>
       </div>
     <%end%>
-    
+
     <div class="formAct appForm">
       <button class="blue_btn scd_btn" name="addTxtItem">
 				增加信息栏
@@ -191,117 +191,18 @@
   </div>
 </div>
 
-<div class="second_box newWarn">
-  <div class="second_content second_content2">
-    <span class="close">关闭</span>
-    <h1>提醒模板</h1>
-    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create},html:{onsubmit: "return check_remind_nonempty()"} do |f|%>
-      <div>
-        <div><label>名称：</label><input name="remind_name" type="text" value="<%=  @remind.nil? ? '' : @remind.title %>"/></div>
-        <div class="itemBox2">
-          <label>发送时间：</label>
-          <div class="labRight">
-
-            <% if @remind.nil? || @remind.days.nil? %>
-              <div class="radioBox1 check">
-                <input name="send_time" type="radio" value="0" checked/>
-                <span class="radioSpan"></span>
-                <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();"/>
-              </div>
-              <div class="radioBox1 ">
-                <input name="send_time" type="radio" value="1" />
-                <span class="radioSpan"></span>
-                <input type="text" name="dayfor_time" style="width: 171px;" disabled="disabled"/><span class="txtSpan">天后</span>
-              </div>
-            <% else %>
-              <div class="radioBox1">
-                <input name="send_time" type="radio" value="0" />
-                <span class="radioSpan"></span>
-                <input type="text" name="free_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.reseve_time %>"class="Wdate" readonly onclick="WdatePicker();" disabled="disabled"/>
-              </div>
-              <div class="radioBox1 check">
-                <input name="send_time" type="radio" value="1" checked/>
-                <span class="radioSpan"></span>
-                <input type="text" name="dayfor_time" style="width: 171px;" value="<%= @remind.nil? ? '' : @remind.days %>"/><span class="txtSpan">天后</span>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="itemBox2">
-          <label>发送范围：</label>
-          <div class="labRight">
-            <% if  @remind.nil? || !@remind.range %>
-              <div class="radioBox1 radioBox2 check">
-                <input type="radio" name="user_select" value="0" class="" checked="true" /><span class="radioSpan"></span>
-                <span class="txtSpan">所有人</span>
-              </div>
-              <div class="radioBox1 radioBox2">
-                <input type="radio" name="user_select" value="1"/><span class="radioSpan"></span>
-                <span class="txtSpan">当前用户</span>
-              </div>
-            <% else %>
-              <div class="radioBox1 radioBox2 ">
-                <input type="radio" name="user_select" value="0" class=""  /><span class="radioSpan"></span>
-                <span class="txtSpan">所有人</span>
-              </div>
-              <div class="radioBox1 radioBox2 check">
-                <input type="radio" name="user_select" value="1" checked="true"/><span class="radioSpan"></span>
-                <span class="txtSpan">当前用户</span>
-              </div>
-            <% end %>
-
-          </div>
-        </div>
-        <div class="itemBox2">
-          <label>内容：</label>
-          <div class="warnArea labRight">
-            <div class="warnTit">
-              <span class="time"></span>
-              <span class="cont thd_btn" name="addcont"></span>
-              <span class="space"></span>
-            </div>
-            <div class="warnTxt">
-              <textarea name="remind_content"><%= @remind.nil? ? '' : @remind.content %></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scdBox_act">
-        <input type="submit" class="blue_btn" value="保存"/>
-        <input type="button" class="blue_btn abandon" value="放弃"/>
-      </div>
-    <% end %>
-
-  </div>
+<div class="second_box newWarn reload_record">
+  <%= render "remaind" %>
 </div>
-<div class="second_box newRecord">
-  <div class="second_content second_content2">
-    <span class="close">关闭</span>
-    <h1>记录模板</h1>
-    <%= form_for :reminds , :url => {:controller => :reminds,:action => :create_records},html:{onsubmit: "return check_record_nonempty()"} do |f|%>
-      <div>
-        <div><label>名称：</label><input name="records_title" type="text" value="<%= @record.nil? ? '' : @record.title %>"/></div>
-        <div class="itemBox2">
-          <label>内容：</label>
-          <div class="warnArea labRight">
-            <div class="warnTit">
-              <span class="time"></span>
-              <span class="cont thd_btn" name="addcont"></span>
-              <span class="space"></span>
-            </div>
-            <div class="warnTxt">
-              <textarea name="records_content"><%= @record.nil? ? '' :  @record.content %></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="scdBox_act">
-        <input type="submit" class="blue_btn" value="保存"/>
-        <input type="button" class="blue_btn abandon" value="放弃"/>
-      </div>
-    <% end %>
-  </div>
+<div class="second_box newRecord reload_record">
+  <%= render "record" %>
 </div>
+<%= form_for :reminds,:url => {:action => :message_record,:controller => :reminds},:remote => true do |f| %>
+<div style="display:none">
+  <input type="text" value=""/>
+  <input type="submit" id="message_record"/>
+</div>
+<% end %>
 <div class="third_bg"></div>
 <div class="third_box second_box addcont">
   <div class="third_content second_content" style="width: 300px;">

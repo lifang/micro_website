@@ -1,0 +1,26 @@
+<div class="second_content second_content2">
+  <span class="close">关闭</span>
+  <h1>记录模板</h1>
+  <%= form_for :reminds , :url => {:controller => :reminds,:action => :create_records},html:{onsubmit: "return check_record_nonempty()"} do |f|%>
+    <div>
+      <div><label>名称：</label><input name="records_title" type="text" value="<%= @record.nil? ? '' : @record.title %>"/></div>
+      <div class="itemBox2">
+        <label>内容：</label>
+        <div class="warnArea labRight">
+          <div class="warnTit">
+            <span class="time"></span>
+            <span class="cont thd_btn" name="addcont"></span>
+            <span class="space"></span>
+          </div>
+          <div class="warnTxt">
+            <textarea name="records_content"><%= @record.nil? ? '' :  @record.content %></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scdBox_act">
+      <input type="submit" class="blue_btn" value="保存"/>
+      <input type="button" class="blue_btn abandon" value="放弃"/>
+    </div>
+  <% end %>
+</div>

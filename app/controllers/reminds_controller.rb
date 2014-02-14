@@ -39,4 +39,8 @@ class RemindsController < ApplicationController
     end
     redirect_to "/sites/#{site_id}/app_managements"
   end
+  def message_record
+    @record = Record.find_by_site_id(@site.id)
+    @remind = Remind.find_by_site_id(@site.id)
+  end
 end
