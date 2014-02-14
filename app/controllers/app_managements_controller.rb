@@ -20,6 +20,7 @@ class AppManagementsController < ApplicationController
     form = params[:form]
     if @chi
       if @chi.update_attribute(:hash_content,params[:html_content])
+        save_tags form
         content = html_content_app form
         save_as_app_form content
         flash[:success]="保存成功"
@@ -29,10 +30,25 @@ class AppManagementsController < ApplicationController
       end
     else
       ClientHtmlInfo.create(client_id:@client.id , hash_content:params[:html_content])
+      save_tags form
       redirect_to site_app_managements_path(@site)
     end
   end
-  
+  #保存标签
+  def save_tags form
+    form.each_with_index do |f,index|
+      if f[0][1..-1]=="label"
+        value =f[1][:value]
+        value.each do |v|
+          val=Tag.find_by_content(v)
+          if val.nil?
+            Tag.create(content:v)
+          end
+        end
+      end
+    end
+  end
+  #得到表单数据
   def get_form_date
     form = params[:form]
     form_hash ="{"
@@ -43,20 +59,39 @@ class AppManagementsController < ApplicationController
           value = f[1][:value].join(",")
         end
         form_hash +="'#{f[1][:name]}'=>'#{value}',"
+        
       end
     end
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
     if @client
       @client.update_attributes(name:params[:username] , mobiephone:params[:phone],site_id:params[:site_id] , html_content:form_hash )
+      save_labels @client,params[:site_id] ,form
       render text:2      
     else
-      Client.create(name:params[:username], mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id],
+      client = Client.create(name:params[:username], mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id],
         has_new_record:false, has_new_message:false)
+        save_labels client,params[:site_id],form
       render text:1
     end
   end
-  
+  #将用户有的信息存入labels里面
+  def save_labels client,site_id,form
+    
+    Label.where("client_id = ? and site_id= ?" , client.id , site_id).destroy_all
+    form.each_with_index do |f,index|
+      if f[0][1..-1]=="label"
+        value =f[1][:value]
+        value.each do |v|
+          tag =Tag.find_by_content(v)
+          label = Label.where("client_id = ? and site_id= ? and tag_id=?" , client.id , site_id , tag.id)[0]
+          if label.nil?
+            Label.create(site_id:site_id,client_id:client.id,tag_id:tag.id)
+          end
+        end
+      end
+    end
+  end
   def save_as_app_form content
     site_path = Rails.root.to_s + "/public/allsites/#{@site.root_path}"
     path = Rails.root.to_s + "/public/allsites/#{@site.root_path}/this_site_app.html"
@@ -93,6 +128,14 @@ class AppManagementsController < ApplicationController
         end
         li += "<li><label>#{element[1][:name]}<input name='form[c#{index}][name]' type='hidden' value='#{element[1][:name]}' /></label></li>#{checkbox}
         "
+      elsif ele.eql?("label")
+        checkbox=""
+        element[1][:value].each do |value|
+          checkbox +="<li><input name='form[#{index}label][value][]' type='checkbox' value='#{value}' /><p>#{value}</p></li>
+          "
+        end
+        li += "<li><label>#{element[1][:name]}<input name='form[#{index}label][name]' type='hidden' value='#{element[1][:name]}' /></label></li>#{checkbox}
+        "
       elsif ele.eql?("select")  
         select =""
         element[1][:value].each do |value|
@@ -122,7 +165,7 @@ class AppManagementsController < ApplicationController
   <article>
         <section class='form_list'>
         <form action='/sites/#{@site.id}/app_managements/get_form_date' data-remote='true' data-type='script' method='post'>
-          <div style='margin:0;padding:0;display:inline''>
+          <div style='margin:0;padding:0;display:inline'>
           <input name='utf8' type='hidden' value='&#x2713;' />
           <input class='authenticity_token' name='authenticity_token' type='hidden' value='' /></div>
           <ul>

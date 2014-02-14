@@ -65,11 +65,14 @@ $(function(){
     $(".addItem").on("click",".addOptBox",function(){
         var item = $(this).parents(".addItem");
         if($(item).hasClass("addRdoItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>单选框选项：</label><input type="text" /><span class="close2"></span></div>');
+            $(item).find(".insetBox").append('<div class="optBox"><label>单选框选项： &nbsp;</label><input type="text" /><span class="close2"></span></div>');
         }else if($(item).hasClass("addChekItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>复选框选项：</label><input type="text" /><span class="close2"></span></div>');
+            $(item).find(".insetBox").append('<div class="optBox"><label>复选框选项： &nbsp;</label><input type="text" /><span class="close2"></span></div>');
         }else if($(item).hasClass("addSelItem")){
-            $(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项：</label><input type="text" /><span class="close2"></span></div>');
+            $(item).find(".insetBox").append('<div class="optBox"><label>下拉框选项： &nbsp;</label><input type="text" /><span class="close2"></span></div>');
+        }
+        else if($(item).hasClass("addLabelItem")){
+            $(item).find(".insetBox").append('<div class="optBox"><label>标签框选项：&nbsp;</label><input type="text" /><span class="close2"></span></div>');
         }
     });
 
