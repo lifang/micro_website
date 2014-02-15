@@ -57,37 +57,38 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        # Message.transaction do
-        #begin
-        m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
-        if m.nil?
-          mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
-            :types => Message::TYPES[:record], :content => params[:xml][:Content],
-            :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
-            :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
-          if mess
-            #推送到IOS端
-            APNS.host = 'gateway.sandbox.push.apple.com'
-            APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
-            APNS.port = 2195
-            token = current_client.token
-            if token
-              badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
-                  Client::HAS_NEW_MESSAGE[:YES]]).length
-              content = "#{client.name}:#{mess.content}"
-              APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
-              recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
-              if recent_client
-                recent_client.update_attributes!(:content => mess.content)
-              else
-                RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
+        Message.transaction do
+          begin
+            m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
+            if m.nil?
+              mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+                :types => Message::TYPES[:record], :content => params[:xml][:Content],
+                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
+                :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
+              if mess
+                #推送到IOS端
+                APNS.host = 'gateway.sandbox.push.apple.com'
+                APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
+                APNS.port = 2195
+                token = current_client.token
+                if token
+                  badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+                      Client::HAS_NEW_MESSAGE[:YES]]).length
+                  content = "#{client.name}:#{mess.content}"
+                  APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
+                  recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
+                  if recent_client
+                    recent_client.update_attributes!(:content => mess.content)
+                  else
+                    RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
+                  end
+                end
               end
             end
+          rescue
+            
           end
         end
-        # rescue
-        # end
-        #end
       end
     end
   end
@@ -210,10 +211,13 @@ Text
 
   def save_image_or_voice_from_wx(cweb, flag)
     msg_id = params[:xml][:MsgId]
-    if @site
+    open_id = params[:xml][:FromUserName]
+    client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
+    if client && @site
       if flag == "image"
         file_extension = ".jpg"
         remote_resource_url = params[:xml][:PicUrl]
+
         save_file(remote_resource_url, file_extension, msg_id)
       else
         access_token = get_access_token(cweb)
