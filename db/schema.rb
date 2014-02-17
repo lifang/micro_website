@@ -228,10 +228,7 @@ ActiveRecord::Schema.define(:version => 20140214061226) do
     t.boolean  "exist_app",                         :default => false
     t.datetime "not_receive_start_at"
     t.datetime "not_receive_end_at"
-<<<<<<< HEAD
     t.boolean  "receive_status",                    :default => false
-=======
->>>>>>> 5b6ae2973a2a6383033969d04799fcf6bf98b300
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
