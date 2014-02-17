@@ -3,12 +3,13 @@ class Message < ActiveRecord::Base
   require 'net/http'
   require "uri"
   require 'openssl'
-  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types, :msg_id
+  attr_accessible :content, :from_user, :site_id, :status, :to_user, :types, :msg_id, :message_type, :message_path
   #validates :msg_id, :uniqueness => true
   validates_uniqueness_of :msg_id, :allow_nil => true
   TYPES = {:phone => 0, :message => 1, :record => 2, :remind => 3} #0打电话，1信息，2记录，3提醒
   S_TYPES = {0 => "打电话", 1 => "短信", 2 => "记录", 3 => "提醒"}
-  STATUS = {:READ => 0, :UNREAD => 1} #该信息0未读/未发，1已读/已发
+  STATUS = {:READ => 1, :UNREAD => 0} #该信息0未读/未发，1已读/已发
+  MSG_TYPE = {:text => 0, :image => 1, :voice => 2} #用户发来的消息类型  文字，图片，语音
 
   #发短信url
   MESSAGE_URL = "http://mt.yeion.com"
@@ -78,4 +79,5 @@ class Message < ActiveRecord::Base
       end
     end
   end
+
 end

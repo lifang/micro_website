@@ -4,26 +4,44 @@ class WeixinsController < ApplicationController
   require 'net/http'
   require "uri"
   require 'openssl'
+  require "open-uri"
+  require "tempfile"
   skip_before_filter :authenticate_user!
   before_filter :get_site_by_token
+
+  WEIXIN_DOWNLOAD_URL = "http://file.api.weixin.qq.com"
+  DOWNLOAD_RESOURCE_ACTION = "/cgi-bin/media/get?access_token=%s&media_id=%s"
+
   def get_site_by_token
-    @site = Site.find_by_cweb(params[:cweb])
+    cweb = params[:cweb]
+    if cweb == "wansu" || cweb == "xyyd"
+      @site = Site.find_by_cweb("xyyd")
+    else
+      @site = Site.find_by_cweb(cweb)
+    end
+    @site
   end
   #用于处理相应服务号的请求以及一开始配置服务器时候的验证，post 或者 get
   def accept_token
     signature, timestamp, nonce, echostr, cweb = params[:signature], params[:timestamp], params[:nonce], params[:echostr], params[:cweb]
     tmp_encrypted_str = get_signature(cweb, timestamp, nonce)
     if request.request_method == "POST" && tmp_encrypted_str == signature
-      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注后收到的回复      
+      if params[:xml][:MsgType] == "event" && params[:xml][:Event] == "subscribe"   #用户关注事件
         return_message = get_return_message(cweb, "auto")  #获得关注后回复消息的内容
         define_render(return_message, "auto") #返回渲染方式 :  text/news
         create_menu(cweb)  #创建自定义菜单
-      elsif params[:xml][:MsgType] == "text"   #用户主动发消息后收到的回复
+      elsif params[:xml][:MsgType] == "text"   #用户发送文字消息
         content = params[:xml][:Content]
         #存储消息并推送到ios端
         get_client_message
         return_message = get_return_message(cweb, "keyword", content)  #获得关键词回复消息
         define_render(return_message, "key") #返回渲染方式 :  text/news
+      elsif params[:xml][:MsgType] == "image" #用户发送图片
+        save_image_or_voice_from_wx(cweb, "image")
+        render :text => "ok"
+      elsif params[:xml][:MsgType] == "voice" #用户发送语音
+        save_image_or_voice_from_wx(cweb, "voice")
+        render :text => "ok"
       else
         render :text => "ok"
       end
@@ -33,11 +51,11 @@ class WeixinsController < ApplicationController
 
   end
   #接手用户的任何信息
-  def get_client_message    
+  def get_client_message(wx_resource_url=nil)
     open_id = params[:xml][:FromUserName]
     if @site
       current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
-      client = Client.find_by_open_id(open_id)
+      client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
         Message.transaction do
           begin
@@ -45,7 +63,8 @@ class WeixinsController < ApplicationController
             if m.nil?
               mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
                 :types => Message::TYPES[:record], :content => params[:xml][:Content],
-                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId])
+                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
+                :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
               if mess
                 #推送到IOS端
                 APNS.host = 'gateway.sandbox.push.apple.com'
@@ -67,6 +86,7 @@ class WeixinsController < ApplicationController
               end
             end
           rescue
+            
           end
         end
       end
@@ -130,15 +150,13 @@ class WeixinsController < ApplicationController
     menu_bar
   end
 
-  def get_valid_award(cweb)
+  def get_site(cweb)
     if cweb == "wansu" || cweb == "xyyd"
       site = Site.find_by_cweb("xyyd")
     else
       site = Site.find_by_cweb(cweb)
     end
-    current_time = Time.now.strftime("%Y-%m-%d")
-    award = site.awards.where("begin_date <= ? and end_date >= ?", current_time, current_time).first if site
-    return award ? MW_URL + "/sites/static?path_name=/#{site.root_path}/ggl.html" : false
+    site
   end
 
   def define_render(return_message, flag)
@@ -189,6 +207,50 @@ Text
 </xml>
 Text
     template_xml
+  end
+
+  def save_image_or_voice_from_wx(cweb, flag)
+    msg_id = params[:xml][:MsgId]
+    open_id = params[:xml][:FromUserName]
+    client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
+    if client && @site
+      if flag == "image"
+        file_extension = ".jpg"
+        remote_resource_url = params[:xml][:PicUrl]
+
+        save_file(remote_resource_url, file_extension, msg_id)
+      else
+        access_token = get_access_token(cweb)
+        if access_token and access_token["access_token"]
+          media_id = params[:xml][:MediaId]
+          download_action = DOWNLOAD_RESOURCE_ACTION % [access_token["access_token"], media_id]
+          remote_resource_url = (WEIXIN_DOWNLOAD_URL + download_action)
+          file_extension = ".amr"
+          
+          http = set_http(WEIXIN_DOWNLOAD_URL)
+          request= Net::HTTP::Get.new(download_action)
+          back_res = http.request(request)
+
+          if back_res && !back_res[:errmsg].present?
+            save_file(remote_resource_url, file_extension, msg_id)
+          end
+        end
+      end
+    end
+  end
+
+  def save_file(remote_resource_url, file_extension, msg_id)
+    tmp_file = open(remote_resource_url) #打开直接下载链接
+    filename = msg_id + file_extension  #临时文件不能取到扩展名
+    weixin_resource = SITE_PATH % @site.root_path + "weixin_resource/"
+    wx_full_resource = Rails.root.to_s + weixin_resource
+    new_file_name = wx_full_resource + filename
+    FileUtils.mkdir_p(wx_full_resource) unless Dir.exists?(wx_full_resource)
+    File.open(new_file_name, "wb")  {|f| f.write tmp_file.read }
+    if File.exist?(new_file_name)
+      message_path = "/allsites/%s/" % @site.root_path + "weixin_resource/" + filename #保存进数据库的路径
+      get_client_message(message_path)
+    end
   end
 
 end

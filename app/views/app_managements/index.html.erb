@@ -1,3 +1,4 @@
+
 <div class="main_container">
   <%= render '/shared/left_panel' %>
   <div class="main_cont">
@@ -34,7 +35,9 @@
         <%end%>
       </div>
     <%end%>
-
+<script>
+	$(".close").attr("onclick","cancle_aitem(this)");
+</script>
     <div class="formAct appForm">
       <button class="blue_btn scd_btn" name="addTxtItem">
 				增加信息栏
@@ -185,7 +188,7 @@
       <button class="blue_btn addOptBox" >
 				增加选项
       </button>
-      <button class="blue_btn addItemSub" onclick="add_Chek_box(this)">
+      <button class="blue_btn addItemSub" onclick="add_Label_box(this)">
 				确认
       </button>
       <button class="blue_btn" onclick="cancle_info_box(this)">
