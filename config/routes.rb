@@ -48,6 +48,7 @@ MicroWebsite::Application.routes.draw do
     resources :messages do
       collection do
         post :make_record, :edit_record
+        get :send_message_to_user
       end
     end
   end
