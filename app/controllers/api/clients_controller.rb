@@ -20,7 +20,7 @@ class Api::ClientsController < ApplicationController
         user.update_attribute("token", token) if token && token.strip != ""
         msg = "登陆成功"
         person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
-            c.html_content from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
+            c.html_content, c.remark from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
         recent_list = RecentlyClients.find_by_sql(["select rc.client_id person_id, rc.content, date_format(rc.updated_at, '%Y-%m-%d %H:%i') date
             from recently_clients rc where rc.site_id=?", user.site_id]).uniq
         rl = recent_list.inject([]){|a, r|
