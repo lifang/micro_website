@@ -111,11 +111,11 @@ class Api::MessagesController < ApplicationController
     #params[:site_id], params[:msg_type], params[:content], params[:client_id],站点名称，发送消息的类型(text,image,voice)，发送的内容(类型是text时)， 接收信息的open_id
     status, message = [0, ""]
     site_id, msg_type, content, receive_client_id = params[:site_id], params[:msg_type], params[:content], params[:client_id]
-    current_client =  Client.where("site_id=#{site_id} and types = #{Client::TYPES[:ADMIN]}")[0]  #后台登陆人员
-    receive_client = Client.find_by_id_and_status(receive_client_id, Client::STATUS[:valid])  #查询有效用户
+    current_client =  Client.where("site_id=#{site_id} and types = #{Client::TYPES[:ADMIN]}")[0] if site_id  #后台登陆人员
+    receive_client = Client.find_by_id_and_status(receive_client_id, Client::STATUS[:valid]) if receive_client_id   #查询有效用户
     open_id = receive_client.open_id if receive_client
     unless msg_type == "text"
-      msg_type_value = Message::MSG_TYPE[msg_type.to_sym]
+      msg_type_value = Message::MSG_TYPE[msg_type.to_sym] if msg_type
       content = msg_type_value == 1 ? "图片" : "语音"
     end
     content_hash = get_content_hash_by_type(open_id, msg_type, content)
@@ -129,9 +129,9 @@ class Api::MessagesController < ApplicationController
           send_message_action = "/cgi-bin/message/custom/send?access_token=#{access_token["access_token"]}"
           response = create_post_http(WEIXIN_OPEN_URL ,send_message_action, content_hash)
           if response
-            if response[:errcode] == 0
+            if response["errcode"] == 0
               message = "发送成功"
-              msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
+              #msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
               mess = Message.create!(:site_id => site_id, :from_user => current_client.id ,:to_user => receive_client.id ,
                 :types => Message::TYPES[:weixin], :content => content,
                 :status => Message::STATUS[:UNREAD], :msg_id => nil,
@@ -141,7 +141,7 @@ class Api::MessagesController < ApplicationController
                 message += "，保存失败"
               end
              
-            elsif response[:errcode] == 45015
+            elsif response["errcode"] == 45015
               status = 6
               message = "此用户超过48小时未与您互动，发送消息失败"
             else
