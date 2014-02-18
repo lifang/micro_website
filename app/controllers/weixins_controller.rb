@@ -50,43 +50,52 @@ class WeixinsController < ApplicationController
     end
 
   end
-  #接手用户的任何信息
+  #接收用户的任何信息
   def get_client_message(wx_resource_url=nil)
     open_id = params[:xml][:FromUserName]
     if @site
-      current_client =  Client.where("site_id=#{@site.id} and types = 0")[0]  #后台登陆人员
+      current_client =  Client.where("site_id=#{@site.id} and types = #{Client::TYPES[:ADMIN]}")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        Message.transaction do
-          begin
-            m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
-            if m.nil?
-              mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
-                :types => Message::TYPES[:record], :content => params[:xml][:Content],
-                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
-                :message_type => Message::MSG_TYPE[params[:xml][:MsgType].to_sym], :message_path => wx_resource_url)
-              if mess
-                #推送到IOS端
-                APNS.host = 'gateway.sandbox.push.apple.com'
-                APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
-                APNS.port = 2195
-                token = current_client.token
-                if token
-                  badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
-                      Client::HAS_NEW_MESSAGE[:YES]]).length
-                  content = "#{client.name}:#{mess.content}"
-                  APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
-                  recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
-                  if recent_client
-                    recent_client.update_attributes!(:content => mess.content)
-                  else
-                    RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
+        time_now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+
+        if (!@site.receive_status || !(@site.receive_status && time_now >= @site.not_receive_start_at.to_s && time_now <= @site.not_receive_end_at.to_s))
+          Message.transaction do
+            begin
+              m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
+              if m.nil?
+                msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
+                content = params[:xml][:Content]
+                unless params[:xml][:Content].present?
+                  content = msg_type_value == 1 ? "图片" : "语音"
+                end
+                mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+                  :types => Message::TYPES[:weixin], :content => content,
+                  :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
+                  :message_type => msg_type_value, :message_path => wx_resource_url)
+                if mess
+                  #推送到IOS端
+                  APNS.host = 'gateway.sandbox.push.apple.com'
+                  APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
+                  APNS.port = 2195
+                  token = current_client.token
+                  if token
+                    badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+                        Client::HAS_NEW_MESSAGE[:YES]]).length
+                    content = "#{client.name}:#{mess.content}"
+                    APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
+                    recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
+                    if recent_client
+                      recent_client.update_attributes!(:content => mess.content)
+                    else
+                      RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
+                    end
                   end
                 end
               end
-            end
-          rescue
+            rescue
             
+            end
           end
         end
       end

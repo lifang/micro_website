@@ -153,4 +153,39 @@ class ApplicationController < ActionController::Base
   def return_site_images(site)
     @imgs_pathes = site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
   end
+
+  #公众号发消息给用户的模板
+  def get_content_hash_by_type(open_id, msg_type, content, media_id=nil)
+    content_hash = {}
+    case msg_type
+    when "text"
+      content_hash = {
+        :touser =>"#{open_id}",
+        :msgtype => msg_type,
+        :text =>
+          {
+          :content => content
+        }
+      }
+    when "image"
+      content_hash = {
+        :touser =>"#{open_id}",
+        :msgtype => msg_type,
+        :image =>
+          {
+          :media_id => media_id
+        }
+      }
+    when "voice"
+      content_hash = {
+        :touser =>"#{open_id}",
+        :msgtype => msg_type,
+        :voice =>
+          {
+          :media_id => media_id
+        }
+      }
+    end
+    content_hash
+  end
 end
