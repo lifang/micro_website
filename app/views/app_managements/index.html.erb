@@ -15,7 +15,7 @@
     <%=form_for(:app_management ,url: create_client_info_model_site_app_managements_path(@site)) do |f|%>
       <div class="appInfo">
         <% if @chi.nil? || @chi.hash_content=="" || @chi.hash_content.nil? %>
-          <input type='hidden' id="info_inedx" value="2"/>
+          <input type='hidden' id="info_inedx" value="3"/>
           <input type='hidden' id="html_content" name="html_content" value=""/>
           <div class="itemBox">
             <label>姓名：
@@ -28,6 +28,12 @@
               <input type="hidden" name="form[2text][name]" value="手机号码" />
             </label>
             <input type="text"  name="mobiephone"  />
+          </div>
+          <div class="itemBox">
+            <label>备注：
+              <input type="hidden" name="form[3text][name]" value="备注" />
+            </label>
+            <input type="text"  name="remark"  />
           </div>
           <hr class="topLine cf" />
         <%else%>

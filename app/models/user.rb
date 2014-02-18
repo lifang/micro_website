@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_create :is_user_exist 
   STATUS = {-1 => "删除", 0 => "禁用", 1 => "启用"}
   STATUS_NAME = {:del => -1 , :forbidden => 0, :normal => 1}
-  TYPES = {:admin => 1, :mormal => 0}
+  TYPES = {:admin => 1, :normal => 0}
   has_many :sites ,dependent: :destroy
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
