@@ -53,7 +53,7 @@ class AppManagementsController < ApplicationController
     form = params[:form]
     form_hash ="{"
     form.each_with_index do |f,index|
-      if index>1
+      if index>2
         value =f[1][:value]
         if f[1][:value].class.eql?(Array)
           value = f[1][:value].join(",")
@@ -65,7 +65,7 @@ class AppManagementsController < ApplicationController
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
     if @client
-      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],site_id:params[:site_id] , html_content:form_hash )
+      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],remark:params[:remark],site_id:params[:site_id] , html_content:form_hash )
       save_labels @client,params[:site_id] ,form
       render text:2      
     else
@@ -189,6 +189,7 @@ class AppManagementsController < ApplicationController
           alert('请输入电话');
           return false;
         }
+        remark = $.trim($(input[2]).val());
         var href = window.location.href;
         var arr = href.split('?open_id=');
         var open_id = arr[1];
@@ -198,7 +199,7 @@ class AppManagementsController < ApplicationController
     type : 'post',
     url : '/sites/#{@site.id}/app_managements/get_form_date',
     dataType : 'text',
-    data :'form = ' + str+'&username='+name+'&phone='+phone+'&open_id='+open_id,
+    data :'form = ' + str+'&username='+name+'&phone='+phone+'&remark='+remark+'&open_id='+open_id,
     success : function(data) {
       if(data==1)
         window.location.replace('/submit_redirect');
