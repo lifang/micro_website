@@ -59,7 +59,6 @@ class WeixinsController < ApplicationController
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
         time_now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
 
-        if (!@site.receive_status || !(@site.receive_status && time_now >= @site.not_receive_start_at.to_s && time_now <= @site.not_receive_end_at.to_s))
           Message.transaction do
             begin
               m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
@@ -73,7 +72,7 @@ class WeixinsController < ApplicationController
                   :types => Message::TYPES[:weixin], :content => content,
                   :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
                   :message_type => msg_type_value, :message_path => wx_resource_url)
-                if mess
+                if mess && (!@site.receive_status || !(@site.receive_status && time_now >= @site.not_receive_start_at.to_s && time_now <= @site.not_receive_end_at.to_s))
                   #推送到IOS端
                   APNS.host = 'gateway.sandbox.push.apple.com'
                   APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
@@ -97,7 +96,7 @@ class WeixinsController < ApplicationController
             
             end
           end
-        end
+        
       end
     end
   end
@@ -261,5 +260,5 @@ Text
       get_client_message(message_path)
     end
   end
-
+  
 end
