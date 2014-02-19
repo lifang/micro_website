@@ -64,13 +64,18 @@ class AppManagementsController < ApplicationController
     end
     form_hash = form_hash[0...-1]+"}"
     @client = Client.find_by_open_id(params[:open_id])
+    open_id = params[:open_id]
+    @site = Site.find_by_id(params[:site_id].to_i)
+    cweb = @site.cweb if @site
     if @client
-      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],remark:params[:remark],site_id:params[:site_id] , html_content:form_hash )
+      user_head_image_url = get_user_basic_info(open_id, cweb) if cweb.present? && open_id.present?
+      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],remark:params[:remark],site_id:params[:site_id] , html_content:form_hash, head_image_url:user_head_image_url )
       save_labels @client,params[:site_id] ,form
       render text:2      
     else
-      client = Client.create(name:params[:username], mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:params[:open_id],
-        has_new_record:false, has_new_message:false)
+      user_head_image_url = get_user_basic_info(open_id, cweb) if cweb.present? && open_id.present?
+      client = Client.create(name:params[:username], mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:open_id,
+        has_new_record:false, has_new_message:false, head_image_url:user_head_image_url)
         save_labels client,params[:site_id],form
       render text:1
     end

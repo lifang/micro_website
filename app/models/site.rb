@@ -15,7 +15,7 @@ class Site < ActiveRecord::Base
   has_many :resources ,dependent: :destroy
   has_many :pages ,dependent: :destroy
   belongs_to :user
-  attr_accessible :name, :root_path, :notes, :user_id,:cweb, :template ,:exist_app
+  attr_accessible :name, :root_path, :notes, :user_id,:cweb, :template ,:exist_app, :receive_status, :not_receive_start_at, :not_receive_end_at
   validates :name ,presence:true,uniqueness: { case_sensitive: false, :message => "名称已存在" }
   validates :root_path ,
    presence:true,

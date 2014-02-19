@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include PagesHelper
   include AppManagementsHelper
+
+  require "fileutils"
+  require 'net/http'
+  require "uri"
+  require 'openssl'
+  
   SITE_PATH = "/public/allsites/%s/"
   PUBLIC_PATH =  Rails.root.to_s + "/public/allsites"
 
@@ -15,11 +21,12 @@ class ApplicationController < ActionController::Base
   APP_ID_AND_SECRET = {:wansu => {:app_id => "wxcbc2e8fb02023e4f", :app_secret => "1243a493f356a0c9ffcc2b7633a78b61"},
     :senvern => {:app_id => "wx4179ca59f560599b", :app_secret => "e5080f5963ead815439875eb0fdc66d7"}
   }
-  
-  require "fileutils"
-  require 'net/http'
-  require "uri"
-  require 'openssl'
+
+  WEIXIN_DOWNLOAD_URL = "http://file.api.weixin.qq.com"
+  DOWNLOAD_RESOURCE_ACTION = "/cgi-bin/media/get?access_token=%s&media_id=%s"
+  GET_USER_INFO_ACTION = "/cgi-bin/user/info?access_token=%s&open_id=%s&lang=zh_CN"
+  ACCESS_TOKEN_ACTION = "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
+
 
   def get_site
     @site = Site.find_by_id params[:site_id]
@@ -77,7 +84,7 @@ class ApplicationController < ActionController::Base
   def get_access_token(cweb)
     app_id = get_app_id(cweb)
     app_secret = get_app_secret(cweb)
-    token_action = "/cgi-bin/token?grant_type=client_credential&appid=#{app_id}&secret=#{app_secret}"
+    token_action = ACCESS_TOKEN_ACTION % [app_id, app_secret]
     token_info = create_get_http(WEIXIN_OPEN_URL ,token_action)
     return token_info
   end
@@ -186,6 +193,22 @@ class ApplicationController < ActionController::Base
         }
       }
     end
+    content_hash = content_hash.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")}
     content_hash
+  end
+
+
+  #根据open_id和token，保存用户的头像信息
+  def get_user_basic_info(open_id, cweb)
+     access_token = get_access_token(cweb)
+     user_head_image_url = nil
+     if access_token and access_token["access_token"]
+       action = GET_USER_INFO_ACTION % [access_token["access_token"], open_id]
+       user_info = create_get_http(WEIXIN_OPEN_URL ,action)
+       if user_info && user_info["subscribe"]==1
+         user_head_image_url = user_info["headimgurl"]
+       end
+     end
+     user_head_image_url
   end
 end
