@@ -69,13 +69,13 @@ class AppManagementsController < ApplicationController
     cweb = @site.cweb if @site
     if @client
       user_head_image_url = get_user_basic_info(open_id, cweb) if cweb.present? && open_id.present?
-      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],remark:params[:remark],site_id:params[:site_id] , html_content:form_hash, head_image_url:user_head_image_url )
+      @client.update_attributes(name:params[:username] , mobiephone:params[:phone],remark:params[:remark],site_id:params[:site_id] , html_content:form_hash, head_image_url: user_head_image_url )
       save_labels @client,params[:site_id] ,form
       render text:2      
     else
       user_head_image_url = get_user_basic_info(open_id, cweb) if cweb.present? && open_id.present?
       client = Client.create(name:params[:username], mobiephone:params[:phone] ,site_id:params[:site_id], html_content:form_hash ,types:Client::TYPES[:CONCERNED],open_id:open_id,
-        has_new_record:false, has_new_message:false, head_image_url:user_head_image_url)
+        has_new_record:false, has_new_message:false, head_image_url: user_head_image_url)
         save_labels client,params[:site_id],form
       render text:1
     end

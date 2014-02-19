@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   WEIXIN_DOWNLOAD_URL = "http://file.api.weixin.qq.com"
   DOWNLOAD_RESOURCE_ACTION = "/cgi-bin/media/get?access_token=%s&media_id=%s"
-  GET_USER_INFO_ACTION = "/cgi-bin/user/info?access_token=%s&open_id=%s&lang=zh_CN"
+  GET_USER_INFO_ACTION = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"
   ACCESS_TOKEN_ACTION = "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
 
 
@@ -197,14 +197,13 @@ class ApplicationController < ActionController::Base
     content_hash
   end
 
-
   #根据open_id和token，保存用户的头像信息
   def get_user_basic_info(open_id, cweb)
      access_token = get_access_token(cweb)
      user_head_image_url = nil
      if access_token and access_token["access_token"]
        action = GET_USER_INFO_ACTION % [access_token["access_token"], open_id]
-       user_info = create_get_http(WEIXIN_OPEN_URL ,action)
+       user_info = create_get_http(WEIXIN_OPEN_URL, action)
        if user_info && user_info["subscribe"]==1
          user_head_image_url = user_info["headimgurl"]
        end
