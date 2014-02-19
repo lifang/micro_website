@@ -8,7 +8,7 @@ class Api::ClientsController < ApplicationController
     token = params[:token]
     status = 1
     msg = ""
-    user = Client.find_by_mobiephone_and_types(mphone, Client::TYPES[:ADMIN])
+    user = Client.find_by_username_and_types(mphone, Client::TYPES[:ADMIN])
     if user.nil?
       status = 0
       msg = "用户名或密码错误!"
@@ -66,7 +66,7 @@ class Api::ClientsController < ApplicationController
       person_id = params[:person_id].to_i
       arr = [user_id, person_id]
       messages = Message.paginate_by_sql(["select m.id, m.from_user, m.to_user, m.types, m.content, m.status,
-      date_format(m.created_at,'%Y-%m-%d %H:%i') date from messages m
+      date_format(m.created_at,'%Y-%m-%d %H:%i') date, m.message_type, m.message_path from messages m
       where m.site_id=? and m.from_user in (?) and m.to_user in (?) order by m.created_at desc",
           site_id, arr, arr], :per_page => 10, :page => page)
       if messages.blank? || messages.length < 10
