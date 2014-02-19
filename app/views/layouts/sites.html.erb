@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><%= @title || "申邑•微网站" %></title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <script type="text/javascript" src="/assets/My97DatePicker/WdatePicker.js" ></script>
+    <!--[if lte IE 6]>
+      <script src="/assets/DD_belatedPNG_0.0.8a-min.js" type="text/javascript"></script>
+    <![endif]-->
     <%= csrf_meta_tags %>
   </head>
   
@@ -13,7 +16,7 @@
 		$(".point_box").wookmark({ 
 			container: $(".main_cont1"),
 			offset: 10,			
-			itemWidth: 340,	
+			itemWidth: 340
 		}); 
 	})
 </script>

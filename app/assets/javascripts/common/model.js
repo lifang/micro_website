@@ -76,7 +76,7 @@ function template3_Submit(site_id){
     }
 
     if(flag){
-        var form = $(".iv_temp3").parent("form")
+        var form = $(".iv_temp3").parent("form");
         var content = $(".iv_temp3").html();
         var htmlContainer = form.find(".hidden_html");
         htmlContainer.html(content)
