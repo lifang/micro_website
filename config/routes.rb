@@ -43,6 +43,7 @@ MicroWebsite::Application.routes.draw do
     resources :clients do
       collection do
         post :login, :message_detail, :refresh, :del_recent_client, :get_token
+        post :edit_client, :set_receive, :set_undisturbed
       end
     end
     resources :messages do
