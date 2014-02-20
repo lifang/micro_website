@@ -153,7 +153,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
     padding: 10px;
     position: relative;
     width: 320px;
-	height: 180px;
+	height: 190px;
 }
 .point_box:hover { box-shadow: 0 0 3px rgba(0,0,0,0.3);}
 .point_box .close { position: absolute; right: 10px; display: none;}
@@ -164,7 +164,7 @@ h1 { line-height: 40px; margin-bottom: 10px;}
 .point_temp3 { width: 112px; height: 112px; background: url(/assets/v2.0/temp3.png) no-repeat; float: left; margin-right: 20px;}
 .point_temp4 { width: 112px; height: 112px; background: url(/assets/v2.0/temp4.png) no-repeat; float: left; margin-right: 20px;}
 .point_info { overflow: hidden;}
-.point_info p { line-height: 23px; height: 23px; overflow: hidden;}
+.point_info p { line-height: 20px; height: 20px; overflow: hidden;}
 .point_act { padding: 10px; text-align: center; margin-top: 15px;}
 .point_box .edit { position: absolute; right: 10px; bottom: 10px;}
 

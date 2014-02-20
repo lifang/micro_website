@@ -18,6 +18,7 @@ class SitesController < ApplicationController
         @site.user_id=current_user.id
         @site.template=params[:site][:template]
         @site.exist_app = params[:exist_app]
+        @site.is_send_app_msg = params[:is_send_app_msg]
         respond_to do |format|
           if @site && @site.save
             if params[:exist_app].eql?(Site::APP[:YES])
@@ -54,7 +55,7 @@ class SitesController < ApplicationController
     cweb=params[:site][:cweb]
     notes=params[:site][:notes]
     respond_to do |format|
-      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb,exist_app:params[:exist_app])
+      if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb,exist_app:params[:exist_app],is_send_app_msg:params[:is_send_app_msg])
         if params[:exist_app].eql?(Site::APP[:YES])
           client = Client.find_by_site_id(@site.id)
           if client

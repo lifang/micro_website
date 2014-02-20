@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140219072301) do
+ActiveRecord::Schema.define(:version => 20140220032733) do
+
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -230,6 +231,7 @@ ActiveRecord::Schema.define(:version => 20140219072301) do
     t.datetime "not_receive_start_at"
     t.datetime "not_receive_end_at"
     t.boolean  "receive_status",                    :default => false
+    t.boolean  "is_send_app_msg"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
