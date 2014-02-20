@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20140220032733) do
 
+
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
     t.string   "name"
@@ -162,11 +163,11 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
     t.text     "post_content"
     t.integer  "post_status"
     t.integer  "site_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "title"
     t.string   "post_img"
-    t.integer  "praise_number"
+    t.integer  "praise_number", :default => 0
   end
 
   create_table "recently_clients", :force => true do |t|

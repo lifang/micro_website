@@ -24,7 +24,7 @@ class Api::ClientsController < ApplicationController
         else
           user.update_attribute("token", token) if token && token.strip != ""
           msg = "登陆成功"
-          tags = Tag.all.map(&:content)
+          tags = Tag.all.map(&:content).uniq
           person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
             c.html_content, c.remark, c.status from clients c where c.site_id=? and c.types=?", user.site_id, Client::TYPES[:CONCERNED]])
           pl = person_list.inject([]){|a,p|
@@ -111,10 +111,22 @@ class Api::ClientsController < ApplicationController
     h = {}
     status = 1
     msg = ""
+    tags = Tag.all.map(&:content).uniq
+    h[:tags] = tags
     if type == 0  #刷新通讯录
       person_list = Client.find_by_sql(["select c.id, c.name, c.mobiephone, c.avatar_url, c.has_new_message, c.has_new_record,
             c.html_content, c.remark, c.status from clients c where c.site_id=? and c.types=?", site_id, Client::TYPES[:CONCERNED]])
-      h[:person_list] = person_list
+      pl = person_list.inject([]){|a,p|
+        hash = {:id => p.id, :name => p.name, :mobiephone => p.mobiephone, :avatar_url => p.avatar_url,
+          :has_new_message => p.has_new_message, :has_new_record => p.has_new_record, :html_content => p.html_content,
+          :remark => p.remark, :status => p.status}
+        person_tags =  Label.find_by_sql(["select t.content from labels l inner join tags t on l.tag_id=t.id
+                where l.site_id=? and l.client_id=?", site_id, p.id]).map(&:content).uniq
+        hash[:tags] = person_tags
+        a << hash;
+        a
+      }
+      h[:person_list] = pl
     else
       recent_list = RecentlyClients.find_by_sql(["select rc.client_id person_id, rc.content, date_format(rc.updated_at, '%Y-%m-%d %H:%i') date
             from recently_clients rc where rc.site_id=?", site_id])
