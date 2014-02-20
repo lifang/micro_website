@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140215115447) do
+ActiveRecord::Schema.define(:version => 20140220032733) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20140215115447) do
     t.string   "token"
     t.boolean  "status",          :default => false
     t.string   "remark"
+    t.string   "head_image_url"
   end
 
   add_index "clients", ["status"], :name => "index_clients_on_status"
@@ -229,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20140215115447) do
     t.datetime "not_receive_start_at"
     t.datetime "not_receive_end_at"
     t.boolean  "receive_status",                    :default => false
+    t.boolean  "is_send_app_msg"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name"
