@@ -9,9 +9,6 @@ class WeixinsController < ApplicationController
   skip_before_filter :authenticate_user!
   before_filter :get_site_by_token
 
-  WEIXIN_DOWNLOAD_URL = "http://file.api.weixin.qq.com"
-  DOWNLOAD_RESOURCE_ACTION = "/cgi-bin/media/get?access_token=%s&media_id=%s"
-
   def get_site_by_token
     cweb = params[:cweb]
     if cweb == "wansu" || cweb == "xyyd"

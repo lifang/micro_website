@@ -21,7 +21,7 @@ class SitesController < ApplicationController
         respond_to do |format|
           if @site && @site.save
             if params[:exist_app].eql?(Site::APP[:YES])
-              Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN])
+              Client.create(site_id:@site.id ,username:params[:username] , password:Digest::MD5.hexdigest(params[:password]), types:Client::TYPES[:ADMIN])
             end
             #初始化index页面
             page = @site.pages.create({:title => "index", :file_name => "index.html",
@@ -55,11 +55,10 @@ class SitesController < ApplicationController
     notes=params[:site][:notes]
     respond_to do |format|
       if @site && @site.update_attributes(name:name,root_path:@root_path,notes:notes,cweb:cweb,exist_app:params[:exist_app])
-          p 3333333333333333333333333333,params[:exist_app].eql?(Site::APP[:YES])
         if params[:exist_app].eql?(Site::APP[:YES])
           client = Client.find_by_site_id(@site.id)
           if client
-           client.update_attributes(username:params[:username] , password:params[:password])
+           client.update_attributes(username:params[:username] , password:Digest::MD5.hexdigest(params[:password]))
           else
            Client.create(site_id:@site.id ,username:params[:username] , password:params[:password] , types:Client::TYPES[:ADMIN]) 
           end

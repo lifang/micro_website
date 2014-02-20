@@ -280,7 +280,7 @@ function is_exist_app(exist_app,username,pwd){
         $(radio[1]).removeAttr("checked");
         $(radio[0]).attr("checked",true);
         $('#username').val(username);
-        $('#password').val(pwd);
+        //$('#password').val(pwd);
     }else{
         $(radio[0]).removeAttr("checked");
         $(radio[1]).attr("checked",true);
