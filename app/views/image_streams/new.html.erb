@@ -10,7 +10,7 @@
     </div>
     <hr class="cf" color="#bcbcbc" />
     <div class="iphoneVirtual">
-
+    <form class="pic_form" method="post">
       <div class="picStream cf">
         <div class="picStrBox">
           <span class="close" onclick="delete_ele(this)"></span>
@@ -18,8 +18,9 @@
             <span>1</span>
             <input type="hidden" class="temp_picture" />
           </div>
-          <textarea></textarea>
-          
+          <textarea ></textarea>
+          <input type="hidden" name="pic_text[]" />
+
         </div>
         <div class="picStrBox">
           <span class="close" onclick="delete_ele(this)"></span>
@@ -28,10 +29,11 @@
             <input type="hidden" class="temp_picture" />
           </div>
           <textarea></textarea>
-           
+          <input type="hidden" name="pic_text[]" />
         </div>
 
       </div>
+      </form>
       <div class="iphvAct">
         <input type="button" class="blue_btn" onclick="add_imgstream_item()" value="添加图片块"></input>
       </div>
@@ -42,7 +44,7 @@
 
   </div>
   <div class="pageAct" >
-    <button class="blue_btn" onclick="submit_imgstream()">保存</button>
+    <button class="blue_btn" type="button" onclick="submit_imgstream()">保存</button>
   </div>
 </div>
 <script type="text/javascript">

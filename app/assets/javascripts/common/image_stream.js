@@ -13,7 +13,7 @@ function add() {
 //新版增加一个区域
 function add_imgstream_item(){
     var len = $(".picStream").find(".picStrBox").length;
-    var div = $("<div class='picStrBox'><span class='close' onclick='delete_ele(this)'></span><div class='imgDiv'><span>"+(len+1)+"</span><input type='hidden' class='temp_picture' /></div><textarea></textarea></div>");
+    var div = $("<div class='picStrBox'><span class='close' onclick='delete_ele(this)'></span><div class='imgDiv'><span>"+(len+1)+"</span><input type='hidden' class='temp_picture' /></div><textarea></textarea><input type=\"hidden\" name=\"pic_text[]\" /></div>");
     var span = $(div).find(".imgDiv").find("span");
     can_it_drop(span);
     $(".picStream").append(div);
@@ -34,6 +34,7 @@ function can_it_drop(obj){
     });
 }
 
+
 //删除图片
 function delete_ele(element) {
     //获取父节点并移除
@@ -47,6 +48,18 @@ function delete_ele(element) {
         $(element).parent().remove();
     }
 
+}
+
+
+function replace_chart(arr,text){
+	for(var i=0;i<arr.length;i++){
+		alert("/"+ arr[i] +"/g");
+		text = text.replace(/[>&<'"]/g, function(x) { return "&#" + x.charCodeAt(0) + ";"; });
+		text.replace("/\\"+ arr[i] +"/g","\\"+arr[i]);
+		alert(text);
+	}
+	return text;
+	
 }
 //提交imgstream
 function submit_imgstream(){
@@ -65,17 +78,17 @@ function submit_imgstream(){
     var flag = true;
     var divArr = $(".picStrBox");
     //将有效图片存入字符串
-    var pattern = new RegExp("[`~@#$^&*()=:\\[\\].<>~！%@#￥……&*（）——|{}。，、-]");
+    var pattern = new RegExp("[`~@#$^&*()=:\\[\\].<>~！%@#￥……&*——|{}。，、-]");
+ 
     $.each(divArr, function(index, name) {
         if (index < divArr.length) {
             if ($(name).find('img').length !=0) {
                 src += $(name).find(".temp_picture").val() + ",";
                 var textarea_txt=$(name).find('textarea').val();
-                if($.trim(textarea_txt)!= "" && pattern.test(textarea_txt)){
-                    tishi_alert("内容不能包含非法字符");
-                    return fasle;
-                }
-                text += textarea_txt + "||";
+                $(name).children('input[type=hidden]').val(textarea_txt);
+               // var tex_txt = textarea_txt.replace(/[`~@#$^&*()=:\[\].<>~！%@#￥……&*——|{}。，、-]/g,  function(x){ return "\&#" + x.charCodeAt(0) + "\;"; });
+               //text += tex_txt + "||";
+                //alert(text);
 
             } else {
                 flag = false;
@@ -90,7 +103,8 @@ function submit_imgstream(){
         tishi_alert('图片流页不能为空');
         return false;
     }
-  
+    var form_data = $(".pic_form").serialize();
+    alert(form_data);
     if ($("#page_type").val() == 'edit') {
         $.ajax({
             //async : true,
@@ -101,7 +115,7 @@ function submit_imgstream(){
             type : 'post',
             url : '/imgtxt_edit_update',
             dataType : "json",
-            data : 'title=' + title + '&name=' + name + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val() + "&id=" + $("#page_id").val(),
+            data : 'title=' + title + '&name=' + name + '&src=' + src+'&site_id=' + $("#site_id").val() + "&id=" + $("#page_id").val() + '&'+form_data,
             success : function(data) {
                 if (data == 1) {
                     tishi_alert("更新成功");
@@ -123,7 +137,7 @@ function submit_imgstream(){
             type : 'post',
             url : '/image_text_page',
             dataType : "json",
-            data : 'title=' + title + '&name=' + name + '&check=' + 0 + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val(),
+            data : 'title=' + title + '&name=' + name + '&check=' + 0 + '&src=' + src + '&text=' + text + '&site_id=' + $("#site_id").val()+ '&'+form_data,
             success : function(data) {
                 if (data == 1) {
                     tishi_alert("创建成功");

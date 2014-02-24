@@ -13,7 +13,7 @@
     </div> 
     <hr class="cf" color="#bcbcbc" />
 
-    <div class="iphoneVirtual m_tab">
+    <div class="iphoneVirtual m_tab" style="overflow: auto;max-height: 568px;width: 337px;">
       <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site)) do |f|%>
         <input type="hidden" value="<%=@site.id%>" name="site_id" />
         <div class="topPic"></div>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="iv_temp4 main_tab m_tab" style="display:none;padding: 30px;text-align: center;">
-      <%=form_for(:pages,url: zdy_sub_create_site_pages_path(@site)) do |f|%>
+      <%=form_for(:pages,url: zdy_sub_create_site_pages_path(@site),style:"min-height: 570px;width: 320px;") do |f|%>
         <input type="hidden" id="sub_title1" name="sub_title" value="" />
         <input type="hidden" id="sub_name1" name="sub_name" value="" />
         <textarea name="zdy_sub_content" style="width: 914px; height: 377px;"></textarea>
@@ -64,7 +64,7 @@
       </div>
       <input type="hidden" class="hiddenIndex" />
       <input type="hidden" class="hiddenBlock" />
-      <div class="tabDiv curr">
+      <div class="tabDiv curr inside">
         <% @sub_pages.each do |page| %>
           <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
         <% end %>
@@ -73,7 +73,7 @@
         <label>站外链接输入：</label><input type="text" name="outside_link" />
       </div>
       <div class="scdBox_act">
-        <button class="blue_btn" onclick="setLink()">确认</button>
+        <button class="blue_btn" onclick="setLink('sub_page')">确认</button>
         <button class="blue_btn cancel">取消</button>
       </div>
     </div>
