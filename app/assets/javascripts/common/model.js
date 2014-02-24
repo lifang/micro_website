@@ -79,7 +79,7 @@ function template3_Submit(site_id){
         var form = $(".iv_temp3").parent("form");
         var content = $(".iv_temp3").html();
         var htmlContainer = form.find(".hidden_html");
-        htmlContainer.html(content)
+        htmlContainer.text(content)
         var dataValue = form.serialize();
         $.ajax({
             url: "/sites/" + site_id + "/pages/save_template3",
@@ -94,7 +94,6 @@ function template3_Submit(site_id){
             }
         })
     }
-    
 }
 
 function add_sub_template(){

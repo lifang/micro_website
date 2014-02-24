@@ -92,12 +92,16 @@
               <li><a class="scd_btn" name="addLink">3</a><input type="hidden" class="img_src" name="img_src[]"/><input type="hidden" class="img_link" name="img_link[]"/></li>
             </ul>
           </div>
-          <textarea style="display:none" class="hidden_html" name="page[content]" ></textarea>
         <% end %>
       </div>
+      <% if @site.template == Constant::Template[:temp3] && @page.page_html.present? %>
+        <textarea style="display:none" class="hidden_html" name="page[content]" ><%= @page.page_html %></textarea>
+      <% else %>
+        <textarea style="display:none" class="hidden_html" name="page[content]" ></textarea>
+      <% end %>
     <% end %>
     <div id="tupian">
-      <%= render 'shared/form_images',:objects => @imgs, :from => "main_page" %>
+      <%= render 'shared/form_images',:objects => @imgs_path, :from => "main_page" %>
     </div>
 
     <div class="iv_temp4 main_tab" style="display: <%= @site.template.present? && @site.template == Constant::Template[:temp4] ? "block" : "none" %>">
