@@ -168,8 +168,8 @@ $(function(){
         var spec_className = $(this).parent("div").parent("div").attr("class").split(/\s/)[0];
 
         var index = $("." + spec_className + " div a").index($(this));
-        initializeLinkValue($(this));
-        showLinkTab()
+        initializeLinkValue($(this).parent());
+        showLinkTab();
 
         $("#linkPage").find(".hiddenIndex").val(index);
         $("#linkPage").find(".hiddenBlock").val(spec_className);
@@ -252,7 +252,7 @@ function initializeLinkValue(obj){
                 $("#linkPage .tabs .tab").first().click();
                 $($("#linkPage .tabs .tab")[1]).removeClass("curr");
                 $("#linkPage .tabDiv.outside").find("input").val("");
-                ifRadioChecked = true
+                ifRadioChecked = true;
             }
         })
         if(!ifRadioChecked){
