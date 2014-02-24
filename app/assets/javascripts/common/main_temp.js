@@ -139,10 +139,14 @@ $(function(){
     $(".temp3Block li").on("click",function(){
         var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
         var index = $("." + spec_className + " li").index($(this));
+        initializeLinkValue($(this));
+
         show_tag($("#linkPage"));
 
         $("#linkPage .cancel").click(function(){
             hide_tab($("#linkPage"));
+            $("#linkPage .tabDiv.outside").find("input").val("");
+            $("#linkPage .tabDiv.inside").find("input[type=radio]").attr("checked", false);
         });
         $("#linkPage").find(".hiddenIndex").val(index);
         $("#linkPage").find(".hiddenBlock").val(spec_className);
@@ -152,7 +156,7 @@ $(function(){
         var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
       
         var index = $("." + spec_className + " a").index($(this));
-        
+        initializeLinkValue($(this));
         showLinkTab()
 
         $("#linkPage").find(".hiddenIndex").val(index);
@@ -164,6 +168,7 @@ $(function(){
         var spec_className = $(this).parent("div").parent("div").attr("class").split(/\s/)[0];
 
         var index = $("." + spec_className + " div a").index($(this));
+        initializeLinkValue($(this));
         showLinkTab()
 
         $("#linkPage").find(".hiddenIndex").val(index);
@@ -224,4 +229,31 @@ function findLink(link){
         }
     });
     return link;
+}
+
+//添加链接弹出块出来，显示对应小图片的link
+function initializeLinkValue(obj){
+    var savedValue = obj.find(".img_link").val();
+    if(savedValue != "" && savedValue != "#"){
+        var ifRadioChecked = false;
+        $("#linkPage .tabDiv.inside").find("input[type=radio]").each(function(){
+            if($(this).val() == savedValue){
+                $(this).click();
+                $("#linkPage .tabs .tab").first().click();
+                $($("#linkPage .tabs .tab")[1]).removeClass("curr");
+                $("#linkPage .tabDiv.outside").find("input").val("");
+                ifRadioChecked = true
+            }
+        })
+        if(!ifRadioChecked){
+            $("#linkPage .tabDiv.outside").find("input").val(savedValue);
+            $("#linkPage .tabs .tab").first().removeClass("curr");
+            $($("#linkPage .tabs .tab")[1]).click();
+            $("#linkPage .tabDiv.inside").find("input[type=radio]").attr("checked", false);
+        }
+    }else{
+        $("#linkPage .tabs .tab").first().click();
+        $("#linkPage .tabDiv.outside").find("input").val("");
+        $("#linkPage .tabDiv.inside").find("input[type=radio]").attr("checked", false);
+    }
 }
