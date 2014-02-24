@@ -10,13 +10,13 @@
       </div>
       <input type="hidden" class="hiddenIndex" />
       <input type="hidden" class="hiddenBlock" />
-      <div class="tabDiv curr">
+      <div class="tabDiv curr inside">
         <% @sub_pages.each do |page| %>
           <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/>
           <span class="radioVal" style="text-align:left; padding: 0"><%= page.title %></span>
         <% end %>
       </div>
-      <div class="tabDiv">
+      <div class="tabDiv outside">
         <label>站外链接输入：</label><input type="text" name="outside_link" />
       </div>
       <div class="scdBox_act">
