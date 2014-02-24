@@ -53,7 +53,7 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = #{Client::TYPES[:ADMIN]}")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        time_now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+        time_now = Time.now.strftime("%H:%M")
 
           Message.transaction do
             begin
@@ -68,7 +68,7 @@ class WeixinsController < ApplicationController
                   :types => Message::TYPES[:weixin], :content => content,
                   :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
                   :message_type => msg_type_value, :message_path => wx_resource_url)
-                if mess && (!@site.receive_status || !(@site.receive_status && time_now >= @site.not_receive_start_at.to_s && time_now <= @site.not_receive_end_at.to_s))
+                if mess && (!@site.receive_status || !(@site.receive_status && @site.not_receive_start_at && @site.not_receive_end_at && time_now >= @site.not_receive_start_at.strftime("%H:%M") && time_now <= @site.not_receive_end_at.strftime("%H:%M")))
                   #推送到IOS端
                   APNS.host = 'gateway.sandbox.push.apple.com'
                   APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')

@@ -92,7 +92,12 @@ class Api::ClientsController < ApplicationController
           page_status = 0
         end
       end
-      messages2 = messages.reverse
+      messages2 = messages.reverse.inject([]){|a,m|
+        h = {:id => m.id, :from_user => m.from_user, :to_user => m.to_user, :types => m.types, :content => m.content,
+          :date => m.date, :status => m.status ? 0 : 1}
+        a << h;
+        a
+      }
       if messages.any?
         person = Client.find_by_id(person_id)
         person.update_attribute("has_new_message", false) if person

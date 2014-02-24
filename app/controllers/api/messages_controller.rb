@@ -54,7 +54,7 @@ class Api::MessagesController < ApplicationController
             status = 1
             msg = "编辑成功!"
             mess = {:id => message.id, :from_user => message.from_user, :to_user => message.to_user, :types => message.types,
-              :content => message.content, :status => message.status,
+              :content => message.content, :status => message.status ? 0 : 1,
               :date => message.created_at.nil? ? nil : message.created_at.strftime("%Y-%m-%d %H:%M")}
             if recent_client.nil?
               RecentlyClients.create(:site_id => message.site_id, :client_id => message.to_user, :content => content)
@@ -85,6 +85,13 @@ class Api::MessagesController < ApplicationController
             else
               recent_client.update_attribute("content",previous_mess.content)
             end
+            #pm = previous_mess.merge({:status => previous_mess.status ? 0 : 1})
+            pm = {:id => previous_mess.id, :site_id => previous_mess.site_id, :from_user => previous_mess.from_user,
+              :to_user => previous_mess.to_user, :types => previous_mess.types, :content => previous_mess.content,
+              :status => previous_mess.status ? 0 : 1, :created_at => previous_mess.created_at,
+              :updated_at => previous_mess.updated_at, :msg_id => previous_mess.msg_id, :message_type => previous_mess.message_type,
+              :message_path => previous_mess.message_path
+            }
           end
 
           if message.types == Message::TYPES[:remind]
@@ -103,7 +110,7 @@ class Api::MessagesController < ApplicationController
         msg = "数据错误!"
       end
       render :json => {:status => status, :msg => msg, :return_object => {:message => type == 1 ? {} : mess,
-          :type => message.nil? ? nil : m_type, :has_remind => has_remind, :last_message => previous_mess}}
+          :type => message.nil? ? nil : m_type, :has_remind => has_remind, :last_message => pm}}
     end
   end
 
@@ -137,16 +144,14 @@ class Api::MessagesController < ApplicationController
                 :types => Message::TYPES[:weixin], :content => content,
                 :status => Message::STATUS[:READ], :msg_id => nil,
                 :message_type => msg_type_value)
-
               message = {:id => mess.id, :from_user => mess.from_user, :to_user => mess.to_user, :types => mess.types,
-                :content => mess.content, :status => mess.status,
+                :content => mess.content, :status => mess.status ? 0 : 1,
                 :date => mess.created_at.nil? ? nil : mess.created_at.strftime("%Y-%m-%d %H:%M"), :message_type => mess.message_type,
                 :message_path => mess.message_path}
               unless mess
                 status = 0
-                msg += "，保存失败"
+                msg += "保存失败"
               end
-             
             elsif response["errcode"] == 45015
               status = 0
               msg = "此用户超过48小时未与您互动，发送消息失败"
