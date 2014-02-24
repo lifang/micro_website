@@ -58,6 +58,7 @@ class AppManagementsController < ApplicationController
         if f[1][:value].class.eql?(Array)
           value = f[1][:value].join(",")
         end
+       
         form_hash +="'#{f[1][:name]}'=>'#{value}',"
         
       end
