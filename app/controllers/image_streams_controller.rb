@@ -25,7 +25,7 @@ class ImageStreamsController < ApplicationController
     title=params[:title];
     check=params[:check];
     imgarr=params[:src].split(",");
-    textstr=params[:text].split("||");
+    textstr=params[:pic_text] ;
     p imgarr,textstr
     @site=Site.find(params[:site_id]);
     @page=@site.pages.build
@@ -99,7 +99,7 @@ class ImageStreamsController < ApplicationController
     title=params[:title];
     #check=params[:check];
     imgarr=params[:src].split(",");
-    textstr=params[:text].split("||");
+    textstr=params[:pic_text];
     @site=Site.find(params[:site_id]);
     @page=Page.find(params[:id]);
     @image_text=PageImageText.find_by_page_id(params[:id])

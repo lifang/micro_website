@@ -45,7 +45,6 @@ class WeixinsController < ApplicationController
     elsif request.request_method == "GET" && tmp_encrypted_str == signature  #配置服务器token时是get请求
       render :text => tmp_encrypted_str == signature ? echostr :  false
     end
-
   end
   #接收用户的任何信息
   def get_client_message(wx_resource_url=nil)
