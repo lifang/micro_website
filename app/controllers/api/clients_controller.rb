@@ -62,7 +62,8 @@ class Api::ClientsController < ApplicationController
         :receive_start => status == 0 || site.not_receive_start_at.nil? ? nil : site.not_receive_start_at.strftime("%H:%M"),
         :receive_end => status == 0 || site.not_receive_end_at.nil? ? nil : site.not_receive_end_at.strftime("%H:%M"),
         :user_avatar => status == 0 ? nil : user.avatar_url,
-        :person_list => pl, :recent_list => rl, :remind => re_content, :record => rec_content, :tags => tags}}
+        :person_list => pl, :recent_list => rl, :remind => re_content, :record => rec_content, :tags => tags,
+        :site_auth => status == 0 ? nil : site.is_send_app_msg}}
   end
 
   #点击某个用户，查看信息详情
@@ -97,7 +98,7 @@ class Api::ClientsController < ApplicationController
         person.update_attribute("has_new_message", false) if person
         new_messages = Message.where(["site_id=? and from_user=? and status=?", site_id, person_id, Message::STATUS[:UNREAD]])
         new_messages.each do |nm|
-          nm.update_attribute("status", Message::STATUS[:READ])
+          nm.update_attribute("status", true)
         end if new_messages.any?
       end
       render :json => {:status => status, :msg => msg, :return_object => {:message_list => messages2, :page_status => page_status}}

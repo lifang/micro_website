@@ -17,8 +17,9 @@ class Api::MessagesController < ApplicationController
         status = 1
         msg = "保存成功!"
         mess = {:id => message.id, :from_user => message.from_user, :to_user => message.to_user, :types => message.types,
-          :content => message.content, :status => message.status,
-          :date => message.created_at.nil? ? nil : message.created_at.strftime("%Y-%m-%d %H:%M")}
+          :content => message.content, :status => message.status ? 0 : 1,
+          :date => message.created_at.nil? ? nil : message.created_at.strftime("%Y-%m-%d %H:%M"),
+          :message_type => message.message_type, :message_path => message.message_path }
         if types == Message::TYPES[:remind] #如果是提醒，则要将has_new_record设为1
           person = Client.find_by_id(to_user)
           person.update_attribute("has_new_record", true) if person
@@ -109,13 +110,13 @@ class Api::MessagesController < ApplicationController
   #公众号 主动发消息 给用户
   def send_message_to_user
     #params[:site_id], params[:msg_type], params[:content], params[:client_id],站点名称，发送消息的类型(text,image,voice)，发送的内容(类型是text时)， 接收信息的open_id
-    status, message = [0, ""]
+    status, msg = [1, ""]
     site_id, msg_type, content, receive_client_id = params[:site_id], params[:msg_type], params[:content], params[:client_id]
     current_client =  Client.where("site_id=#{site_id} and types = #{Client::TYPES[:ADMIN]}")[0] if site_id  #后台登陆人员
     receive_client = Client.find_by_id_and_status(receive_client_id, Client::STATUS[:valid]) if receive_client_id   #查询有效用户
-    open_id = receive_client.open_id if receive_client
+    open_id = receive_client.open_id if receive_client  
+    msg_type_value = Message::MSG_TYPE[msg_type.to_sym] if msg_type
     unless msg_type == "text"
-      msg_type_value = Message::MSG_TYPE[msg_type.to_sym] if msg_type
       content = msg_type_value == 1 ? "图片" : "语音"
     end
     content_hash = get_content_hash_by_type(open_id, msg_type, content)
@@ -130,42 +131,47 @@ class Api::MessagesController < ApplicationController
           response = create_post_http(WEIXIN_OPEN_URL ,send_message_action, content_hash)
           if response
             if response["errcode"] == 0
-              message = "发送成功"
+              msg = "发送成功"
               #msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
               mess = Message.create!(:site_id => site_id, :from_user => current_client.id ,:to_user => receive_client.id ,
                 :types => Message::TYPES[:weixin], :content => content,
-                :status => Message::STATUS[:UNREAD], :msg_id => nil,
+                :status => Message::STATUS[:READ], :msg_id => nil,
                 :message_type => msg_type_value)
-             unless mess
-                status = 7
-                message += "，保存失败"
+
+              message = {:id => mess.id, :from_user => mess.from_user, :to_user => mess.to_user, :types => mess.types,
+                :content => mess.content, :status => mess.status,
+                :date => mess.created_at.nil? ? nil : mess.created_at.strftime("%Y-%m-%d %H:%M"), :message_type => mess.message_type,
+                :message_path => mess.message_path}
+              unless mess
+                status = 0
+                msg += "，保存失败"
               end
              
             elsif response["errcode"] == 45015
-              status = 6
-              message = "此用户超过48小时未与您互动，发送消息失败"
+              status = 0
+              msg = "此用户超过48小时未与您互动，发送消息失败"
             else
-              status = 5
-              message = "未知错误"
+              status = 0
+              msg = "未知错误"
             end
           else
-            status = 4
-            message = "请求超时"
+            status = 0
+            msg = "请求超时"
           end
         else
-          status = 3
-          message = "此公众号没有权限主动发送信息，请先认证！"
+          status = 0
+          msg = "此公众号没有权限主动发送信息，请先认证！"
         end
       else
-        status = 2
-        message = "该网站未绑定微信公众号"
+        status = 0
+        msg = "该网站未绑定微信公众号"
       end
     else
-      status = 1
-      message = "缺少参数或者用户无效"
+      status = 0
+      msg = "缺少参数或者用户无效"
     end
 
-    render :json => {:status => status, :message => message}
+    render :json => {:status => status, :message => msg, :return_object => {:message => status == 0 ? nil : message}}
   end
 
 end
