@@ -190,7 +190,8 @@ function setLink(from){
     var link = "";
     link = findLink(link);
     if(link != ""){
-        if(from=="main_page"){
+    	 
+        if(from == "main_page"){
             var spec_className = $("#linkPage").find(".hiddenBlock").val();
             var index = $("#linkPage").find(".hiddenIndex").val();
             if(spec_className=='homeMenu1' || spec_className=='homeMenu2'){
@@ -204,10 +205,18 @@ function setLink(from){
         }else if(from == "form"){
             $(".hidden_redirect_path").val(link);
             hide_tab($("#linkPage"));
+        }else if(from == "sub_page"){
+        	var spec_className = $("#linkPage").find(".hiddenBlock").val();
+        	
+            var index = $("#linkPage").find(".hiddenIndex").val();
+            if(spec_className=='smlPicList'){
+                $($("." + spec_className).find(".img_link")[index]).attr("value", link);
+            }
+            hide_tab($("#linkPage"));
         }
 
     }else{
-        tishi_alert("未选择链接！")
+        tishi_alert("未选择链接！");
     }
 }
 
@@ -216,6 +225,7 @@ function findLink(link){
     $(".addLink .tabs").find("span").each(function(){
         if($(this).hasClass("curr")){
             if($(this).text() == "站内链接"){
+    	       
                 var checked = $(".addLink input[name=insite_link]:checked");
                 link = checked.length > 0 ? checked.val() : "";
             }else{

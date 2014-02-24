@@ -29,10 +29,10 @@ function submit_template1_2(models,template){
         tishi_alert('存在未填充区域！');
         return false;
     }
-    if(template==2&&imgarr.length!=8){
-        tishi_alert('存在未填充区域！');
-        return false;
-    }
+    // if(template==2&&imgarr.length!=8){
+        // tishi_alert('存在未填充区域！');
+        // return false;
+    // }
     var alinkarr = $(models).children(".homeMenu").find("input");
     var imgstr ="",alinkstr ="";
     for(var i=0;i<imgarr.length;i++){
