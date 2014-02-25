@@ -15,7 +15,8 @@
         <div class="vcItem <%= @page && @page.authenticate ? "check" : "" %>"><%= radio_button "form", "authenticate", 1, :checked => @page && @page.authenticate ? true : false %><span>是</span></div>
         <div class="vcItem <%= @page && @page.authenticate ? "" : "check" %>"><%= radio_button "form", "authenticate", 0, :checked => @page && @page.authenticate ? false : true %><span>否</span></div>
       </div>
-      <div class="iphoneVirtual">
+      <div class="iphoneVirtual" style="width: 335px;overflow: auto; max-height: 568px;">
+        <div style="min-height: 569px;">
         <div class="image_text_area">
           <% if @page.new_record? %>
             <div class="tuwenBox">
@@ -52,7 +53,7 @@
           <button class="blue_btn" type="button" onclick="appendEditor()">添加图文块</button>
           <button class="blue_btn scd_btn" type="button" onclick="show_tag($('#one_key_button'))">添加一键导航</button>
         </div>
-
+        </div>
       </div>
       <div id="tupian">
         <%= render 'shared/form_images',:objects => @imgs_path %>
