@@ -311,11 +311,9 @@ class PagesController < ApplicationController
       imgarr_each_img imgarr,"290x290","_sub."
       content = sub_page_html title,top_img,imgarr,link_arr
       save_as_sub_page @site,path,content
-      flash[:success]='创建成功！'
-      redirect_to sub_site_pages_path(@site)
+      render text:1
     else
-      flash[:error]="创建失败,文件名存在！"
-      redirect_to tmlt_sub_new_site_pages_path(@site)
+      render text:0
     end
   end
   def tmlt_sub_edit
