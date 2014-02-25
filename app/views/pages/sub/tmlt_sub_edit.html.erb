@@ -10,8 +10,8 @@
     </div>
     <hr class="cf" color="#bcbcbc" />
 
-    <div class="iphoneVirtual m_tab">
-      <%=form_for(:pages,url: tmlt_sub_update_site_page_path(@site,@page)) do |f|%>
+    <div class="iphoneVirtual m_tab" style="overflow: auto;max-height: 568px;width: 337px;">
+      <%=form_for(:pages,url: tmlt_sub_update_site_page_path(@site,@page),html:{style:"min-height: 570px;width: 320px;"}) do |f|%>
         <%=raw @page.page_html%>
       <%end%>
     </div>

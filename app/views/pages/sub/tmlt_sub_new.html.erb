@@ -14,7 +14,7 @@
     <hr class="cf" color="#bcbcbc" />
 
     <div class="iphoneVirtual m_tab" style="overflow: auto;max-height: 568px;width: 337px;">
-      <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site)) do |f|%>
+      <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site),html:{style:"min-height: 570px;width: 320px;"}) do |f|%>
         <input type="hidden" value="<%=@site.id%>" name="site_id" />
         <div class="topPic"></div>
         <div class="smlPicList cf ">
