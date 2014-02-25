@@ -87,7 +87,7 @@ $(function(){
 
     $(".homeAd .addAdPic").on("click",function(){
         var i = $(".ad_box li").length;
-        $(".ad_box ul").append("<li><a class='scd_btn'>"+ Number(i+1)+"</a><input type='hidden' class='img_src' name='ad_src[]'/><span class='close'></span></li>");
+        $(".ad_box ul").append("<li><a class='scd_btn'>"+ Number(i+1)+"</a><input type='hidden' class='img_src' name='ad_src[]'/><input type='hidden' class='img_link' name='ad_link[]'/><span class='close'></span></li>");
         $(".ad_box ul").css("width",Number(i+1)*280+"px");
         $(".ad_num ul").append("<li>"+ Number(i+1)+"</li>");
         $input_280 = $( ".tmp_280-196 a" );
@@ -103,6 +103,24 @@ $(function(){
                 }
             })
         });
+        
+        //模板页小图加超链接
+        $(".temp3Block li").on("click",function(){
+            var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
+            var index = $("." + spec_className + " li").index($(this));
+            initializeLinkValue($(this));
+
+            show_tag($("#linkPage"));
+
+            $("#linkPage .cancel").click(function(){
+                hide_tab($("#linkPage"));
+                $("#linkPage .tabDiv.outside").find("input").val("");
+                $("#linkPage .tabDiv.inside").find("input[type=radio]").attr("checked", false);
+            });
+            $("#linkPage").find(".hiddenIndex").val(index);
+            $("#linkPage").find(".hiddenBlock").val(spec_className);
+        });
+
     });
 
     $(".homeAd li span.close").on("click",function(){
@@ -135,7 +153,7 @@ $(function(){
         $(this).addClass("hover");
     })
 
-    //加超链接
+    //模板页小图加超链接
     $(".temp3Block li").on("click",function(){
         var spec_className = $(this).parent("ul").attr("class").split(/\s/)[0];
         var index = $("." + spec_className + " li").index($(this));
@@ -211,7 +229,7 @@ function setLink(from){
             $(".hidden_redirect_path").val(link);
             hide_tab($("#linkPage"));
         }else if(from == "sub_page"){
-        	var spec_className = $("#linkPage").find(".hiddenBlock").val();
+            var spec_className = $("#linkPage").find(".hiddenBlock").val();
         	
             var index = $("#linkPage").find(".hiddenIndex").val();
             if(spec_className=='smlPicList'){

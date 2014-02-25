@@ -266,18 +266,19 @@ class PagesController < ApplicationController
     img_links = params[:img_link]
     img_src = params[:img_src]
     ad_srcs = params[:ad_src]
+    ad_links = params[:ad_link]
     page = @site.pages.main[0]
     Page.transaction do
-      #begin
-        content = initial_template3(img_links, img_src, ad_srcs)
+      begin
+        content = initial_template3(img_links, img_src, ad_srcs, ad_links)
         save_into_file(content, page, page.file_name) if content
         page.update_attribute(:page_html, params[:page][:content].strip)
         @site.update_attribute(:template, Constant::Template[:temp3])
 
         render :text => "0"
-     # rescue
-        #render :text => "-1"
-      #end
+      rescue
+        render :text => "-1"
+      end
     end
   end
 
