@@ -177,7 +177,6 @@ end
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
@@ -201,6 +200,7 @@ end
 			});
 		})
     </script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 </body>
 </html>
     "
@@ -224,7 +224,6 @@ end
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.mobile-1.3.2.js'></script>
 <link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
@@ -237,6 +236,7 @@ end
   <article>#{selection}</article>
 </article>
 " + page_footer(@site)+"
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 </body></html>"
   bigcontent
   end
