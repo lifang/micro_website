@@ -11,7 +11,9 @@
       </li>
     <% end %>
     <%= link_to(sub_site_pages_path(@site)) do %>
-      <li class="leftItem2 <%= controller.action_name == "sub" ? 'leftItem_selected' : '' %>">
+      <li class="leftItem2 <%= controller.action_name == "sub" ||
+                               controller.action_name == "tmlt_sub_new" ||
+                               controller.action_name == "tmlt_sub_edit" ? 'leftItem_selected' : '' %>">
         其他页
       </li>
     <% end %>
