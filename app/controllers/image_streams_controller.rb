@@ -153,12 +153,15 @@ class ImageStreamsController < ApplicationController
       fb.write(bigcontent.html_safe)
     end
   end
-
+  def encoding_character(str)
+    arr={"<"=>"#&lt;",">"=>"#&gt;"}
+    str.gsub(/<|>/){|s| arr[s]}
+end
   #得到内容
   def get_content(imgarr,textarr)
     str=""
     (0..imgarr.length-1).each do |x|
-      p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
+      p1=(textarr[x].nil? ? '':"<p>#{encoding_character textarr[x]}</p>")
       #image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
       #<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' ></a>#{p1}</li>
       str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img  src='#{deal_img_to_min imgarr[x]}'></a>#{p1}</li>
