@@ -119,7 +119,7 @@ function submit_sub_page(){
         return false;
     }
 
-    
+    var page_type=$("#page_type").val();
     var site_id=$("#site_id").val();
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
@@ -127,7 +127,7 @@ function submit_sub_page(){
             $("#sub_name1").val(name);
             $("#sub_m_title").val(title);
             $("#sub_m_name").val(name);
-            if(i==0){
+            if(i==0 && page_type!="edit"){
                 if($(".smlPic").find("a").length!=$(".smlPic").find("img").length ||$(".smlPic").find("a").length==0 ){
                     tishi_alert('存在未填充区域或者无图片区域！');
                     return false;
@@ -154,7 +154,7 @@ function submit_sub_page(){
                 })
 
 
-            }else if(i==1){
+            }else if(i==1 && page_type!="edit"){
                 if($.trim($(models[i]).find("textarea").val()) ==""){
                     tishi_alert('请输入内容！');
                     return false;
@@ -178,6 +178,33 @@ function submit_sub_page(){
                     // alert("error");
                     }
                 })
+            }else if(i==0 && page_type=="edit"){
+                if($(".smlPic").find("a").length!=$(".smlPic").find("img").length ||$(".smlPic").find("a").length==0 ){
+                    tishi_alert('存在未填充区域或者无图片区域！');
+                    return false;
+                }
+                var page_id = $("#page_id").val();
+                $("#html_content").val($(".iphoneVirtual form").html());
+                var form = $(".iphoneVirtual form").serialize();
+                 $.ajax({
+                    url: "/sites/" + site_id + "/pages/"+page_id+"/tmlt_sub_update",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("更新成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("更新失败,文件不存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
+
             }
         }
     }

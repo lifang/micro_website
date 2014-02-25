@@ -342,11 +342,9 @@ class PagesController < ApplicationController
       imgarr_each_img imgarr,"290x290","_sub."
       content = sub_page_html title,top_img,imgarr,link_arr
       save_as_sub_page @site,path,content
-      flash[:success]='更新成功！'
-      redirect_to sub_site_pages_path(@site)
+      render text:1
     else
-      flash[:error]="更新失败"
-      redirect_to tmlt_sub_edit_site_pages_path(@site)
+       render text:0
     end
   end
   
