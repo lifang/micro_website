@@ -30,8 +30,8 @@ function submit_template1_2(models,template){
         return false;
     }
     // if(template==2&&imgarr.length!=8){
-        // tishi_alert('存在未填充区域！');
-        // return false;
+    // tishi_alert('存在未填充区域！');
+    // return false;
     // }
     var alinkarr = $(models).children(".homeMenu").find("input");
     var imgstr ="",alinkstr ="";
@@ -42,7 +42,7 @@ function submit_template1_2(models,template){
     var html_content = $(models).html();
     $(models).find(".html_content").val(html_content);
     var form = $(models).parent();
-   // form.submit();
+    // form.submit();
     var str = form.serialize();
     $.ajax({
         async:true,
@@ -120,7 +120,7 @@ function submit_sub_page(){
     }
 
     
-    
+    var site_id=$("#site_id").val();
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
             $("#sub_title1").val(title);
@@ -133,13 +133,51 @@ function submit_sub_page(){
                     return false;
                 }
                 $("#html_content").val($(".iphoneVirtual form").html());
-                $(".iphoneVirtual form").submit();
+                var form = $(".iphoneVirtual form").serialize();
+                 $.ajax({
+                    url: "/sites/" + site_id + "/pages/tmlt_sub_create",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("创建成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("创建失败,文件名存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
+
+
             }else if(i==1){
                 if($.trim($(models[i]).find("textarea").val()) ==""){
                     tishi_alert('请输入内容！');
                     return false;
                 }
-                $(".iv_temp4.main_tab.m_tab form").submit();
+                var form = $(".iv_temp4.main_tab.m_tab form").serialize();
+                $.ajax({
+                    url: "/sites/" + site_id + "/pages/tmlt_sub_create",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("创建成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("创建失败,文件名存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
             }
         }
     }

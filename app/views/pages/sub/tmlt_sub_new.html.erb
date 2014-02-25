@@ -1,6 +1,7 @@
 <div class="main_container">
   <%=render 'shared/left_panel'%>
   <div class="main_cont">
+    <input type="hidden" id="site_id" value="<%=@site.id%>"/>
     <div class="tit"><span>标题：</span><input type="text" id="title"  name="title"/><span>文件名：</span><input id="name" name="name" type="text" /><span>.html</span></div>
     <div class="tempChoice tempChoice2" style="width:200px;">
       <span> </span>
