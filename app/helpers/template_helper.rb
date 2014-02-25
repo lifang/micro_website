@@ -1,7 +1,7 @@
 #encoding: utf-8
 module TemplateHelper
   #初始化 处理模板3需要的图片
-  def initial_template3(img_links, img_srcs, ad_srcs)
+  def initial_template3(img_links, img_srcs, ad_srcs, ad_links)
    
     new_img_srcs = []
     size = ""
@@ -20,16 +20,16 @@ module TemplateHelper
       end
     end
    
-    content = generate_template3(img_links, new_img_srcs, ad_srcs)
+    content = generate_template3(img_links, new_img_srcs, ad_srcs, ad_links)
     content
   end
 
   #生成模板页面
-  def generate_template3(img_links, new_img_srcs, ad_srcs)
+  def generate_template3(img_links, new_img_srcs, ad_srcs, ad_links)
     ad_content, ad_num = '', ''
     ad_srcs.each_with_index do |ad_src, index|
       ad_content = ad_content + '<li id="page-' + (index+1).to_s + '" data-role="page" class="demo-page">
-                    	<span class="cover_bg" style="background-image: url(' + '\'' + ad_src + '\'' + ')"><a href="#" rel="external"></a></span>
+                    	<a href="' + (ad_links[index].present? ? ad_links[index] : '#') +'" rel="external"><span class="cover_bg" style="background-image: url(' + '\'' + ad_src + '\'' + ')"></a></span>
                     </li>'
       if index == 0
         ad_num = ad_num + '<li class="on">' + (index+1).to_s + '</li>'
