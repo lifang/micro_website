@@ -8,7 +8,35 @@ class WeixinsController < ApplicationController
   require "tempfile"
   skip_before_filter :authenticate_user!
   before_filter :get_site_by_token
-
+ def get_qr_image
+  url = "www.baidu.com"
+  @qr = RQRCode::QRCode.new(url, :size => 3, :level => 'l'.to_sym)
+  respond_to do |format|
+  format.html
+  # format.svg  { render :qrcode => request.url, :level => :l, :unit => 10 }
+  # format.png  { render :qrcode => request.url }
+  # format.gif  { render :qrcode => request.url }
+  #format.jpeg { render :qrcode => "www.baidu.com" }
+  end
+def get_qr_img_by_url
+  # format =  :png
+  # size   =  3
+  # level  =  :h
+  url = "ytuuiuouo" 
+  # qrcode = RQRCode::QRCode.new(url, :size => size, :level => level)
+  # svg    = RQRCode::Renderers::SVG::render(qrcode, {})
+  # image = MiniMagick::Image.read(svg) { |i| i.format "svg" }
+  # image.format "png" if format == :png
+  # path=image.path
+  respond_to do |format|
+   format.html
+   format.svg  { render :qrcode => url, :level => :l, :unit => 10 }
+   format.png  { render :qrcode => url }
+   format.gif  { render :qrcode => url }
+   format.jpeg { render :qrcode => url }
+  end
+end
+  end
   def get_site_by_token
     cweb = params[:cweb]
     if cweb == "wansu" || cweb == "xyyd"

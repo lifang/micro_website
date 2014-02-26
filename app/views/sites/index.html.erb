@@ -40,7 +40,7 @@
 					<% end %>
 				</div>
 
-				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>',<%=s.exist_app%>,<%=s.is_send_app_msg%>)"> 编辑 </a>
+				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>',<%=s.exist_app%>,'<%=s.is_send_app_msg%>')"> 编辑 </a>
 			</div>
 			<%end%>
 			

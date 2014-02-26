@@ -37,7 +37,8 @@ MicroWebsite::Application.routes.draw do
   match '/sites/:site_id/app_managements/get_form_date' => 'app_managements#get_form_date', :as => :preview_visits, :via => :post
   match '/submit_redirect' => 'app_managements#submit_redirect', :as => :submit_redirect, :via => :get
   match '/get_form_date' => 'client_forms#get_form_date', :as => :preview_visits, :via => :post
-
+  match '/get_qr_image' ,to:"weixins#get_qr_image"
+  match '/get_qr_img_by_url' ,to:"weixins#get_qr_img_by_url"
   # Sample resource route with options:
   namespace :api do
     resources :clients do
@@ -63,6 +64,7 @@ MicroWebsite::Application.routes.draw do
     resources :app_managements do
       collection do        
         post :create_client_info_model
+
       end
     end
 

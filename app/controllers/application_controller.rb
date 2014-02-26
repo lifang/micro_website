@@ -2,8 +2,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
-  
-  prepend_before_filter :check_user_status
   include ApplicationHelper
   include PagesHelper
   include AppManagementsHelper
@@ -27,6 +25,8 @@ class ApplicationController < ActionController::Base
   GET_USER_INFO_ACTION = "/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN"
   ACCESS_TOKEN_ACTION = "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
 
+
+ 
 
   def get_site
     @site = Site.find_by_id params[:site_id]
