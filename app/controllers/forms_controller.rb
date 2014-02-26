@@ -107,18 +107,20 @@ class FormsController < ApplicationController
       else
       end
     end
-    model_html = "<!DOCTYPE html>
-                 <html>
-                  <head>
-                    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-                    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+    model_html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+<head>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
                     <link href='/allsites/style/template_style.css' media='all' rel='stylesheet' type='text/css'></link>
                     <script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
+                  <script src='/allsites/js/form.js' type='text/javascript'></script>
+                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
                     <title>preview</title>
                   </head>
                   <body>
                       <article>
-                         <section class=\"cover_bg title\" style='background-image:url(\"#{ page.img_path}\");'></section>
+                         <img src='#{ page.img_path}' width='100%'/>
                          <form accept-charset='UTF-8' action='/sites/#{site.id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post' data-redirect_path='#{redirect_path}'>
                              <div style=\"margin:0;padding:0;display:inline\">
                             <input name=\"utf8\" type=\"hidden\" value=\"✓\">
@@ -127,7 +129,7 @@ class FormsController < ApplicationController
                                 <ul>" + form_ele +"</ul>
                                 <div class=\"form_btn\"><button type='button' onclick=\"return submit_form(this)\">确认提交</button></div>
                            </section>
-                         <form>
+                         </form>
 
                           <div class='second_box' id='form_view'>
                             <div class='second_content second_content_3'>
@@ -139,8 +141,7 @@ class FormsController < ApplicationController
                            </div>
                       </article>
                       "+ page_footer(site) +"
-                  <script src='/allsites/js/form.js' type='text/javascript'></script>
-                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
+                  
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',
