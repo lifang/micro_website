@@ -249,3 +249,9 @@
 .autoReplyEdit{
     display: none;
 }
+.inputStyle {
+    height: 18px;
+    padding: 3px;
+    resize: none;
+    width: 200px;
+}

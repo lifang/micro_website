@@ -35,6 +35,12 @@ var select_option = "<option></option>"
 
 var select_hidden_option = "<input type=\"hidden\" class=\"hidden_option\"/>"
 
+var text_ele = "<div class=\"itemBox textBox\">\n\
+                   <span class=\"close\"></span>\n\
+                   <label></label>\n\
+                   <input type=\"hidden\" class=\"hidden_label\"/>\n\
+                 </div>"
+
 $(function(){
     //弹出增加表单元素的框
     $(".formAct button").on('click', function(){
@@ -42,6 +48,7 @@ $(function(){
         show_tag($("#" + pop_id))
     });
     //弹出框里面点击确定，增加表单元素
+    //增加输入框
     $(".addItem").on("click",".addItemInput",function(){
         var item = $(this).parents(".addItem");
         var input = $(item).find(".insetBox input").val();
@@ -151,6 +158,34 @@ $(function(){
             });
         }
 
+    });
+
+    //增加纯文本
+    $(".addItem").on("click",".addItemText",function(){
+        var item = $(this).parents(".addItem");
+        var input = $(item).find(".insetBox input").val();
+        if($.trim(input)==""){
+            tishi_alert("您还未输入内容！")
+        }else{
+            var text_form_ele = $(".iphoneVirtual .form_ele").find(".textBox");
+            var text_length = text_form_ele.length;
+            if(text_length!=0){
+                var last_text_box = text_form_ele.last()
+                text_length = last_text_box.find("input.hidden_label").attr("name").split("_")[1][0];
+                text_length = parseInt(text_length) + 1;
+            }
+            $(".iphoneVirtual .form_ele").append(text_ele);
+            var new_text_ele = $(".iphoneVirtual .form_ele").find(".textBox").last();
+            new_text_ele.find("label").text(input);    //label设置值
+            new_text_ele.find("input.hidden_label").attr("name", "labels[text_" + text_length + "]");
+            new_text_ele.find("input.hidden_label").val(input);
+            hide_tab($("#text_pop"));
+            $(".itemBox").on("click",".close",function(){
+                if(confirm("确定移除吗？")){
+                    $(this).parents(".itemBox").remove();
+                }
+            });
+        }
     });
 
     $(".itemBox").on("click",".close",function(){
