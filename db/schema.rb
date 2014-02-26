@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20140220032733) do
 
-
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
     t.string   "name"
@@ -128,7 +127,7 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.boolean  "mtype"
+    t.integer  "mtype"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "solid_link_flag"
@@ -226,7 +225,7 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.string   "cweb"
-    t.integer  "template",                          :default => 1
+    t.integer  "template"
     t.boolean  "exist_app",                         :default => false
     t.datetime "not_receive_start_at"
     t.datetime "not_receive_end_at"
@@ -257,9 +256,9 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.string   "open_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "open_id",       :limit => 50
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "award_id"
     t.string   "secret_code"
     t.boolean  "if_checked"

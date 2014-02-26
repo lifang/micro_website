@@ -1,6 +1,7 @@
 <div class="main_container">
   <%=render 'shared/left_panel'%>
   <div class="main_cont">
+    <input type="hidden" id="site_id" value="<%=@site.id%>"/>
     <div class="tit"><span>标题：</span><input type="text" id="title"  name="title"/><span>文件名：</span><input id="name" name="name" type="text" /><span>.html</span></div>
     <div class="tempChoice tempChoice2" style="width:200px;">
       <span> </span>
@@ -14,7 +15,7 @@
     <hr class="cf" color="#bcbcbc" />
 
     <div class="iphoneVirtual m_tab" style="overflow: auto;max-height: 568px;width: 337px;">
-      <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site)) do |f|%>
+      <%=form_for(:pages,url: tmlt_sub_create_site_pages_path(@site),html:{style:"min-height: 570px;width: 320px;"}) do |f|%>
         <input type="hidden" value="<%=@site.id%>" name="site_id" />
         <div class="topPic"></div>
         <div class="smlPicList cf ">
@@ -52,33 +53,7 @@
   </div>
 </div>
 
-<div class="second_box addLink">
-  <div class="second_content">
-    <span class="close" >关闭</span>
-    <h1>菜单一链接</h1>
-    <div id="linkPage">
-      <div class="tabs">
-        <span class="tab curr">站内链接</span>
-        <span class="tab">站外链接</span>
-        <div class="tabsLine"></div>
-      </div>
-      <input type="hidden" class="hiddenIndex" />
-      <input type="hidden" class="hiddenBlock" />
-      <div class="tabDiv curr inside">
-        <% @sub_pages.each do |page| %>
-          <input type="radio" name="insite_link" value="<%= "/sites/static?path_name=" + page.path_name %>"/><span class="radioVal"><%= page.title %></span>
-        <% end %>
-      </div>
-      <div class="tabDiv">
-        <label>站外链接输入：</label><input type="text" name="outside_link" />
-      </div>
-      <div class="scdBox_act">
-        <button class="blue_btn" onclick="setLink('sub_page')">确认</button>
-        <button class="blue_btn cancel">取消</button>
-      </div>
-    </div>
-  </div>
-</div>
+<%=render 'shared/links',from:"sub_page"%>
 
 <script>
   // 定义图片库, drop area
