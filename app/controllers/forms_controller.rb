@@ -45,11 +45,13 @@ class FormsController < ApplicationController
 
   def update
     labels = params[:labels]
+    labels_param = labels.dup
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
-    params[:page][:element_relation] = labels if labels
+    params[:page][:element_relation] = labels_param if labels
     @form = Page.find_by_id params[:id]
     Page.transaction do
+      params[:page][:element_relation].delete_if{|k,v| k.include?("text")}
       if @form.update_attributes(params[:page])
         if @form.submit_redirect[0]
           submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
@@ -94,7 +96,11 @@ class FormsController < ApplicationController
       elsif name_str.include?("checkbox")
         form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
-          form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           if option == "其他"
+              form_ele << "<li><input class='questionTitle' type=\"checkbox\"><p>#{option}</p><input name=\"form[#{name}][]\" type=\"text\"></li>"
+           else
+             form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           end
         end
         form_ele << "</div>"
       elsif name_str.include?("select")

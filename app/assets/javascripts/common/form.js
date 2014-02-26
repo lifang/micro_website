@@ -9,37 +9,48 @@ var patten_html = new RegExp("[.]");
 
 //表单元素
 
+//输入框元素
 var input_ele = "<div class=\"itemBox inputBox\">\n\
                    <span class=\"close\"></span>\n\
                    <label></label><input type=\"text\" />\n\
                    <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>";
+//单选按钮
 var radio_ele = "<div class=\"itemBox radioBox\">\n\
                     <span class=\"close\"></span>\n\
                     <div class='label'><span></span><input type=\"hidden\" class=\"hidden_label\"/></div>\n\
                 </div>"
+//单选 选项
 var radio_option = "<div class=\"opt rad\"><input type=\"radio\" /><input type=\"hidden\" class=\"hidden_option\"/><span></span></div>"
 
+//复选框
 var checkbox_ele = "<div class=\"itemBox checkboxBox\">\n\
 			<span class=\"close\"></span>\n\
             <div class='label'><span class=\"label_value\"></span><input type=\"hidden\" class=\"hidden_label\"/></div>\n\
 	            </div>"
+//复选框选项
 var checkbox_option = "<div class=\"opt chk\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span></span></div>"
 
+//下拉菜单元素
 var select_ele = "<div class=\"itemBox selectBox\">\n\
                         <span class=\"close\"></span>\n\
 			<label></label><select></select>\n\
 		        <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>"
+//下拉选项
 var select_option = "<option></option>"
 
+//下拉隐藏元素
 var select_hidden_option = "<input type=\"hidden\" class=\"hidden_option\"/>"
 
+//文本元素
 var text_ele = "<div class=\"itemBox textBox\">\n\
                    <span class=\"close\"></span>\n\
                    <label></label>\n\
                    <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>"
+//复选框 其他选项
+var checkbox_other_option = "<div class=\"opt chk other_chk_option\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span>其他</span><input type=\"text\" /></div>"
 
 $(function(){
     //弹出增加表单元素的框
@@ -102,8 +113,13 @@ $(function(){
             new_radio_ele.find(".label .hidden_label").attr("name", "labels[" + (box_ele == "radioBox" ? "radio" : "checkbox") + "_" + rc_length +"]"); //设置label隐藏域的值
             new_radio_ele.find(".label .hidden_label").val(rc_label)
             input_options.each(function(){
-                new_radio_ele.append(box_ele == "radioBox" ? radio_option : checkbox_option);
-                var new_option = new_radio_ele.find(".opt").last();
+                var new_option;
+                if($(this).parent(".optBox").hasClass("other_option") && box_ele == "radioBox" ){
+                   new_radio_ele.append(checkbox_other_option);
+                }else{
+                   new_radio_ele.append(box_ele == "radioBox" ? radio_option : checkbox_option);
+                }
+                new_option = new_radio_ele.find(".opt").last();
                 new_option.find("span").text($(this).val());
                 new_option.find("input.hidden_option").attr("name", "options[" + (box_ele == "radioBox" ? "radio" : "checkbox") +"_" + rc_length + "][]");
                 new_option.find("input.hidden_option").val($(this).val());
@@ -185,6 +201,18 @@ $(function(){
                     $(this).parents(".itemBox").remove();
                 }
             });
+        }
+    });
+
+    $(".addItem").on("click",".addOthBox",function(){
+        var item = $(this).parents(".addItem");
+        if($(item).hasClass("addChekItem")){
+            var qita = $(item).find(".insetBox").find(".other_option");
+            if(qita.length == 0){
+                $(item).find(".insetBox").append('<div class="optBox other_option"><label>其他选项： &nbsp;</label><input type="text" readonly="true" value="其他"/><span class="close2"></span></div>');
+            }else{
+                tishi_alert("其他选项只能加一项");
+            }
         }
     });
 
