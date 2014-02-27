@@ -45,11 +45,13 @@ class FormsController < ApplicationController
 
   def update
     labels = params[:labels]
+    labels_param = labels.dup
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
-    params[:page][:element_relation] = labels if labels
+    params[:page][:element_relation] = labels_param if labels
     @form = Page.find_by_id params[:id]
     Page.transaction do
+      params[:page][:element_relation].delete_if{|k,v| k.include?("text")}
       if @form.update_attributes(params[:page])
         if @form.submit_redirect[0]
           submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
@@ -84,17 +86,21 @@ class FormsController < ApplicationController
     labels.each do |name, value|
       name_str = name.to_s
       if name_str.include?("input")
-        form_ele << "<div class='options'><li><label>#{value}：</label><input name=\"form[#{name}]\" class='questionTitle' type=\"text\"></li></div>"
+        form_ele << "<div class='options'><li><label>#{value}</label><input name=\"form[#{name}]\" class='questionTitle' type=\"text\"></li></div>"
       elsif name_str.include?("radio")
-        form_ele << "<h2>#{value}</h2><div class='options'>"
+        form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
           form_ele << "<li><input name=\"form[#{name}]\" class='questionTitle' type=\"radio\" value=\"#{option}\"><p>#{option}</p></li>"
         end
         form_ele << "</div>"
       elsif name_str.include?("checkbox")
-        form_ele << "<h2>#{value}</h2><div class='options'>"
+        form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
-          form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           if option == "其他"
+              form_ele << "<li><input class='questionTitle' type=\"checkbox\"><p>#{option} <input name=\"form[#{name}][]\" type=\"text\" style='width:150px'></p></li>"
+           else
+             form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           end
         end
         form_ele << "</div>"
       elsif name_str.include?("select")
@@ -104,7 +110,8 @@ class FormsController < ApplicationController
           form_ele << "<option>#{option}</option>"
         end
         form_ele << "</select></li></div>"
-      else
+      elsif name_str.include?("text")
+        form_ele << "<div class='options'><li><label>#{value}</label></li></div>"
       end
     end
     model_html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
@@ -140,7 +147,6 @@ class FormsController < ApplicationController
                             </div>
                            </div>
                       </article>
-                      "+ page_footer(site) +"
                   
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
