@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220032733) do
+ActiveRecord::Schema.define(:version => 20140227021413) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
     t.date     "end_date"
     t.integer  "total_number"
     t.integer  "no_operation_number"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "types",               :default => 0
   end
 
   add_index "awards", ["site_id"], :name => "index_awards_on_site_id"

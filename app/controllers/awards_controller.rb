@@ -5,7 +5,7 @@ class AwardsController < ApplicationController
   layout 'sites'
   SITE_PATH = "/public/allsites/%s/"
   def index
-    @awards=@site.awards
+    @awards=Award.where(["site_id= ? and types = 0 ",@site.id] )
   end
 
   def new

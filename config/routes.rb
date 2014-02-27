@@ -1,6 +1,5 @@
 MicroWebsite::Application.routes.draw do
 
-
   devise_for :users, :controllers => { :passwords => "passwords" , :registrations => "registrations",:sessions=>'sessions'} do
     get "change", :to => "devise/registrations#edit"
     get "change_password", :to => "devise/passwords#change"
@@ -66,6 +65,11 @@ MicroWebsite::Application.routes.draw do
         post :create_client_info_model
 
       end
+    end
+    resources :qr_codes
+
+    resources :qr_code_awards  do
+      get :win_award_info
     end
 
     resources :awards do
