@@ -54,7 +54,6 @@ class WeixinsController < ApplicationController
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
         time_now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
-
           Message.transaction do
             begin
               m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
