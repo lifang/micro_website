@@ -94,7 +94,7 @@ class Api::ClientsController < ApplicationController
       end
       messages2 = messages.reverse.inject([]){|a,m|
         h = {:id => m.id, :from_user => m.from_user, :to_user => m.to_user, :types => m.types, :content => m.content,
-          :date => m.date, :status => m.status ? 0 : 1}
+          :date => m.date, :status => m.status ? 0 : 1, :message_type => m.message_type, :message_path => m.message_path}
         a << h;
         a
       }
