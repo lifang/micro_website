@@ -28,6 +28,7 @@ module PagesHelper
               </nav>
          </section>
     </article>
+
 </body>
 </html>
     "
@@ -36,7 +37,7 @@ module PagesHelper
   def model2_html site,bigimg,imgarr,alinkarr
     liarr =""
     imgarr.each_with_index do |img,index|
-      liarr += " <li><a href='#{alinkarr[index]}' class='cover_bg' style='background-image:url(\"#{img}\");'></a></li>
+      liarr += " <li><a href='#{alinkarr[index] if img!="#"}' class='cover_bg' style='background-image:url(\"#{img}\");'></a></li>
       "
     end
 
@@ -64,6 +65,7 @@ module PagesHelper
               </nav>
          </section>
     </article>
+
 </body>
 </html>
     "
@@ -86,8 +88,8 @@ module PagesHelper
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
@@ -103,14 +105,23 @@ module PagesHelper
     </article>
 " + page_footer(@site)+"
      <script type='text/javascript'>
-    	$(function(){
-			$('.show_pic ul li').wookmark({
-				container:$('.show_pic ul'),
-				offset:10,
-
-			});
-		})
+    	  $(function(){
+			    $('.show_pic ul li').wookmark({
+				    container:$('.show_pic ul'),
+				    offset:10
+			    });
+		    });
+        $(function(){
+          var cw = document.documentElement.clientWidth;
+          var image=new Image();
+          image_bak = $('.cover_bg').css('background-image');
+          if(typeof(image_bak)!='undefined'){
+              image.src= image_bak.split('(')[1].split(')')[0];
+              $('.title').css('height',Math.ceil((image.height*cw)/image.width ));
+          }
+        });
     </script>
+
 </body>
 </html>"
     html

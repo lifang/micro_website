@@ -30,8 +30,8 @@ function submit_template1_2(models,template){
         return false;
     }
     // if(template==2&&imgarr.length!=8){
-        // tishi_alert('存在未填充区域！');
-        // return false;
+    // tishi_alert('存在未填充区域！');
+    // return false;
     // }
     var alinkarr = $(models).children(".homeMenu").find("input");
     var imgstr ="",alinkstr ="";
@@ -42,7 +42,7 @@ function submit_template1_2(models,template){
     var html_content = $(models).html();
     $(models).find(".html_content").val(html_content);
     var form = $(models).parent();
-   // form.submit();
+    // form.submit();
     var str = form.serialize();
     $.ajax({
         async:true,
@@ -79,7 +79,7 @@ function template3_Submit(site_id){
         var form = $(".iv_temp3").parent("form");
         var content = $(".iv_temp3").html();
         var htmlContainer = form.find(".hidden_html");
-        htmlContainer.html(content)
+        htmlContainer.text(content)
         var dataValue = form.serialize();
         $.ajax({
             url: "/sites/" + site_id + "/pages/save_template3",
@@ -94,7 +94,6 @@ function template3_Submit(site_id){
             }
         })
     }
-    
 }
 
 function add_sub_template(){
@@ -120,27 +119,92 @@ function submit_sub_page(){
         return false;
     }
 
-    
-    
+    var page_type=$("#page_type").val();
+    var site_id=$("#site_id").val();
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
             $("#sub_title1").val(title);
             $("#sub_name1").val(name);
             $("#sub_m_title").val(title);
             $("#sub_m_name").val(name);
-            if(i==0){
+            if(i==0 && page_type!="edit"){
                 if($(".smlPic").find("a").length!=$(".smlPic").find("img").length ||$(".smlPic").find("a").length==0 ){
                     tishi_alert('存在未填充区域或者无图片区域！');
                     return false;
                 }
                 $("#html_content").val($(".iphoneVirtual form").html());
-                $(".iphoneVirtual form").submit();
-            }else if(i==1){
+                var form = $(".iphoneVirtual form").serialize();
+                 $.ajax({
+                    url: "/sites/" + site_id + "/pages/tmlt_sub_create",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("创建成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("创建失败,文件名存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
+
+
+            }else if(i==1 && page_type!="edit"){
                 if($.trim($(models[i]).find("textarea").val()) ==""){
                     tishi_alert('请输入内容！');
                     return false;
                 }
-                $(".iv_temp4.main_tab.m_tab form").submit();
+                var form = $(".iv_temp4.main_tab.m_tab form").serialize();
+                $.ajax({
+                    url: "/sites/" + site_id + "/pages/tmlt_sub_create",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("创建成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("创建失败,文件名存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
+            }else if(i==0 && page_type=="edit"){
+                if($(".smlPic").find("a").length!=$(".smlPic").find("img").length ||$(".smlPic").find("a").length==0 ){
+                    tishi_alert('存在未填充区域或者无图片区域！');
+                    return false;
+                }
+                var page_id = $("#page_id").val();
+                $("#html_content").val($(".iphoneVirtual form").html());
+                var form = $(".iphoneVirtual form").serialize();
+                 $.ajax({
+                    url: "/sites/" + site_id + "/pages/"+page_id+"/tmlt_sub_update",
+                    type: "POST",
+                    dataType: "text",
+                    data: form,
+                    success:function(data){
+                       if(data==1){
+
+                           tishi_alert("更新成功！");
+                           location.href="/sites/" + site_id + "/pages/sub";
+                       }else if(data == 0 ){
+                           tishi_alert("更新失败,文件不存在！");
+                       }
+                    },
+                    error:function(data){
+                    // alert("error");
+                    }
+                })
+
             }
         }
     }

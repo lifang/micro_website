@@ -9,39 +9,58 @@ var patten_html = new RegExp("[.]");
 
 //表单元素
 
+//输入框元素
 var input_ele = "<div class=\"itemBox inputBox\">\n\
                    <span class=\"close\"></span>\n\
                    <label></label><input type=\"text\" />\n\
                    <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>";
+//单选按钮
 var radio_ele = "<div class=\"itemBox radioBox\">\n\
                     <span class=\"close\"></span>\n\
                     <div class='label'><span></span><input type=\"hidden\" class=\"hidden_label\"/></div>\n\
                 </div>"
+//单选 选项
 var radio_option = "<div class=\"opt rad\"><input type=\"radio\" /><input type=\"hidden\" class=\"hidden_option\"/><span></span></div>"
 
+//复选框
 var checkbox_ele = "<div class=\"itemBox checkboxBox\">\n\
 			<span class=\"close\"></span>\n\
             <div class='label'><span class=\"label_value\"></span><input type=\"hidden\" class=\"hidden_label\"/></div>\n\
 	            </div>"
+//复选框选项
 var checkbox_option = "<div class=\"opt chk\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span></span></div>"
 
+//下拉菜单元素
 var select_ele = "<div class=\"itemBox selectBox\">\n\
                         <span class=\"close\"></span>\n\
 			<label></label><select></select>\n\
 		        <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>"
+//下拉选项
 var select_option = "<option></option>"
 
+//下拉隐藏元素
 var select_hidden_option = "<input type=\"hidden\" class=\"hidden_option\"/>"
+
+//文本元素
+var text_ele = "<div class=\"itemBox textBox\">\n\
+                   <span class=\"close\"></span>\n\
+                   <label></label>\n\
+                   <input type=\"hidden\" class=\"hidden_label\"/>\n\
+                 </div>"
+//复选框 其他选项
+var checkbox_other_option = "<div class=\"opt chk chk2 other_chk_option\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span>其他</span><input type=\"text\"/></div>"
 
 $(function(){
     //弹出增加表单元素的框
     $(".formAct button").on('click', function(){
         var pop_id = $(this).attr("data-ele");
-        show_tag($("#" + pop_id))
+        $("#" + pop_id).find("input").val("");
+        show_tag($("#" + pop_id));
     });
     //弹出框里面点击确定，增加表单元素
+    //增加输入框
     $(".addItem").on("click",".addItemInput",function(){
         var item = $(this).parents(".addItem");
         var input = $(item).find(".insetBox input").val();
@@ -95,8 +114,13 @@ $(function(){
             new_radio_ele.find(".label .hidden_label").attr("name", "labels[" + (box_ele == "radioBox" ? "radio" : "checkbox") + "_" + rc_length +"]"); //设置label隐藏域的值
             new_radio_ele.find(".label .hidden_label").val(rc_label)
             input_options.each(function(){
-                new_radio_ele.append(box_ele == "radioBox" ? radio_option : checkbox_option);
-                var new_option = new_radio_ele.find(".opt").last();
+                var new_option;
+                if($(this).parent(".optBox").hasClass("other_option") && box_ele == "checkboxBox" ){
+                   new_radio_ele.append(checkbox_other_option);
+                }else{
+                   new_radio_ele.append(box_ele == "radioBox" ? radio_option : checkbox_option);
+                }
+                new_option = new_radio_ele.find(".opt").last();
                 new_option.find("span").text($(this).val());
                 new_option.find("input.hidden_option").attr("name", "options[" + (box_ele == "radioBox" ? "radio" : "checkbox") +"_" + rc_length + "][]");
                 new_option.find("input.hidden_option").val($(this).val());
@@ -151,6 +175,47 @@ $(function(){
             });
         }
 
+    });
+
+    //增加纯文本
+    $(".addItem").on("click",".addItemText",function(){
+        var item = $(this).parents(".addItem");
+        var input = $(item).find(".insetBox input").val();
+        if($.trim(input)==""){
+            tishi_alert("您还未输入内容！")
+        }else{
+            var text_form_ele = $(".iphoneVirtual .form_ele").find(".textBox");
+            var text_length = text_form_ele.length;
+            if(text_length!=0){
+                var last_text_box = text_form_ele.last()
+                text_length = last_text_box.find("input.hidden_label").attr("name").split("_")[1][0];
+                text_length = parseInt(text_length) + 1;
+            }
+            $(".iphoneVirtual .form_ele").append(text_ele);
+            var new_text_ele = $(".iphoneVirtual .form_ele").find(".textBox").last();
+            new_text_ele.find("label").text(input);    //label设置值
+            new_text_ele.find("input.hidden_label").attr("name", "labels[text_" + text_length + "]");
+            new_text_ele.find("input.hidden_label").val(input);
+            hide_tab($("#text_pop"));
+            $(".itemBox").on("click",".close",function(){
+                if(confirm("确定移除吗？")){
+                    $(this).parents(".itemBox").remove();
+                }
+            });
+        }
+    });
+
+//复选框增加其他选项
+    $(".addItem").on("click",".addOthBox",function(){
+        var item = $(this).parents(".addItem");
+        if($(item).hasClass("addChekItem")){
+            var qita = $(item).find(".insetBox").find(".other_option");
+            if(qita.length == 0){
+                $(item).find(".insetBox").append('<div class="optBox other_option"><label>其他选项： &nbsp;</label><input type="text" readonly="true" value="其他"/><span class="close2"></span></div>');
+            }else{
+                tishi_alert("其他选项只能加一项");
+            }
+        }
     });
 
     $(".itemBox").on("click",".close",function(){

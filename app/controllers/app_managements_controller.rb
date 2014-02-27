@@ -113,8 +113,7 @@ class AppManagementsController < ApplicationController
     form.each_with_index do |element,index|
       ele = element[0][1..-1]
       if ele.eql?("text")
-        li += "<li><label>#{element[1][:name]}：<input name='form[t#{index}][name]' type='hidden' value='#{element[1][:name]}' /> </label><input name='form[t#{index}][value]' type='text'></li>
-        "
+        li += "<li><label>" + ((index==0 || index==1) ? "<span class='mark'>*</span>" : "") + "#{element[1][:name]}：<input name='form[t#{index}][name]' type='hidden' value='#{element[1][:name]}' /> </label><input name='form[t#{index}][value]' type='text'></li>"
         
         #单选
       elsif ele.eql?("radio")
@@ -161,7 +160,6 @@ class AppManagementsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>客户表单</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script src='http://malsup.github.com/jquery.form.js'></script> 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 
@@ -170,7 +168,7 @@ class AppManagementsController < ApplicationController
 
 <body>
   <article>
-        <section class='form_list'>
+        <section class='app_form'>
         <form action='/sites/#{@site.id}/app_managements/get_form_date' data-remote='true' data-type='script' method='post'>
           <div style='margin:0;padding:0;display:inline'>
           <input name='utf8' type='hidden' value='&#x2713;' />
@@ -178,10 +176,12 @@ class AppManagementsController < ApplicationController
           <ul>
                #{li}
             </ul>
+     <p class='warn'>带*内容爲必填项目，请你务必完成填写。对于你所填写的所有信息，我们将严格保密。</p>
             <div class='form_btn'><button type='button' onclick='submit_form(this)'>确认提交</button></div>
         </form>
         </section>
     </article>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
     <script>
       function submit_form(value){
         var input =$('.form_list').find('input[type=text]');
@@ -235,7 +235,6 @@ a.each(function(){
             }
         })
 </script>
-
 </body>
 </html>
 

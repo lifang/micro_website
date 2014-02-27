@@ -104,7 +104,6 @@ function submit_imgstream(){
         return false;
     }
     var form_data = $(".pic_form").serialize();
-    alert(form_data);
     if ($("#page_type").val() == 'edit') {
         $.ajax({
             //async : true,

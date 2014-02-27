@@ -8,7 +8,35 @@ class WeixinsController < ApplicationController
   require "tempfile"
   skip_before_filter :authenticate_user!
   before_filter :get_site_by_token
-
+ def get_qr_image
+  url = "www.baidu.com"
+  @qr = RQRCode::QRCode.new(url, :size => 3, :level => 'l'.to_sym)
+  respond_to do |format|
+  format.html
+  # format.svg  { render :qrcode => request.url, :level => :l, :unit => 10 }
+  # format.png  { render :qrcode => request.url }
+  # format.gif  { render :qrcode => request.url }
+  #format.jpeg { render :qrcode => "www.baidu.com" }
+  end
+def get_qr_img_by_url
+  # format =  :png
+  # size   =  3
+  # level  =  :h
+  url = "ytuuiuouo" 
+  # qrcode = RQRCode::QRCode.new(url, :size => size, :level => level)
+  # svg    = RQRCode::Renderers::SVG::render(qrcode, {})
+  # image = MiniMagick::Image.read(svg) { |i| i.format "svg" }
+  # image.format "png" if format == :png
+  # path=image.path
+  respond_to do |format|
+   format.html
+   format.svg  { render :qrcode => url, :level => :l, :unit => 10 }
+   format.png  { render :qrcode => url }
+   format.gif  { render :qrcode => url }
+   format.jpeg { render :qrcode => url }
+  end
+end
+  end
   def get_site_by_token
     cweb = params[:cweb]
     if cweb == "wansu" || cweb == "xyyd"
@@ -53,7 +81,8 @@ class WeixinsController < ApplicationController
       current_client =  Client.where("site_id=#{@site.id} and types = #{Client::TYPES[:ADMIN]}")[0]  #后台登陆人员
       client = Client.find_by_open_id_and_status(open_id, Client::STATUS[:valid])  #查询有效用户
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
-        time_now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+        time_now = Time.now.strftime("%H:%M")
+
           Message.transaction do
             begin
               m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
@@ -67,7 +96,7 @@ class WeixinsController < ApplicationController
                   :types => Message::TYPES[:weixin], :content => content,
                   :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
                   :message_type => msg_type_value, :message_path => wx_resource_url)
-                if mess && (!@site.receive_status || !(@site.receive_status && time_now >= @site.not_receive_start_at.to_s && time_now <= @site.not_receive_end_at.to_s))
+                if mess && (!@site.receive_status || !(@site.receive_status && @site.not_receive_start_at && @site.not_receive_end_at && time_now >= @site.not_receive_start_at.strftime("%H:%M") && time_now <= @site.not_receive_end_at.strftime("%H:%M")))
                   #推送到IOS端
                   APNS.host = 'gateway.sandbox.push.apple.com'
                   APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')

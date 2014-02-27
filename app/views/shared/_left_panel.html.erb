@@ -11,7 +11,9 @@
       </li>
     <% end %>
     <%= link_to(sub_site_pages_path(@site)) do %>
-      <li class="leftItem2 <%= controller.action_name == "sub" ? 'leftItem_selected' : '' %>">
+      <li class="leftItem2 <%= controller.action_name == "sub" ||
+                               controller.action_name == "tmlt_sub_new" ||
+                               controller.action_name == "tmlt_sub_edit" ? 'leftItem_selected' : '' %>">
         其他页
       </li>
     <% end %>
@@ -54,6 +56,16 @@
     <%=link_to site_weixin_replies_path(@site) do%>
       <li class="leftItem10 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
         自动回复
+      </li>
+    <%=link_to site_weixin_replies_path(@site) do%>
+      <li class="leftItem11 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
+        二维码
+      </li>
+    <% end %>
+    <% end %>
+      <%=link_to site_qr_code_awards_path(@site) do%>
+      <li class="leftItem12 <%= controller.controller_name == "qr_code_awards" ? "leftItem_selected":"" %>">
+        二维码奖品
       </li>
     <% end %>
   </ul>

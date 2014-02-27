@@ -153,12 +153,15 @@ class ImageStreamsController < ApplicationController
       fb.write(bigcontent.html_safe)
     end
   end
-
+  def encoding_character(str)
+    arr={"<"=>"&lt;",">"=>"&gt;"}
+    str.gsub(/<|>/){|s| arr[s]}
+end
   #得到内容
   def get_content(imgarr,textarr)
     str=""
     (0..imgarr.length-1).each do |x|
-      p1=(textarr[x].nil? ? '':"<p>#{textarr[x]}</p>")
+      p1=(textarr[x].nil? ? '':"<p>#{encoding_character textarr[x]}</p>")
       #image = MiniMagick::Image.open(Rails.root.to_s + '/public' +deal_img_to_min(imgarr[x]))
       #<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img src='#{deal_img_to_min imgarr[x]}' width='140' height='#{image['height']*140/image['width']}' ></a>#{p1}</li>
       str+="<li><a href='bigimg_#{@page.file_name}#page-#{x+1}'><img  src='#{deal_img_to_min imgarr[x]}'></a>#{p1}</li>
@@ -174,8 +177,8 @@ class ImageStreamsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
@@ -221,8 +224,9 @@ class ImageStreamsController < ApplicationController
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{@page.title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.mobile-1.3.2.js'></script>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
+
 <link href='/allsites/style/jquery.mobile-1.3.2.css' rel='stylesheet' type='text/css'>
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 <style  type='text/css'>

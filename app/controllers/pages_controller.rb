@@ -266,18 +266,19 @@ class PagesController < ApplicationController
     img_links = params[:img_link]
     img_src = params[:img_src]
     ad_srcs = params[:ad_src]
+    ad_links = params[:ad_link]
     page = @site.pages.main[0]
     Page.transaction do
-      #begin
-        content = initial_template3(img_links, img_src, ad_srcs)
+      begin
+        content = initial_template3(img_links, img_src, ad_srcs, ad_links)
         save_into_file(content, page, page.file_name) if content
         page.update_attribute(:page_html, params[:page][:content].strip)
         @site.update_attribute(:template, Constant::Template[:temp3])
 
         render :text => "0"
-     # rescue
-        #render :text => "-1"
-      #end
+      rescue
+        render :text => "-1"
+      end
     end
   end
 
@@ -310,11 +311,9 @@ class PagesController < ApplicationController
       imgarr_each_img imgarr,"290x290","_sub."
       content = sub_page_html title,top_img,imgarr,link_arr
       save_as_sub_page @site,path,content
-      flash[:success]='创建成功！'
-      redirect_to sub_site_pages_path(@site)
+      render text:1
     else
-      flash[:error]="创建失败,文件名存在！"
-      redirect_to tmlt_sub_new_site_pages_path(@site)
+      render text:0
     end
   end
   def tmlt_sub_edit
@@ -343,11 +342,9 @@ class PagesController < ApplicationController
       imgarr_each_img imgarr,"290x290","_sub."
       content = sub_page_html title,top_img,imgarr,link_arr
       save_as_sub_page @site,path,content
-      flash[:success]='更新成功！'
-      redirect_to sub_site_pages_path(@site)
+      render text:1
     else
-      flash[:error]="更新失败"
-      redirect_to tmlt_sub_edit_site_pages_path(@site)
+       render text:0
     end
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220032733) do
+ActiveRecord::Schema.define(:version => 20140227021413) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
     t.date     "end_date"
     t.integer  "total_number"
     t.integer  "no_operation_number"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "types",               :default => 0
   end
 
   add_index "awards", ["site_id"], :name => "index_awards_on_site_id"
@@ -127,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
 
   create_table "micro_messages", :force => true do |t|
     t.integer  "site_id"
-    t.boolean  "mtype"
+    t.integer  "mtype"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "solid_link_flag"
@@ -225,7 +226,7 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.string   "cweb"
-    t.integer  "template",                          :default => 1
+    t.integer  "template"
     t.boolean  "exist_app",                         :default => false
     t.datetime "not_receive_start_at"
     t.datetime "not_receive_end_at"
@@ -256,9 +257,9 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
 
   create_table "user_awards", :force => true do |t|
     t.integer  "award_info_id"
-    t.string   "open_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "open_id",       :limit => 50
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "award_id"
     t.string   "secret_code"
     t.boolean  "if_checked"
@@ -284,3 +285,4 @@ ActiveRecord::Schema.define(:version => 20140220032733) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
+

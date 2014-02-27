@@ -40,7 +40,7 @@
 					<% end %>
 				</div>
 
-				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>',<%=s.exist_app%>,<%=s.is_send_app_msg%>)"> 编辑 </a>
+				<a name="new_point" class="edit" id='edit' onclick="show_edit_page('<%= s.name%>','<%= s.root_path%>','<%= s.notes%>','<%= s.cweb%>','<%=client.username unless client.nil?%>','<%=client.password unless client.nil?%>',<%=s.exist_app%>,'<%=s.is_send_app_msg%>')"> 编辑 </a>
 			</div>
 			<%end%>
 			
@@ -124,7 +124,7 @@
 
 			</li>
 			<li>
-				<%= f.label '自动发微信消息？'%><input type="radio" value='1' class="is_send_app_msg" name='is_send_app_msg'/> 是  <input type="radio" class="is_send_app_msg" name='is_send_app_msg' value='0' checked/> 否 
+				<%= f.label '能否发微信消息？'%><input type="radio" value='1' class="is_send_app_msg" name='is_send_app_msg'/> 能  <input type="radio" class="is_send_app_msg" name='is_send_app_msg' value='0' checked/> 不能
 			</li>
 			<li class="exist_app_li">
 				<%= f.label '是否配置app？'%><input type="radio" class="exist_app" value='1' name='exist_app'/> 是  <input type="radio" class="exist_app" name='exist_app' value='0' checked/> 否 

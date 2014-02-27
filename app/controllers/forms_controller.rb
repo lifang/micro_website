@@ -45,11 +45,13 @@ class FormsController < ApplicationController
 
   def update
     labels = params[:labels]
+    labels_param = labels.dup
     options = params[:options]
     params[:page][:file_name] = params[:page][:file_name] + ".html" if params[:page][:file_name]
-    params[:page][:element_relation] = labels if labels
+    params[:page][:element_relation] = labels_param if labels
     @form = Page.find_by_id params[:id]
     Page.transaction do
+      params[:page][:element_relation].delete_if{|k,v| k.include?("text")}
       if @form.update_attributes(params[:page])
         if @form.submit_redirect[0]
           submit_redirect = @form.submit_redirect[0].update_attributes(params[:tishi])
@@ -84,17 +86,21 @@ class FormsController < ApplicationController
     labels.each do |name, value|
       name_str = name.to_s
       if name_str.include?("input")
-        form_ele << "<div class='options'><li><label>#{value}：</label><input name=\"form[#{name}]\" class='questionTitle' type=\"text\"></li></div>"
+        form_ele << "<div class='options'><li><label>#{value}</label><input name=\"form[#{name}]\" class='questionTitle' type=\"text\"></li></div>"
       elsif name_str.include?("radio")
-        form_ele << "<h2>#{value}</h2><div class='options'>"
+        form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
           form_ele << "<li><input name=\"form[#{name}]\" class='questionTitle' type=\"radio\" value=\"#{option}\"><p>#{option}</p></li>"
         end
         form_ele << "</div>"
       elsif name_str.include?("checkbox")
-        form_ele << "<h2>#{value}</h2><div class='options'>"
+        form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
-          form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           if option == "其他"
+              form_ele << "<li><input class='questionTitle' type=\"checkbox\"><p>#{option} <input name=\"form[#{name}][]\" type=\"text\" style='width:150px'></p></li>"
+           else
+             form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
+           end
         end
         form_ele << "</div>"
       elsif name_str.include?("select")
@@ -104,21 +110,24 @@ class FormsController < ApplicationController
           form_ele << "<option>#{option}</option>"
         end
         form_ele << "</select></li></div>"
-      else
+      elsif name_str.include?("text")
+        form_ele << "<div class='options'><li><label>#{value}</label></li></div>"
       end
     end
-    model_html = "<!DOCTYPE html>
-                 <html>
-                  <head>
-                    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-                    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+    model_html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+<head>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
                     <link href='/allsites/style/template_style.css' media='all' rel='stylesheet' type='text/css'></link>
                     <script src='/allsites/js/jQuery-v1.9.0.js' type='text/javascript'></script>
+                  <script src='/allsites/js/form.js' type='text/javascript'></script>
+                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
                     <title>preview</title>
                   </head>
                   <body>
                       <article>
-                         <section class=\"cover_bg title\" style='background-image:url(\"#{ page.img_path}\");'></section>
+                         <img src='#{ page.img_path}' width='100%'/>
                          <form accept-charset='UTF-8' action='/sites/#{site.id}/pages/#{page.id}/submit_queries' class='submit_form_static' method='post' data-redirect_path='#{redirect_path}'>
                              <div style=\"margin:0;padding:0;display:inline\">
                             <input name=\"utf8\" type=\"hidden\" value=\"✓\">
@@ -127,7 +136,7 @@ class FormsController < ApplicationController
                                 <ul>" + form_ele +"</ul>
                                 <div class=\"form_btn\"><button type='button' onclick=\"return submit_form(this)\">确认提交</button></div>
                            </section>
-                         <form>
+                         </form>
 
                           <div class='second_box' id='form_view'>
                             <div class='second_content second_content_3'>
@@ -138,9 +147,7 @@ class FormsController < ApplicationController
                             </div>
                            </div>
                       </article>
-                      "+ page_footer(site) +"
-                  <script src='/allsites/js/form.js' type='text/javascript'></script>
-                  <script src=\"/allsites/js/template_main.js\" type=\"text/javascript\"></script>
+                  
                   <script language='javascript' type='text/javascript'>
                           $.ajax({
                               url: '/get_token',
