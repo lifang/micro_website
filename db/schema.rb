@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20140220032733) do
 
-
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
     t.string   "name"
