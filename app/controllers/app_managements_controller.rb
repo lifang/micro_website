@@ -88,12 +88,14 @@ class AppManagementsController < ApplicationController
     form.each_with_index do |f,index|
       if f[0][1..-1]=="label"
         value =f[1][:value]
+        unless value.nil?
         value.each do |v|
           tag =Tag.find_by_content(v)
           label = Label.where("client_id = ? and site_id= ? and tag_id=?" , client.id , site_id , tag.id)[0]
           if label.nil?
             Label.create(site_id:site_id,client_id:client.id,tag_id:tag.id)
           end
+        end
         end
       end
     end
@@ -184,7 +186,7 @@ class AppManagementsController < ApplicationController
 <script type='text/javascript' src='/allsites/js/template_main.js'></script>
     <script>
       function submit_form(value){
-        var input =$('.form_list').find('input[type=text]');
+        var input =$('.app_form').find('input[type=text]');
         name = $.trim($(input[0]).val());
         if(name==''){
           alert('请输入姓名');
