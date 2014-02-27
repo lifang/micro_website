@@ -249,9 +249,6 @@
 .autoReplyEdit{
     display: none;
 }
-.inputStyle {
-    height: 18px;
-    padding: 3px;
-    resize: none;
-    width: 200px;
-}
+
+.opt.chk2 span { display: inline-block; width: 80px;}
+.opt input[type="text"] { display: inline-block;}

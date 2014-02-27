@@ -97,7 +97,7 @@ class FormsController < ApplicationController
         form_ele << "<h2>#{value}</h2><div class='options options2'>"
         options[name].each do |option|
            if option == "其他"
-              form_ele << "<li><input class='questionTitle' type=\"checkbox\"><p>#{option}</p><input name=\"form[#{name}][]\" type=\"text\"></li>"
+              form_ele << "<li><input class='questionTitle' type=\"checkbox\"><p>#{option} <input name=\"form[#{name}][]\" type=\"text\" style='width:150px'></p></li>"
            else
              form_ele << "<li><input name=\"form[#{name}][]\" class='questionTitle' type=\"checkbox\" value=\"#{option}\"><p>#{option}</p></li>"
            end

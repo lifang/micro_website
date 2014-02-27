@@ -50,13 +50,14 @@ var text_ele = "<div class=\"itemBox textBox\">\n\
                    <input type=\"hidden\" class=\"hidden_label\"/>\n\
                  </div>"
 //复选框 其他选项
-var checkbox_other_option = "<div class=\"opt chk other_chk_option\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span>其他</span><input type=\"text\" /></div>"
+var checkbox_other_option = "<div class=\"opt chk chk2 other_chk_option\"><input type=\"checkbox\" /><input type=\"hidden\" class=\"hidden_option\"/><span>其他</span><input type=\"text\"/></div>"
 
 $(function(){
     //弹出增加表单元素的框
     $(".formAct button").on('click', function(){
         var pop_id = $(this).attr("data-ele");
-        show_tag($("#" + pop_id))
+        $("#" + pop_id).find("input").val("");
+        show_tag($("#" + pop_id));
     });
     //弹出框里面点击确定，增加表单元素
     //增加输入框
@@ -114,7 +115,7 @@ $(function(){
             new_radio_ele.find(".label .hidden_label").val(rc_label)
             input_options.each(function(){
                 var new_option;
-                if($(this).parent(".optBox").hasClass("other_option") && box_ele == "radioBox" ){
+                if($(this).parent(".optBox").hasClass("other_option") && box_ele == "checkboxBox" ){
                    new_radio_ele.append(checkbox_other_option);
                 }else{
                    new_radio_ele.append(box_ele == "radioBox" ? radio_option : checkbox_option);
@@ -204,6 +205,7 @@ $(function(){
         }
     });
 
+//复选框增加其他选项
     $(".addItem").on("click",".addOthBox",function(){
         var item = $(this).parents(".addItem");
         if($(item).hasClass("addChekItem")){
