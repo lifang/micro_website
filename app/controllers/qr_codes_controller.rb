@@ -5,7 +5,7 @@ class QrCodesController < ApplicationController
   layout 'sites'
   
   def index
-    @qr_code = Page.where("site_id = #{@site.id} and types=#{Page::TYPE_NAMES[:sub]} and template = #{Page::TEMPLATE[:qr_code]}")[0]
+    @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
     @qr_code = Page.new unless @qr_code
     resources_for_select
     @awards =@site.awards.qr_code
@@ -46,7 +46,7 @@ class QrCodesController < ApplicationController
   end
 
   def after_scan
-    @qr_code = Page.where("site_id = #{@site.id} and types=#{Page::TYPE_NAMES[:sub]} and template = #{Page::TEMPLATE[:qr_code]}")[0]
+    @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
     @qr_img = params[:qr_img]
     @code = params[:code]
     render :layout => false

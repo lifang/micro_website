@@ -7,7 +7,6 @@
         <%= f.text_field :title %>
         <span>文件名：</span>
         <%= f.text_field :file_name, :value => @qr_code.new_record? ? "" : @qr_code.file_name.gsub(".html", "") %><span>.html</span></div>
-      <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:sub] %>
       <%= f.hidden_field :template, :value => Page::TEMPLATE[:qr_code] %>
       <hr class="cf" color="#bcbcbc" />
       <div class="vstContr">
