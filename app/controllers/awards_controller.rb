@@ -9,7 +9,7 @@ class AwardsController < ApplicationController
   end
 
   def new
-    @award=@site.awards.build
+    @award = @site.awards.build
 
   end
 
@@ -209,18 +209,13 @@ class AwardsController < ApplicationController
     render :text => ua ? "1" : "0"
   end
   def template
-    get_imgs
-    @awards =@site.awards
+    resources_for_select
+    @awards = @site.awards.ggl
     @template = Page.where("site_id = #{@site.id} and types=1 and template = 2")[0]
   end
 
-  def get_imgs
-    @imgs_pathes = @site.resources.where("path_name like '%.jpg' or path_name like '%.gif' or path_name like '%.png' or path_name like '%.jpeg' ")
-    @imgs_path = @imgs_pathes.paginate(:page =>1,:per_page=>12)
-  end
-
   def save_template
-    get_imgs
+    resources_for_select
     html_content = params[:html_content]
     @award_id = params[:award_id]
     title = params[:name]

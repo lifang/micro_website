@@ -71,7 +71,11 @@ MicroWebsite::Application.routes.draw do
 
       end
     end
-    resources :qr_codes
+    resources :qr_codes do
+      collection do
+        get :after_scan
+      end
+    end
 
     resources :qr_code_awards  do
       get :win_award_info

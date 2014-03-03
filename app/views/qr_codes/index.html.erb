@@ -1,2 +1,52 @@
-<h1>QrCodes#index</h1>
-<p>Find me in app/views/qr_codes/index.html.erb</p>
+<div class="main_container">
+  <%=render 'shared/left_panel'%>
+  <div class="main_cont">
+    <%= form_for @qr_code, :url => @qr_code.new_record? ? "/sites/#{@site.id}/qr_codes" : "/sites/#{@site.id}/qr_codes/#{@qr_code.id}", :method => @qr_code.new_record? ? :post : :put do |f| %>
+      <div class="tit">
+        <span>标题：</span>
+        <%= f.text_field :title %>
+        <span>文件名：</span>
+        <%= f.text_field :file_name, :value => @qr_code.new_record? ? "" : @qr_code.file_name.gsub(".html", "") %><span>.html</span></div>
+      <%= f.hidden_field :types, :value => Page::TYPE_NAMES[:sub] %>
+      <%= f.hidden_field :template, :value => Page::TEMPLATE[:qr_code] %>
+      <hr class="cf" color="#bcbcbc" />
+      <div class="vstContr">
+        <span>访问控制：</span>
+        <div class="vcItem <%= @qr_code && @qr_code.authenticate ? "check" : "" %>"><%= radio_button "page", "authenticate", 1, :checked => @qr_code && @qr_code.authenticate ? true : false %><span>是</span></div>
+        <div class="vcItem <%= @qr_code && @qr_code.authenticate ? "" : "check" %>"><%= radio_button "page", "authenticate", 0, :checked => @qr_code && @qr_code.authenticate ? false : true %><span>否</span></div>
+      </div>
+      <div class="iphoneVirtual qrCode" style="<%= @qr_code && @qr_code.img_path ? "background-image: url(#{@qr_code.img_path}) ;background-size:cover" : "" %>">
+        <div class="qrCodeBox">
+          <div class="qrCodePrize">
+          </div>
+        </div>
+        <div class="qrCodeInfo">
+          <span>兑奖码</span>
+        </div>
+      </div>
+      <%= f.hidden_field :img_path, :value => @qr_code && @qr_code.img_path ? @qr_code.img_path : "" %>
+      <div class="pageAct" >
+        <button class="blue_btn" onclick="return submit_qrcode(this)">保存</button>
+        <%if !@qr_code.new_record? %>
+          <%= link_to "预览" , after_scan_site_qr_codes_path(@site),:target =>"_blank", :class => "blue_btn page_preview" %>
+        <%end%>
+      </div>
+    <% end %>
+
+    <div id="tupian">
+      <%= render 'shared/form_images'%>
+    </div>
+
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+ 
+<% if @qr_code.errors.any? %>
+  tishi_alert("<%= @error.html_safe() %>")
+<% end %>
+  $input=$( ".qrCode" );
+  qr_code_drop($input, 320, 570);
+</script>

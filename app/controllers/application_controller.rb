@@ -153,7 +153,7 @@ class ApplicationController < ActionController::Base
 
   def resources_for_select
     @imgs_pathes = return_site_images(@site)
-    @imgs_path = @imgs_pathes.paginate(:page =>params[:page] || 1,:per_page=>12)
+    @imgs_path = @imgs_pathes.paginate(:page => 1,:per_page=>12)
   end
 
   #返回资源图片

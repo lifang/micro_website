@@ -57,8 +57,8 @@
       <li class="leftItem10 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
         自动回复
       </li>
-    <%=link_to site_weixin_replies_path(@site) do%>
-      <li class="leftItem11 <%= controller.controller_name == "weixin_replies" ? "leftItem_selected":"" %>">
+    <%=link_to site_qr_codes_path(@site) do%>
+      <li class="leftItem11 <%= controller.controller_name == "qr_codes" ? "leftItem_selected":"" %>">
         二维码
       </li>
     <% end %>

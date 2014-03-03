@@ -14,9 +14,9 @@ class Page < ActiveRecord::Base
   TYPE_NAMES = {:main => 0, :sub => 1, :style => 2, :form => 3, :image_text => 4, :image_stream => 5, :big_image => 6}
   TYPES = {0 => "主页", 1 => "子页", 2 => "样式表", 3 => "表单", 4 => "图文", 5 => "图片流", 6 => "大图"}
 
-  TEMPLATE = {:self => 0, :model => 1, :ggl => 2}
-  TEMPLATE_NAME = {0 => "自定义", 1 => "模板", 2 => "刮刮乐"}
-  #template 子页  0是自定义，1是模板  2是刮刮乐
+  TEMPLATE = {:self => 0, :model => 1, :ggl => 2, :qr_code => 3}
+  TEMPLATE_NAME = {0 => "自定义", 1 => "模板", 2 => "刮刮乐", 3 => "二维码"}
+  #template 子页  0是自定义，1是模板  2是刮刮乐 3是二维码
 
   TYPES_ARR.each do |type|
     #取出等于 type的集合

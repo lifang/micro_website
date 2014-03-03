@@ -848,3 +848,9 @@ opacity: 0.3; display: none; filter: alpha(opacity=30);}
 .listLi input { width: 151px; margin: 0 10px;}
 .addjx {border: 1px dashed; font-size: 20px; height: 30px; line-height: 30px; color: #4B4B4B; text-align: center;}
 .addjx span { cursor: pointer;}
+
+/* 二维码 */
+.qrCodeBox { width: 200px; height: 200px; margin: 180px auto 0; background: rgba(200,200,200,0.1);}
+.qrCodeBox .qrCodePrize { display: inline-block; width: 190px; height: 190px; margin: 5px; background: #fff;}
+.qrCodeInfo { height: 24px; text-align: center;}
+.qrCodeInfo span { display: inline-block; width: 150px; height: 18px; line-height: 18px; border: 1px solid #ed1010; margin: 5px; background: #fff; color:#ed1010;}
