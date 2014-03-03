@@ -13,7 +13,7 @@ class WeixinsController < ApplicationController
     render layout:'qr_code'
   end
   def dispose_award
-    code  = params[:code].to_i
+    @code  = params[:code].to_i
     index = params[:index]
     @award = Award.find_by_id(params[:award_id])
     img_path =""
@@ -26,16 +26,20 @@ class WeixinsController < ApplicationController
         img_path = @award_info.content
       else
         @award_info = nil
-        code = 0
+        @code = 0
         img_path = "error.jpg"
       end
     else
       @award_info = nil
-      code = 0
+      @code = 0
       img_path = "error.jpg"
     end
     @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
-    redirect_to "/sites/19/qr_codes/after_scan?code=#{code}&qr_img=#{img_path}"
+
+    @site = Site.find_by_id(@award.site_id)
+    @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
+    render "/qr_codes/after_scan"
+    #redirect_to "/sites/19/qr_codes/after_scan?code=#{code}&qr_img=#{img_path}"
   end
   def get_qr_img_by_url
     # format =  :png
@@ -80,11 +84,11 @@ class WeixinsController < ApplicationController
           # award_index = 1
           if award_index == "0"
             @status = 0  #未中奖
-            url = "http://192.168.199.201:3000/dispose_award?code=#{100000 + Random.rand(90000)}&index=0&award_id=#{@award.id}"  #谢谢参与
+            url = "http://192.168.135.128:3000/dispose_award?code=#{100000 + Random.rand(90000)}&index=0&award_id=#{@award.id}"  #谢谢参与
           else
             @status = 1  #中奖
             @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
-            url ="http://192.168.199.201:3000/dispose_award?code=#{@award_info.code[0].to_s}&index=#{award_index}&award_id=#{@award.id}" if @award_info
+            url ="http://192.168.135.128:3000/dispose_award?code=#{@award_info.code[0].to_s}&index=#{award_index}&award_id=#{@award.id}" if @award_info
           end
         else
           url = "it's none#{rand(1000)}"  #奖券已抽完
