@@ -56,7 +56,9 @@ $(function(){
     //弹出增加表单元素的框
     $(".formAct button").on('click', function(){
         var pop_id = $(this).attr("data-ele");
-        $("#" + pop_id).find("input").val("");
+        if(pop_id != "after_submit_form"){
+            $("#" + pop_id).find("input").val("");
+        }
         show_tag($("#" + pop_id));
     });
     //弹出框里面点击确定，增加表单元素
