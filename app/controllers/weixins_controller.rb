@@ -13,23 +13,29 @@ class WeixinsController < ApplicationController
     render layout:'qr_code'
   end
   def dispose_award
-    @code  = params[:code].to_i
+    code  = params[:code].to_i
     index = params[:index]
     @award = Award.find_by_id(params[:award_id])
-    
+    img_path =""
     if index!="0"
       @award_info = @award.award_infos.where("award_index = ?", index)[0]
       if !@award_info.code.blank? && @award_info.code.include?(@code)
         UserAward.create(award_info_id:@award_info.id,open_id:@code,award_id:@award.id)
         @award_info.code.delete(@code)
         @award_info.update_attribute(:code,@award_info.code)
+        img_path = @award_info.content
       else
         @award_info = nil
+        code = 0
+        img_path = "error.jpg"
       end
     else
       @award_info = nil
+      code = 0
+      img_path = "error.jpg"
     end
     @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
+    redirect_to "/sites/19/qr_codes/after_scan?code=#{code}&qr_img=#{img_path}"
   end
   def get_qr_img_by_url
     # format =  :png

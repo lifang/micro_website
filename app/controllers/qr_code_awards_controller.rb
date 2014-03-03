@@ -69,10 +69,8 @@ class QrCodeAwardsController < ApplicationController
         award_info.code =create_code award_info
         award_info.save
       end
-
     end
   end
-  
   #生成奖项code
   def create_code award_info
     arr=[]
