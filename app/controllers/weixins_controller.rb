@@ -38,7 +38,7 @@ class WeixinsController < ApplicationController
 
     @site = Site.find_by_id(@award.site_id)
     @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
-    render "/qr_codes/after_scan"
+    render "/qr_codes/after_scan", :layout => false
     #redirect_to "/sites/19/qr_codes/after_scan?code=#{code}&qr_img=#{img_path}"
   end
   def get_qr_img_by_url
