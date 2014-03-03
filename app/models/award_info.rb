@@ -1,8 +1,9 @@
 class AwardInfo < ActiveRecord::Base
-  attr_accessible :award_id, :content, :name, :number, :img, :award_index
+  attr_accessible :award_id, :content, :name, :number, :img, :award_index, :code
   belongs_to :award
   has_many :user_awards
   require "fileutils"
+  serialize :code
 
   SITE_PATH_C =  Rails.root.to_s + "/public/allsites/%s/"
 

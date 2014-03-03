@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227021413) do
+ActiveRecord::Schema.define(:version => 20140228021341) do
 
   create_table "award_infos", :force => true do |t|
     t.integer  "award_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20140227021413) do
     t.datetime "updated_at",  :null => false
     t.string   "img"
     t.integer  "award_index"
+    t.text     "code"
   end
 
   add_index "award_infos", ["award_id"], :name => "index_award_infos_on_award_id"
@@ -285,4 +286,3 @@ ActiveRecord::Schema.define(:version => 20140227021413) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
-

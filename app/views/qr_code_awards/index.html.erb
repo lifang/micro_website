@@ -5,8 +5,7 @@
     <div class="tabDiv used">
       <div class="page_content">
         <div class="page_tit">
-          <%=link_to '添加二维码',new_site_qr_code_award_path,remote:true,class:'blue_btn scd_btn',name:"addGgl"%>
-
+          <%=link_to '添加二维码',new_site_qr_code_award_path(@site),remote:true,class:'blue_btn scd_btn',name:"addGgl"%>
           </div>
           <div class="page_txt">
             <table class="table1">
@@ -27,7 +26,10 @@
                   <td>
                     <%award.award_infos.each do |a_info|%>
                   <li>
-                    <%="#{a_info.name} #{a_info.content} 共#{a_info.number}名"%>
+          
+                    <img src="<%=get_min_by_imgpath a_info.content%>" />
+                    <input type="button" src="<%=a_info.content%>" value="预览大图" class="blue_btn" onclick="viewLargerImage(this)" />
+
                   </li>
                 <%end%>
                 </td>
@@ -54,3 +56,4 @@
         <div class="second_box resInfo">
 
         </div>
+<div id="viewLarge"></div>

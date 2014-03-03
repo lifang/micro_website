@@ -1,0 +1,8 @@
+.qr_code_image img{
+    width:100px;
+        position: relative;
+}
+.qr_code_image{
+        float:left;
+        margin-left:5px ;
+}

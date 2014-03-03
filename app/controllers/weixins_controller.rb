@@ -8,35 +8,103 @@ class WeixinsController < ApplicationController
   require "tempfile"
   skip_before_filter :authenticate_user!
   before_filter :get_site_by_token
- def get_qr_image
-  url = "www.baidu.com"
-  @qr = RQRCode::QRCode.new(url, :size => 3, :level => 'l'.to_sym)
-  respond_to do |format|
-  format.html
-  # format.svg  { render :qrcode => request.url, :level => :l, :unit => 10 }
-  # format.png  { render :qrcode => request.url }
-  # format.gif  { render :qrcode => request.url }
-  #format.jpeg { render :qrcode => "www.baidu.com" }
+  def get_qr_image
+    @award =Award.find_by_id(params[:id])
+    render layout:'qr_code'
   end
-def get_qr_img_by_url
-  # format =  :png
-  # size   =  3
-  # level  =  :h
-  url = "ytuuiuouo" 
-  # qrcode = RQRCode::QRCode.new(url, :size => size, :level => level)
-  # svg    = RQRCode::Renderers::SVG::render(qrcode, {})
-  # image = MiniMagick::Image.read(svg) { |i| i.format "svg" }
-  # image.format "png" if format == :png
-  # path=image.path
-  respond_to do |format|
-   format.html
-   format.svg  { render :qrcode => url, :level => :l, :unit => 10 }
-   format.png  { render :qrcode => url }
-   format.gif  { render :qrcode => url }
-   format.jpeg { render :qrcode => url }
+  def dispose_award
+    @code  = params[:code].to_i
+    index = params[:index]
+    @award = Award.find_by_id(params[:award_id])
+    
+    if index!="0"
+      @award_info = @award.award_infos.where("award_index = ?", index)[0]
+      if !@award_info.code.blank? && @award_info.code.include?(@code)
+        UserAward.create(award_info_id:@award_info.id,open_id:@code,award_id:@award.id)
+        @award_info.code.delete(@code)
+        @award_info.update_attribute(:code,@award_info.code)
+      else
+        @award_info = nil
+      end
+    else
+      @award_info = nil
+    end
+    @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
   end
-end
+  def get_qr_img_by_url
+    # format =  :png
+    # size   =  3
+    # level  =  :h
+    # qrcode = RQRCode::QRCode.new(url, :size => size, :level => level)
+    # svg    = RQRCode::Renderers::SVG::render(qrcode, {})
+    # image = MiniMagick::Image.read(svg) { |i| i.format "svg" }
+    # image.format "png" if format == :png
+    # path=image.path
+    @award = Award.find_by_id(params[:id])
+    current_time = Time.now.strftime("%Y-%m-%d")
+    url=""
+    if @award
+      if current_time >= @award.begin_date.to_s && current_time <= @award.end_date.to_s
+        award_infos = @award.award_infos
+        total_num = @award.total_number #总的奖券数
+        has_award_num = award_infos.sum(:number) #有奖的奖券总数
+        no_award_num = total_num - has_award_num  #无奖的奖券总数
+        no_operation_number = @award.no_operation_number  #剩余的奖券
+        scratched_award_infos, scratched_has_award_infos,scratched_no_award_infos = get_scratched_award(@award)
+        scratched_has_award_infos_hash = scratched_has_award_infos.group_by{|ua| ua.award_info_id} #刮过的，有奖的奖券,奖券id分类
+       
+        #所有索引放进一个string
+        award_str = ""
+        award_infos.each do |ai|
+          award_info_id = ai.id
+          if scratched_has_award_infos_hash[award_info_id].present?
+            left_number = ai.number - scratched_has_award_infos_hash[award_info_id].length #剩余的未刮过的有奖奖券
+          else
+            left_number = ai.number
+          end
+          no_award_num = no_operation_number - left_number #剩余的无奖奖券
+          award_str << (ai.award_index.to_s) * left_number if left_number > 0
+        end
+        left_no_scratched_no_award_num = no_award_num - scratched_no_award_infos.length  #剩余的未刮过的无奖奖券
+        award_str << "0" * left_no_scratched_no_award_num  if left_no_scratched_no_award_num> 0 #无奖项默认0
+        award_arr = award_str.split("")  #string 转换成数组
+        if award_arr.present?
+          #乱序数组两次，随机索引数
+          award_index = award_arr.shuffle.shuffle[rand(no_operation_number)]  #抽取出来的奖项索引
+          # award_index = 1
+          if award_index == "0"
+            @status = 0  #未中奖
+            url = "http://192.168.199.201:3000/dispose_award?code=#{100000 + Random.rand(90000)}&index=0&award_id=#{@award.id}"  #谢谢参与
+          else
+            @status = 1  #中奖
+            @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
+            url ="http://192.168.199.201:3000/dispose_award?code=#{@award_info.code[0].to_s}&index=#{award_index}&award_id=#{@award.id}" if @award_info
+          end
+        else
+          url = "it's none#{rand(1000)}"  #奖券已抽完
+        end
+      else
+        url = "time out#{rand(1000)}"  #奖券未开始或者已经过期
+      end 
+    end
+    respond_to do |format|
+      format.html
+      format.svg  { render :qrcode => url, :level => :l, :unit => 1 }
+      format.png  { render :qrcode => url }
+      format.gif  { render :qrcode => url }
+      format.jpeg { render :qrcode => url, :level => :l }
+    end
   end
+  
+  def get_scratched_award(award)
+    tmp_arr = []
+    scratched_award_infos = UserAward.where("award_id = ?", @award.id) #刮过的，所有的奖券
+    scratched_has_award_infos = UserAward.where("award_id = ? and award_info_id is not null", @award.id) #刮过的，有奖的奖券
+    scratched_no_award_infos = scratched_award_infos - scratched_has_award_infos  #刮过的，无奖的奖券
+    tmp_arr << scratched_award_infos << scratched_has_award_infos << scratched_no_award_infos
+    tmp_arr
+  end
+
   def get_site_by_token
     cweb = params[:cweb]
     if cweb == "wansu" || cweb == "xyyd"
@@ -83,43 +151,43 @@ end
       if @site.exist_app && client && current_client && client.update_attribute(:has_new_message,true)
         time_now = Time.now.strftime("%H:%M")
 
-          Message.transaction do
-            begin
-              m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
-              if m.nil?
-                msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
-                content = params[:xml][:Content]
-                unless params[:xml][:Content].present?
-                  content = msg_type_value == 1 ? "图片" : "语音"
-                end
-                mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
-                  :types => Message::TYPES[:weixin], :content => content,
-                  :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
-                  :message_type => msg_type_value, :message_path => wx_resource_url)
-                if mess && (!@site.receive_status || !(@site.receive_status && @site.not_receive_start_at && @site.not_receive_end_at && time_now >= @site.not_receive_start_at.strftime("%H:%M") && time_now <= @site.not_receive_end_at.strftime("%H:%M")))
-                  #推送到IOS端
-                  APNS.host = 'gateway.sandbox.push.apple.com'
-                  APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
-                  APNS.port = 2195
-                  token = current_client.token
-                  if token
-                    badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
-                        Client::HAS_NEW_MESSAGE[:YES]]).length
-                    content = "#{client.name}:#{mess.content}"
-                    APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
-                    recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
-                    if recent_client
-                      recent_client.update_attributes!(:content => mess.content)
-                    else
-                      RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
-                    end
+        Message.transaction do
+          begin
+            m = Message.find_by_msg_id(params[:xml][:MsgId].to_s)
+            if m.nil?
+              msg_type_value = Message::MSG_TYPE[params[:xml][:MsgType].to_sym]
+              content = params[:xml][:Content]
+              unless params[:xml][:Content].present?
+                content = msg_type_value == 1 ? "图片" : "语音"
+              end
+              mess = Message.create!(:site_id => @site.id , :from_user => client.id ,:to_user => current_client.id ,
+                :types => Message::TYPES[:weixin], :content => content,
+                :status => Message::STATUS[:UNREAD], :msg_id => params[:xml][:MsgId],
+                :message_type => msg_type_value, :message_path => wx_resource_url)
+              if mess && (!@site.receive_status || !(@site.receive_status && @site.not_receive_start_at && @site.not_receive_end_at && time_now >= @site.not_receive_start_at.strftime("%H:%M") && time_now <= @site.not_receive_end_at.strftime("%H:%M")))
+                #推送到IOS端
+                APNS.host = 'gateway.sandbox.push.apple.com'
+                APNS.pem  = File.join(Rails.root, 'config', 'CMR_Development.pem')
+                APNS.port = 2195
+                token = current_client.token
+                if token
+                  badge = Client.where(["site_id=? and types=? and has_new_message=?", @site.id, Client::TYPES[:CONCERNED],
+                      Client::HAS_NEW_MESSAGE[:YES]]).length
+                  content = "#{client.name}:#{mess.content}"
+                  APNS.send_notification(token,:alert => content, :badge => badge, :sound => client.id)
+                  recent_client = RecentlyClients.find_by_site_id_and_client_id(@site.id, client.id)
+                  if recent_client
+                    recent_client.update_attributes!(:content => mess.content)
+                  else
+                    RecentlyClients.create!(:site_id => @site.id, :client_id => client.id, :content => mess.content)
                   end
                 end
               end
-            rescue
-            
             end
+          rescue
+            
           end
+        end
         
       end
     end

@@ -1,0 +1,8 @@
+<h1 style="color:white;font-size: 50px;padding: 150px;" >
+  <%unless @award_info.nil?%>
+    恭喜您中了<%=@award_info.name%> 奖品：<%=@award_info.content%>
+    你的取奖码：<%=@code%>
+  <%else%>
+    谢谢参与！
+  <%end%>
+</h1>

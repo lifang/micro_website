@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>我的微网站</title>
+
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+
+    <style type="text/css">
+      * { margin: 0; padding: 0;}
+      .ballBox { background: url(/assets/v2.0/bg.jpg) no-repeat; overflow: hidden; background-size: cover; position: relative;}
+      .header { background: url(/assets/v2.0/header.jpg) no-repeat; background-size: cover; box-shadow: 0 0 5px #000;}
+      .footer { background: url(/assets/v2.0/footer.jpg) no-repeat; background-size: cover; position: fixed; bottom: 0; width: 100%; box-shadow: 0 0 5px #000;}
+      .ball { width: 160px; height: 200px; display: inline-block; margin: 20px;}
+      .ball1 { background: url(/assets/v2.0/11111.png) no-repeat; background-size: 160px 200px;}
+      .ball2 { background: url(/assets/v2.0/22222.png) no-repeat; background-size: 160px 200px;}
+      .ball3 { background: url(/assets/v2.0/33333.png) no-repeat; background-size: 160px 200px;}
+      .ball4 { background: url(/assets/v2.0/44444.png) no-repeat; background-size: 160px 200px;}
+      .ball5 { background: url(/assets/v2.0/55555.png) no-repeat; background-size: 160px 200px;}
+      .ball6 { background: url(/assets/v2.0/66666.png) no-repeat; background-size: 160px 200px;}
+      /* 倾斜 */
+      .ball {
+        transform:rotate(-20deg);/*兼容性强*/
+        -ms-transform:rotate(-20deg);/*ie9*/
+        -o-tranform:rotate(-20deg);/*opera*/
+        -webkit-transform:rotate(-20deg);/*chrome safria*/
+        -moz-transform:rotate(-20deg); /*firefox*/
+        filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.866025404, M12=0.5, M21=-0.5, M22=0.866025404);	/* cos -sin sin cos*/
+      }
+      .ball img { width: 70px; margin: 31px 48px;}
+
+
+    </style>
+    <script type="text/javascript">
+      $(function(){
+        var cw = document.documentElement.clientWidth;
+        var ch = document.documentElement.clientHeight;
+        var hh = Math.ceil(cw*9/16);
+        if(ch >= hh){
+          $(".ballBox").css("height",hh);
+        }else{
+          $(".ballBox").css("height",ch);
+        }
+        $(".header").css("height",Math.ceil(cw*170/1920));
+        $(".footer").css("height",Math.ceil(cw*22/1920));
+      })
+    </script>
+  </head>
+  <body style="background: #373f42;">
+    <div class="ballBox">
+      <div class="header"></div>
+      <%= yield %>
+      <div class="footer"></div>
+    </div>
+  </body>
+</html>

@@ -1,36 +1,88 @@
-<style type="text/css">
-  table {
-    border-width: 0;
-    border-style: none;
-    border-color: #0000ff;
-    border-collapse: collapse;
-  }
-  td {
-    border-width: 0;
-    border-style: none;
-    border-color: #0000ff;
-    border-collapse: collapse;
-    padding: 0;
-    margin: 0;
-    width: 10px;
-    height: 10px;
-  }
-  td.black { background-color: #000; }
-  td.white { background-color: #fff; }
-</style>
-<div class="qr_code_image">
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-  <img src="/get_qr_img_by_url.jpeg" />
-</div>
 
+  <div class="main">
+    <div class="qr_code_image" >
+      <div class="ball ball1">
+        <img src="" />
+      </div>
+    </div>
+    <div class="qr_code_image" >
+      <div class="ball ball2">
+        <img src="" />
+      </div>
+    </div>
+    <div class="qr_code_image" >
+      <div class="ball ball3">
+        <img src="" />
+      </div>
+    </div>
+    <div class="qr_code_image" >
+      <div class="ball ball4">
+        <img src="" />
+      </div>
+    </div>
+    <div class="qr_code_image" >
+      <div class="ball ball5">
+        <img src="" />
+      </div>
+    </div>
+    <div class="qr_code_image" >
+      <div class="ball ball6">
+        <img src="" />
+      </div>
+    </div>
+  </div>
+  
+<script>
+  var balls = $(".qr_code_image").find(".ball");
+  var iamges = $(".qr_code_image").find("img");
+  var temp=0;
+  for(var i=0;i<iamges.length;i++){
+    $(iamges[i]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+i);
+  }
+  function start(){
+    for(var i=0;i<iamges.length;i++){
+      var h = Math.random()*100;
+
+      auto_down(balls[i],iamges[i],h+5);
+    }
+    setTimeout("start()",3000);
+  
+  }
+  
+  function auto_down(ball,img,index){
+    var height = $(ball).offset().top+index;
+    var ch = document.documentElement.clientHeight;
+    $(ball).animate({
+      marginTop: height
+    },1000);
+    // $(img).css("margin-top",height);
+    if(height >=ch-56){
+      $(ball).animate({
+        marginTop: 0
+      },10);
+      $(img).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(ball);
+    }
+    // $(img).css("margin-top",0);
+     
+     
+  }
+  start();
+
+  function change_deg(img){
+    var deg = (Math.random()-0.5)*60;
+    var sin=Math.sin(deg);
+    var cos=Math.cos(deg);
+    $(img).css("transform","rotate("+deg+"deg)");
+    $(img).css("MsTransform","rotate("+deg+"deg)");
+    $(img).css("OTransform","rotate("+deg+"deg)");
+    $(img).css("WebkitTransform","rotate("+deg+"deg)");
+    $(img).css("filter","progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11="+cos+", M12="+sin+", M21="+-sin+", M22="+cos);
+
+  }
+</script>
 

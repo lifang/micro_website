@@ -1,11 +1,11 @@
 <div class="second_content second_content2"> 
 
   <span class="close" onclick="cancle_award_page()">关闭</span>
-  <%=form_for(:qr_code_awards ,url:(@award.nil? ? site_qr_code_awards_path(@site):site_qr_code_award_path(@site,@award) ) ,method:(@award.nil? ? 'post':'put') ) do |f|%>
+  <%=form_for(:qr_code_awards ,url:(@award.nil? ?  site_qr_code_awards_path(@site):site_qr_code_award_path(@site,@award) ),method:(@award.nil? ? 'post':'put'), :html =>{:multipart => true} ) do |f|%>
     <h1><%=  controller.action_name=='new' ? '添加':'编辑'%>刮刮乐</h1>
     <li>
       <label>抽奖名称：</label>
-      <input id="award_name" name="award[name]" size="30" type="text" value="<%=@award.name%>"/>
+      <input id="award_name" name="award[name]" size="30" type="text" value="<%=@award.name unless @award.nil?%>"/>
 
     </li>
     <li class="dataLi">
@@ -18,29 +18,30 @@
       <label>奖项设置：</label>
 
       <ul class="award_item">
-        <%if @award.award_infos.length==0%>
-          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]" />
+        <%if @award.nil? || @award.award_infos.length==0%>
+          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="file" name="content[]"/>奖项数：<input type="text" name="number[]" />
             <span class="close" title="删除该奖项" onclick="remove_award_item(this)"></span></li>
-          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]"/>
+          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="file" name="content[]"/>奖项数：<input type="text" name="number[]"/>
             <span class="close" title="删除该奖项" onclick="remove_award_item(this)"></span></li>
-          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="text" name="content[]"/>奖项数：<input type="text" name="number[]"/>
+          <li>奖项名：<input type="text" name="name[]"/> 奖项内容： <input type="file" name="content[]"/>奖项数：<input type="text" name="number[]"/>
             <span class="close" title="删除该奖项" onclick="remove_award_item(this)"></span></li>
 
         <%else%>
-          <%@award.award_infos.each do |a_info|%>
-            <li>
-              <input type="hidden" class="award_item_id" name="info_id[]" value="<%= a_info.id%>"/>奖项名：<input type="text" name="name[]" value=<%= a_info.name%> /> 奖项内容：  <input type="text" name="content[]" value=<%= a_info.content%> />奖项数：<input type="text" name="number[]" value=<%= a_info.number%> />
-              <span class="close" title="删除该奖项" onclick="remove_award_item(this)"></span>
-            </li>
+          <%unless @award.nil?%>
+            <%@award.award_infos.each do |a_info|%>
+              <li>
+                <input type="hidden" class="award_item_id" name="info_id[]" value="<%= a_info.id%>"/>奖项名：<input type="text" name="name[]" value="<%= a_info.name%>" /> 奖项内容：  <input type="file" name="content[]" value=<%= a_info.content%> />奖项数：<input type="text" name="number[]" value=<%= a_info.number%> />
+                <span class="close" title="删除该奖项" onclick="remove_award_item(this)"></span>
+              </li>
+            <%end%>
           <%end%>
-
         <%end%>
       </ul>
     </li>
     <div class="addjx" onclick="add_award_item()"><span title="添加奖项" >+</span></div>
     <li>
       <label>奖券数：</label>
-      <input id="award_total_number" name="award[total_number]" size="30" type="text" value="<%=@award.total_number%>" />
+      <input id="award_total_number" name="award[total_number]" size="30" type="text" value="<%=@award.total_number unless @award.nil?%>" />
     </li>
     <div class="uinfo_act">
       <input type="button" class="blue_btn" onclick="check_award_form()" value='提交'/>
@@ -52,6 +53,6 @@
   $( "#datepicker1" ).datepicker();
   $( "#datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd" );
   $( "#datepicker1" ).datepicker("option", "dateFormat", "yy-mm-dd" );
-  $( "#datepicker" ).val('<%=@award.begin_date%>');
-  $( "#datepicker1" ).val('<%=@award.end_date%>');
+  $( "#datepicker" ).val('<%=@award.begin_date unless @award.nil?%>');
+  $( "#datepicker1" ).val('<%=@award.end_date unless @award.nil?%>');
 </script>

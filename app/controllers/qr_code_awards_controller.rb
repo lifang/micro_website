@@ -2,12 +2,12 @@
 class QrCodeAwardsController < ApplicationController
   before_filter :get_site
   layout 'sites'
+  SITE_PATH = "/public/allsites/%s/"
   def index
     @awards=Award.where(["site_id= ? and types = 1 ",@site.id] )
   end
   def new
-    @award=@site.awards.build
-
+    @award=nil
   end
   def edit
     @award=Award.find_by_id(params[:id])
@@ -55,55 +55,59 @@ class QrCodeAwardsController < ApplicationController
     end
   end
   def save_award_item
-    name=params[:name]
-    content=params[:content]
+    name =params[:name]
+    @tmp =params[:content]
     number=params[:number]
     (0...name.length).each do|x|
+      save_qr_code_img @tmp[x]
       award_info=@award.award_infos.build
       award_info.name=name[x]
-      award_info.content=content[x]
+      award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename
       award_info.number=number[x]
       award_info.award_index = x + 1 #设置奖项索引,预留0作为无奖项
       if award_info.save
-        #生成奖项图片  开始
-        img_path = award_info.generate_image(@site.name)
-        award_info.img = img_path if img_path
-        #生成奖项图片  结束
+        award_info.code =create_code award_info
         award_info.save
       end
 
     end
   end
+  
+  #生成奖项code
+  def create_code award_info
+    arr=[]
+    award_info.number.times do |t|
+      arr << Time.now.usec
+    end
+     arr
+  end
+
   def update_award_item
     remove_id=params[:remove_id]
     id=params[:info_id]
     name=params[:name]
-    content=params[:content]
+    content=""
+    @tmp = params[:content]
     number=params[:number]
     if !name.nil?
       (0...name.length).each do|x|
+        save_qr_code_img @tmp[x]
         if !id[x].nil?
           award_info=AwardInfo.find_by_id(id[x])
           old_name = award_info.name
-          award_info.update_attributes(name:name[x],content:content[x],number:number[x],award_index:x + 1)
-          if award_info.name != old_name
-            #生成奖项图片  开始
-            img_path = award_info.generate_image(@site.name)
-            award_info.update_attribute(:img,img_path) if img_path
-            #生成奖项图片  结束
-          end
-
+          award_info.update_attributes(
+            name:name[x],
+            content:"/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename,
+            number:number[x],award_index:x + 1 ,
+            code:(create_code award_info) )
         else
           award_info=@award.award_infos.build
           award_info.name=name[x]
-          award_info.content=content[x]
+          award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename
           award_info.number=number[x]
           award_info.award_index = x + 1  #设置奖项索引
           if award_info.save
-            #生成奖项图片  开始
-            img_path = award_info.generate_image(@site.name)
-            award_info.img = img_path if img_path
-            #生成奖项图片  结束
+            award_info.code =create_code award_info
             award_info.save
           end
 
@@ -114,6 +118,23 @@ class QrCodeAwardsController < ApplicationController
       remove_id.each do |rid|
         AwardInfo.find_by_id(rid).destroy
       end
+    end
+  end
+  def save_qr_code_img tmp
+    dir_path = Rails.root.to_s+SITE_PATH%@site.root_path+"qr_code_imgs"
+    path  = dir_path+"/"+ tmp.original_filename
+    FileUtils.mkdir_p  dir_path unless Dir.exists?(dir_path)
+    file1 =File.new(path,'wb')
+    FileUtils.cp tmp.path,file1
+    min_image(path,tmp.original_filename,dir_path,"50x50","_min.")
+  end
+
+  def min_image(ful_path,filename,ful_dir,size,end_name)
+    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+end_name+filename.split(".")[-1]
+    if !File.exist?(target_path)
+      image = MiniMagick::Image.open(ful_path)
+      image.resize size
+      image.write  target_path
     end
   end
 
@@ -127,7 +148,7 @@ class QrCodeAwardsController < ApplicationController
     @userinfos =UserAward.where( "award_info_id in ( #{award_info_id.join(',')} )")
     @awards_is = @userinfos.group_by{|a| a[:award_info_id]} unless @award_infos.nil?
   end
- #领奖
+  #领奖
   def obtain_award
     @user_award=UserAward.find_by_id(params[:id])
     if @user_award && @user_award.update_attribute(:if_checked,true)

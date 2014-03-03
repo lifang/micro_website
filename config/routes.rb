@@ -38,6 +38,7 @@ MicroWebsite::Application.routes.draw do
   match '/get_form_date' => 'client_forms#get_form_date', :as => :preview_visits, :via => :post
   match '/get_qr_image' ,to:"weixins#get_qr_image"
   match '/get_qr_img_by_url' ,to:"weixins#get_qr_img_by_url"
+  match '/dispose_award' ,to:"weixins#dispose_award"
   # Sample resource route with options:
   namespace :api do
     resources :clients do
@@ -52,7 +53,11 @@ MicroWebsite::Application.routes.draw do
       end
     end
   end
-
+  resources  :weixins do
+    member do
+      get :get_qr_image
+    end
+  end
   resources :sites do
     member do
       post :verify_site

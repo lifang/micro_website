@@ -56,7 +56,7 @@ class AppManagementsController < ApplicationController
       if index>2
         value =f[1][:value]
         if f[1][:value].class.eql?(Array)
-          value = f[1][:value].join(",")
+          value = f[1][:value].join("、")
         end
        
         form_hash +="'#{f[1][:name]}'=>'#{value}',"
