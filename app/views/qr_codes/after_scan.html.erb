@@ -14,11 +14,13 @@
     <section>
       <div class="qrCodeBox">
         <div class="qrCodePrize">
-          <img src="<%= @qr_img %>" style="width:inherit"/>
+          <img src="<%= (@award_info && @award_info.content) ? @award_info.content : "/assets/thanks.png" %>" style="width:inherit"/>
         </div>
       </div>
       <div class="qrCodeInfo">
-        <span><%= @code %></span>
+        <% if @code && @code != 0 %>
+          <span><%= @code%></span>
+        <% end %>
       </div>
     </section>
   </article>
