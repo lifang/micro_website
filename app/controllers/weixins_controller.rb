@@ -12,16 +12,21 @@ class WeixinsController < ApplicationController
     @award =Award.find_by_id(params[:id])
     render layout:'qr_code'
   end
+
+  
+
   def dispose_award
     @code  = params[:code].to_i
     index = params[:index]
     @award = Award.find_by_id(params[:award_id])
     if index!="0"
       @award_info = @award.award_infos.where("award_index = ?", index)[0]
+      find_award_number()
       if !@award_info.code.blank? && @award_info.code.include?(@code)
         UserAward.create(award_info_id:@award_info.id,open_id:@code,award_id:@award.id)
         @award_info.code.delete(@code)
         @award_info.update_attribute(:code,@award_info.code)
+        @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
       else
         @award_info = nil
         @code = 0
@@ -29,12 +34,31 @@ class WeixinsController < ApplicationController
     else
       @award_info = nil
       @code = 0
+      if find_award_number > 0
+        @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
+      end
     end
-    @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
     @site = Site.find_by_id(@award.site_id)
     @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
     render "/qr_codes/after_scan" , layout:false
   end
+
+  def find_award_number award_infos
+    scratched_award_infos, scratched_has_award_infos,scratched_no_award_infos = get_scratched_award(@award)
+    scratched_has_award_infos_hash = scratched_has_award_infos.group_by{|ua| ua.award_info_id} #刮过的，有奖的奖券,奖券id分类
+    no_award_num = @award.no_operation_number  #剩余的奖券
+    award_infos.each do |ai|
+      award_info_id = ai.id
+      if scratched_has_award_infos_hash[award_info_id].present?
+        left_number = ai.number - scratched_has_award_infos_hash[award_info_id].length #剩余的未刮过的有奖奖券
+      else
+        left_number = ai.number
+      end
+      no_award_num = no_award_num - left_number  #剩余的无奖奖券
+    end
+    no_award_num
+  end
+
   def get_qr_img_by_url
     # format =  :png
     # size   =  3
@@ -52,8 +76,8 @@ class WeixinsController < ApplicationController
         award_infos = @award.award_infos
         total_num = @award.total_number #总的奖券数
         has_award_num = award_infos.sum(:number) #有奖的奖券总数
-        no_award_num = total_num - has_award_num  #无奖的奖券总数
         no_operation_number = @award.no_operation_number  #剩余的奖券
+        no_award_num = no_operation_number #无奖的奖券总数
         scratched_award_infos, scratched_has_award_infos,scratched_no_award_infos = get_scratched_award(@award)
         scratched_has_award_infos_hash = scratched_has_award_infos.group_by{|ua| ua.award_info_id} #刮过的，有奖的奖券,奖券id分类
        
@@ -66,13 +90,13 @@ class WeixinsController < ApplicationController
           else
             left_number = ai.number
           end
-          no_award_num = no_operation_number - left_number #剩余的无奖奖券
+          no_award_num = no_award_num - left_number  #剩余的无奖奖券
           award_str << (ai.award_index.to_s) * left_number if left_number > 0
         end
         left_no_scratched_no_award_num = no_award_num - scratched_no_award_infos.length  #剩余的未刮过的无奖奖券
         award_str << "0" * left_no_scratched_no_award_num  if left_no_scratched_no_award_num> 0 #无奖项默认0
         award_arr = award_str.split("")  #string 转换成数组
-        p 12234234,award_arr
+        p 12234234,award_arr,no_award_num
         if award_arr.present?
           #乱序数组两次，随机索引数
           award_index = award_arr.shuffle.shuffle[rand(no_operation_number)]  #抽取出来的奖项索引

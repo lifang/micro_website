@@ -13,9 +13,14 @@ class QrCodeAwardsController < ApplicationController
     @award=Award.find_by_id(params[:id])
   end
   def destroy
-    @award=Award.find_by_id(params[:id])
+    @award =Award.find_by_id(params[:id])
+    award_infos = AwardInfo.where(["award_id = ?",@award.id])
+    award_infos.each do |award_info|
+     
+      remove_old_image Rails.root.to_s+"/public"+ award_info.content
+    end
     if @award.destroy
-      flash[:success]='删除成功'
+      flash[:success]='删除成功'  
       redirect_to site_qr_code_awards_path
     else
       flash[:success]='删除失败'
@@ -59,10 +64,11 @@ class QrCodeAwardsController < ApplicationController
     @tmp =params[:content]
     number=params[:number]
     (0...name.length).each do|x|
-      save_qr_code_img @tmp[x]
+      time_str = Time.now.usec
+      save_qr_code_img @tmp[x],time_str
       award_info=@award.award_infos.build
       award_info.name=name[x]
-      award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename
+      award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/#{time_str}"+@tmp[x].original_filename
       award_info.number=number[x]
       award_info.award_index = x + 1 #设置奖项索引,预留0作为无奖项
       if award_info.save
@@ -89,19 +95,21 @@ class QrCodeAwardsController < ApplicationController
     number=params[:number]
     if !name.nil?
       (0...name.length).each do|x|
-        save_qr_code_img @tmp[x]
+        time_str = Time.now.usec
+        save_qr_code_img @tmp[x],time_str
         if !id[x].nil?
           award_info=AwardInfo.find_by_id(id[x])
+          remove_old_image Rails.root.to_s+"/public/"+award_info.content
           old_name = award_info.name
           award_info.update_attributes(
             name:name[x],
-            content:"/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename,
+            content:"/allsites/#{@site.root_path}/qr_code_imgs/#{time_str}"+@tmp[x].original_filename,
             number:number[x],award_index:x + 1 ,
             code:(create_code award_info) )
         else
           award_info=@award.award_infos.build
           award_info.name=name[x]
-          award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/"+@tmp[x].original_filename
+          award_info.content="/allsites/#{@site.root_path}/qr_code_imgs/#{time_str}"+@tmp[x].original_filename
           award_info.number=number[x]
           award_info.award_index = x + 1  #设置奖项索引
           if award_info.save
@@ -118,17 +126,24 @@ class QrCodeAwardsController < ApplicationController
       end
     end
   end
-  def save_qr_code_img tmp
+
+  def remove_old_image img_path
+     p 2134123123,img_path
+    FileUtils.rm img_path if File.exist?(img_path)
+    FileUtils.rm (get_min_by_imgpath img_path) if File.exist?(get_min_by_imgpath img_path)
+  end
+
+  def save_qr_code_img tmp,time_str
     dir_path = Rails.root.to_s+SITE_PATH%@site.root_path+"qr_code_imgs"
-    path  = dir_path+"/"+ tmp.original_filename
+    path  = dir_path+"/#{time_str}"+ tmp.original_filename
     FileUtils.mkdir_p  dir_path unless Dir.exists?(dir_path)
     file1 =File.new(path,'wb')
     FileUtils.cp tmp.path,file1
-    min_image(path,tmp.original_filename,dir_path,"50x50","_min.")
+    min_image(path,tmp.original_filename,dir_path,"50x50","_min.",time_str)
   end
 
-  def min_image(ful_path,filename,ful_dir,size,end_name)
-    target_path =ful_dir+"/"+filename.split(".")[0...-1].join(".")+end_name+filename.split(".")[-1]
+  def min_image(ful_path,filename,ful_dir,size,end_name,time_str)
+    target_path =ful_dir+"/#{time_str}"+filename.split(".")[0...-1].join(".")+end_name+filename.split(".")[-1]
     if !File.exist?(target_path)
       image = MiniMagick::Image.open(ful_path)
       image.resize size

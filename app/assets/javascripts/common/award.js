@@ -4,6 +4,12 @@ function add_award_item(){
 	li.html("奖项名：<input type='text' name='name[]'> 奖项内容：  <input type='text' name='content[]'>奖项数：<input type='text' name='number[]'><span class='close' title='删除该奖项' onclick='remove_award_item(this)'></span> ");
 	award.append(li);
 }
+function add_qr_code_award_item(){
+	var award=$(".award_item");
+	var li =$("<li></li>");
+	li.html("奖项名：<input type='text' name='name[]'> 奖项内容：  <input type='file' name='content[]'>奖项数：<input type='text' name='number[]'><span class='close' title='删除该奖项' onclick='remove_award_item(this)'></span> ");
+	award.append(li);
+}
 function remove_award_item(lii){
 	var ul=$(".award_item");
 //	var li=$(".award_item >li");
