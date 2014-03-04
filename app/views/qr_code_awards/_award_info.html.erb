@@ -2,13 +2,16 @@
 		<span class="close" onclick="cancle_award_page()">关闭</span>
 		<h1><span><%=@award.name%></span>(<span><%="#{@award.begin_date}~#{@award.end_date}"%></span>)</h1>
 		<table class="table1">
-			<tr>
-				<th>奖项</th>
+			<tr >
+				<th style="width: 340px;">奖项</th>
                                 <th>
+                                  <span style="width:60px;display:inline-block;">
+                                  code
+                                  </span>
                                   <span style="width:150px;display:inline-block;">
                                   手机号
                                   </span>
-                                  <span style="width:130px;display:inline-block;text-align: left;margin-left: 25px;">
+                                  <span style="width:160px;display:inline-block;text-align: center;margin-left: 25px;">
                                     操作
                                   </span>
                                 </th>
@@ -16,19 +19,27 @@
                         <%if !@awards_is.nil?%>
                         <%  @awards_is.each do |a,awards| %>
 			<tr>
-				<td><%=get_award_info(@award_infos,a)%>（<%=awards.length%>人）</td>
+				<td><img src="<%=  get_qr_award_info(@award_infos,a)%>"/>（<%=awards.length%>人）</td>
                                 
 				<td>
                                   
                                   <%awards.each do |award|%>
-                                  <%=award.secret_code%>
+                                  <div>
+                                  <span style="width:60px;display:inline-block;">
+                                  <%=award.open_id%>
+                                  </span>
+                                  <span style="width:174px;display:inline-block;">
+                                    <input type="text" class="phone" name="phone" style="width:150px;" value="<%=award.secret_code%>"/>
+                                  </span>
                                   <span style="width:150px;display:inline-block;">
                                     <% if award.if_checked %>
                                       <font color="red" >已领取</font>
                                     <%else%>
-                                      <%=link_to '领取',"/obtain_award?id=#{award.id}&site_id=#{@site.id}",class:'blue_btn',style:'padding:2px;'%>
+                                      <input type="button" class='blue_btn' style='padding:2px;' value="领取" onclick="submit_obtion_award(this,<%=award.id%>,<%=@site.id%>)" />
+                                 
                                     <%end%>
                                       </span>
+                                  </div>
                                     <br/>
                                   <%end%>
 

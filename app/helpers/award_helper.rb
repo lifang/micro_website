@@ -8,6 +8,14 @@ module AwardHelper
     end
     nil
   end
+  def get_qr_award_info(award_infos,id)
+    award_infos.each do|award_info|
+      if award_info.id==id
+        return (get_min_by_imgpath "#{award_info.content}")
+      end
+    end
+    nil
+  end
 
   def reply_content(micro_message)
     if micro_message

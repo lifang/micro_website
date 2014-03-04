@@ -16,9 +16,12 @@ class WeixinsController < ApplicationController
   
 
   def dispose_award
+       
     @code  = params[:code].to_i
     index = params[:index]
     @award = Award.find_by_id(params[:award_id])
+
+     p 21312312312312,index
     if index!="0" && index!="-1"
       @award_info = @award.award_infos.where("award_index = ?", index)[0]
       if !@award_info.code.blank? && @award_info.code.include?(@code)
@@ -121,6 +124,8 @@ class WeixinsController < ApplicationController
       end
       #url = url.force_encoding("cp852")
     end
+
+
     respond_to do |format|
       format.html
       format.svg  { render :qrcode => url, :level => :l, :unit => 1 }

@@ -2,7 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+function submit_obtion_award(obj,award_id,site_id){
+    var phone = $.trim($(obj).parent().parent().find(".phone").val());
+    if(phone==""){
+        tishi_alert("电话不能为空");
+        return false;
+    }
+    location.href = "/obtain_qr_code_award?id="+award_id+"&site_id="+site_id+"&phone="+phone;
+}
 function submit_qrcode(obj){
    var flag = validatePageForm("hello");
    if(flag){

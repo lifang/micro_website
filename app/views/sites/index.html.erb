@@ -24,7 +24,7 @@
 						公共账号token：<%= s.cweb%>
 					</p>
 					<p>
-					    <%= s.is_send_app_msg ? "自动发送微信消息":"不自动发送微信" %>
+					    <%= s.is_send_app_msg ? "主动发送微信消息":"不主动发送微信" %>
 					</p>
 					<p>
 						<%client = (site_client s.clients) if s.clients.length!=0 %>

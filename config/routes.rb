@@ -13,6 +13,7 @@ MicroWebsite::Application.routes.draw do
   post "user/enable/:uid", :to=>"users#enable"
   get "user/delete/:uid", :to=>"users#delete"
   match 'obtain_award', :to=>'awards#obtain_award' ,via: 'get'
+  match 'obtain_qr_code_award', :to=>'qr_code_awards#obtain_award' ,via: 'get'
   post "site/verify/:sid",:to=>"sites#verify"
   post "site/change_status/:sid/:status",:to=>"sites#change_status"
   match "/sites/static", :to => "pages#static"

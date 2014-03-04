@@ -163,10 +163,10 @@ class QrCodeAwardsController < ApplicationController
   end
   #领奖
   def obtain_award
+    phone = params[:phone]
     @user_award=UserAward.find_by_id(params[:id])
-    if @user_award && @user_award.update_attribute(:if_checked,true)
+    if @user_award && @user_award.update_attributes(:if_checked=>true,secret_code:phone)
       flash[:success]='领取成功'
-
       redirect_to site_qr_code_awards_path(@site)
     else
       flash[:success]='领取失败'
