@@ -19,7 +19,7 @@ class WeixinsController < ApplicationController
     @code  = params[:code].to_i
     index = params[:index]
     @award = Award.find_by_id(params[:award_id])
-    if index!="0"
+    if index!="0" && index!="-1"
       @award_info = @award.award_infos.where("award_index = ?", index)[0]
       if !@award_info.code.blank? && @award_info.code.include?(@code)
         UserAward.create(award_info_id:@award_info.id,open_id:@code,award_id:@award.id)
@@ -30,12 +30,15 @@ class WeixinsController < ApplicationController
         @award_info = nil
         @code = 0
       end
-    else
+    elsif index=="0"
       @award_info = nil
       @code = 0
       if find_award_number > 0
         @award.update_attribute(:no_operation_number,(@award.no_operation_number-1))
       end
+    else
+      @award_info = nil
+      @code = 0
     end
     @site = Site.find_by_id(@award.site_id)
     @qr_code = Page.where("site_id = #{@site.id} and template = #{Page::TEMPLATE[:qr_code]}")[0]
@@ -111,12 +114,12 @@ class WeixinsController < ApplicationController
 
           end
         else
-          url = "奖券已经抽完了(Game Over!)#{rand(1000)}"  #奖券已抽完
+          url = MW_URL + "/dispose_award?code=#{100000 + Random.rand(90000)}&index=-1&award_id=#{@award.id}"#奖券已抽完
         end
       else
-        url = "抽奖日期不对(Time Out!)#{rand(1000)}"  #奖券未开始或者已经过期
+        url = MW_URL + "/dispose_award?code=#{100000 + Random.rand(90000)}&index=-1&award_id=#{@award.id}" #奖券未开始或者已经过期
       end
-      url = url.force_encoding("cp852")
+      #url = url.force_encoding("cp852")
     end
     respond_to do |format|
       format.html
