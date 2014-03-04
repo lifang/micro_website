@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>我的微网站</title>
+    <title><%=@site.name%></title>
 
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
@@ -29,7 +29,7 @@
         -moz-transform:rotate(-20deg); /*firefox*/
         filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.866025404, M12=0.5, M21=-0.5, M22=0.866025404);	/* cos -sin sin cos*/
       }
-      .ball img { width: 65px; margin: 34px 51px;}
+      .ball img { width: 60px; margin: 36px 53px;}
 
 
     </style>
