@@ -21,7 +21,6 @@ class WeixinsController < ApplicationController
     @award = Award.find_by_id(params[:award_id])
     if index!="0"
       @award_info = @award.award_infos.where("award_index = ?", index)[0]
-      find_award_number()
       if !@award_info.code.blank? && @award_info.code.include?(@code)
         UserAward.create(award_info_id:@award_info.id,open_id:@code,award_id:@award.id)
         @award_info.code.delete(@code)
@@ -43,7 +42,8 @@ class WeixinsController < ApplicationController
     render "/qr_codes/after_scan" , layout:false
   end
 
-  def find_award_number award_infos
+  def find_award_number 
+    award_infos = @award.award_infos
     scratched_award_infos, scratched_has_award_infos,scratched_no_award_infos = get_scratched_award(@award)
     scratched_has_award_infos_hash = scratched_has_award_infos.group_by{|ua| ua.award_info_id} #刮过的，有奖的奖券,奖券id分类
     no_award_num = @award.no_operation_number  #剩余的奖券
@@ -111,11 +111,11 @@ class WeixinsController < ApplicationController
 
           end
         else
-          url = "奖券已经抽完了#{rand(1000)}"  #奖券已抽完
+          url = "奖券已经抽完了(Game Over！)#{rand(1000)}"  #奖券已抽完
         end
       else
-        url = "抽奖日期不对#{rand(1000)}"  #奖券未开始或者已经过期
-      end 
+        url = "抽奖日期不对(Time Out！)#{rand(1000)}"  #奖券未开始或者已经过期
+      end
     end
     respond_to do |format|
       format.html
