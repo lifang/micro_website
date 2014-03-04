@@ -19,7 +19,7 @@
               <%@awards.each do |award|%>
                 <tr>
                   <td><%= link_to award.name, site_qr_code_award_path(@site,award), "target" => "_blank" %>
-                    <br/><%=get_qr_image_weixin_path(award.id)%>
+                    <br/><%=link_to '进二维码页面',get_qr_image_weixin_path(award.id),target:"_blank"%>
                   </td>
                   <td><%=award.begin_date%>到<%=award.end_date%></td>
 

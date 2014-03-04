@@ -4,7 +4,7 @@ class AwardInfo < ActiveRecord::Base
   has_many :user_awards
   require "fileutils"
   serialize :code
-
+  validates :content,uniqueness: { case_sensitive: false }
   SITE_PATH_C =  Rails.root.to_s + "/public/allsites/%s/"
 
   def generate_image(site_name)
