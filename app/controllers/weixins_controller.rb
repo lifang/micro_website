@@ -111,11 +111,12 @@ class WeixinsController < ApplicationController
 
           end
         else
-          url = "奖券已经抽完了(Game Over！)#{rand(1000)}"  #奖券已抽完
+          url = "奖券已经抽完了(Game Over!)#{rand(1000)}"  #奖券已抽完
         end
       else
-        url = "抽奖日期不对(Time Out！)#{rand(1000)}"  #奖券未开始或者已经过期
+        url = "抽奖日期不对(Time Out!)#{rand(1000)}"  #奖券未开始或者已经过期
       end
+      url = url.force_encoding("cp852")
     end
     respond_to do |format|
       format.html
