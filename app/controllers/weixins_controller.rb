@@ -79,11 +79,12 @@ class WeixinsController < ApplicationController
           # award_index = 1
           if award_index == "0"
             @status = 0  #未中奖
-            url = "http://192.168.199.201:3000/dispose_award?code=#{100000 + Random.rand(90000)}&index=0&award_id=#{@award.id}"  #谢谢参与
+            url = MW_URL + "/dispose_award?code=#{100000 + Random.rand(90000)}&index=0&award_id=#{@award.id}"  #谢谢参与
           else
             @status = 1  #中奖
             @award_info = @award.award_infos.where("award_index = ?", award_index.to_i)[0]
-            url ="http://192.168.199.201:3000/dispose_award?code=#{@award_info.code[0].to_s}&index=#{award_index}&award_id=#{@award.id}" if @award_info
+            url = MW_URL + "/dispose_award?code=#{@award_info.code[0].to_s}&index=#{award_index}&award_id=#{@award.id}" if @award_info
+
           end
         else
           url = "奖券已经抽完了#{rand(1000)}"  #奖券已抽完
