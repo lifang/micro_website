@@ -39,7 +39,7 @@ function check_award_form(temp){
 			tishi_alert("奖项名称存在空白！");
 		    return false;
 		}
-		if( $.trim($(content[i]).val())=="" && temp=="new"){
+		if( $.trim($(content[i]).val())=="" && temp=="add"){
 			tishi_alert("奖项内容存在空白！");
 		    return false;
 		}
