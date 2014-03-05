@@ -96,16 +96,28 @@ class QrCodeAwardsController < ApplicationController
     if !name.nil?
       (0...name.length).each do|x|
         time_str = Time.now.usec
-        save_qr_code_img @tmp[x],time_str
+        if @tmp &&@tmp[x] && !@tmp[x].nil?
+          save_qr_code_img @tmp[x],time_str
+        end
         if !id[x].nil?
-          award_info=AwardInfo.find_by_id(id[x])
-          remove_old_image Rails.root.to_s+"/public/"+award_info.content
+          award_info =AwardInfo.find_by_id(id[x])
+          if @tmp &&@tmp[x] && !@tmp[x].nil?
+            remove_old_image Rails.root.to_s+"/public/"+award_info.content
+          end
           old_name = award_info.name
+          if @tmp&&@tmp[x]&&!@tmp[x].nil?
           award_info.update_attributes(
             name:name[x],
             content:"/allsites/#{@site.root_path}/qr_code_imgs/#{time_str}"+@tmp[x].original_filename,
             number:number[x],award_index:x + 1 ,
             code:(create_code award_info) )
+          else
+          award_info.update_attributes(
+            name:name[x],
+            number:number[x],award_index:x + 1 ,
+            code:(create_code award_info) )
+          end
+
         else
           award_info=@award.award_infos.build
           award_info.name=name[x]
@@ -128,7 +140,6 @@ class QrCodeAwardsController < ApplicationController
   end
 
   def remove_old_image img_path
-     p 2134123123,img_path
     FileUtils.rm img_path if File.exist?(img_path)
     FileUtils.rm (get_min_by_imgpath img_path) if File.exist?(get_min_by_imgpath img_path)
   end

@@ -26,7 +26,7 @@ function cancle_award_page(){
 	$(".second_box.addGgl").hide();
         $(".second_box.resInfo").hide();
 }
-function check_award_form(){
+function check_award_form(temp){
 	var name=$("input[name='name[]']");
 	var content=$("input[name='content[]']");
 	var number=$("input[name='number[]']");
@@ -39,7 +39,7 @@ function check_award_form(){
 			tishi_alert("奖项名称存在空白！");
 		    return false;
 		}
-		if( $.trim($(content[i]).val())==""){
+		if( $.trim($(content[i]).val())=="" && temp=="new"){
 			tishi_alert("奖项内容存在空白！");
 		    return false;
 		}
