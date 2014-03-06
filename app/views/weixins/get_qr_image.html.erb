@@ -1,77 +1,201 @@
 
-  <div class="main">
-    <div class="qr_code_image" >
-      <div class="ball ball1">
-        <img src="" />
-      </div>
-    </div>
-    <div class="qr_code_image" >
-      <div class="ball ball2">
-        <img src="" />
-      </div>
-    </div>
-    <div class="qr_code_image" >
-      <div class="ball ball3">
-        <img src="" />
-      </div>
-    </div>
-    <div class="qr_code_image" >
-      <div class="ball ball4">
-        <img src="" />
-      </div>
-    </div>
-    <div class="qr_code_image" >
-      <div class="ball ball5">
-        <img src="" />
-      </div>
-    </div>
-    <div class="qr_code_image" >
-      <div class="ball ball6">
-        <img src="" />
-      </div>
+<div class="main">
+  <div class="qr_code_image" >
+    <div class="ball ball1">
+      <img src="" />
     </div>
   </div>
-  
+  <div class="qr_code_image" >
+    <div class="ball ball2">
+      <img src="" />
+    </div>
+  </div>
+  <div class="qr_code_image" >
+    <div class="ball ball3">
+      <img src="" />
+    </div>
+  </div>
+  <div class="qr_code_image" >
+    <div class="ball ball4">
+      <img src="" />
+    </div>
+  </div>
+  <div class="qr_code_image" >
+    <div class="ball ball5">
+      <img src="" />
+    </div>
+  </div>
+  <div class="qr_code_image" >
+    <div class="ball ball6">
+      <img src="" />
+    </div>
+  </div>
+</div>
+
 <script>
   var balls = $(".qr_code_image").find(".ball");
   var iamges = $(".qr_code_image").find("img");
+  var spech = [0.7,0.8,0.6,1.1,1.2,1.3]
+  var height = [0,0,0,0,0,0]
   var temp=0;
+  var ch = document.documentElement.clientHeight;
   for(var i=0;i<iamges.length;i++){
     $(iamges[i]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+i);
   }
   function start(){
     for(var i=0;i<iamges.length;i++){
-      var h = Math.random()*100;
-
-      auto_down(balls[i],iamges[i],h+5);
+      auto_down(balls[i],iamges[i],spech[i],i);
+      
     }
-    setTimeout("start()",4000);
+
   
   }
   
-  function auto_down(ball,img,index){
-    var height = $(ball).offset().top+index;
+  function auto_down(ball,img,index,i){
+    height[i] = $(ball).offset().top;
     var ch = document.documentElement.clientHeight;
-    $(ball).animate({
-      marginTop: height
-    },1000);
-    // $(img).css("margin-top",height);
-    if(height >=ch-56){
-      $(ball).animate({
-        marginTop: 0
-      },10);
+    if( height[i] >=ch){
       $(img).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
       temp++;
       if(temp>1000){
         temp=0;
       }
       change_deg(ball);
+     // $(ball).css("marginTop",0);
+      
+      $(ball).animate({
+        marginTop: 0
+      },10);
+
     }
-    // $(img).css("margin-top",0);
-     
-     
+   // $(ball).css("marginTop", height[i]);
+     $(ball).animate({
+      marginTop: ch
+    },19000);
+     setTimeout(auto_down(ball,img,index,i),19000);
+    // $(img).css("margin-top",height);
+    
   }
-  start();
+ //start();
+
+  function auto_down0(time){
+    var height = $(balls[0]).offset().top;
+    if(height >=ch-100){
+      $(iamges[0]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[0]);
+      $(balls[0]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[0]).animate({
+      marginTop: (ch-116)
+    },time);
+    setTimeout('auto_down0(17600)',17600);
+  }
+  function auto_down1(time){
+    var height = $(balls[1]).offset().top;
+    if(height >=ch-100){
+      $(iamges[1]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[1]);
+      $(balls[1]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[1]).animate({
+      marginTop: (ch-116)
+    },time);
+   // common(balls[1],iamges[1],time)
+    setTimeout('auto_down1(19000)',19000);
+  }
+  function auto_down2(time){
+   var height = $(balls[2]).offset().top;
+    if(height >=ch-100){
+      $(iamges[2]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[2]);
+      $(balls[2]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[2]).animate({
+      marginTop: (ch-116)
+    },time);
+    setTimeout('auto_down2(18600)',18600);
+  }
+  function auto_down3(time){
+    var height = $(balls[3]).offset().top;
+    if(height >=ch-100){
+      $(iamges[3]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[3]);
+      $(balls[3]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[3]).animate({
+      marginTop: (ch-116)
+    },time);
+    setTimeout('auto_down3(19500)',19500);
+  }
+  function auto_down4(time){
+    var height = $(balls[4]).offset().top;
+    if(height >=ch-100){
+      $(iamges[4]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[4]);
+      $(balls[4]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[4]).animate({
+      marginTop: (ch-116)
+    },time);
+    setTimeout('auto_down4(17800)',17800);
+  }
+  function auto_down5(time){
+    var height = $(balls[5]).offset().top;
+    if(height >=ch-100){
+      $(iamges[5]).attr("src",'/get_qr_img_by_url.png?id=<%=@award.id%>&u='+temp);
+      temp++;
+      if(temp>1000){
+        temp=0;
+      }
+      change_deg(balls[5]);
+      $(balls[5]).animate({
+        marginTop: 0
+      },10);
+    }
+    $(balls[5]).animate({
+      marginTop: (ch-116)
+    },time);
+    setTimeout('auto_down5(18400)',18400);
+  }
+  auto_down0(17600);
+  auto_down1(19000);
+  auto_down2(18600);auto_down3(19500);
+  auto_down4(17800);auto_down5(18400);
+
+
+  function common(ball,image,time){
+   
+  }
 
   function change_deg(img){
     var deg = (Math.random()-0.5)*60;
