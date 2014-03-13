@@ -4,6 +4,7 @@ class RepliesController < ApplicationController
   before_filter :get_site
   before_filter :get_post
 
+  #论坛所用，现已不用
   def create
     reply_total = @post.replies.length
     params[:comment][:send_open_id] = reply_total + 1
