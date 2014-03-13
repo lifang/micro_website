@@ -2,7 +2,6 @@
 class ClientFormsController < ApplicationController
   layout:'client_form'
   def get_form_date
-    p 12312312312312
     form = params[:form]
     form_hash ="{"
     form.each do |f|
@@ -13,8 +12,10 @@ class ClientFormsController < ApplicationController
       form_hash +="'#{f[1][:name]}'=>'#{value}',"
     end
     form_hash = form_hash[0...-1]+"}"
+    if form_hash =="}"
+      form_hash = nil
+    end
     @client = Client.find_by_open_id(params[:open_id])
-
     if @client
       @client.update_attributes(name:params[:username] , mobiephone:params[:phone] , html_content:form_hash )
       render text:2
