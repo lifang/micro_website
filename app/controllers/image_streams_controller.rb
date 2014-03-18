@@ -156,7 +156,7 @@ class ImageStreamsController < ApplicationController
   def encoding_character(str)
     arr={"<"=>"&lt;",">"=>"&gt;"}
     str.gsub(/<|>/){|s| arr[s]}
-end
+  end
   #得到内容
   def get_content(imgarr,textarr)
     str=""

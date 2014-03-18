@@ -12,6 +12,7 @@ class ClientFormsController < ApplicationController
       form_hash +="'#{f[1][:name]}'=>'#{value}',"
     end
     form_hash = form_hash[0...-1]+"}"
+    p 1111111111111,form_hash
     if form_hash =="}"
       form_hash = nil
     end

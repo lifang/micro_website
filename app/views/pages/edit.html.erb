@@ -1,3 +1,9 @@
+<script>
+  var html = $(".html_content");
+  for(var i=0;i<html.length;i++){
+    $(html[i]).val("");
+  }
+</script>
 <div class="main_container">
   <input type="hidden" value="<%=@site.id%>" id="site_id" />
   <%= render '/shared/left_panel' %>

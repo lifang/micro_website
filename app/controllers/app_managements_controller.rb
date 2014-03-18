@@ -64,6 +64,9 @@ class AppManagementsController < ApplicationController
       end
     end
     form_hash = form_hash[0...-1]+"}"
+    if form_hash =="}"
+      form_hash = nil
+    end
     @client = Client.find_by_open_id(params[:open_id])
     open_id = params[:open_id]
     @site = Site.find_by_id(params[:site_id].to_i)

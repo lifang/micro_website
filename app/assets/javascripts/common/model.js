@@ -1,6 +1,10 @@
 
 function submit_model_page(site_id){
     var models=$(".main_cont").find(".main_tab");
+    var html = $(".html_content");
+    for(var i=0;i<html.length;i++){
+        $(html[i]).val("");
+    }
     for(var i=0;i<models.length;i++){
         if($(models[i]).css("display")!="none"){
             if(i==0){
@@ -134,19 +138,19 @@ function submit_sub_page(){
                 }
                 $("#html_content").val($(".iphoneVirtual form").html());
                 var form = $(".iphoneVirtual form").serialize();
-                 $.ajax({
+                $.ajax({
                     url: "/sites/" + site_id + "/pages/tmlt_sub_create",
                     type: "POST",
                     dataType: "text",
                     data: form,
                     success:function(data){
-                       if(data==1){
+                        if(data==1){
 
-                           tishi_alert("创建成功！");
-                           location.href="/sites/" + site_id + "/pages/sub";
-                       }else if(data == 0 ){
-                           tishi_alert("创建失败,文件名存在！");
-                       }
+                            tishi_alert("创建成功！");
+                            location.href="/sites/" + site_id + "/pages/sub";
+                        }else if(data == 0 ){
+                            tishi_alert("创建失败,文件名存在！");
+                        }
                     },
                     error:function(data){
                     // alert("error");
@@ -166,13 +170,13 @@ function submit_sub_page(){
                     dataType: "text",
                     data: form,
                     success:function(data){
-                       if(data==1){
+                        if(data==1){
 
-                           tishi_alert("创建成功！");
-                           location.href="/sites/" + site_id + "/pages/sub";
-                       }else if(data == 0 ){
-                           tishi_alert("创建失败,文件名存在！");
-                       }
+                            tishi_alert("创建成功！");
+                            location.href="/sites/" + site_id + "/pages/sub";
+                        }else if(data == 0 ){
+                            tishi_alert("创建失败,文件名存在！");
+                        }
                     },
                     error:function(data){
                     // alert("error");
@@ -186,19 +190,19 @@ function submit_sub_page(){
                 var page_id = $("#page_id").val();
                 $("#html_content").val($(".iphoneVirtual form").html());
                 var form = $(".iphoneVirtual form").serialize();
-                 $.ajax({
+                $.ajax({
                     url: "/sites/" + site_id + "/pages/"+page_id+"/tmlt_sub_update",
                     type: "POST",
                     dataType: "text",
                     data: form,
                     success:function(data){
-                       if(data==1){
+                        if(data==1){
 
-                           tishi_alert("更新成功！");
-                           location.href="/sites/" + site_id + "/pages/sub";
-                       }else if(data == 0 ){
-                           tishi_alert("更新失败,文件不存在！");
-                       }
+                            tishi_alert("更新成功！");
+                            location.href="/sites/" + site_id + "/pages/sub";
+                        }else if(data == 0 ){
+                            tishi_alert("更新失败,文件不存在！");
+                        }
                     },
                     error:function(data){
                     // alert("error");
