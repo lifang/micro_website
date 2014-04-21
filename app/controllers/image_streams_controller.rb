@@ -17,7 +17,7 @@ class ImageStreamsController < ApplicationController
 
   def img_stream
     @site=Site.find(params[:site_id])
-    @image_stream_pages=@site.pages.image_stream.paginate(page:params[:page]|| 1,:per_page => 1)
+    @image_stream_pages=@site.pages.image_stream.paginate(page:params[:page]|| 1,:per_page => 10)
     #@imgs_path=@site.resources
   end
   def create_imgtxt
