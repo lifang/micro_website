@@ -214,12 +214,37 @@ function submit_sub_page(){
     }
      
 }
+
+function submit_sub_zdy(){
+    var title =$.trim($("#title").val());
+    var name =$.trim($("#name").val());
+    var content = $.trim($(".zdy_sub_content").val())
+    if(title==""){
+        tishi_alert('请输入标题');
+        return false;
+    }
+    else if(name ==""){
+        tishi_alert('请输入文件名');
+        return false;
+    }
+   else if(content == ""){
+       tishi_alert('请输入页面内容');
+        return false;
+   }
+   $("#sub_title1").val(title);
+   $("#sub_name1").val(name);
+    $(".iv_temp4").find("form").submit();
+
+}
+
 function show_sub(){
+    $(".submit_sub_button").attr("onclick", "submit_sub_zdy()")
     $(".iphoneVirtual").hide();
     $("#tupian").hide();
     $(".iv_temp4").show();
 }
 function show_model_sub(){
+    $(".submit_sub_button").attr("onclick", "submit_sub_page()")
     $(".iphoneVirtual").show();
     $("#tupian").show();
     $(".iv_temp4").hide();
