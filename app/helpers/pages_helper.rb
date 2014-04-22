@@ -11,12 +11,11 @@ module PagesHelper
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{site.name}首页</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
 
-<body class='cover_bg' style='background-image: url(#{bigimg});'>
+<body class='cover_bg' style='background-image: url(\"#{bigimg}\");'>
 	<article>
          <section class='nav_3'>
               <nav>
@@ -30,6 +29,7 @@ module PagesHelper
     </article>
 
 </body>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 </html>
     "
     html
@@ -49,12 +49,11 @@ module PagesHelper
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{site.name}首页 </title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
 
-<body class='cover_bg' style='background-image: url(#{bigimg});'>
+<body class='cover_bg' style='background-image: url(\"#{bigimg}\");'>
 	<article>
          <section class='nav_8'>
               <nav>
@@ -67,6 +66,7 @@ module PagesHelper
     </article>
 
 </body>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 </html>
     "
     html
@@ -79,7 +79,7 @@ module PagesHelper
     end
     section=""
     unless top_img.nil?
-      section="<section class='cover_bg title' style='background-image: url(#{ top_img });'></section>"
+      section="<section class='cover_bg title' style='background-image: url(\"#{ top_img }\");'></section>"
     end
     html="<!doctype html>
 <html>
@@ -89,7 +89,6 @@ module PagesHelper
 <title>#{title}</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
 <script type='text/javascript' src='/allsites/js/jquery.wookmark.js'></script>
-<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
@@ -111,18 +110,11 @@ module PagesHelper
 				    offset:10
 			    });
 		    });
-        $(function(){
-          var cw = document.documentElement.clientWidth;
-          var image=new Image();
-          image_bak = $('.cover_bg').css('background-image');
-          if(typeof(image_bak)!='undefined'){
-              image.src= image_bak.split('(')[1].split(')')[0];
-              $('.title').css('height',Math.ceil((image.height*cw)/image.width ));
-          }
-        });
+    
     </script>
 
 </body>
+<script type='text/javascript' src='/allsites/js/template_main.js'></script>
 </html>"
     html
   end
