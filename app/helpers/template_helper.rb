@@ -46,7 +46,7 @@ module TemplateHelper
 <title>申邑•微网站</title>
 <script type="text/javascript" src="/allsites/js/jQuery-v1.9.0.js"></script>
 <script type="text/javascript" src="/allsites/js/jquery.mobile-1.3.2.js"></script>
-
+<script type="text/javascript" src="/assets/fenx.js"></script>
 <link href="/allsites/style/template_style.css" rel="stylesheet" type="text/css">
 <link href="/allsites/style/jquery.mobile-1.3.2.css" rel="stylesheet" type="text/css">
 </head>

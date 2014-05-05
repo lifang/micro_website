@@ -11,6 +11,7 @@ module PagesHelper
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{site.name}首页</title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
+<script type='text/javascript' src='/assets/fenx.js'></script>
 
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
@@ -49,7 +50,7 @@ module PagesHelper
 <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 <title>#{site.name}首页 </title>
 <script type='text/javascript' src='/allsites/js/jQuery-v1.9.0.js'></script>
-
+<script type='text/javascript' src='/assets/fenx.js'></script>
 <link href='/allsites/style/template_style.css' rel='stylesheet' type='text/css'>
 </head>
 
