@@ -35,10 +35,12 @@ class MicroMessagesController < ApplicationController
         FileUtils.rm get_min2_by_imgpath original_img_true_path if File::exist?( get_min2_by_imgpath original_img_true_path )  
       end
       keyword = @micro_messages.keyword
-      if keyword.auto?
-        keyword.destroy
-      else
-        keyword.update_attribute(:micro_message_id, nil)
+      if keyword
+        if keyword.auto?
+          keyword.destroy
+        else
+          keyword.update_attribute(:micro_message_id, nil)
+        end
       end
       @micro_messages.destroy
       flash[:success]="删除成功！"
